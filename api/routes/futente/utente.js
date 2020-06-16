@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { config }= require('../db/config')
+const { config }= require('../../db/config')
 var mysql = require('mysql');
 var connection= mysql.createConnection(config);
 /* GET users listing. */
