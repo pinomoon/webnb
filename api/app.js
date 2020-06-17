@@ -7,7 +7,7 @@ var cors= require("cors");
 
 var indexRouter = require('./routes/index');
 var utenteRouter = require('./routes/futente/utente');
-var testAPIRouter= require("./routes/testAPI");
+
 var registrazioneRouter = require('./routes/registrazione');
 var prenotazioneRouter = require ('./routes/prenotazione');
 var hostRouter = require('./routes/fhost/host');
@@ -29,7 +29,7 @@ app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/users', utenteRouter);
-app.use("/testAPI",testAPIRouter);
+
 app.use('/registrazione',registrazioneRouter);
 app.use('/prenotazione',prenotazioneRouter);
 app.use('/host',hostRouter);

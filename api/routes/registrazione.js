@@ -7,7 +7,8 @@ var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'webnbmail@gmail.com',
-        pass: 'webnb2020'
+        pass: 'web&b2020'
+
     }
 });
 
@@ -32,9 +33,11 @@ async function registrazione(req, res, next) {
             pwdhash.update(req.body.password);
             let encpsw= pwdhash.digest('hex');
 
-            results = await db.query('INSERT INTO `utente`(nome,cognome,tipo, data_di_nascita,indirizzo,sesso,password,email)'
+            results = await db.query("INSERT INTO utente (nome,cognome,tipo,data_di_nascita,indirizzo,sesso,password,email,citta,cap) VALUES ?"
        , [
-                req.body.nome ,
+           [
+           [
+                req.body.nome,
                 req.body.cognome,
                 req.body.tipo,
                 req.body.data_di_nascita,
@@ -44,15 +47,21 @@ async function registrazione(req, res, next) {
                 req.body.email,
                 req.body.citta,
                 req.body.cap
+                    ]
+           ]
             ])
-            let id_utente=results[0].id_utente;
 
-            results= await db.query('INSERT INTO `carta_credito`(numero_carta,scadenza,cvc,id_utente)',
+            let email=req.body.email;
+            results= await db.query("INSERT INTO carta_credito (numero_carta,scadenza,cvc,email) VALUES ?",
                 [
+                    [
+                        [
                     req.body.numero_carta,
                     req.body.scadenza,
                     req.body.cvc,
-                   id_utente
+                    email
+                ]
+                    ]
                 ])
                 .catch(err => {
                     throw err;
@@ -61,31 +70,32 @@ async function registrazione(req, res, next) {
 
             console.log(results);
             console.log(`Utente ${req.body.email} inserito!`);
-            res.send('Registrazione effettuata ');
-
+            res.json('Registrazione effettuata ');
+            var mailOptions = {
+                from: 'webnbmail@gmail.com',
+                to:email,
+                subject: 'Conferma il tuo account WeB&B',
+                text: 'https://localhost:9000/accountConferma?email='+email
+            };
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                    res.send(+
+                        "Ti abbiamo inviato una email di conferma al tuo indirizzo di posta elettronica, assicurati di confermare il tuo accout prima di effettuare l'accesso ")
+                }
+            });
         });
     } catch (err) {
         console.log(err);
-        res.send("E' già presente un account con questa email" +
+        res.json("E' già presente un account con questa email" +
             "Effettua l'accesso con questo indirizzo di posta elettronica o registrati con  un nuovo indirizzo ")
         next(createError(500));
     }
-    var mailOptions = {
-        from: 'webnbmail@gmail.com',
-        to: req.body.email,
-        subject: 'Conferma il tuo account WeB&B',
-        text: 'https://localhost:9000/accauntConferma?email='+results[0].email
-    };
 
-    transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-            res.send(+
-                "Ti abbiamo inviato una email di conferma al tuo indirizzo di posta elettronica, assicurati di confermare il tuo accout prima di effettuare l'accesso ")
-        }
-    });
+
+
 }
 
 
