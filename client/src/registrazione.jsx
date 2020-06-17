@@ -36,10 +36,10 @@ class Registrazione extends Component{
         event.preventDefault();
         let res =axios.post('https://localhost:9000/registrazione', this.state)
             .then(function(response){
-                console.log(response.data);
+                alert(response.data);
             })
             .catch(function(error){
-                console.log(error);
+                alert(error);
             });
     }
     makePostRequest(){

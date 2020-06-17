@@ -49,7 +49,12 @@ async function registrazione(req, res, next) {
                 req.body.cap
                     ]
            ]
-            ])
+            ]).catch(err=>{
+                res.send("E' già presente un account con questa email" +
+                   "Effettua l\'accesso con questo indirizzo di posta elettronica o registrati con  un nuovo indirizzo ");
+                throw err;
+            });
+
 
             let email=req.body.email;
             results= await db.query("INSERT INTO carta_credito (numero_carta,scadenza,cvc,email) VALUES ?",
@@ -89,8 +94,7 @@ async function registrazione(req, res, next) {
         });
     } catch (err) {
         console.log(err);
-        res.json("E' già presente un account con questa email" +
-            "Effettua l'accesso con questo indirizzo di posta elettronica o registrati con  un nuovo indirizzo ")
+        res.send("Registrazione fallita");
         next(createError(500));
     }
 

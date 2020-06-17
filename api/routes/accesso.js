@@ -21,12 +21,11 @@ async function autenticazione(req,res, next){
                 .catch(err => {
                     throw err;
                 });
-            if (results.affectedRows == 0) {
-                console.log('Utente non trovato!');
-                res.send("Utente non trovato!");
+
+
                 //next(createError(404, 'Utente non trovato'));
-            }
-            else if(result[0].conferma_account==false){
+
+            if(results[0].conferma_account==false){
                 console.log('Email non confermata');
                 res.send('Email non confermata');
             }
@@ -41,19 +40,21 @@ async function autenticazione(req,res, next){
                     res.send("Password errata!");
                     //next(createError(403, 'Password errata'));
                 } else {
+                    let id_utente = results[0].id_utente;
+                    results = await db.query('UPDATE `utente` SET `autenticazione`=true WHERE `utente`.id_utente = ?', [
+                    id_utente
+                ])
+                    .catch(err => {
+                        throw err;
+                    });
                     console.log('Utente autenticato');
                     console.log(results);
                     res.send("Utente autenticato");
 
-                    let id_utente = results[0].id_utente;
 
 
-                    results = await db.query('UPDATE `utente` SET `autenticazione`=true WHERE `utente`.id = ?', [
-                        id_utente
-                    ])
-                        .catch(err => {
-                            throw err;
-                        });
+
+
 
                     console.log('Dati utente:');
                     console.log(results[0]);
@@ -68,8 +69,8 @@ async function autenticazione(req,res, next){
             }
         });
     } catch (err) {
-        console.log(err);
-        res.send('Siamo spiecenti si è verificato un errore imprevisto')
+        console.log('Utente non trovato!');
+        res.send("Utente non trovato!");
         next(createError(500));
     }
 
