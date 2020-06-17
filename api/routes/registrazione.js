@@ -39,10 +39,21 @@ async function registrazione(req, res, next) {
                 req.body.tipo,
                 req.body.data_di_nascita,
                 req.body.indirizzo,
-                req.body.sesso =='Maschio' ? 'M' : 'F',
+                req.body.sesso,
                 encpsw,
-                req.body.email
+                req.body.email,
+                req.body.citta,
+                req.body.cap
             ])
+            let id_utente=results[0].id_utente;
+
+            results= await db.query('INSERT INTO `carta_credito`(numero_carta,scadenza,cvc,id_utente)',
+                [
+                    req.body.numero_carta,
+                    req.body.scadenza,
+                    req.body.cvc,
+                   id_utente
+                ])
                 .catch(err => {
                     throw err;
                 });
@@ -63,7 +74,7 @@ async function registrazione(req, res, next) {
         from: 'webnbmail@gmail.com',
         to: req.body.email,
         subject: 'Conferma il tuo account WeB&B',
-        text: 'Ciao baby sei bellissima!'
+        text: 'https://localhost:9000/accauntConferma?email='+results[0].email
     };
 
     transporter.sendMail(mailOptions, function(error, info){

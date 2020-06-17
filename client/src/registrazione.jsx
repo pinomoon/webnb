@@ -16,7 +16,7 @@ class Registrazione extends Component{
     }
     render(){
         return(
-            <form className="container was-validated col-sm-8 mt-3" method="POST" action="/registrazione">
+            <form className="container was-validated col-sm-8 mt-3" method="POST" action="https://localhost:9000/registrazione">
 
                 <div className="custom-control custom-radio custom-control-inline mt-2">
                     <input type="radio" className="custom-control-input" id="host" name="tipo" value="host" required/>

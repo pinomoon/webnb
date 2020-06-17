@@ -21,11 +21,16 @@ async function autenticazione(req,res, next){
                 .catch(err => {
                     throw err;
                 });
-
             if (results.affectedRows == 0) {
                 console.log('Utente non trovato!');
-                next(createError(404, 'Utente non trovato'));
-            } else {
+                res.send("Utente non trovato!");
+                //next(createError(404, 'Utente non trovato'));
+            }
+            else if(result[0].conferma_account==false){
+                console.log('Email non confermata');
+                res.send('Email non confermata');
+            }
+            else {
                 let pwdhash = crypto.createHash('sha512'); // istanziamo l'algoritmo di hashing
                 pwdhash.update(req.body.password); // cifriamo la password
                 let encpwd = pwdhash.digest('hex'); // otteniamo la stringa esadecimale
@@ -33,19 +38,17 @@ async function autenticazione(req,res, next){
                 if (encpwd != results[0].password) {
 
                     console.log('Password errata!');
-                    next(createError(403, 'Password errata'));
+                    res.send("Password errata!");
+                    //next(createError(403, 'Password errata'));
                 } else {
                     console.log('Utente autenticato');
                     console.log(results);
+                    res.send("Utente autenticato");
 
                     let id_utente = results[0].id_utente;
 
 
-                    results = await db.query('SELECT `utente`.nome, `utente`.cognome,\
-                        DATE_FORMAT(`utente`.data_di_nascita,"%d/%m/%Y") AS data_nascita, `utente`.indirizzo, \
-                        utente.sesso\
-                        FROM `utente`\
-                        WHERE `utente`.id = ?', [
+                    results = await db.query('UPDATE `utente` SET `autenticazione`=true WHERE `utente`.id = ?', [
                         id_utente
                     ])
                         .catch(err => {
@@ -54,9 +57,9 @@ async function autenticazione(req,res, next){
 
                     console.log('Dati utente:');
                     console.log(results[0]);
-                    res.send('Profilo', {
+                    res.render('profile', {
                         title: 'Profilo Utente',
-                        profilo: {
+                        profile: {
                             user: req.body.email,
                             data: results[0]
                         }
@@ -66,7 +69,7 @@ async function autenticazione(req,res, next){
         });
     } catch (err) {
         console.log(err);
-        router.send('Siamo spiecenti si è verificato un errore imprevisto')
+        res.send('Siamo spiecenti si è verificato un errore imprevisto')
         next(createError(500));
     }
 
