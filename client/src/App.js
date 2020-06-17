@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import logo from './header_trasparente.png';
+
 import './App.css';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,9 +10,14 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import { BottomNavigation } from '@material-ui/core';
 import Registrazione from './registrazione.jsx';
 import Login from './login.jsx';
-
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import FolderIcon from '@material-ui/icons/Folder';
+import RestoreIcon from '@material-ui/icons/Restore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 const useStyles = makeStyles((theme) => ({
     root: {
     },
@@ -31,9 +37,12 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.enteringScreen,
         }),
     },
+    right:{
+        float:"right"
+    },
     appLogo: {
-        maxWidth: 200,
-        maxHeight: 50,
+        Width: 50,
+        Height: 50,
         display: "block",
         margin: "0 auto"
     },
@@ -70,14 +79,15 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     footerContainer: {
-        backgroundColor: "#fff",
+        backgroundColor: "grey",
         width: "100%",
         maxHeight: 120,
-        position: "fixed",
+        position: "relative",
         boxShadow: "1px 1px 10px #ddd",
-        bottom: 0,
+        margin: "1px",
         paddingTop: 10,
         paddingBottom: 20,
+
     },
     footerContent: {
         display: "block",
@@ -106,39 +116,42 @@ class App extends Component {
     render(){
         return (
             <div className={useStyles.root}>
-                    <Router>
-                        <AppBar position="static">
-                            <Toolbar>
-                                <IconButton edge="start"  color="inherit" aria-label="menu" className={useStyles.menuIcon} >
-                                    <MenuIcon/>
-                                </IconButton>
-                                <Typography variant="h6" className={useStyles.title}>
-                                    <img src={logo} className={useStyles.appLogo} alt="logo"/>
-                                </Typography>
+                <Router>
+                    <AppBar position="static" color="white">
+                        <Toolbar>
+
+                            <Typography variant="h6" className={useStyles.title}>
+                                <img src={logo} className={useStyles.appLogo} width="100px" height="50px" alt="logo"/>
+                            </Typography>
+                            <Button color="inherit" >Home</Button>
+                            <Button color="inherit" > Chi siamo</Button>
+                            <div className={useStyles.right}>
                                 <Button color="inherit" href="login">Login</Button>
                                 <Button color="inherit" href="registrazione">Registrati</Button>
-                            </Toolbar>
-
-                        </AppBar>
-
-
-
-                        <main className={`${useStyles.content}`}>
-                            <Switch>
-
-                                <Route path="/login" component={Login}/>
-                                <Route path="/registrazione" component={Registrazione} />
-                            </Switch>
-                        </main>
-                        <footer>
-                            <div className={useStyles.footerContainer}>
-                                <div className={useStyles.footerContent}>
-
-                                </div>
                             </div>
-                        </footer>
-                    </Router>
-                </div>
+                        </Toolbar>
+
+                    </AppBar>
+
+                    <main className={`${useStyles.content}`}>
+                        <Switch>
+
+                            <Route path="/login" component={Login}/>
+                            <Route path="/registrazione" component={Registrazione} />
+                        </Switch>
+                    </main>
+
+
+                    <BottomNavigation className={makeStyles.root}>
+                        <BottomNavigationAction label="Recents" value="recents" icon={<RestoreIcon />} />
+                        <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
+                        <BottomNavigationAction label="Nearby" value="nearby" icon={<LocationOnIcon />} />
+                        <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
+
+
+                    </BottomNavigation>
+                </Router>
+            </div>
         );
     }
 }
