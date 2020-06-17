@@ -39,7 +39,7 @@ async function registrazione(req, res, next) {
                 req.body.tipo,
                 req.body.data_di_nascita,
                 req.body.indirizzo,
-                req.body.sesso =='Maschio' ? 'M' : 'F',
+                req.body.sesso ,
                 encpsw,
                 req.body.email
             ])
