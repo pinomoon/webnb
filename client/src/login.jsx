@@ -1,10 +1,34 @@
 import  React, {Component} from "react";
+import axios from 'axios';
 
 class Login extends Component{
     constructor(props){
         super(props);
-        this.state={apiResponse:""};
+        this.state={email:"",
+                    password:""
+                    };
+
+    this.handleChange=this.handleChange.bind(this);
+    this.handleSubmit=this.handleSubmit.bind(this);
     }
+    handleChange(event){
+        const target=event.target;
+        const proprieta= target.name;
+        const valore= target.value;
+        this.setState({[proprieta]: valore});
+    }
+    handleSubmit(event){
+        alert("sono stati inseriti dei campi: "+this.state.email+" "+this.state.password);
+        event.preventDefault();
+        let res =axios.post('https://localhost:9000/accesso', this.state)
+            .then(function(response){
+                alert(response.data);
+            })
+            .catch(function(error){
+                alert(error);
+            });
+    }
+    /*
     callAPI(){
         fetch("https://localhost:9000/")
             .then(res=>res.text())
@@ -14,27 +38,28 @@ class Login extends Component{
     componentDidMount(){
         this.callAPI();
     }
+
+     */
     render(){
         return(
-            <form className="container was-validated col-sm-8 mt-3" method="POST" action="/users/login">
+            <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST" onSubmit={this.handleSubmit}>
 
                 <p className="lead text-uppercase mt-3">Autenticazione</p>
                 <div className="form-group">
                     <label htmlFor="email">E-mail *</label>
                     <input name="email" id="email" type="email" className="form-control" size="32" maxLength="40"
-                           required/>
+                           onChange={this.handleChange} required/>
                     <div className="invalid-feedback">
                         Inserire indirizzo e-mail
                     </div>
-                </div>
 
-                <div className="form-group">
                     <label htmlFor="pass">Password *</label>
-                    <input name="pass" id="pass" type="password" className="form-control"
+                    <input name="password" id="pass" type="password" className="form-control"
                            title="Almeno 8 caratteri, una lettera maiuscola e un numero"
-                           pattern="^(?=.[a-z])(?=.[A-Z])(?=.*[0-9]).{8,}$" size="32" maxLength="40" required/>
+                          // pattern="^(?=.[a-z])(?=.[A-Z])(?=.*[0-9]).{8,}$"
+                        size="32" maxLength="40" required onChange={this.handleChange}/>
                     <div className="invalid-feedback">
-                        Almeno 8 caratteri di cui uno maiusciolo e un numero
+                        Almeno 8 caratteri di cui uno maiuscolo e un numero
                     </div>
                     <div className="valid-feedback text-warning">
                         Password media

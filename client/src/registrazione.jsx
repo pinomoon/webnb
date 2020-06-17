@@ -34,8 +34,13 @@ class Registrazione extends Component{
     handleSubmit(event){
         alert("sono stati inseriti dei campi:"+" "+this.state.tipo+" "+this.state.nome+this.state.cognome+" "+this.state.data_di_nascita+" "+this.state.indirizzo+" "+this.state.email+" "+this.state.password+" "+this.state.sesso);
         event.preventDefault();
-        let res =axios.post('https://localhost:9000/registrazione', this.state);
-        alert(res);
+        let res =axios.post('https://localhost:9000/registrazione', this.state)
+            .then(function(response){
+                console.log(response.data);
+            })
+            .catch(function(error){
+                console.log(error);
+            });
     }
     makePostRequest(){
 
@@ -55,6 +60,7 @@ class Registrazione extends Component{
 
     render(){
         return(
+            <div class="container mt-10">
             <form name="form"  id="form" className="container was-validated col-sm-8 mt-3" method="POST" onSubmit={this.handleSubmit}>
 
                 <div className="custom-control custom-radio custom-control-inline mt-2">
@@ -196,6 +202,11 @@ class Registrazione extends Component{
                 </div>
                 <button name="ok" id="ok" type="submit" className="btn btn-primary mt-3">Invia</button>
             </form>
+
+            </div>
+
+
+
         );
 
     }
