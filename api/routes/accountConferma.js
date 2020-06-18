@@ -14,31 +14,28 @@ async function confermacc(req,res,next){
     const db = await makeDb(config);
     let results = {};
 
-    var emailp=params['email'];
+    var tokenp=params['token'];
     try {
 
         await withTransaction(db, async() => {
-            results=await  db.query("SELECT conferma_account FROM utente WHERE utente.email=?",[emailp])
+            results=await  db.query("SELECT conferma_account FROM utente WHERE utente.token=?",[tokenp]).catch(err=>{})
             if(results[0].conferma_account==true){
                 res.send("La ta email è già stata verificata, effettua l'accesso")
             }else{
-                results = await db.query("UPDATE `utente` SET conferma_account=true WHERE `utente`.email=?",[emailp])
+                results = await db.query("UPDATE `utente` SET conferma_account=true WHERE `utente`.token=?",[tokenp])
                 .catch(err => {
                     throw err;
                 });
             }
-
-
-
             console.log(results);
-            console.log(`Utente ${req.body.email} inserito!`);
+
             res.send("Account confermato con successo! Vai alla HomePage per effettuare l'accesso");
 
         });
     } catch (err) {
 
         console.log(err);
-        res.send("Siamo spiacenti si è verificato un errore imprevisto: "+emailp)
+        res.send("Siamo spiacenti si è verificato un errore imprevisto: ");
         next(createError(500));
     }
 }

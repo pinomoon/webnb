@@ -3,13 +3,20 @@ var router = express.Router();
 var createError= require('http-errors');
 var nodemailer = require('nodemailer');
 
-var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'webnbmail@gmail.com',
-        pass: 'web&b2020'
 
+ var transport=nodemailer.createTransport({
+
+    host:'smtp.libero.it',
+     port:587,
+     secure: false,
+    auth:{
+        user: 'webnb-service@libero.it',
+        pass: 'webnb2020'
+    },
+    tls:{
+        rejectUnauthorized: false
     }
+
 });
 
 router.post('/',registrazione);
@@ -76,13 +83,26 @@ async function registrazione(req, res, next) {
             console.log(results);
             console.log(`Utente ${req.body.email} inserito!`);
             res.json('Registrazione effettuata ');
+
+
+
+            let time= Date.now().toString(16).toString('hex');
+            let token=crypto.randomBytes(16).toString('hex')+time ;
+
+            results = await db.query("UPDATE `utente` SET token=? WHERE `utente`.=?",[token,
+                email])
+                .catch(err => {
+                    throw err;
+                })
             var mailOptions = {
-                from: 'webnbmail@gmail.com',
+                from: 'webnb-service@libero.it',
                 to:email,
                 subject: 'Conferma il tuo account WeB&B',
-                text: 'https://localhost:9000/accountConferma?email='+email
+                text: 'Ciao '+req.body.nome+',\n'+'\nTi abbiamo inviato il link di conferma del tuo account WeB&B' +
+                    '\nclicca sul link per confermare :\n https://localhost:9000/accountConferma?token='+token+'\n' +
+                    '\n Saluti,\n\n Staff WeB&B.'
             };
-            transporter.sendMail(mailOptions, function(error, info){
+            transport.sendMail(mailOptions, function(error, info){
                 if (error) {
                     console.log(error);
                 } else {
