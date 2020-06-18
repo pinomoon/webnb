@@ -40,8 +40,4 @@ async function confermacc(req,res,next){
     }
 }
 
-
-
-
-
 module.exports = router;

@@ -57,8 +57,9 @@ async function registrazione(req, res, next) {
                     ]
            ]
             ]).catch(err=>{
-                res.send("E' già presente un account con questa email" +
-                   "Effettua l\'accesso con questo indirizzo di posta elettronica o registrati con  un nuovo indirizzo ");
+                res.send("E' già presente un account con questa email\n" +
+                   "Effettua l'accesso con questo indirizzo di posta elettronica \nse lo hai confermato\n oppure clicca qui per ricevere la email di conferma\n o registrati con una nuova email ");
+
                 throw err;
             });
 
@@ -76,20 +77,24 @@ async function registrazione(req, res, next) {
                     ]
                 ])
                 .catch(err => {
+                    res.send('inserimento carta fallito ');
                     throw err;
                 });
 
 
             console.log(results);
             console.log(`Utente ${req.body.email} inserito!`);
-            res.json('Registrazione effettuata ');
+            res.send("Registrazione Effettuata con successo!\n"+
+                "Ti abbiamo inviato una email di conferma al tuo indirizzo: "+req.body.email +" di posta elettronica, assicurati di confermare il tuo accout prima di effettuare l'accesso ");
 
 
 
             let time= Date.now().toString(16).toString('hex');
             let token=crypto.randomBytes(16).toString('hex')+time ;
 
-            results = await db.query("UPDATE `utente` SET token=? WHERE `utente`.=?",[token,
+            console.log(token);
+
+            results = await db.query("UPDATE `utente` SET token=? WHERE `utente`.email=?",[token,
                 email])
                 .catch(err => {
                     throw err;
@@ -107,8 +112,6 @@ async function registrazione(req, res, next) {
                     console.log(error);
                 } else {
                     console.log('Email sent: ' + info.response);
-                    res.send(+
-                        "Ti abbiamo inviato una email di conferma al tuo indirizzo di posta elettronica, assicurati di confermare il tuo accout prima di effettuare l'accesso ")
                 }
             });
         });
@@ -117,10 +120,9 @@ async function registrazione(req, res, next) {
         res.send("Registrazione fallita");
         next(createError(500));
     }
-
-
-
 }
+
+
 
 
 
