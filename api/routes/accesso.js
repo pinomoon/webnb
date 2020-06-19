@@ -41,7 +41,7 @@ async function autenticazione(req,res, next){
                     //next(createError(403, 'Password errata'));
                 } else {
                     let id_utente = results[0].id_utente;
-                    results = await db.query('UPDATE `utente` SET `autenticazione`=true WHERE `utente`.id_utente = ?', [
+                    await db.query('UPDATE `utente` SET `autenticazione`=true WHERE `utente`.id_utente = ?', [
                     id_utente
                 ])
                     .catch(err => {
@@ -49,7 +49,7 @@ async function autenticazione(req,res, next){
                     });
                     console.log('Utente autenticato');
                     console.log(results);
-                    res.send("Utente autenticato");
+                   // res.send("Utente autenticato");
 
 
 
@@ -58,13 +58,7 @@ async function autenticazione(req,res, next){
 
                     console.log('Dati utente:');
                     console.log(results[0]);
-                    res.render('profile', {
-                        title: 'Profilo Utente',
-                        profile: {
-                            user: req.body.email,
-                            data: results[0]
-                        }
-                    });
+                    res.send(results[0]);
                 }
             }
         });
