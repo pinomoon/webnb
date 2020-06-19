@@ -2,22 +2,10 @@ var express = require('express');
 var router = express.Router();
 var createError= require('http-errors');
 var nodemailer = require('nodemailer');
+const {configmail}= require('../servermail/configmail');
 
 
- var transport=nodemailer.createTransport({
-
-    host:'smtp.libero.it',
-     port:587,
-     secure: false,
-    auth:{
-        user: 'webnb-service@libero.it',
-        pass: 'webnb2020'
-    },
-    tls:{
-        rejectUnauthorized: false
-    }
-
-});
+ var transport=nodemailer.createTransport(configmail);
 
 router.post('/',registrazione);
 
