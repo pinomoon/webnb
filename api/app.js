@@ -6,13 +6,14 @@ var logger = require('morgan');
 var cors= require("cors");
 
 var indexRouter = require('./routes/index');
-var utenteRouter = require('./routes/futente/utente');
+
 
 var registrazioneRouter = require('./routes/registrazione');
 var prenotazioneRouter = require ('./routes/prenotazione');
-var hostRouter = require('./routes/fhost/host');
+var hostRouter = require('./routes/fhost/inserisciStruttura');
 var accessoRouter = require('./routes/accesso');
-var accountConfermaRouter= require('./routes/accountConferma')
+var accountConfermaRouter= require('./routes/accountConferma');
+var utenteRouter =require('./routes/futente/utente');
 
 var app = express();
 
@@ -28,13 +29,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 app.use('/', indexRouter);
-app.use('/users', utenteRouter);
+
 
 app.use('/registrazione',registrazioneRouter);
 app.use('/prenotazione',prenotazioneRouter);
 app.use('/host',hostRouter);
 app.use('/accesso',accessoRouter);
 app.use('/accountConferma', accountConfermaRouter);
+app.use('/utente',utenteRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
