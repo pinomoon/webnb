@@ -17,7 +17,7 @@ const useStyles= makeStyles({
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-export default function BoxConferma(props) {
+export default function BoxRifiuto(props) {
     const{open, onClose}=props;
     const classes =useStyles();
 
@@ -34,18 +34,19 @@ export default function BoxConferma(props) {
                     open={open}
                     TransitionComponent={Transition}
                     keepMounted
+                    onClose={handleClose}
                     aria-labelledby="alert-dialog-slide-title"
                     aria-describedby="alert-dialog-slide-description"
                 >
                     <DialogTitle id="alert-dialog-slide-title">{"Registrazione"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-slide-description">
-                            Registrazione effettuata, è stata inviata una mail di conferma al tuo indirizzo di posta elettronica
+                            Email già presente, riprova con una nuova mail
                         </DialogContentText>
 
                     </DialogContent>
                     <DialogActions id="action">
-                        <Button  href="https://localhost:3000" onClick={handleClose}color="primary">Torna alla Home</Button>
+                        <Button  color="primary" onClick={handleClose}>OK</Button>
                     </DialogActions>
                 </Dialog>
             </div>

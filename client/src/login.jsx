@@ -22,7 +22,7 @@ class Login extends Component{
         event.preventDefault();
         let res =axios.post('https://localhost:9000/accesso', this.state)
             .then(function(response){
-                alert(response.data);
+                alert(response.data.id_utente);
             })
             .catch(function(error){
                 alert(error);

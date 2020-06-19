@@ -44,10 +44,10 @@ async function registrazione(req, res, next) {
                 req.body.cap
                     ]
            ]
-            ]).catch(err=>{
-                res.send("1");
+            ]).catch(()=>{
 
-                throw err;
+
+                throw res.send("1");
             });
 
 
