@@ -45,8 +45,7 @@ async function registrazione(req, res, next) {
                     ]
            ]
             ]).catch(err=>{
-                res.send("E' già presente un account con questa email\n" +
-                   "Effettua l'accesso con questo indirizzo di posta elettronica \nse lo hai confermato\n oppure clicca qui per ricevere la email di conferma\n o registrati con una nuova email ");
+                res.send("1");
 
                 throw err;
             });
@@ -72,8 +71,7 @@ async function registrazione(req, res, next) {
 
             console.log(results);
             console.log(`Utente ${req.body.email} inserito!`);
-            res.send("Registrazione Effettuata con successo!\n"+
-                "Ti abbiamo inviato una email di conferma al tuo indirizzo: "+req.body.email +" di posta elettronica, assicurati di confermare il tuo accout prima di effettuare l'accesso ");
+            res.send("2");
 
 
 
