@@ -179,7 +179,7 @@ const Registrazione=()=>{
                         </div>
                         <div className="custom-control custom-radio custom-control-inline mt-2">
                             <input type="radio" className="custom-control-input" id="cliente" name="tipo"
-                                   value="true" onChange={handleChangeTipo}  required/>
+                                   value="true" onChange={handleChangeTipo} required/>
                             <label className="custom-control-label" htmlFor="cliente">Cliente</label>
                             <br></br>
                             <div className="invalid-feedback ml-2">
@@ -327,9 +327,12 @@ const Registrazione=()=>{
                     <BoxConferma
                         open={openConferma}
                         onClose={handleCloseConferma}
+
+
                     />
                     <BoxRifiuto
                         open={openRifiuto}
+
                         onClose={handleCloseRifiuta}
                     />
 

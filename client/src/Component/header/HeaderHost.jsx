@@ -16,7 +16,7 @@ class HeaderHost extends Component{
 
                 <Navbar bg="light" style={{color:"#6495ED"}} >
 
-                    <Navbar.Brand href="/"><img src={logo} width="100" height="50"/></Navbar.Brand>
+                    <Navbar.Brand href="/"><img src={logo} width="130" height="60"/></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
@@ -41,8 +41,11 @@ class HeaderHost extends Component{
 
                             <Dropdown.Menu>
                                 <Dropdown.Item href="/modificaaccount">Modifica Account</Dropdown.Item>
-                                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                                <Dropdown.Item href="/lemiestrutture">Le mie strutture</Dropdown.Item>
+                                <Dropdown.Item href="/checkin">Check-in</Dropdown.Item>
+                                <Dropdown.Item href="/checkout">Check-out</Dropdown.Item>
+                                <Dropdown.Item href="/ufficioturismo">Ufficio Turismo</Dropdown.Item>
+
                             </Dropdown.Menu>
                         </Dropdown>
 

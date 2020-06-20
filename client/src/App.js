@@ -10,6 +10,12 @@ import PaginaLogin from "./Component/login/PaginaLogin"
 import PaginaRegistrazione from "./Component/registrazione/PaginaRegistrazione"
 import PaginaModificaAccount from "./Component/modifica_account/PaginaModificaAccount"
 import PaginaProfilo from "./Component/profilo/PaginaProfilo";
+import PaginaCheckin from "./Component/Check-in/checkin";
+import PaginaCheckinSuccess from "./Component/Check-in/CheckinSuccess"
+import CheckinFail from "./Component/Check-in/CheckinFail";
+import GestisciStrutture from "./Component/GestioneStrutture/GestisciStrutture";
+import InserisciStruttura from "./Component/GestioneStrutture/InserisciStruttura";
+import InserisciStrutturaSuccess from "./Component/GestioneStrutture/InserisciStrutturaSuccess";
 
 
 class App extends Component {
@@ -44,9 +50,23 @@ class App extends Component {
                         <Route path="/login" component={PaginaLogin} exact/>
                         <Route path="/cliente" component={HomepageCliente} exact/>
                         <Route path="/modificaaccount" component={PaginaModificaAccount} exact/>
+                        <Route path="/checkin" component={PaginaCheckin} exact/>
+                        <Route path="/checkin/success" component={PaginaCheckinSuccess} exact/>
+                        <Route path="/checkin/success" component={PaginaCheckinSuccess} exact/>
+                        <Route path="/checkin/error" component={CheckinFail} exact/>
+                        <Route path="/lemiestrutture" component={GestisciStrutture} exact/>
+                        <Route path="/inseriscistruttura" component={InserisciStruttura} exact/>
+                        <Route path="/inseriscistruttura/success" component={InserisciStrutturaSuccess} exact/>
+
+
 
 
                     </main>
+
+
+
+
+
                 </Router>
 
 
