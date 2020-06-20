@@ -1,63 +1,111 @@
-import  React, {Component} from "react";
+import  * as React from "react";
 import axios from 'axios';
+import BoxConferma from './boxconferma';
+export class EntUtente{
+    id;
+    email;
+    tipo;
+}
 
-class Login extends Component{
-    constructor(props){
-        super(props);
-        this.state={email:"",
-                    password:""
-                    };
 
-    this.handleChange=this.handleChange.bind(this);
-    this.handleSubmit=this.handleSubmit.bind(this);
-    }
-    handleChange(event){
+
+const Login =()=>{
+    const[tipoRisposta,setTipoRisposta]=React.useState("");
+    const[messaggioBox, setMessaggioBox]=React.useState("");
+    const[openConferma, setOpenConferma]=React.useState(false);
+    const[openRifiuto,setOpenRifiuto]=React.useState(false);
+    const[email, setEmail]=React.useState("");
+    const[password, setPassword]=React.useState("");
+    const state={email,password};
+
+    const handleChangeEmail=(event)=>{
         const target=event.target;
-        const proprieta= target.name;
-        const valore= target.value;
-        this.setState({[proprieta]: valore});
-    }
-    handleSubmit(event){
-        alert("sono stati inseriti dei campi: "+this.state.email+" "+this.state.password);
+        const valore=  target.value;
+        setEmail(valore);
+        state.email=valore;
+    };
+
+    const handleChangePassword=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setPassword(valore);
+        state.password=valore;
+    };
+
+    const handleCloseConferma = () => {
+        setOpenConferma(false);
+        setTipoRisposta("");
+    };
+    const handleClickOpenConferma = () => {
+        setOpenConferma(true);
+    };
+
+    const svuotaCampi=()=>{
+        setEmail("");
+        setPassword("");
+    };
+    const handleSubmit=(event)=>{
+        alert("sono stati inseriti dei campi: "+state.email+" "+state.password);
         event.preventDefault();
-        let res =axios.post('https://localhost:9000/accesso', this.state)
+        axios.post('https://localhost:9000/accesso', state)
             .then(function(response){
-                alert(response.data.id_utente);
+                if(response.data[0]=="1"){
+                    setTipoRisposta("1");
+                    EntUtente.id=response.data[1].id;
+                    EntUtente.tipo=response.data[1].tipo;
+                    EntUtente.email=response.data[1].email;
+
+
+                    setMessaggioBox("Accesso andato a buon fine! Clicca qui per andare alla tua HomePage!");
+                    alert(messaggioBox);
+                    handleClickOpenConferma();
+                }
+                else if(response.data=="2"){
+                    setTipoRisposta("2");
+                    setMessaggioBox("Email non ancora confermata, vai alla tua casella di posta per confermare");
+                    alert(messaggioBox);
+                    handleClickOpenConferma();
+                }
+                else if(response.data=="3"){
+                    setTipoRisposta("3");
+                    setMessaggioBox("Password errata, riprova");
+                    alert(messaggioBox);
+                    handleClickOpenConferma();
+                    svuotaCampi();
+                }
+                else if(response.data=="4"){
+                    setTipoRisposta("");
+                    setMessaggioBox("Utente non trovato, riprova");
+                    alert(messaggioBox);
+                    handleClickOpenConferma();
+                    svuotaCampi();
+                }
+                else{
+                    alert("Errore generico");
+                }
             })
             .catch(function(error){
                 alert(error);
             });
-    }
-    /*
-    callAPI(){
-        fetch("https://localhost:9000/")
-            .then(res=>res.text())
-            .then(res=>this.setState({apiResponse:res}))
-            .catch(err=>err);
-    }
-    componentDidMount(){
-        this.callAPI();
-    }
-
-     */
-    render(){
+    };
         return(
-            <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST" onSubmit={this.handleSubmit}>
+            <div class="container mt-10">
+            <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
 
                 <p className="lead text-uppercase mt-3">Autenticazione</p>
                 <div className="form-group">
                     <label htmlFor="email">E-mail *</label>
-                    <input name="email" id="email" type="email" className="form-control" size="32" maxLength="40"
-                           onChange={this.handleChange} required/>
+                    <input name="email" id="email" type="email" className="form-control" size="32" maxLength="40" value={state.email}
+                           onChange={handleChangeEmail} required/>
                     <div className="invalid-feedback">
                         Inserire indirizzo e-mail
                     </div>
 
                     <label htmlFor="pass">Password *</label>
                     <input name="password" id="pass" type="password" className="form-control"
-                           title="Almeno 8 caratteri, una lettera maiuscola e un numero"
+                           title="Almeno 8 caratteri, una lettera maiuscola e un numero" value={state.password}
                           // pattern="^(?=.[a-z])(?=.[A-Z])(?=.*[0-9]).{8,}$"
-                        size="32" maxLength="40" required onChange={this.handleChange}/>
+                        size="32" maxLength="40" required onChange={handleChangePassword}/>
                     <div className="invalid-feedback">
                         Almeno 8 caratteri di cui uno maiuscolo e un numero
                     </div>
@@ -66,9 +114,15 @@ class Login extends Component{
                     </div>
                 </div>
 
-                <button name="ok" id="ok" type="submit" className="btn btn-primary mt-3">Invia</button>
+                <button name="ok" id="ok" type="submit" onClick={handleSubmit}className="btn btn-primary mt-3">Login</button>
             </form>
+
+
+
+
+            </div>
+
         );
-    }
-}
+
+};
 export default Login;
