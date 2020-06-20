@@ -47,11 +47,6 @@ class App extends Component {
 
 
                     </main>
-
-
-
-                <registrazione/>
-
                 </Router>
 
 
