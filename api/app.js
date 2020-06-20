@@ -14,6 +14,8 @@ var hostRouter = require('./routes/fhost/inserisciStruttura');
 var accessoRouter = require('./routes/accesso');
 var accountConfermaRouter= require('./routes/accountConferma');
 var utenteRouter =require('./routes/futente/utente');
+var gestisciStruttureRouter=require('./routes/fhost/gestisciStruttura');
+var inserisciStrutturaRouter=require('./routes/fhost/inserisciStruttura');
 
 var app = express();
 
@@ -37,6 +39,8 @@ app.use('/host',hostRouter);
 app.use('/accesso',accessoRouter);
 app.use('/accountConferma', accountConfermaRouter);
 app.use('/utente',utenteRouter);
+app.use('/gestisciStrutture',gestisciStruttureRouter);
+app.use('/inserisciStruttura',inserisciStrutturaRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
