@@ -1,3 +1,6 @@
+
+
+
 .App {
   text-align: center;
 }
@@ -26,6 +29,15 @@
 
 .App-link {
   color: #61dafb;
+}
+.container-center{
+  /*background-image: url("+ {sfondo}+");*/
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 400px;
+  height: 400px;
+  border: 2px dashed #333
+
 }
 
 @keyframes App-logo-spin {
