@@ -17,6 +17,7 @@ var utenteRouter =require('./routes/futente/utente');
 var gestisciStruttureRouter=require('./routes/fhost/gestisciStruttura');
 var inserisciStrutturaRouter=require('./routes/fhost/inserisciStruttura');
 var gestisciPrenotazioniRouter=require('./routes/fhost/gestisciPrenotazioni');
+var modificaAccountRouter= require('./routes/modificaAccount');
 
 var app = express();
 
@@ -43,21 +44,22 @@ app.use('/utente',utenteRouter);
 app.use('/gestisciStrutture',gestisciStruttureRouter);
 app.use('/inserisciStruttura',inserisciStrutturaRouter);
 app.use('/gestisciPrenotazioni',gestisciPrenotazioniRouter);
+app.use('/modificaAccount',modificaAccountRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+    next(createError(404));
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;
