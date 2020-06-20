@@ -1,0 +1,44 @@
+html,body{height: 100%;}
+
+.cover{
+
+    height: 100%;
+    background-image: url(https://source.unsplash.com/user/erondu);
+    background-size: cover;
+    -o-background-size:cover;
+    -moz-background-size:cover;
+    background-position: center  center;
+    position: relative;
+
+}
+.cover_filter{
+    background: black;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index:0 ;
+    opacity: 0.5;
+}
+
+.cover_caption{
+    display: table;
+    height: 100%;
+    width:100% ;
+    position: relative;
+}
+.cover_caption_copy{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: antiquewhite;
+    padding: 0 20px;
+
+}
+.cover--single{height: 50%;}
+
+.cards{max-width: 1200px;margin :40px auto;
+    background: white;;}
+.card{width:30%;margin:1.5%;float: left;}
+.card_image{width: 100%;height: auto;}
+.card_copy{padding:5px 20px;}
+.card_copy h3{margin-bottom:0 ;}
