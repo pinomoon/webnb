@@ -11,6 +11,8 @@ const { makeDb, withTransaction } = require('../db/dbmiddleware');
 /** login */
 router.post('/',autenticazione);
 
+
+
 async function autenticazione(req,res, next){
 
     const db = await makeDb(config);
@@ -21,13 +23,9 @@ async function autenticazione(req,res, next){
 
             results = await db.query('SELECT * FROM `utente`WHERE email = ?', [
                 req.body.email
-            ])
-                .catch(err => {
+            ]).catch(err => {
                     throw err;
                 });
-
-
-                //next(createError(404, 'Utente non trovato'));
 
             if(results[0].conferma_account==false){
                 console.log('Email non confermata');
@@ -44,9 +42,9 @@ async function autenticazione(req,res, next){
                     res.send("3");
                     //next(createError(403, 'Password errata'));
                 } else {
-                    let id_utente = results[0].id_utente;
+
                     await db.query('UPDATE `utente` SET `autenticazione`=true WHERE `utente`.id_utente = ?', [
-                    id_utente
+                    results[0].id_utente
                 ])
                     .catch(err => {
                         throw err;
@@ -55,14 +53,9 @@ async function autenticazione(req,res, next){
                     console.log(results);
                    // res.send("Utente autenticato");
 
-
-
-
-
-
                     console.log('Dati utente:');
                     console.log(results[0]);
-                    var utente=['1',resuts[0].id_utente, results[0].email, results[0].tipo];
+                    let utente=['1',results[0].id_utente, results[0].email, results[0].tipo];
                     res.send(utente);
                 }
             }
@@ -181,11 +174,6 @@ async function nuovecredenziali(req,res, next){
             next(createError(500));
         }
     }
-
-
-
-
-
 
 
 
