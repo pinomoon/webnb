@@ -2,7 +2,7 @@ var express= require("express");
 var router= express.Router();
 var createError= require('http-errors');
 
-let results={};
+
 /****elenco delle strutture******/
 router.post('/',elencoStrutture);
 
@@ -11,6 +11,7 @@ const {config}= require('../../db/config');
 const { makeDb, withTransaction } = require("../../db/dbmiddleware");
 
 async function elencoStrutture(req,res,next) {
+    let results={};
     const db = await makeDb(config);
     try {
 
@@ -36,6 +37,7 @@ router.post('/modificaStruttura',modificaStruttura);
 
 async function modificaStruttura(req,res,next){
     const db= await  makeDb(config);
+    let results={};
     try {
 
 
