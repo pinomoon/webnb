@@ -23,7 +23,7 @@ async function inserisciStruttura(req,res,next) {
         await withTransaction(db, async() => {
 
 
-            results = await db.query("INSERT INTO struttura (id_utente,nome_struttura,indirizzo_struttura,cap,punti_di_interesse,citta,regione,stato,tipo,disdetta_gratuita,modalita_di_pagamento,tassa_soggiorno,servizi,ora_checkin,ora_checkout) VALUES ?"
+            await db.query("INSERT INTO struttura (id_utente,nome_struttura,indirizzo_struttura,cap,punti_di_interesse,citta,regione,stato,tipo,disdetta_gratuita,modalita_di_pagamento,tassa_soggiorno,servizi,ora_checkin,ora_checkout) VALUES ?"
                 , [
                     [
                         [
@@ -57,7 +57,7 @@ async function inserisciStruttura(req,res,next) {
                     throw err;
                 });
             let ids=results[0].id_struttura;
-            results= await db.query("INSERT INTO gallery_struttura(id_struttura,immagine_1,immagine_2,immagine_3) VALUES ?",[
+            await db.query("INSERT INTO gallery_struttura(id_struttura,immagine_1,immagine_2,immagine_3) VALUES ?",[
                 [
                     [
                         ids,
@@ -71,7 +71,7 @@ async function inserisciStruttura(req,res,next) {
             });
 
 
-            result= await db.query("INSERT INTO camera(id_struttura,nome_camera,numero_posti_letto,costo_camera,colazione_inclusa) VALUES ?",[
+            await db.query("INSERT INTO camera(id_struttura,nome_camera,numero_posti_letto,costo_camera,colazione_inclusa) VALUES ?",[
                     [
                         [
                             ids,
