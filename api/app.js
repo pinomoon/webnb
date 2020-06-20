@@ -7,7 +7,7 @@ var cors= require("cors");
 
 
 
-
+var guadagniRouter= require('./routes/fhost/guadagni');
 var registrazioneRouter = require('./routes/registrazione');
 var prenotazioneRouter = require ('./routes/prenotazione');
 var hostRouter = require('./routes/fhost/inserisciStruttura');
@@ -34,7 +34,7 @@ app.use(cors());
 
 
 
-
+app.use('/guadagni',guadagniRouter);
 app.use('/registrazione',registrazioneRouter);
 app.use('/prenotazione',prenotazioneRouter);
 app.use('/host',hostRouter);
