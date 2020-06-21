@@ -13,6 +13,7 @@ router.post('/',autenticazione);
 
 
 
+
 async function autenticazione(req,res, next){
 
     const db = await makeDb(config);
@@ -21,7 +22,7 @@ async function autenticazione(req,res, next){
 
         await withTransaction(db, async() => {
 
-            results = await db.query('SELECT * FROM `utente`WHERE email = ?', [
+            results = await db.query('SELECT *FROM `utente`WHERE email = ?', [
                 req.body.email
             ]).catch(err => {
                     throw err;
@@ -44,7 +45,7 @@ async function autenticazione(req,res, next){
                 } else {
 
                     await db.query('UPDATE `utente` SET `autenticazione`=true WHERE `utente`.id_utente = ?', [
-                    results[0].id_utente
+                    results[0].id_utente,
                 ])
                     .catch(err => {
                         throw err;

@@ -5,6 +5,9 @@ var nodemailer = require('nodemailer');
 const {configmail}= require('../servermail/configmail');
 
 
+
+
+
  var transport=nodemailer.createTransport(configmail);
 
 router.post('/',registrazione);
@@ -12,6 +15,8 @@ router.post('/',registrazione);
 
 
 const crypto = require('crypto');
+
+
 const { config } = require("../db/config");
 const { makeDb, withTransaction } = require("../db/dbmiddleware");
 
@@ -85,21 +90,27 @@ async function registrazione(req, res, next) {
                 .catch(err => {
                     throw err;
                 })
-            var mailOptions = {
+
+            let mailOptions = {
                 from: 'webnb-service@libero.it',
                 to:email,
                 subject: 'Conferma il tuo account WeB&B',
                 text: 'Ciao '+req.body.nome+',\n'+'\nTi abbiamo inviato il link di conferma del tuo account WeB&B' +
                     '\nclicca sul link per confermare :\n https://localhost:9000/accountConferma?token='+token+'\n' +
                     '\n Saluti,\n\n Staff WeB&B.'
+
             };
             transport.sendMail(mailOptions, function(error, info){
                 if (error) {
                     console.log(error);
                 } else {
+
+
                     console.log('Email sent: ' + info.response);
                 }
+
             });
+
         });
     } catch (err) {
         console.log(err);

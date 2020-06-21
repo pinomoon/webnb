@@ -5,9 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors= require("cors");
 
+var indexRouter= require('./routes/index');
 
 
-var guadagniRouter= require('./routes/fhost/guadagni');
 var registrazioneRouter = require('./routes/registrazione');
 var prenotazioneRouter = require ('./routes/prenotazione');
 var hostRouter = require('./routes/fhost/inserisciStruttura');
@@ -18,6 +18,7 @@ var gestisciStruttureRouter=require('./routes/fhost/gestisciStruttura');
 var inserisciStrutturaRouter=require('./routes/fhost/inserisciStruttura');
 var gestisciPrenotazioniRouter=require('./routes/fhost/gestisciPrenotazioni');
 var modificaAccountRouter= require('./routes/modificaAccount');
+var guadagniRouter= require('./routes/fhost/guadagni');
 
 var app = express();
 
@@ -33,8 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 
+app.use("/",indexRouter);
 
-app.use('/guadagni',guadagniRouter);
 app.use('/registrazione',registrazioneRouter);
 app.use('/prenotazione',prenotazioneRouter);
 app.use('/host',hostRouter);
@@ -45,6 +46,7 @@ app.use('/gestisciStrutture',gestisciStruttureRouter);
 app.use('/inserisciStruttura',inserisciStrutturaRouter);
 app.use('/gestisciPrenotazioni',gestisciPrenotazioniRouter);
 app.use('/modificaAccount',modificaAccountRouter);
+app.use('/guadagni',guadagniRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

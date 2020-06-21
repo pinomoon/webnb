@@ -15,16 +15,13 @@ const useStyles= makeStyles({
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-export default function BoxAccesso(props) {
+export default function BoxConferma(props) {
     const{open, onClose, responseType, boxMessage}=props;
     const[tipoPulsante, setTipoPulsante]=React.useState("Chiudi");
     const classes =useStyles();
 
     const handleClose=()=>{
         onClose();
-    };
-    const handleRedirect=()=>{
-        //da inserire anche in base all'id cliente
     };
 
     if(responseType=="1"){
@@ -45,7 +42,7 @@ export default function BoxAccesso(props) {
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle id="alert-dialog-slide-title">{"Accesso"}</DialogTitle>
+                <DialogTitle id="alert-dialog-slide-title">{"Registrazione"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
                         <p value={boxMessage}></p>
@@ -53,7 +50,7 @@ export default function BoxAccesso(props) {
 
                 </DialogContent>
                 <DialogActions id="action">
-                    <Button value={tipoPulsante} href={handleRedirect} onClick={handleClose}color="primary"></Button>
+                    <Button value={tipoPulsante} href="https://localhost:3000" onClick={handleClose}color="primary"></Button>
                 </DialogActions>
             </Dialog>
         </div>
