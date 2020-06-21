@@ -18,6 +18,7 @@ var gestisciStruttureRouter=require('./routes/fhost/gestisciStruttura');
 var inserisciStrutturaRouter=require('./routes/fhost/inserisciStruttura');
 var gestisciPrenotazioniRouter=require('./routes/fhost/gestisciPrenotazioni');
 var modificaAccountRouter= require('./routes/modificaAccount');
+var guadagniRouter= require('./routes/fhost/guadagni');
 
 var app = express();
 
@@ -45,6 +46,7 @@ app.use('/gestisciStrutture',gestisciStruttureRouter);
 app.use('/inserisciStruttura',inserisciStrutturaRouter);
 app.use('/gestisciPrenotazioni',gestisciPrenotazioniRouter);
 app.use('/modificaAccount',modificaAccountRouter);
+app.use('/guadagni',guadagniRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
