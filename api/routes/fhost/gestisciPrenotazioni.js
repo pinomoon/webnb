@@ -215,6 +215,8 @@ async function rifiutaPrenotazioneAutomatica(){
 }
 /*********check-in**********/
 
+/***invio dati alla questura****/
+
 router.post('/checkinQuestura',checkinQuestura);
 
 async function checkinQuestura(res,req,next){
@@ -270,7 +272,108 @@ async function checkinQuestura(res,req,next){
     }
 }
 
+/**********inserisci-dati-ospiti***********/
 
+router.post('/inserisciOspiti',inserisciOspiti);
+
+async function inserisciOspiti(res,req,next){
+    const db=makeDb(config);
+    let results= {};
+    try{
+        await withTransaction(db,async ()=>{
+            (await db).query("INSERT INTO `dati_ospiti`(`id_dati_ospiti`, `id_prenotazione`, `id_utente`, `nome_ospite`, `cognome_ospite`, `data_nascita`, `sesso`, `residenza`, `n_documento`, `foto_documento`) VALUES?",[
+                req.body.id_prenotazione,
+                req.body.id_utente,
+                req.body.nome_ospite,
+                req.body.cognome_ospite,
+                req.body.data_nascita,
+                req.body.sesso,
+                req.body.residenza,
+                req.body.n_documento,
+                req.body.foto_documento
+            ]).catch(err=>{
+                throw err;
+            })
+
+            res.send("success");
+        })
+    }catch (error) {
+        res.send("error");
+        throw error
+    }
+}
+
+/*******elimina ospite*********/
+
+
+router.post("/eliminaOspiti",eliminaOspiti);
+
+async function eliminaOspiti(req,res,next){
+     const db =makeDb(config);
+     try{ await withTransaction(db,async ()=>{
+
+
+         await db.query("DELETE FROM dati_ospiti WHERE id_dati_ospiti=?",[req.body.id_dati_ospiti]).catch(err=>{
+             throw err;
+         }).catch(err=>{
+             throw err;
+         })
+
+     });
+     }catch(err){
+         res.send("error");
+         throw err;}
+}
+
+/******modifica dati ospiti**********/
+
+router.post("/modificaDatiOspiti",modificaDatiOspiti);
+
+async function modificaDatiOspiti(res,req,next){
+    const db=makeDb(config);
+
+    try{
+        await  withTransaction(db,async ()=>{
+            (await db).query("UPDATE dati_ospiti SET id_dati_ospiti=? ,id_prenotazione=?, \
+                id_utente=?, nome_ospitet=?, cognome_ospite=?, data_nascita=?,sesso=?,residenza=?,n_documento=? foto_documento=?",[
+                req.body.id_prenotazione,
+                req.body.id_utente,
+                req.body.nome_ospite,
+                req.body.cognome_ospite,
+                req.body.data_nascita,
+                req.body.sesso,
+                req.body.residenza,
+                req.body.n_documento,
+                req.body.foto_documento
+            ]).catch(err=>{
+                throw err;
+            })
+            res.send("success");
+        })
+
+    }catch(err){
+        res.send("error");
+    }
+}
+
+/**********clicca su checkin********/
+
+router.post("/checkIN",checkIN);
+
+async function checkIN(res,req,next){
+    const db=makeDb(config);
+    let results={};
+    try {
+        results= await withTransaction(db,async ()=>{
+            (await db).query("SELECT * FROM dati_ospiti WHERE id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{throw err;})
+        })
+        res.send(results);
+    }catch (error) {
+        res.send("error");
+        throw error;
+
+    }
+}
 
 
 
