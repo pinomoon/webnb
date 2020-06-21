@@ -32,7 +32,7 @@ const Login =()=>{
         state.password=valore;
     };
 
-    const handleCloseConferma = () => {
+    const handleCloseConferma =() => {
         setOpenConferma(false);
         setTipoRisposta("");
     };
@@ -49,7 +49,7 @@ const Login =()=>{
         event.preventDefault();
         axios.post('https://localhost:9000/accesso', state)
             .then(function(response){
-                if(response.data[0]=="1"){
+                if(response.data[0]==="1"){
                     setTipoRisposta("1");
                     EntUtente.id=response.data[1].id;
                     EntUtente.tipo=response.data[1].tipo;
@@ -60,20 +60,20 @@ const Login =()=>{
                     alert(messaggioBox);
                     handleClickOpenConferma();
                 }
-                else if(response.data=="2"){
+                else if(response.data==="2"){
                     setTipoRisposta("2");
                     setMessaggioBox("Email non ancora confermata, vai alla tua casella di posta per confermare");
                     alert(messaggioBox);
                     handleClickOpenConferma();
                 }
-                else if(response.data=="3"){
+                else if(response.data==="3"){
                     setTipoRisposta("3");
                     setMessaggioBox("Password errata, riprova");
                     alert(messaggioBox);
                     handleClickOpenConferma();
                     svuotaCampi();
                 }
-                else if(response.data=="4"){
+                else if(response.data==="4"){
                     setTipoRisposta("");
                     setMessaggioBox("Utente non trovato, riprova");
                     alert(messaggioBox);
