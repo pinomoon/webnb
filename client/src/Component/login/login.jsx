@@ -1,19 +1,18 @@
 import  * as React from "react";
 import axios from 'axios';
-import BoxConferma from './boxconferma';
-export class EntUtente{
-    id;
-    email;
-    tipo;
-}
+import BoxAccesso from './boxconferma';
+import {useContext} from "react";
+import {UserContext} from "../../UserContext";
+
 
 
 
 const Login =()=>{
+    const {user, setUser}=React.useContext(UserContext);
+
     const[tipoRisposta,setTipoRisposta]=React.useState("");
     const[messaggioBox, setMessaggioBox]=React.useState("");
     const[openConferma, setOpenConferma]=React.useState(false);
-    const[openRifiuto,setOpenRifiuto]=React.useState(false);
     const[email, setEmail]=React.useState("");
     const[password, setPassword]=React.useState("");
     const state={email,password};
@@ -32,7 +31,7 @@ const Login =()=>{
         state.password=valore;
     };
 
-    const handleCloseConferma =() => {
+    const handleCloseConferma = () => {
         setOpenConferma(false);
         setTipoRisposta("");
     };
@@ -48,35 +47,36 @@ const Login =()=>{
         alert("sono stati inseriti dei campi: "+state.email+" "+state.password);
         event.preventDefault();
         axios.post('https://localhost:9000/accesso', state)
-            .then(function(response){
-                if(response.data[0]==="1"){
+            .then((response)=>{
+                if(response.data[0]=="1"){
                     setTipoRisposta("1");
-                    EntUtente.id=response.data[1].id;
-                    EntUtente.tipo=response.data[1].tipo;
-                    EntUtente.email=response.data[1].email;
-
-
+                    setUser({id:response.data[1],
+                             email:response.data[2],
+                             tipo:response.data[3]});
                     setMessaggioBox("Accesso andato a buon fine! Clicca qui per andare alla tua HomePage!");
-                    alert(messaggioBox);
+                    alert(messaggioBox+" "+response.data[0]+" "+response.data[1]+" "+response.data[2]+" "+response.data[3]);
                     handleClickOpenConferma();
+                    alert(JSON.stringify(user));
+
                 }
-                else if(response.data==="2"){
+                else if(response.data=="2"){
                     setTipoRisposta("2");
                     setMessaggioBox("Email non ancora confermata, vai alla tua casella di posta per confermare");
-                    alert(messaggioBox);
+                    alert(messaggioBox+" "+response.data);
                     handleClickOpenConferma();
+
                 }
-                else if(response.data==="3"){
+                else if(response.data=="3"){
                     setTipoRisposta("3");
                     setMessaggioBox("Password errata, riprova");
-                    alert(messaggioBox);
+                    alert(messaggioBox+" "+response.data);
                     handleClickOpenConferma();
                     svuotaCampi();
                 }
-                else if(response.data==="4"){
-                    setTipoRisposta("");
+                else if(response.data=="4"){
+                    setTipoRisposta("4");
                     setMessaggioBox("Utente non trovato, riprova");
-                    alert(messaggioBox);
+                    alert(messaggioBox+" "+response.data);
                     handleClickOpenConferma();
                     svuotaCampi();
                 }
