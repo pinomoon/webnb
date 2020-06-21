@@ -23,6 +23,9 @@ export default function BoxAccesso(props) {
     const handleClose=()=>{
         onClose();
     };
+    const handleRedirect=()=>{
+        //da inserire anche in base all'id cliente
+    };
 
     if(responseType=="1"){
         setTipoPulsante("Vai alla tua HomePage");
@@ -50,7 +53,7 @@ export default function BoxAccesso(props) {
 
                 </DialogContent>
                 <DialogActions id="action">
-                    <Button value={tipoPulsante} href="https://localhost:3000" onClick={handleClose}color="primary"></Button>
+                    <Button value={tipoPulsante} href={handleRedirect} onClick={handleClose}color="primary"></Button>
                 </DialogActions>
             </Dialog>
         </div>

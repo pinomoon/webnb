@@ -19,6 +19,7 @@ const Registrazione=()=>{
     const[email,setEmail]=React.useState("");
     const[citta,setCitta]=React.useState("");
     const[cap,setCap]=React.useState("");
+    const [titolare_carta, setTitolareCarta]=React.useState("");
     const[numero_carta,setNumeroCarta]=React.useState("");
     const[scadenza,setScadenza]=React.useState("");
     const[cvc,setCvc]=React.useState("");
@@ -105,6 +106,12 @@ const Registrazione=()=>{
         setCap(valore);
         state.cap=valore;
     };
+    const handleChangeTitolareCarta=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setTitolareCarta(valore);
+        state.titolare_carta=valore;
+    };
     const handleChangeNumeroCarta=(event)=>{
         const target=event.target;
         const valore=  target.value;
@@ -123,7 +130,7 @@ const Registrazione=()=>{
         setCvc(valore);
         state.cvc=valore;
     };
-    const state={nome, cognome, tipo, data_di_nascita,indirizzo,sesso,password,email,citta,cap,numero_carta,scadenza,cvc};
+    const state={nome, cognome, tipo, data_di_nascita,indirizzo,sesso,password,email,citta,cap,titolare_carta,numero_carta,scadenza,cvc};
     const svuotaCampi=()=>{
         setEmail("");
         setPassword("");
@@ -263,6 +270,12 @@ const Registrazione=()=>{
                         <p className="lead text-uppercase mt-3">Dati di Pagamento</p>
 
                         <div className="form-group">
+                            <div className="col-6">
+                                <label htmlFor="credit-card">Titolare Carta di Credito</label>
+                                <input name="titolare_carta" id="titolare_carta" type="name" className="form-control"
+                                       size="32" maxLength="40"
+                                       value={state.titolare_carta} onChange={handleChangeTitolareCarta}/>
+                            </div>
                             <div class="col-6">
                                 <label htmlFor="credit-card">Carta di Credito</label>
                                 <input name="numero_carta" id="numero_carta" type="credit-card" className="form-control"
