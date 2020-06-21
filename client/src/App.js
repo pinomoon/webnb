@@ -18,6 +18,7 @@ import {UserContext} from "./UserContext";
 import {PrivateRoute} from "./privateRoute";
 
 
+
 const App= ()=> {
 
     const [currentUser, setCurrentUser]= useState({
@@ -56,12 +57,8 @@ const App= ()=> {
 
 
 
+
                     </main>
-
-
-
-
-
                 </Router>
 </UserContext.Provider>
 
