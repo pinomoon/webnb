@@ -15,7 +15,7 @@ const useStyles= makeStyles({
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-export default function BoxConferma(props) {
+export default function BoxAccesso(props) {
     const{open, onClose, responseType, boxMessage}=props;
     const[tipoPulsante, setTipoPulsante]=React.useState("Chiudi");
     const classes =useStyles();
@@ -42,7 +42,7 @@ export default function BoxConferma(props) {
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle id="alert-dialog-slide-title">{"Registrazione"}</DialogTitle>
+                <DialogTitle id="alert-dialog-slide-title">{"Accesso"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
                         <p value={boxMessage}></p>
