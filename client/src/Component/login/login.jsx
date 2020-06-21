@@ -1,15 +1,15 @@
 import  * as React from "react";
 import axios from 'axios';
 import BoxAccesso from './boxconferma';
-export class EntUtente{
-    id;
-    email;
-    tipo;
-}
+import {useContext} from "react";
+import {UserContext} from "../../UserContext";
+
 
 
 
 const Login =()=>{
+    const {user, setUser}=React.useContext(UserContext);
+
     const[tipoRisposta,setTipoRisposta]=React.useState("");
     const[messaggioBox, setMessaggioBox]=React.useState("");
     const[openConferma, setOpenConferma]=React.useState(false);
@@ -50,12 +50,13 @@ const Login =()=>{
             .then((response)=>{
                 if(response.data[0]=="1"){
                     setTipoRisposta("1");
-                    EntUtente.id=response.data[1];
-                    EntUtente.tipo=response.data[3];
-                    EntUtente.email=response.data[2];
+                    setUser({id:response.data[1],
+                             email:response.data[2],
+                             tipo:response.data[3]});
                     setMessaggioBox("Accesso andato a buon fine! Clicca qui per andare alla tua HomePage!");
                     alert(messaggioBox+" "+response.data[0]+" "+response.data[1]+" "+response.data[2]+" "+response.data[3]);
                     handleClickOpenConferma();
+                    alert(JSON.stringify(user));
 
                 }
                 else if(response.data=="2"){
@@ -115,12 +116,7 @@ const Login =()=>{
 
                 <button name="ok" id="ok" type="submit" onClick={handleSubmit}className="btn btn-primary mt-3">Login</button>
             </form>
-            <BoxAccesso
-                open={openConferma}
-                onClose={handleCloseConferma}
-                responseType={tipoRisposta}
-                boxMessage={messaggioBox}
-            />
+
 
 
 
