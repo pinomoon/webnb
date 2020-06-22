@@ -376,7 +376,73 @@ async function checkIN(res,req,next){
 }
 
 
+/*********** checkout automatico*************/
 
 
 
-module.exports=router
+let rejectcheckoutAutomatico= setInterval(checkoutAutomatico, 86400000);
+
+
+async function checkoutAutomatico(res,req,next){
+    const db=makeDb(config);
+    let results={};
+    let now=new Date();
+    try{
+        await withTransaction(db,async ()=>{
+           results = await db.query("SELECT id_prenotazione,email,nome_struttura,nome_camera,nome\
+               FROM prenotazione AS p ,camera AS c,struttura AS s, utente AS u \
+               WHERE data_fine<=? AND stato_prenotazione='soggiorno in corso'AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND s.id_utente=u.id_utente",[now]);
+        }).catch(err=>{
+            throw err;
+        })
+        for(let i=0;i<results.length;i++){
+            await db.query("UPDATE prenotazione SET stato_prenotazione='soggiorno concluso'").catch(err=>{
+                throw err;
+            })
+            let mailOptions = {
+                from: 'webnb-service@libero.it',
+                to:results[i].email,
+                subject: 'Check-ou automatico',
+                text: 'Ciao '+results[i].nome+',\n'+"\n Eseguito check-out automatico per la tua prenotazione : " +
+                    results[i].id_prenotazione+'\npresso: '+results[i].nome_struttura+" : "+results[i].nome_camera+
+                    '\n Saluti,\n\n Staff WeB&B.'
+            };
+            transport.sendMail(mailOptions,function(error, info){
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            })
+
+        }
+        res.send("success")
+
+    }catch (error) {
+        res.send('error');
+    }
+
+}
+
+
+/*********checkoutManuale******/
+
+router.post("/checkoutManuale",checkoutManuale);
+
+async function checkoutManuale(req,res,next){
+    const db= makeDb(config);
+
+    try{
+        await withTransaction(db,async ()=>{
+            await db.query("UPDATE prenotazione SET stato_prenotazione='soggiorno concluso' WHERE id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{
+                throw err;
+            })
+            res.send("success");
+        })
+    }catch(error){
+        res.send('error');
+    }
+}
+
+
+module.exports=router;
