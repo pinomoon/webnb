@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
+import {useContext} from 'react';
 import Header from "../header/Header.jsx";
 import Footer from "../footer/Footer.jsx";
 import Login from "./login"
 
+import {UserContext} from "../../UserContext";
 
-class PaginaLogin extends Component{
-    render(){
+
+
+const PaginaLogin=()=> {
+
+
         return(
 
             <div>
@@ -15,7 +20,8 @@ class PaginaLogin extends Component{
             </div>
         );
 
-    }
-}
+
+};
+
 
 export default PaginaLogin;

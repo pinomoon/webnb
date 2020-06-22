@@ -27,7 +27,7 @@ app.set("port", port);
  * Create HTTP and HTTPS server.
  */
 
-var server = http.createServer(app);
+
 var servers = https.createServer(options, app);
 
 /**
