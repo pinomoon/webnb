@@ -3,10 +3,20 @@ import logo from "../../header_trasparente.png";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "@material-ui/core/Button";
+import Form from "react-bootstrap/Form";
+
+
+
 
 
 
 class Header extends Component{
+
+    handleChange = date => {
+        this.setState({
+            startDate: date
+        });
+    };
     render(){
       return(
 
@@ -25,9 +35,10 @@ class Header extends Component{
 
 
 
-                              <div className="md-form mt-0" style={{marginLeft:"20px"}}>
-                                  <input className="form-control" type="text" placeholder=" Dove vuoi andare?" aria-label="Search"></input>
-                              </div>
+
+
+
+
 
 
 

@@ -27,9 +27,6 @@ class HeaderCliente extends Component{
 
 
 
-                            <div className="md-form mt-0" style={{marginLeft:"20px"}}>
-                                <input className="form-control" type="text" placeholder=" Dove vuoi andare?" aria-label="Search"></input>
-                            </div>
 
                         </Nav>
 
