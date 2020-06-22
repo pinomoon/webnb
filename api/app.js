@@ -13,7 +13,8 @@ var prenotazioneRouter = require ('./routes/prenotazione');
 var hostRouter = require('./routes/fhost/inserisciStruttura');
 var accessoRouter = require('./routes/accesso');
 var accountConfermaRouter= require('./routes/accountConferma');
-var utenteRouter =require('./routes/futente/utente');
+var iMieiPreferitiRouter =require('./routes/futente/iMieiPreferiti');
+var leMiePrenotazioniRouter =require('./routes/futente/leMiePrenotazioni');
 var gestisciStruttureRouter=require('./routes/fhost/gestisciStruttura');
 var inserisciStrutturaRouter=require('./routes/fhost/inserisciStruttura');
 var gestisciPrenotazioniRouter=require('./routes/fhost/gestisciPrenotazioni');
@@ -34,8 +35,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 
-app.use("/",indexRouter);
-
+app.use('/',indexRouter);
+app.use('/iMieiPreferiti', iMieiPreferitiRouter);
+app.use('/leMiePrenotazioni',leMiePrenotazioniRouter);
 app.use('/registrazione',registrazioneRouter);
 app.use('/prenotazione',prenotazioneRouter);
 app.use('/host',hostRouter);
