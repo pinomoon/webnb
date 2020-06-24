@@ -281,8 +281,11 @@ async function inserisciOspiti(res,req,next){
     let results= {};
     try{
         await withTransaction(db,async ()=>{
-            (await db).query("INSERT INTO `dati_ospiti`(`id_dati_ospiti`, `id_prenotazione`, `id_utente`, `nome_ospite`, `cognome_ospite`, `data_nascita`, `sesso`, `residenza`, `n_documento`, `foto_documento`) VALUES?",[
-                req.body.id_prenotazione,
+            (await db).query("INSERT INTO `dati_ospiti`(`id_dati_ospiti`, `id_prenotazione`, `id_utente`, `nome_ospite`, `cognome_ospite`, `data_nascita`, `sesso`, `residenza`, `n_documento`, `foto_documento`) VALUES?",
+                [
+                [
+                    [
+                    req.body.id_prenotazione,
                 req.body.id_utente,
                 req.body.nome_ospite,
                 req.body.cognome_ospite,
@@ -291,7 +294,9 @@ async function inserisciOspiti(res,req,next){
                 req.body.residenza,
                 req.body.n_documento,
                 req.body.foto_documento
-            ]).catch(err=>{
+                    ]
+                ]
+        ]).catch(err=>{
                 throw err;
             })
 

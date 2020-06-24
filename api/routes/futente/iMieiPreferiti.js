@@ -1,8 +1,8 @@
 var express= require("express");
 var router= express.Router();
 var createError= require('http-errors');
-const { config } = require("../db/config");
-const { makeDb, withTransaction } = require("../db/dbmiddleware");
+const { config } = require("../../db/config");
+const { makeDb, withTransaction } = require("../../db/dbmiddleware");
 
 /* Elenco preferiti */
 
