@@ -215,6 +215,8 @@ async function rifiutaPrenotazioneAutomatica(){
 }
 /*********check-in**********/
 
+/***invio dati alla questura****/
+
 router.post('/checkinQuestura',checkinQuestura);
 
 async function checkinQuestura(res,req,next){
@@ -270,10 +272,182 @@ async function checkinQuestura(res,req,next){
     }
 }
 
+/**********inserisci-dati-ospiti***********/
+
+router.post('/inserisciOspiti',inserisciOspiti);
+
+async function inserisciOspiti(res,req,next){
+    const db=makeDb(config);
+    let results= {};
+    try{
+        await withTransaction(db,async ()=>{
+            (await db).query("INSERT INTO `dati_ospiti`(`id_dati_ospiti`, `id_prenotazione`, `id_utente`, `nome_ospite`, `cognome_ospite`, `data_nascita`, `sesso`, `residenza`, `n_documento`, `foto_documento`) VALUES?",
+                [
+                [
+                    [
+                    req.body.id_prenotazione,
+                req.body.id_utente,
+                req.body.nome_ospite,
+                req.body.cognome_ospite,
+                req.body.data_nascita,
+                req.body.sesso,
+                req.body.residenza,
+                req.body.n_documento,
+                req.body.foto_documento
+                    ]
+                ]
+        ]).catch(err=>{
+                throw err;
+            })
+
+            res.send("success");
+        })
+    }catch (error) {
+        res.send("error");
+        throw error
+    }
+}
+
+/*******elimina ospite*********/
+
+
+router.post("/eliminaOspiti",eliminaOspiti);
+
+async function eliminaOspiti(req,res,next){
+     const db =makeDb(config);
+     try{ await withTransaction(db,async ()=>{
+
+
+         await db.query("DELETE FROM dati_ospiti WHERE id_dati_ospiti=?",[req.body.id_dati_ospiti]).catch(err=>{
+             throw err;
+         }).catch(err=>{
+             throw err;
+         })
+
+     });
+     }catch(err){
+         res.send("error");
+         throw err;}
+}
+
+/******modifica dati ospiti**********/
+
+router.post("/modificaDatiOspiti",modificaDatiOspiti);
+
+async function modificaDatiOspiti(res,req,next){
+    const db=makeDb(config);
+
+    try{
+        await  withTransaction(db,async ()=>{
+            (await db).query("UPDATE dati_ospiti SET id_dati_ospiti=? ,id_prenotazione=?, \
+                id_utente=?, nome_ospitet=?, cognome_ospite=?, data_nascita=?,sesso=?,residenza=?,n_documento=? foto_documento=?",[
+                req.body.id_prenotazione,
+                req.body.id_utente,
+                req.body.nome_ospite,
+                req.body.cognome_ospite,
+                req.body.data_nascita,
+                req.body.sesso,
+                req.body.residenza,
+                req.body.n_documento,
+                req.body.foto_documento
+            ]).catch(err=>{
+                throw err;
+            })
+            res.send("success");
+        })
+
+    }catch(err){
+        res.send("error");
+    }
+}
+
+/**********clicca su checkin********/
+
+router.post("/checkIN",checkIN);
+
+async function checkIN(res,req,next){
+    const db=makeDb(config);
+    let results={};
+    try {
+        results= await withTransaction(db,async ()=>{
+            (await db).query("SELECT * FROM dati_ospiti WHERE id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{throw err;})
+        })
+        res.send(results);
+    }catch (error) {
+        res.send("error");
+        throw error;
+
+    }
+}
+
+
+/*********** checkout automatico*************/
 
 
 
+let rejectcheckoutAutomatico= setInterval(checkoutAutomatico, 86400000);
 
 
+async function checkoutAutomatico(res,req,next){
+    const db=makeDb(config);
+    let results={};
+    let now=new Date();
+    try{
+        await withTransaction(db,async ()=>{
+           results = await db.query("SELECT id_prenotazione,email,nome_struttura,nome_camera,nome\
+               FROM prenotazione AS p ,camera AS c,struttura AS s, utente AS u \
+               WHERE data_fine<=? AND stato_prenotazione='soggiorno in corso'AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND s.id_utente=u.id_utente",[now]);
+        }).catch(err=>{
+            throw err;
+        })
+        for(let i=0;i<results.length;i++){
+            await db.query("UPDATE prenotazione SET stato_prenotazione='soggiorno concluso'").catch(err=>{
+                throw err;
+            })
+            let mailOptions = {
+                from: 'webnb-service@libero.it',
+                to:results[i].email,
+                subject: 'Check-ou automatico',
+                text: 'Ciao '+results[i].nome+',\n'+"\n Eseguito check-out automatico per la tua prenotazione : " +
+                    results[i].id_prenotazione+'\npresso: '+results[i].nome_struttura+" : "+results[i].nome_camera+
+                    '\n Saluti,\n\n Staff WeB&B.'
+            };
+            transport.sendMail(mailOptions,function(error, info){
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            })
 
-module.exports=router
+        }
+        res.send("success")
+
+    }catch (error) {
+        res.send('error');
+    }
+
+}
+
+
+/*********checkoutManuale******/
+
+router.post("/checkoutManuale",checkoutManuale);
+
+async function checkoutManuale(req,res,next){
+    const db= makeDb(config);
+
+    try{
+        await withTransaction(db,async ()=>{
+            await db.query("UPDATE prenotazione SET stato_prenotazione='soggiorno concluso' WHERE id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{
+                throw err;
+            })
+            res.send("success");
+        })
+    }catch(error){
+        res.send('error');
+    }
+}
+
+
+module.exports=router;

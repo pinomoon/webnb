@@ -6,19 +6,18 @@ var logger = require('morgan');
 var cors= require("cors");
 
 var indexRouter= require('./routes/index');
-
-
 var registrazioneRouter = require('./routes/registrazione');
 var prenotazioneRouter = require ('./routes/prenotazione');
-var hostRouter = require('./routes/fhost/inserisciStruttura');
 var accessoRouter = require('./routes/accesso');
 var accountConfermaRouter= require('./routes/accountConferma');
-var utenteRouter =require('./routes/futente/utente');
+var iMieiPreferitiRouter =require('./routes/futente/iMieiPreferiti');
+var leMiePrenotazioniRouter =require('./routes/futente/leMiePrenotazioni');
 var gestisciStruttureRouter=require('./routes/fhost/gestisciStruttura');
 var inserisciStrutturaRouter=require('./routes/fhost/inserisciStruttura');
 var gestisciPrenotazioniRouter=require('./routes/fhost/gestisciPrenotazioni');
 var modificaAccountRouter= require('./routes/modificaAccount');
 var guadagniRouter= require('./routes/fhost/guadagni');
+var documentiUfficioTurismoRouter =require('./routes/fhost/documentiUfficioTurismo');
 
 var app = express();
 
@@ -34,19 +33,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 
-app.use("/",indexRouter);
-
+app.use('/',indexRouter);
+app.use('/iMieiPreferiti', iMieiPreferitiRouter);
+app.use('/leMiePrenotazioni',leMiePrenotazioniRouter);
 app.use('/registrazione',registrazioneRouter);
 app.use('/prenotazione',prenotazioneRouter);
-app.use('/host',hostRouter);
 app.use('/accesso',accessoRouter);
 app.use('/accountConferma', accountConfermaRouter);
-app.use('/utente',utenteRouter);
 app.use('/gestisciStrutture',gestisciStruttureRouter);
 app.use('/inserisciStruttura',inserisciStrutturaRouter);
 app.use('/gestisciPrenotazioni',gestisciPrenotazioniRouter);
 app.use('/modificaAccount',modificaAccountRouter);
 app.use('/guadagni',guadagniRouter);
+app.use('documentiUfficioTurismo',documentiUfficioTurismoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
