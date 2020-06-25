@@ -15,24 +15,14 @@ const useStyles= makeStyles({
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-export default function BoxConferma(props) {
-    const{open, onClose, responseType, boxMessage}=props;
-    const[tipoPulsante, setTipoPulsante]=React.useState("Chiudi");
+ const BoxAccesso=(props)=> {
+    const{open, onClose, responseType}=props;
     const classes =useStyles();
 
     const handleClose=()=>{
         onClose();
     };
 
-    if(responseType=="1"){
-        setTipoPulsante("Vai alla tua HomePage");
-    }
-    else if (responseType=="2"){
-        setTipoPulsante("Torna alla Home");
-    }
-    else{
-        setTipoPulsante("Chiudi");
-    }
     return (
         <div class="sm-6">
             <Dialog
@@ -45,12 +35,34 @@ export default function BoxConferma(props) {
                 <DialogTitle id="alert-dialog-slide-title">{"Registrazione"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        <p value={boxMessage}></p>
+                        {responseType=="1"&&
+                            <p>Accesso andato a buon fine! Clicca qui per andare alla tua HomePage!</p>
+                        }
+                        {responseType=="2"&&
+                            <p>Email non ancora confermata, vai alla tua casella di posta per confermare</p>
+                        }
+                        {responseType=="3"&&
+                        <p>Password errata, riprova</p>
+                        }
+                        {responseType=="4"&&
+                        <p>Utente non trovato, riprova</p>
+                        }
                     </DialogContentText>
 
                 </DialogContent>
                 <DialogActions id="action">
-                    <Button value={tipoPulsante} href="https://localhost:3000" onClick={handleClose}color="primary"></Button>
+                    {responseType == "1"&&
+                    < Button href="https://localhost:3000" onClick={handleClose}color="primary">Vai alla tua Homepage</Button>
+                    }
+                    {responseType == "2"&&
+                    < Button href="https://localhost:3000" onClick={handleClose}color="primary">Homepage</Button>
+                    }
+                    {responseType == "3"&&
+                    < Button onClick={handleClose} color="primary">Chiudi</Button>
+                    }
+                    {responseType == "4"&&
+                    < Button onClick={handleClose} color="primary">Chiudi</Button>
+                    }
                 </DialogActions>
             </Dialog>
         </div>
@@ -58,4 +70,5 @@ export default function BoxConferma(props) {
 
     );
 
-}
+};
+export default BoxAccesso;

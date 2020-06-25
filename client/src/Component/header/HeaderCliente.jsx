@@ -24,17 +24,10 @@ class HeaderCliente extends Component{
                             <Nav.Link href="/aboutus" style={{color:"#6495ED"}}>About</Nav.Link>
                             <Nav.Link href="/aboutus"style={{color:"#6495ED"}}>Lorem</Nav.Link>
                             <Nav.Link href="/aboutus"style={{color:"#6495ED"}}>Ipsum</Nav.Link>
-
-
-
-
                         </Nav>
-
                         <Dropdown as={ButtonGroup} style={{marginRight:"70px"}} variant="primary">
                             <Button href="/profilo"style={{color:"#6495ED"}}>Profilo</Button>
-
                             <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
-
                             <Dropdown.Menu>
                                 <Dropdown.Item href="/modificaaccount">Modifica Account</Dropdown.Item>
                                 <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>

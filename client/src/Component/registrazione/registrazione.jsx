@@ -175,7 +175,7 @@ const Registrazione=()=>{
 
         return(
 
-                <div class="container mt-10">
+                <div className="container mt-10">
                     <form name="form" id="form"  className="container was-validated col-sm-8 mt-3" method="POST">
 
 

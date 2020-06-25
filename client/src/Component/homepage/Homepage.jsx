@@ -16,7 +16,7 @@ class Homepage extends Component{
         return(
 
          <container >
-             <Header/>
+
              <section className="cover" style={{height:"500px"}}>
                  <div className="cover_filter"></div>
                  <div className="cover_caption">
@@ -84,7 +84,7 @@ class Homepage extends Component{
 
 
              </section>
-             <Footer/>
+
          </container>
 
         );

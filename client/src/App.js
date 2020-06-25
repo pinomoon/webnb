@@ -3,7 +3,8 @@ import PaginaAboutUs from "./Component/about_us/PaginaAboutUs";
 import HomepageCliente from "./Component/homepage/HomepageCliente";
 import HomepageHost from "./Component/homepage/HomepageHost";
 import Homepage from "./Component/homepage/Homepage";
-import {BrowserRouter as Router, Switch,Route} from "react-router-dom";
+import {Switch,Route} from "react-router"
+import {BrowserRouter} from "react-router-dom";
 import PaginaLogin from "./Component/login/PaginaLogin"
 import PaginaRegistrazione from "./Component/registrazione/PaginaRegistrazione"
 import PaginaModificaAccount from "./Component/modifica_account/PaginaModificaAccount"
@@ -16,27 +17,36 @@ import InserisciStruttura from "./Component/GestioneStrutture/InserisciStruttura
 import InserisciStrutturaSuccess from "./Component/GestioneStrutture/InserisciStrutturaSuccess";
 import {UserContext} from "./UserContext";
 import {PrivateRoute} from "./privateRoute";
+import Header from "./Component/header/Header";
+import Footer from "./Component/footer/Footer";
+import {createBrowserHistory} from 'history';
+import {getSessionCookie} from "./sessions";
 
 
 
 const App= ()=> {
-
-    const [currentUser, setCurrentUser]= useState({
-        id:undefined,
-        email:undefined,
-        tipo:undefined
-    });
-    const value=useMemo(()=>({currentUser,setCurrentUser}),[currentUser,setCurrentUser]);
+    const [session,setSession]=useState(getSessionCookie());
+    const value=useMemo(()=>({session,setSession}),[session,setSession]);
+    const handleAlert=()=>{
+        console.log(session);
+    };
+    /*React.useEffect(()=>{
+        setSession(getSessionCookie());
+    },[session]);*/
 
         return (
-            <div>
-                <UserContext.Provider value={value} >
-                <Router>
+
+                <div>
+                    <UserContext.Provider value={session}>
+                <BrowserRouter>
+
+                    <Header/>
 
                     <main>
+                        <button onClick={handleAlert}>Prova</button>
 
                         <Switch>
-                        /*provo private route con aboutus*/
+
                         <PrivateRoute path="/aboutus" component={PaginaAboutUs} exact/>
                         <Route path="/" component={Homepage} exact/>
                         <Route path="/profilo" component={PaginaProfilo} exact/>
@@ -52,18 +62,20 @@ const App= ()=> {
                         <Route path="/inseriscistruttura" component={InserisciStruttura} exact/>
                         <Route path="/inseriscistruttura/success" component={InserisciStrutturaSuccess} exact/>
                         <Route path="*" component={()=>{"404 NOT FOUND"}}/>
+
                         </Switch>
 
-
-
-
-
                     </main>
-                </Router>
-</UserContext.Provider>
+
+                    <Footer/>
+
+                </BrowserRouter>
+                    </UserContext.Provider>
+
 
 
             </div>
+
 
 
 
