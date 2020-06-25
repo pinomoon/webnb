@@ -6,11 +6,8 @@ var logger = require('morgan');
 var cors= require("cors");
 
 var indexRouter= require('./routes/index');
-
-
 var registrazioneRouter = require('./routes/registrazione');
 var prenotazioneRouter = require ('./routes/prenotazione');
-var hostRouter = require('./routes/fhost/inserisciStruttura');
 var accessoRouter = require('./routes/accesso');
 var accountConfermaRouter= require('./routes/accountConferma');
 var iMieiPreferitiRouter =require('./routes/futente/iMieiPreferiti');
@@ -41,10 +38,8 @@ app.use('/iMieiPreferiti', iMieiPreferitiRouter);
 app.use('/leMiePrenotazioni',leMiePrenotazioniRouter);
 app.use('/registrazione',registrazioneRouter);
 app.use('/prenotazione',prenotazioneRouter);
-app.use('/host',hostRouter);
 app.use('/accesso',accessoRouter);
 app.use('/accountConferma', accountConfermaRouter);
-app.use('/utente',utenteRouter);
 app.use('/gestisciStrutture',gestisciStruttureRouter);
 app.use('/inserisciStruttura',inserisciStrutturaRouter);
 app.use('/gestisciPrenotazioni',gestisciPrenotazioniRouter);

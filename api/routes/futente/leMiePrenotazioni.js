@@ -1,8 +1,8 @@
 var express= require("express");
 var router= express.Router();
 var createError= require('http-errors');
-const { config } = require("../db/config");
-const { makeDb, withTransaction } = require("../db/dbmiddleware");
+const { config } = require("../../db/config");
+const { makeDb, withTransaction } = require("../../db/dbmiddleware");
 
 
 
@@ -17,9 +17,9 @@ async function elenco(req, res, next) {
         await withTransaction(db, async() => {
             results = await db.query("SELECT * FROM utente,prenotazione WHERE prenotazione.id_utente=utente.id_utente \
             AND utente.id_utente=req.body.id_utente ORDER BY stato_prenotazione ASC ,data_prenotazione DESC ")
-            .catch(err=>{
-                throw err;
-            });
+                .catch(err=>{
+                    throw err;
+                });
             var risultato=['1',results];
             res.send(risultato);
         })
@@ -43,9 +43,9 @@ async function annulla(req, res, next) {
         await withTransaction(db, async() => {
             results = await db.query("SELECT data_inizio,disdetta_gratuita,modalita_di_pagamento FROM prenotazione \
             WHERE prenotazione.id_prenotazione=req.body.id_prenotazione ")
-            .catch(err=>{
-                throw err;
-            });
+                .catch(err=>{
+                    throw err;
+                });
             let datenow=new Date();
 
             if((results[0].modalita_di_pagamento=='struttura') && (data_inizio.getTime()-datenow.getTime()<(results[0].disdetta_gratuita*86400000))){
@@ -58,12 +58,12 @@ async function annulla(req, res, next) {
                 /* effettua rimborso */
                 result= await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione=annullata AND prenotazione.stato_rimborso=true \
                 WHERE prenotazione.id_prenotazione=req.body.id_prenotazione ");
-                res.rend('1');
+                res.rend('2');
             }
         })
     }catch(err){
         console.log(err);
-        res.send('2');
+        res.send('3');
         next(createError(500));
     }
 }
@@ -78,30 +78,30 @@ async function recensisci(req, res, next) {
         await withTransaction(db, async() => {
             results= await db.query("SELECT id_struttura,id_utente FROM camera,prenotazione \
              WHERE prenotazione.id_camera=camera.id_camera AND prenotazione.id_prenotazione=req.body.id_prenotazione")
-            .catch(err=>{
-                throw err;
-            });
+                .catch(err=>{
+                    throw err;
+                });
             var idstruttura= results[0].id_struttura;
             var idutente= results[0].id_utente;
             results = await db.query("INSERT INTO recensione (id_utente,id_struttura,recensione) VALUES ?"
-            ,[
-                [
+                ,[
                     [
-                        idutente,
-                        idstruttura,
-                        req.body.recensione
+                        [
+                            idutente,
+                            idstruttura,
+                            req.body.recensione
+                        ]
                     ]
-                ]
-            ])
-            .catch(err=>{
-                throw err;
-            });
+                ])
+                .catch(err=>{
+                    throw err;
+                });
             res.send('1');
         })
     }catch(err){
-    console.log(err);
-    res.send('2');
-    next(createError(500));
+        console.log(err);
+        res.send('2');
+        next(createError(500));
     }
 }
 
