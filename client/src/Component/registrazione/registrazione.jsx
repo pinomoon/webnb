@@ -181,12 +181,12 @@ const Registrazione=()=>{
 
                         <div className="custom-control custom-radio custom-control-inline mt-2">
                             <input type="radio" className="custom-control-input" id="host" name="tipo"
-                                   value="false" onChange={handleChangeTipo} required/>
+                                   value="0" onChange={handleChangeTipo} required/>
                             <label className="custom-control-label" htmlFor="host">Host</label>
                         </div>
                         <div className="custom-control custom-radio custom-control-inline mt-2">
                             <input type="radio" className="custom-control-input" id="cliente" name="tipo"
-                                   value="true" onChange={handleChangeTipo}  required/>
+                                   value="1" onChange={handleChangeTipo}  required/>
                             <label className="custom-control-label" htmlFor="cliente">Cliente</label>
                             <br></br>
                             <div className="invalid-feedback ml-2">

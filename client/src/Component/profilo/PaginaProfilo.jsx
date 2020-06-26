@@ -9,9 +9,9 @@ class PaginaProfilo extends Component{
         return(
 
             <div>
-                <HeaderCliente/>
+
                 <Profilo/>
-                <Footer/>
+
 
             </div>
 

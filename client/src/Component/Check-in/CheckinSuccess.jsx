@@ -8,10 +8,10 @@ class CheckinSuccess extends Component{
     render(){
         return(
             <div>
-                <Header/>
+
                 <h3 style={{textAlign:"center",marginTop:"150px",marginBottom:"150px"}}>Check-in effettuato correttamente</h3>
                 <Button color="inherit" href="/host"style={{color:"#6495ED",marginLeft:"30px"}}>Indietro</Button>
-                <Footer/>
+
 
 
             </div>

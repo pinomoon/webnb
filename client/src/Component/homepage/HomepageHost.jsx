@@ -10,7 +10,7 @@ class HomepageHost extends Component{
         return(
 
             <container >
-                <HeaderHost/>
+
 
                 <section className="cover" style={{height:"500px"}}>
                     <div className="cover_filter"></div>
@@ -73,7 +73,7 @@ class HomepageHost extends Component{
                         </div>
                     </div>
                 </section>
-                <Footer/>
+
             </container>
 
         );

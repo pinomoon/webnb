@@ -6,7 +6,7 @@ import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import Slide from "@material-ui/core/Slide/Slide";
-import {setSessionCookie} from "../../sessions";
+import {setSessionCookie, setUserCookie} from "../../sessions";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -21,6 +21,7 @@ const Logout =()=>{
     };
     const handleLogout=()=>{
         setSessionCookie({});
+        setUserCookie({});
         setOpen(false);
 
     };

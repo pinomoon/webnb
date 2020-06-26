@@ -12,7 +12,7 @@ class checkin extends Component{
     render(){
         return(
             <div>
-                <Header/>
+
 
                 <div style={{marginLeft:"550px", width:"30%",marginTop:"30px"}}>
             <Form>
@@ -55,7 +55,7 @@ class checkin extends Component{
                 </div>
                 <Button color="inherit" href="/host"style={{color:"#6495ED",marginLeft:"540px"}}>Indietro</Button>
                 <Button color="inherit" href="/checkin/success"style={{color:"#6495ED",marginLeft:"330px"}}>Invia</Button>
-                <Footer/>
+
 
             </div>
 

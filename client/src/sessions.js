@@ -13,3 +13,13 @@ export const getSessionCookie=()=>{
         return JSON.parse(sessionCookie);
     }
 };
+export const setUserCookie=(user)=>{
+    Cookies.remove("user");
+    Cookies.set("user",user,{expires:14});
+}
+export const getUserCookie=()=>{
+    const userCookie=Cookies.get("user");
+    if(userCookie===undefined){
+        return{};
+    }
+};

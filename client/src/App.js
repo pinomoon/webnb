@@ -14,7 +14,7 @@ import PaginaCheckinSuccess from "./Component/Check-in/CheckinSuccess"
 import CheckinFail from "./Component/Check-in/CheckinFail";
 import GestisciStrutture from "./Component/GestioneStrutture/GestisciStrutture";
 import InserisciStruttura from "./Component/GestioneStrutture/InserisciStruttura";
-import InserisciStrutturaSuccess from "./Component/GestioneStrutture/InserisciStrutturaSuccess";
+import Boxconfermainserimento from "./Component/GestioneStrutture/boxconfermainserimento";
 import {UserContext} from "./UserContext";
 import {PrivateRoute} from "./privateRoute";
 import Header from "./Component/header/Header";
@@ -60,7 +60,7 @@ const App= ()=> {
                         <Route path="/checkin/error" component={CheckinFail} exact/>
                         <Route path="/lemiestrutture" component={GestisciStrutture} exact/>
                         <Route path="/inseriscistruttura" component={InserisciStruttura} exact/>
-                        <Route path="/inseriscistruttura/success" component={InserisciStrutturaSuccess} exact/>
+                        <Route path="/inseriscistruttura/success" component={Boxconfermainserimento} exact/>
                         <Route path="*" component={()=>{"404 NOT FOUND"}}/>
 
                         </Switch>

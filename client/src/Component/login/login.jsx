@@ -3,7 +3,7 @@ import axios from 'axios';
 import BoxAccesso from './boxconferma';
 import {useContext} from "react";
 import {UserContext} from "../../UserContext";
-import {setSessionCookie} from "../../sessions";
+import {setSessionCookie, setUserCookie} from "../../sessions";
 
 
 
@@ -52,6 +52,21 @@ const Login =()=>{
                     setTipoRisposta("1");
                     handleClickOpenConferma();
                     setSessionCookie({id:response.data[1],email:response.data[2],tipo:response.data[3]});
+                    setUserCookie({ id:response.data[1],
+                                    email:response.data[2],
+                                    tipo:response.data[3],
+                                    nome:response.data[4],
+                                    cognome:response.data[5],
+                                    sesso:response.data[6],
+                                    data_di_nascita:response.data[6],
+                                    indirizzo:response.data[7],
+                                    citta:response.data[8],
+                                    cap:response.data[9],
+                                    titolare_carta:response.data[10],
+                                    numero_carta:response.data[11],
+                                    scadenza:response.data[12],
+                                    cvc:response.data[13]
+                    });
 
                 }
                 else if(response.data=="2"){

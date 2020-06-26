@@ -12,7 +12,7 @@ class GestisciStrutture extends Component{
     render(){
         return(
             <div>
-            <HeaderHost/>
+
             <section className="cards clearfix">
                 <div className="card">
                     <img className="card_image" src={villa}  alt=" Villa "/>
@@ -29,7 +29,7 @@ class GestisciStrutture extends Component{
 
 
             </section>
-                <Footer/>
+
             </div>
 
 
