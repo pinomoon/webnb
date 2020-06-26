@@ -51,21 +51,21 @@ const Login =()=>{
                 if(response.data[0]=="1"){
                     setTipoRisposta("1");
                     handleClickOpenConferma();
-                    setSessionCookie({id:response.data[1],email:response.data[2],tipo:response.data[3]});
-                    setUserCookie({ id:response.data[1],
-                                    email:response.data[2],
-                                    tipo:response.data[3],
-                                    nome:response.data[4],
-                                    cognome:response.data[5],
-                                    sesso:response.data[6],
-                                    data_di_nascita:response.data[6],
-                                    indirizzo:response.data[7],
-                                    citta:response.data[8],
-                                    cap:response.data[9],
-                                    titolare_carta:response.data[10],
-                                    numero_carta:response.data[11],
-                                    scadenza:response.data[12],
-                                    cvc:response.data[13]
+                    setSessionCookie({id:response.data[1].id_utente,email:response.data[1].email,tipo:response.data[1].tipo});
+                    setUserCookie({ id:response.data[1].id_utente,
+                                    email:response.data[1].email,
+                                    tipo:response.data[1].tipo,
+                                    nome:response.data[1].nome,
+                                    cognome:response.data[1].cognome,
+                                    sesso:response.data[1].sesso,
+                                    data_di_nascita:response.data[1].data_di_nascita,
+                                    indirizzo:response.data[1].indirizzo,
+                                    citta:response.data[1].citta,
+                                    cap:response.data[1].cap,
+                                    titolare_carta:response.data[1].titolare_carta,
+                                    numero_carta:response.data[1].numero_carta,
+                                    scadenza:response.data[1].scadenza,
+                                    cvc:response.data[1].cvc
                     });
 
                 }

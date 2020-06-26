@@ -22,14 +22,12 @@ async function autenticazione(req,res, next){
 
         await withTransaction(db, async() => {
 
-            results = await db.query('SELECT id_utente,email,tipo,nome,cognome,sesso,data_di_nascita,indirizzo,citta,cap,titolare_carta,numero_carta,scadenza,cvc \
-            FROM utente,carta_credito \
-            WHERE carta_credito.email=utente.email AND email = ?', [
+            results = await db.query('SELECT *FROM  utente as u,carta_credito as c WHERE u.email = ? AND u.email=c.email', [
                 req.body.email
             ]).catch(err => {
                     throw err;
                 });
-
+            console.log(results[0].conferma_account);
             if(results[0].conferma_account==false){
                 console.log('Email non confermata');
                 res.send("2");

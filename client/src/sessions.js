@@ -22,4 +22,7 @@ export const getUserCookie=()=>{
     if(userCookie===undefined){
         return{};
     }
+    else{
+        return JSON.parse(userCookie);
+    }
 };

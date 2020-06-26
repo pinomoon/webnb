@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import axios from "axios";
-import {getSessionCookie, getUserCoolkie} from "../../sessions";
+import {getSessionCookie, getUserCookie} from "../../sessions";
 import BoxConferma from "../registrazione/boxconferma";
 import BoxRifiuto from "../registrazione/boxrifiuto";
 
