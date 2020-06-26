@@ -57,10 +57,11 @@ async function registrazione(req, res, next) {
 
 
             let email=req.body.email;
-            results= await db.query("INSERT INTO carta_credito (numero_carta,scadenza,cvc,email) VALUES ?",
+            results= await db.query("INSERT INTO carta_credito (titolare_carta,numero_carta,scadenza,cvc,email) VALUES ?",
                 [
                     [
                         [
+                    req.body.titolare_carta,
                     req.body.numero_carta,
                     req.body.scadenza,
                     req.body.cvc,

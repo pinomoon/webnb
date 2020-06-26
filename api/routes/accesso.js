@@ -22,7 +22,9 @@ async function autenticazione(req,res, next){
 
         await withTransaction(db, async() => {
 
-            results = await db.query('SELECT *FROM `utente`WHERE email = ?', [
+            results = await db.query('SELECT id_utente,email,tipo,nome,cognome,sesso,data_di_nascita,indirizzo,citta,cap,titolare_carta,numero_carta,scadenza,cvc \
+            FROM utente,carta_credito \
+            WHERE carta_credito.email=utente.email AND email = ?', [
                 req.body.email
             ]).catch(err => {
                     throw err;
@@ -41,7 +43,7 @@ async function autenticazione(req,res, next){
 
                     console.log('Password errata!');
                     res.send("3");
-                    //next(createError(403, 'Password errata'));
+                    next(createError(403, 'Password errata'));
                 } else {
 
                     await db.query('UPDATE `utente` SET `autenticazione`=true WHERE `utente`.id_utente = ?', [
@@ -56,7 +58,7 @@ async function autenticazione(req,res, next){
 
                     console.log('Dati utente:');
                     console.log(results[0]);
-                    let utente=['1',results[0].id_utente, results[0].email, results[0].tipo];
+                    let utente=['1',results[0]];
                     res.send(utente);
                 }
             }
