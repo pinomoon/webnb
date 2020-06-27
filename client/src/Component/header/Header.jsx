@@ -33,21 +33,21 @@ const Header =()=>{
                       <Navbar.Toggle aria-controls="basic-navbar-nav" />
                       <Navbar.Collapse id="basic-navbar-nav">
                           <Nav className="mr-auto">
-                              <Nav.Link href="/" style={{color:"#6495ED"}}>Home</Nav.Link>
-                              <Nav.Link href="/aboutus"style={{color:"#6495ED"}}>About</Nav.Link>
-                              <Nav.Link href="/aboutus"style={{color:"#6495ED"}}>Lorem</Nav.Link>
-                              <Nav.Link href="/aboutus"style={{color:"#6495ED"}}>Ipsum</Nav.Link>
+                              <Nav.Link href="/" style={{color:"#ff6300"}}>Home</Nav.Link>
+                              <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>About</Nav.Link>
+                              <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>Lorem</Nav.Link>
+                              <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>Ipsum</Nav.Link>
                           </Nav>
                           {user.id==null &&
                               <div>
-                              <Button color="inherit" href="/login" style={{color: "#6495ED"}}>Accedi</Button>
-                              <Button color="inherit" href="/registrazione"style={{color:"#6495ED"}}>Registrati</Button>
+                              <Button color="inherit" href="/login" style={{color:"#ff6300"}}>Accedi</Button>
+                              <Button color="inherit" href="/registrazione"style={{color:"#ff6300"}}>Registrati</Button>
                               </div>
                           }
                           {user.tipo=="1"&&
                               <div>
                               <Dropdown as={ButtonGroup} style={{marginRight: "70px"}} variant="primary">
-                                  <Button href="/profilo" style={{color: "#6495ED"}}>Profilo</Button>
+                                  <Button href="/profilo" style={{color:"#ff6300"}}>Profilo</Button>
                                   <Dropdown.Toggle split variant="primary" id="dropdown-split-basic"/>
                                   <Dropdown.Menu>
                                       <Dropdown.Item href="/modificaaccount">Modifica Account</Dropdown.Item>
@@ -60,11 +60,11 @@ const Header =()=>{
                           }
                           {user.tipo=="0"&&
                               <div>
-                                  <Button href="/inserisciStruttura" style={{color: "#6495ED"}}>Inserisci la tua
+                                  <Button href="/inserisciStruttura" style={{color:"#ff6300"}}>Inserisci la tua
                                       struttura</Button>
-                                  <Dropdown as={ButtonGroup} style={{marginRight: "70px", color: "#6495ED"}}
+                                  <Dropdown as={ButtonGroup} style={{marginRight: "70px", color:"#ff6300"}}
                                             variant="primary">
-                                      <Button href="/profilo" style={{color: "#6495ED"}}>Profilo</Button>
+                                      <Button href="/profilo" style={{color:"#ff6300"}}>Profilo</Button>
 
                                       <Dropdown.Toggle split variant="primary" id="dropdown-split-basic"/>
 
