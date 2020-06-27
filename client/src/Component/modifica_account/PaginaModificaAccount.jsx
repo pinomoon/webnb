@@ -1,18 +1,21 @@
-import React, {Component} from 'react';
-import Header from "../header/HeaderHost";
+import React, {Component, useState} from 'react';
+import Header from "../header/HeaderCliente";
 import ModificaAccount from "./ModificaAccount";
 import Footer from "../footer/Footer";
+import axios from "axios";
+import {getSessionCookie} from "../../sessions";
 
 
-class PaginaModificaAccount extends Component{
-    render(){
+const PaginaModificaAccount=()=>{
+
+
         return(
             <div>
-            <Header />
+
             <ModificaAccount/>
-             <Footer/>
+
             </div>
         );
-    }
-}
+
+};
 export default PaginaModificaAccount;

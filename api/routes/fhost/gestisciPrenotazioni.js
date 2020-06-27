@@ -261,7 +261,13 @@ async function checkinQuestura(res,req,next){
                     console.log('File deleted!: '+filename);
                     console.log('Email sent: ' + info.response);
                 }
+            }).catch(err=>{
+                throw  err;
             })
+
+            (await db).query("UPDATE prenotazione SET stato_prenotazione='soggiorno in corso' WHERE id_prenotazione=?",[
+                req.body.id_prenotazione
+            ])
 
             res.send("success");
 
@@ -281,8 +287,11 @@ async function inserisciOspiti(res,req,next){
     let results= {};
     try{
         await withTransaction(db,async ()=>{
-            (await db).query("INSERT INTO `dati_ospiti`(`id_dati_ospiti`, `id_prenotazione`, `id_utente`, `nome_ospite`, `cognome_ospite`, `data_nascita`, `sesso`, `residenza`, `n_documento`, `foto_documento`) VALUES?",[
-                req.body.id_prenotazione,
+            (await db).query("INSERT INTO `dati_ospiti`(`id_dati_ospiti`, `id_prenotazione`, `id_utente`, `nome_ospite`, `cognome_ospite`, `data_nascita`, `sesso`, `residenza`, `n_documento`, `foto_documento`) VALUES?",
+                [
+                [
+                    [
+                    req.body.id_prenotazione,
                 req.body.id_utente,
                 req.body.nome_ospite,
                 req.body.cognome_ospite,
@@ -291,9 +300,12 @@ async function inserisciOspiti(res,req,next){
                 req.body.residenza,
                 req.body.n_documento,
                 req.body.foto_documento
-            ]).catch(err=>{
+                    ]
+                ]
+        ]).catch(err=>{
                 throw err;
             })
+
 
             res.send("success");
         })
@@ -376,7 +388,73 @@ async function checkIN(res,req,next){
 }
 
 
+/*********** checkout automatico*************/
 
 
 
-module.exports=router
+let rejectcheckoutAutomatico= setInterval(checkoutAutomatico, 86400000);
+
+
+async function checkoutAutomatico(res,req,next){
+    const db=makeDb(config);
+    let results={};
+    let now=new Date();
+    try{
+        await withTransaction(db,async ()=>{
+           results = await db.query("SELECT id_prenotazione,email,nome_struttura,nome_camera,nome\
+               FROM prenotazione AS p ,camera AS c,struttura AS s, utente AS u \
+               WHERE data_fine<=? AND stato_prenotazione='soggiorno in corso'AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND s.id_utente=u.id_utente",[now]);
+        }).catch(err=>{
+            throw err;
+        })
+        for(let i=0;i<results.length;i++){
+            await db.query("UPDATE prenotazione SET stato_prenotazione='soggiorno concluso'").catch(err=>{
+                throw err;
+            })
+            let mailOptions = {
+                from: 'webnb-service@libero.it',
+                to:results[i].email,
+                subject: 'Check-ou automatico',
+                text: 'Ciao '+results[i].nome+',\n'+"\n Eseguito check-out automatico per la tua prenotazione : " +
+                    results[i].id_prenotazione+'\npresso: '+results[i].nome_struttura+" : "+results[i].nome_camera+
+                    '\n Saluti,\n\n Staff WeB&B.'
+            };
+            transport.sendMail(mailOptions,function(error, info){
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            })
+
+        }
+        res.send("success")
+
+    }catch (error) {
+        res.send('error');
+    }
+
+}
+
+
+/*********checkoutManuale******/
+
+router.post("/checkoutManuale",checkoutManuale);
+
+async function checkoutManuale(req,res,next){
+    const db= makeDb(config);
+
+    try{
+        await withTransaction(db,async ()=>{
+            await db.query("UPDATE prenotazione SET stato_prenotazione='soggiorno concluso' WHERE id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{
+                throw err;
+            })
+            res.send("success");
+        })
+    }catch(error){
+        res.send('error');
+    }
+}
+
+
+module.exports=router;

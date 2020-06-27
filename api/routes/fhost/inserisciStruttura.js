@@ -4,13 +4,10 @@ var createError= require('http-errors');
 
 
 
-router.get('/', function (req,res,next) {
-    next(createError(403));
-});
 
 /***inserimento struttura*****/
 
-router.post('/inserisciStruttura',inserisciStruttura);
+router.post('/',inserisciStruttura);
 const { config } = require("../../db/config");
 const { makeDb, withTransaction } = require("../../db/dbmiddleware");
 
@@ -23,7 +20,7 @@ async function inserisciStruttura(req,res,next) {
         await withTransaction(db, async() => {
 
 
-            await db.query("INSERT INTO struttura (id_utente,nome_struttura,indirizzo_struttura,cap,punti_di_interesse,citta,regione,stato,tipo,disdetta_gratuita,modalita_di_pagamento,tassa_soggiorno,servizi,ora_checkin,ora_checkout) VALUES ?"
+            await db.query("INSERT INTO struttura (id_utente,nome_struttura,indirizzo_struttura,cap,punti_di_interesse,citta,regione,stato,tipo,disdetta_gratuita,modalita_di_pagamento,tassa_soggiorno,servizi,ora_checkin,ora_checkout,descrizione) VALUES ?"
                 , [
                     [
                         [
@@ -41,7 +38,8 @@ async function inserisciStruttura(req,res,next) {
                             req.body.tassa_soggiorno,
                             req.body.servizi,
                             req.body.ora_checkin,
-                            req.body.ora_checkout
+                            req.body.ora_checkout,
+                            req.body.descrzione
                         ]
                     ]
                 ]).catch(err=>{
@@ -90,7 +88,7 @@ async function inserisciStruttura(req,res,next) {
 
 }catch (err) {
             console.log(err);
-            res.send("Inserimento Struttura Fallito!");
+            res.send("2");
             next(createError(500));
         }
 

@@ -22,12 +22,12 @@ async function autenticazione(req,res, next){
 
         await withTransaction(db, async() => {
 
-            results = await db.query('SELECT *FROM `utente`WHERE email = ?', [
+            results = await db.query('SELECT *FROM  utente as u,carta_credito as c WHERE u.email = ? AND u.email=c.email', [
                 req.body.email
             ]).catch(err => {
                     throw err;
                 });
-
+            console.log(results[0].conferma_account);
             if(results[0].conferma_account==false){
                 console.log('Email non confermata');
                 res.send("2");
@@ -41,7 +41,7 @@ async function autenticazione(req,res, next){
 
                     console.log('Password errata!');
                     res.send("3");
-                    //next(createError(403, 'Password errata'));
+                    next(createError(403, 'Password errata'));
                 } else {
 
                     await db.query('UPDATE `utente` SET `autenticazione`=true WHERE `utente`.id_utente = ?', [
@@ -56,7 +56,7 @@ async function autenticazione(req,res, next){
 
                     console.log('Dati utente:');
                     console.log(results[0]);
-                    let utente=['1',results[0].id_utente, results[0].email, results[0].tipo];
+                    let utente=['1',results[0]];
                     res.send(utente);
                 }
             }
@@ -112,12 +112,12 @@ async function recupero(req,res, next){
                         console.log('Email sent: ' + info.response);
                     }
                 });
-           
+           res.send("1") // inviata mail per recupero credenziali
             
         })
     }catch (err) {
         console.log('Utente non trovato!');
-        res.send("Utente non trovato!");
+        res.send("2"); //"Utente non trovato!"
         next(createError(500));
     }
 }
@@ -142,11 +142,11 @@ async function nuovecredenziali(req,res, next){
                      throw err;
                     
                 });
-            res.send('Password aggiornata correttamente, effettua il login')
+            res.send('1'); //'Password aggiornata correttamente, effettua il login'
             })
         }catch(err){
             console.log('Recupero credenziali fallito, riprova');
-            res.send('Recupero credenziali fallito, riprova');
+            res.send('2'); //'Recupero credenziali fallito, riprova'
             next(createError(500));
         }
     }

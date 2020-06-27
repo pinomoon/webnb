@@ -14,9 +14,7 @@ const PaginaLogin=()=> {
         return(
 
             <div>
-                <Header/>
                 <Login/>
-                <Footer/>
             </div>
         );
 

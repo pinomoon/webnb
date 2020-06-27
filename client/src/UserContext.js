@@ -1,7 +1,4 @@
 import {createContext} from 'react';
+import {getSessionCookie} from "./sessions";
 
-export const UserContext= createContext({
-    id:undefined,
-    email:undefined,
-    tipo:undefined
-});
+export const UserContext= createContext(getSessionCookie());

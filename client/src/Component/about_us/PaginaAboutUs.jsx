@@ -9,9 +9,9 @@ class PaginaAboutUs extends Component{
         return(
 
             <div>
-                <Header />
+
                 <AboutUs />
-                <Footer/>
+
 
 
 
