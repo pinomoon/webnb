@@ -142,11 +142,11 @@ async function nuovecredenziali(req,res, next){
                      throw err;
                     
                 });
-            res.send('Password aggiornata correttamente, effettua il login')
+            res.send('1'); //'Password aggiornata correttamente, effettua il login'
             })
         }catch(err){
             console.log('Recupero credenziali fallito, riprova');
-            res.send('Recupero credenziali fallito, riprova');
+            res.send('2'); //'Recupero credenziali fallito, riprova'
             next(createError(500));
         }
     }

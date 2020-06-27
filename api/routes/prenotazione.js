@@ -17,17 +17,26 @@ async function ricerca(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async() => {
-            results = await db.query(" DECLARESELECT id_struttura,nome_struttura,indirizzo_struttura,citta,regione,stato, \
+            results = await db.query("DECLARE @sql nvarchar(MAX);DECLARE paramlist navchar(4000);\
+            IF @req.body.regione IS NOT NULL SELECT @sql+=' AND s.regione=@req.body.regione' \
+            IF @req.body.stato IS NOT NULL SELECT @sql+=' AND s.stato=@req.body.stato'  \
+            IF @req.body.citta IS NOT NULL SELECT @sql+=' AND s.citta=@req.body.citta' \
+            IF @req.body.npl IS NOT NULL SELECT @sql+=' AND s.numero_posti_letto=@req.body.npl' \
+            IF @req.body.tipo IS NOT NULL SELECT @sql+=' AND s.tipo=@req.body.tipo'  \
+            IF @req.body.disdetta_gratuita IS NOT NULL SELECT @sql+=' AND s.disdetta_gratuita>0' \
+            IF @req.body.modalita_di_pagamento IS NOT NULL SELECT @sql+=' AND s.modalità_di_pagamento=@req.body.modalita_di_pagamento' \
+            IF @req.body.costo_camera IS NOT NULL SELECT @sql+=' AND c.costo_camera<=@req.body.costo_camera'\
+            IF @req.body.colazione_inclusa IS NOT NULL SELECT @sql+=' AND c.colazione_inclusa==@req.body.colazione_inclusa' \                                
+            "SELECT id_struttura,nome_struttura,indirizzo_struttura,citta,regione,stato, \
             tipo,immagine_1 \
             FROM struttura, gallery_struttura\
             WHERE struttura.id_struttura=gallery_struttura.id_struttura \
-            AND id_struttura=(SELECT id_struttura \
+            AND id_struttura=(SELECT @sql='SELECT id_struttura \
             FROM struttura AS s,camera AS c, \
             WHERE c.id_struttura=s.id_struttura\
-            AND (s.regione=? OR s.regione LIKE '%') AND (s.stato=? OR s.stato LIKE '%') AND (s.citta=? OR s.citta LIKE '%') AND camera.numero_posti_letto>=? \
-            AND camera.id_camera NOT IN(SELECT id_camera FROM camera,prenotazione \
+            AND c.id_camera NOT IN(SELECT id_camera FROM camera,prenotazione \
                 WHERE prenotazione.id_camera=camera.id_camera AND (prenotazione.data_fine>? AND \
-                prenotazione.data_inizio<?)) \
+                prenotazione.data_inizio<?)) AND 1=1' \
                 GROUP BY id_struttura) ORDER BY nome_struttura ASC",
                 [
                     req.body.regione,
