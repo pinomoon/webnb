@@ -95,7 +95,7 @@ async function recupero(req,res, next){
                     req.body.email])
                     .catch(err => {
                         throw err;
-                    })
+                    });
                
                     var mailOptions = {
                     from: 'webnb-service@libero.it',
@@ -112,7 +112,7 @@ async function recupero(req,res, next){
                         console.log('Email sent: ' + info.response);
                     }
                 });
-           res.send("1") // inviata mail per recupero credenziali
+           res.send("1");// inviata mail per recupero credenziali
             
         })
     }catch (err) {
@@ -137,7 +137,7 @@ async function nuovecredenziali(req,res, next){
 
 
             results = await db.query("UPDATE `utente` SET password=? WHERE `utente`.token=?",
-                [encpsw,token])
+                [encpsw,req.body.token])
                 .catch(err => {
                      throw err;
                     

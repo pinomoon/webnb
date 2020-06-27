@@ -97,7 +97,7 @@ async function registrazione(req, res, next) {
                 to:email,
                 subject: 'Conferma il tuo account WeB&B',
                 text: 'Ciao '+req.body.nome+',\n'+'\nTi abbiamo inviato il link di conferma del tuo account WeB&B' +
-                    '\nclicca sul link per confermare :\n https://localhost:9000/accountConferma?token='+token+'\n' +
+                    '\nclicca sul link per confermare :\n https://localhost:3000/accountConferma?token='+token+'\n' +
                     '\n Saluti,\n\n Staff WeB&B.'
 
             };

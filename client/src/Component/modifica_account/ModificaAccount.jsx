@@ -1,15 +1,16 @@
 import React, {Component, useState} from 'react';
 import axios from "axios";
-import {getSessionCookie, getUserCookie} from "../../sessions";
+import {getSessionCookie, getUserCookie, setUserCookie} from "../../sessions";
 import BoxConferma from "../registrazione/boxconferma";
 import BoxRifiuto from "../registrazione/boxrifiuto";
+import BoxConfermaModifica from "./boxconfermamodifica";
 
 
 
 const ModificaAccount=()=>{
+    const[tipoRisposta, setTipoRisposta]=React.useState("");
     const [id_utente, setIdUtente]=useState(getSessionCookie().id);
     const[openConferma, setOpenConferma]=React.useState(false);
-    const[boxType, setBoxType]=React.useState("");
     const[nome, setNome]=React.useState(getUserCookie().nome);
     const[cognome, setCognome]=React.useState(getUserCookie().cognome);
     const[data_di_nascita, setData_di_nascita]=React.useState(getUserCookie().data_di_nascita);
@@ -22,17 +23,77 @@ const ModificaAccount=()=>{
     const[scadenza,setScadenza]=React.useState(getUserCookie().scadenza);
     const[cvc,setCvc]=React.useState(getUserCookie().cvc);
     const[email,setEmail]=React.useState(getUserCookie().email);
+    const[password, setPassword]=React.useState("");
+    const[repassword,setRepassword]=React.useState("");
+    const[check_repass, setCheckRepass]=React.useState("");
 
 
 
 
+    const handleClickOpenConferma=()=>{
+        setOpenConferma(true);
+    };
+    const handleCloseConferma=()=>{
+      setOpenConferma(false);
+      setTipoRisposta("");
+    };
+    const svuotaCampi=()=>{
+        setNome(getUserCookie().nome);
+        setCognome(getUserCookie().cognome);
+        setData_di_nascita(getUserCookie().data_di_nascita);
+        setIndirizzo(getUserCookie().indirizzo);
+        setSesso(getUserCookie().sesso);
+        setCitta(getUserCookie().citta);
+        setCap(getUserCookie().cap);
+        setTitolareCarta(getUserCookie().titolare_carta);
+        setNumeroCarta(getUserCookie().numero_carta);
+        setScadenza(getUserCookie().scadenza);
+        setCvc(getUserCookie().cvc);
+        setPassword("");
+        setRepassword("");
+        setCheckRepass("");
 
+    };
     const handleSubmit= async(event)=>{
         alert("sono stati inseriti dei campi:"+" "+JSON.stringify(state));
         event.preventDefault();
         let res = await axios.post('https://localhost:9000/modificaAccount/salvamodifiche', state)
             .then(function(response){
-                console.log(response.data);
+                if(response.data=="1"){
+                    setTipoRisposta("1");
+                    setUserCookie({
+                        id:getSessionCookie().id,
+                        email:getSessionCookie().email,
+                        tipo:getSessionCookie().tipo,
+                        nome:nome,
+                        cognome:cognome,
+                        sesso:sesso,
+                        data_di_nascita:data_di_nascita,
+                        indirizzo:indirizzo,
+                        citta:citta,
+                        cap:cap,
+                        titolare_carta:titolare_carta,
+                        numero_carta:numero_carta,
+                        scadenza:scadenza,
+                        cvc:cvc});
+                    handleClickOpenConferma();
+                }
+                else if(response.data=="2"){
+                    setTipoRisposta("2");
+                    svuotaCampi();
+                    handleClickOpenConferma();
+                }
+                else if(response.data=="3"){
+                    setTipoRisposta("3");
+                    handleClickOpenConferma();
+                    svuotaCampi();
+                }
+                else{
+                    setTipoRisposta("4");
+                    handleClickOpenConferma();
+                    svuotaCampi();
+                }
+
             })
             .catch(function(error){
                 console.log(error);
@@ -107,8 +168,26 @@ const ModificaAccount=()=>{
         setCvc(valore);
         state.cvc=valore;
     };
+    const handleChangePassword=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setPassword(valore);
+        state.password=valore;
+    };
+    const handleChangeRepassword=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setRepassword(valore);
+        state.repassword=valore;
+    };
+    const handleChangeCheckRepass=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setCheckRepass(valore);
 
-    const state={id_utente, email, nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,titolare_carta,numero_carta,scadenza,cvc};
+    };
+
+    const state={id_utente, email, nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,titolare_carta,numero_carta,scadenza,cvc, password, repassword};
 
 
 
@@ -220,13 +299,47 @@ const ModificaAccount=()=>{
                                    value={state.cvc} onChange={handleChangeCvc}/>
                         </div>
 
+                        <p className="lead text-uppercase mt-3">Modifica Password</p>
+
+                        <div className="form-group">
+                            <label htmlFor="repass">Vecchia Password </label>
+                            <input name="repass" id="repass" type="password" className="form-control" size="32"
+                                   maxLength="40" value={state.password}
+                                   onChange={handleChangePassword} />
+
+                            <label htmlFor="repassword">Nuova Password </label>
+                            <input name="repassword" id="repassword" type="password" className="form-control"
+                                   title="Almeno 8 caratteri, una lettera maiuscola e un numero"
+                                //pattern="^(?=.[a-z])(?=.[A-Z])(?=.*[0-9]).{8,}$"
+                                   size="32" maxLength="40" value={state.repassword} onChange={handleChangeRepassword}
+                                   />
+                            <div className="invalid-feedback">
+                                Almeno 8 caratteri di cui uno maiusciolo e un numero
+                            </div>
+                            <div className="valid-feedback text-warning">
+                                Password media
+                            </div>
+
+                            <label htmlFor="check_repass">Reinserisci Nuova Password </label>
+                            <input name="check_repass" id="check_repass" type="password" className="form-control" size="32"
+                                   maxLength="40" value={check_repass}
+                                   onChange={handleChangeCheckRepass} />
+                            <div className="invalid-feedback">
+                                Le password devono coincidere
+                            </div>
+                        </div>
+
                     </div>
 
                     <button name="ok" id="ok" type="submit" onClick={handleSubmit}
                             className="btn btn-primary mt-3">Invia
                     </button>
                 </form>
-
+                <BoxConfermaModifica
+                    open={openConferma}
+                    onClose={handleCloseConferma}
+                    responseType={tipoRisposta}
+                />
 
 
             </div>
