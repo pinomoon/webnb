@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Header from "../header/HeaderCliente";
+import Header from "../header/HeaderHost";
 import ModificaAccount from "./ModificaAccount";
 import Footer from "../footer/Footer";
 

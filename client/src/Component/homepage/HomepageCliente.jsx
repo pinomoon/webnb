@@ -5,6 +5,11 @@ import Footer from "../footer/Footer";
 import "./Homepage.css"
 import Form from "react-bootstrap/Form";
 import Header from "../header/Header";
+import Input from "@material-ui/core/Input/Input";
+import Button from "@material-ui/core/Button";
+import simpson from "./casa-simpson-690x362.jpg";
+import flinstones from "./casa-flin.jpg";
+import villa from "../GestioneStrutture/villa.jpg";
 
 class HomepageCliente extends Component{
     render(){
@@ -12,7 +17,6 @@ class HomepageCliente extends Component{
 
             <container >
                 <HeaderCliente/>
-
                 <section className="cover" style={{height:"500px"}}>
                     <div className="cover_filter"></div>
                     <div className="cover_caption">
@@ -23,57 +27,89 @@ class HomepageCliente extends Component{
                             <div>
 
 
-                                <div className="form-row"style={{width:"600px",marginLeft:"430px"}} >
+                                <div className="form-row"style={{height:"40px",width:"780px",marginLeft:"350px",border:"1px solid #ff6300",backgroundColor:"white"}} >
+
                                     <div className="form-group col" >
-                                        <input type="text" className="form-control" id="Citta" placeholder="Dove vuoi andare?"/>
+                                        <Input type="email" name="email" id="exampleEmail" placeholder="Dove vuoi andare?" style={{backgroundColor:"white"}} />
 
                                     </div>
+
                                     <div className="form-group col" >
-                                        <input className="form-control" type="date" id="start" name="trip-start"
-                                               value="2018-07-22"
-                                               min="2018-01-01" max="2018-12-31" />
+
+
+
+                                        <Input style={{width:"150px",backgroundColor:"white"}}
+                                               type="date"
+                                               name="date"
+                                               id="exampleDate"
+                                               placeholder="date placeholder"
+                                        />
                                     </div>
+
+                                    <div className="form-group col" >
+
+                                        <Input style={{width:"150px",backgroundColor:"white"}}
+                                               type="date"
+                                               name="date"
+                                               id="exampleDate"
+                                               placeholder="date placeholder"
+                                        />
+                                    </div>
+
+
+
+
+
                                     <div className="form-group col">
-                                        <Form.Group controlId="exampleForm.ControlSelect1" style={{width:"200px"}}>
-
-                                            <Form.Control as="select">
+                                        <Form.Group controlId="exampleForm.ControlSelect1" style={{width:"150px"}}>
+                                            <Input type="select" name="select" id="exampleSelect" placeholder="Ospiti" style={{backgroundColor:"white"}}>
                                                 <option>Ospiti</option>
                                                 <option>1</option>
                                                 <option>2</option>
                                                 <option>3</option>
                                                 <option>4</option>
                                                 <option>5</option>
-                                            </Form.Control>
+                                            </Input>
+
                                         </Form.Group>
+
                                     </div>
+                                    <Button color="inherit" href="/login"style={{fontSize:"12px",marginTop:"10px",height:"20px",color:"#ff6300",backgroundColor:"white"}}>Conferma</Button>
+
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </section>
-
                 <section className="cards clearfix">
                     <div className="card">
-                        <img className="card_image" src="https://source.unsplash.com/400x260/?animals " alt=" Nature"/>
+                        <img className="card_image" src={simpson}  alt=" Villa "/>
                         <div className="card_copy">
-                            <h3>title card</h3>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.?</p>
+                            <h4>Casa di Homer</h4>
+                            <p>La foto parla da se' </p>
                         </div>
+
                     </div>
                     <div className="card">
-                        <img className="card_image" src="https://source.unsplash.com/400x260/?travel" alt="Random"/>
+                        <img className="card_image" src={flinstones}  alt=" Villa "/>
                         <div className="card_copy">
-                            <h3>title card</h3>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.?</p>
+                            <h4>Casale dei Flinstones</h4>
+                            <p>Reggia per gli amanti della semplicita' </p>
                         </div>
+
                     </div>
                     <div className="card">
-                        <img className="card_image" src="https://source.unsplash.com/400x260/?water" alt=" Random"/>
+                        <img className="card_image" src={villa}  alt=" Villa "/>
                         <div className="card_copy">
-                            <h3>title card</h3>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.? </p>
+                            <h4>Villa Maestro</h4>
+                            <p>Nel cuore di San Giuseppe Jato, famosa villa del Boss Luna </p>
                         </div>
+
                     </div>
+
+
+
                 </section>
                 <Footer/>
             </container>

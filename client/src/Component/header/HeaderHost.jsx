@@ -20,26 +20,28 @@ class HeaderHost extends Component{
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            <Nav.Link href="/" style={{color:"#6495ED"}}>Home</Nav.Link>
-                            <Nav.Link href="/aboutus"style={{color:"#6495ED"}}>About</Nav.Link>
-                            <Nav.Link href="/aboutus"style={{color:"#6495ED"}}>Lorem</Nav.Link>
-                            <Nav.Link href="/aboutus"style={{color:"#6495ED"}}>Ipsum</Nav.Link>
+                            <Nav.Link href="/" style={{color:"#ff6300"}}>Home</Nav.Link>
+                            <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>About</Nav.Link>
+                            <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>Lorem</Nav.Link>
+                            <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>Ipsum</Nav.Link>
 
 
 
 
                         </Nav>
 
-                        <Button href="/inserisciStruttura" style={{color:"#6495ED"}}>Inserisci la tua struttura</Button>
-                        <Dropdown as={ButtonGroup} style={{marginRight:"70px",color:"#6495ED"}} variant="primary">
-                            <Button href="/profilo" style={{color:"#6495ED"}}>Profilo</Button>
+                        <Button href="/inserisciStruttura" style={{color:"#ff6300"}}>Inserisci la tua struttura</Button>
+                        <Button href="/profilo"style={{color:"#ff6300"}}>Profilo</Button>
+                        <Dropdown as={ButtonGroup} style={{marginRight:"50px",color:"#ff6300",border:"none"}} >
 
-                            <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
+
+                            <Dropdown.Toggle split  style={{backgroundColor:"#ff6300",border:"1px solid black"}} id="dropdown-split-basic" />
 
                             <Dropdown.Menu>
                                 <Dropdown.Item href="/modificaaccount">Modifica Account</Dropdown.Item>
-                                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                                <Dropdown.Item href="/lemiestrutture">Le mie strutture</Dropdown.Item>
+                                <Dropdown.Item href="/checkin">Check-in</Dropdown.Item>
+                                <Dropdown.Item href="/checkout">Check-out</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
 

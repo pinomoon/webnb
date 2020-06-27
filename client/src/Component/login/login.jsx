@@ -1,5 +1,6 @@
 import  * as React from "react";
 import axios from 'axios';
+
 import BoxAccesso from './boxconferma';
 import {useContext} from "react";
 import {UserContext} from "../../UserContext";
@@ -92,8 +93,10 @@ const Login =()=>{
             <div class="container mt-10">
             <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
 
+
                 <p className="lead text-uppercase mt-3">Autenticazione</p>
                 <div className="form-group">
+
                     <label htmlFor="email">E-mail *</label>
                     <input name="email" id="email" type="email" className="form-control" size="32" maxLength="40" value={state.email}
                            onChange={handleChangeEmail} required/>

@@ -24,14 +24,14 @@ class Header extends Component{
 
                   <Navbar bg="light" style={{color:"#6495ED"}} >
 
-                      <Navbar.Brand href="/"><img src={logo} width="100" height="50"/></Navbar.Brand>
+                      <Navbar.Brand href="/"><img src={logo} width="120" height="45"/></Navbar.Brand>
                       <Navbar.Toggle aria-controls="basic-navbar-nav" />
                       <Navbar.Collapse id="basic-navbar-nav">
                           <Nav className="mr-auto">
-                              <Nav.Link href="/" style={{color:"#6495ED"}}>Home</Nav.Link>
-                              <Nav.Link href="/aboutus"style={{color:"#6495ED"}}>About</Nav.Link>
-                              <Nav.Link href="/aboutus"style={{color:"#6495ED"}}>Lorem</Nav.Link>
-                              <Nav.Link href="/aboutus"style={{color:"#6495ED"}}>Ipsum</Nav.Link>
+                              <Nav.Link href="/" style={{color:"#ff6300"}}>Home</Nav.Link>
+                              <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>About</Nav.Link>
+                              <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>Lorem</Nav.Link>
+                              <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>Ipsum</Nav.Link>
 
 
 
@@ -43,9 +43,9 @@ class Header extends Component{
 
 
                           </Nav>
-                          <Button color="inherit" href="/login"style={{color:"#6495ED"}}>Accedi</Button>
+                          <Button color="inherit" href="/login"style={{color:"#ff6300"}}>Accedi</Button>
 
-                          <Button color="inherit" href="/registrazione"style={{color:"#6495ED"}}>Registrati</Button>
+                          <Button color="inherit" href="/registrazione"style={{color:"#ff6300"}}>Registrati</Button>
 
 
 
