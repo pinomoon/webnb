@@ -17,18 +17,21 @@ async function ricerca(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async() => {
-            results = await db.query("SELECT id_struttura,nome_struttura,indirizzo_struttura,citta,regione,stato, \
+            results = await db.query(" DECLARESELECT id_struttura,nome_struttura,indirizzo_struttura,citta,regione,stato, \
             tipo,immagine_1 \
             FROM struttura, gallery_struttura\
             WHERE struttura.id_struttura=gallery_struttura.id_struttura \
             AND id_struttura=(SELECT id_struttura \
-            FROM struttura,camera, \
-            WHERE camera.id_struttura=struttura.id_struttura AND struttura.citta=? AND camera.numero_posti_letto>=? \
+            FROM struttura AS s,camera AS c, \
+            WHERE c.id_struttura=s.id_struttura\
+            AND (s.regione=? OR s.regione LIKE '%') AND (s.stato=? OR s.stato LIKE '%') AND (s.citta=? OR s.citta LIKE '%') AND camera.numero_posti_letto>=? \
             AND camera.id_camera NOT IN(SELECT id_camera FROM camera,prenotazione \
                 WHERE prenotazione.id_camera=camera.id_camera AND (prenotazione.data_fine>? AND \
                 prenotazione.data_inizio<?)) \
                 GROUP BY id_struttura) ORDER BY nome_struttura ASC",
                 [
+                    req.body.regione,
+                    req.body.stato,
                     req.body.citta,
                     req.body.npl,
                     req.body.data_inizio,
