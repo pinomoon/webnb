@@ -103,17 +103,19 @@ async function dati(req, res, next) {
     }
 }
 
-router.post('/prenota',prenota);
+router.post('/',prenota);
 
 async function prenota(req, res, next) {
 
     const db = await makeDb(config);
     let results = {};
     try {
+        let date= new Date();
+        year=date.getFullYear();
         await withTransaction(db, async() => {
             results=await db.query("SELECT SUM(data_fine-data_inizio) AS giorni_soggiorno \
             FROM prenotazione,camera \
-            WHERE prenotazione.id_camera=camera.id_camera AND prenotazione.id_utente=? AND camera.id_struttura=? ",
+            WHERE (data_inizio>=year-01-01 AND data_fine<=year-12-31) AND prenotazione.id_camera=camera.id_camera AND prenotazione.id_utente=? AND camera.id_struttura=? ",
                 [
                     req.body.id_utente,
                     req.body.id_struttura
@@ -136,7 +138,12 @@ async function prenota(req, res, next) {
                 ]).catch(err=>{
                     throw err;
                 });
-                let now=Date.now();
+                
+                
+                let now= new Date();
+                now=Date.now();
+                
+                
             await db.query("INSERT INTO prenotazione(id_utente, data_prenotazione, id_camera, data_inizio, data_fine,\
                 metodo_di_pagamento,importo, stato_pagamento, stato_rimborso) VALUES ?"
                 ,[
@@ -168,6 +175,7 @@ async function prenota(req, res, next) {
                 mydoc.fontSize("12");
                 mydoc.text(results,100,100);
                 mydoc.end();
+                
                 let mailOptions = {
                     from: 'webnb-service@libero.it',
                     to:    req.body.email,
@@ -193,10 +201,37 @@ async function prenota(req, res, next) {
                     }
     
                 });
-            reaults= await db.query("SELECT email FROM utente,struttura WHERE struttura.id_utente=utente.id_utente\
+            
+            results= await db.query("SELECT email FROM utente,struttura WHERE struttura.id_utente=utente.id_utente\
             AND struttura.id_struttura=req.body.id_struttura")
             .catch(err=>{
                 throw err;
+            });
+            let mailOptions = {
+                from: 'webnb-service@libero.it',
+                to:    results,
+                subject: 'Prenotazione effettuata nella sua struttura',
+                text: "E' stata effettuata una prenotazione presso una tua struttura.\
+                Puoi in qualsiasi momento, effettuando l'accesso, \
+                gestire le prenotazioni effettuate presso le tue strutture alla voce Gestisci Prenotazioni\
+                Ricorda che dopo 48 ore la richiesta di prenotazione verrà rifiutata in automatico. \
+                    '\n Saluti,\n\n Staff WeB&B.",
+                    attachments:[
+                        {   filename: filename,
+                            path: './'+filename
+                        }
+                    ]
+            };
+            transport.sendMail(mailOptions, function(error, info){
+                if (error) {
+                    console.log(error);
+                } else {
+                    fs.unlinkSync(filename);
+                    console.log('File deleted!: '+filename);
+                    console.log('Email sent: ' + info.response);
+
+                }
+
             });
     })
     }catch(err){
