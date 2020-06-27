@@ -16,7 +16,8 @@ async function elenco(req, res, next) {
     try {
         await withTransaction(db, async() => {
             results = await db.query("SELECT * FROM utente,prenotazione WHERE prenotazione.id_utente=utente.id_utente \
-            AND utente.id_utente=req.body.id_utente ORDER BY stato_prenotazione ASC ,data_prenotazione DESC ")
+            AND utente.id_utente=?\
+             ORDER BY stato_prenotazione ASC ,data_prenotazione DESC ",[req.body.id_utente])
                 .catch(err=>{
                     throw err;
                 });
@@ -42,7 +43,7 @@ async function annulla(req, res, next) {
     try {
         await withTransaction(db, async() => {
             results = await db.query("SELECT data_inizio,disdetta_gratuita,modalita_di_pagamento FROM prenotazione \
-            WHERE prenotazione.id_prenotazione=req.body.id_prenotazione ")
+            WHERE prenotazione.id_prenotazione=?",[req.body.id_prenotazione ])
                 .catch(err=>{
                     throw err;
                 });
@@ -51,13 +52,17 @@ async function annulla(req, res, next) {
             if((results[0].modalita_di_pagamento=='struttura') && (data_inizio.getTime()-datenow.getTime()<(results[0].disdetta_gratuita*86400000))){
                 /* effettua pagaemento */
                 result= await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione=annullata AND prenotazione.stato_pagamento=true \
-                WHERE prenotazione.id_prenotazione=req.body.id_prenotazione");
+                WHERE prenotazione.id_prenotazione=",[req.body.id_prenotazione]).catch(err=>{
+                    throw err;
+                })
                 res.rend('1');
             }
             else if((results[0].modalita_di_pagamento=='carta') && (data_inizio.getTime()-datenow.getTime()>=(results[0].disdetta_gratuita*86400000))){
                 /* effettua rimborso */
                 result= await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione=annullata AND prenotazione.stato_rimborso=true \
-                WHERE prenotazione.id_prenotazione=req.body.id_prenotazione ");
+                WHERE prenotazione.id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{
+                    throw err;
+                })
                 res.rend('2');
             }
         })
@@ -77,7 +82,7 @@ async function recensisci(req, res, next) {
     try {
         await withTransaction(db, async() => {
             results= await db.query("SELECT id_struttura,id_utente FROM camera,prenotazione \
-             WHERE prenotazione.id_camera=camera.id_camera AND prenotazione.id_prenotazione=req.body.id_prenotazione")
+             WHERE prenotazione.id_camera=camera.id_camera AND prenotazione.id_prenotazione=?",[req.body.id_prenotazione])
                 .catch(err=>{
                     throw err;
                 });
