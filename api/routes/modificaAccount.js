@@ -93,7 +93,7 @@ async function salvamodifiche(req, res, next) {
   }
   else{
    
-      results = await db.query("UPDATE utente SET nome=?,cognome=?,data_di_nascita=?,indirizzo=?,sesso=?,citta=?,cap=?,cellulare=? WHERE utente.id_utente=req.body.id_utente"
+      results = await db.query("UPDATE utente SET nome=?,cognome=?,data_di_nascita=?,indirizzo=?,sesso=?,citta=?,cap=?,cellulare=? WHERE utente.id_utente=?"
         , 
             
              [
@@ -104,20 +104,22 @@ async function salvamodifiche(req, res, next) {
         req.body.sesso,
         req.body.citta,
         req.body.cap,
-        req.body.cellulare
+        req.body.cellulare,
+                 req.body.id_utente
             ]).catch(err=>{
         throw err;
     });
 
 
     
-    results= await db.query("UPDATE carta_credito SET titolare_carta=?,numero_carta=?,scadenza=?,cvc=? WHERE carta_credito.email=req.body.email",
+    results= await db.query("UPDATE carta_credito SET titolare_carta=?,numero_carta=?,scadenza=?,cvc=? WHERE carta_credito.email=?",
         [
             
             req.body.titolare_carta,    
             req.body.numero_carta,
             req.body.scadenza,
-            req.body.cvc
+            req.body.cvc,
+            req.body.email
             
         
             

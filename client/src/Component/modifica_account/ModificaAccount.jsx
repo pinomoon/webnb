@@ -21,13 +21,14 @@ const ModificaAccount=()=>{
     const[numero_carta,setNumeroCarta]=React.useState(getUserCookie().numero_carta);
     const[scadenza,setScadenza]=React.useState(getUserCookie().scadenza);
     const[cvc,setCvc]=React.useState(getUserCookie().cvc);
+    const[email,setEmail]=React.useState(getUserCookie().email);
 
 
 
 
 
     const handleSubmit= async(event)=>{
-        alert("sono stati inseriti dei campi:"+" "+this.state.tipo+" "+this.state.nome+this.state.cognome+" "+this.state.data_di_nascita+" "+this.state.indirizzo+" "+this.state.email+" "+this.state.password+" "+this.state.sesso);
+        alert("sono stati inseriti dei campi:"+" "+JSON.stringify(state));
         event.preventDefault();
         let res = await axios.post('https://localhost:9000/modificaAccount/salvamodifiche', state)
             .then(function(response){
@@ -107,7 +108,7 @@ const ModificaAccount=()=>{
         state.cvc=valore;
     };
 
-    const state={id_utente, nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,titolare_carta,numero_carta,scadenza,cvc};
+    const state={id_utente, email, nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,titolare_carta,numero_carta,scadenza,cvc};
 
 
 
