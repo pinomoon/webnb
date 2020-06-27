@@ -261,7 +261,13 @@ async function checkinQuestura(res,req,next){
                     console.log('File deleted!: '+filename);
                     console.log('Email sent: ' + info.response);
                 }
+            }).catch(err=>{
+                throw  err;
             })
+
+            (await db).query("UPDATE prenotazione SET stato_prenotazione='soggiorno in corso' WHERE id_prenotazione=?",[
+                req.body.id_prenotazione
+            ])
 
             res.send("success");
 
@@ -299,6 +305,7 @@ async function inserisciOspiti(res,req,next){
         ]).catch(err=>{
                 throw err;
             })
+
 
             res.send("success");
         })
