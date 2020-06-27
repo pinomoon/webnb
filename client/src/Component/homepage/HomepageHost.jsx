@@ -15,7 +15,7 @@ class HomepageHost extends Component{
         return(
 
             <container >
-                <HeaderHost/>
+
                 <section className="cover" style={{height:"500px"}}>
                     <div className="cover_filter"></div>
                     <div className="cover_caption">
@@ -26,7 +26,7 @@ class HomepageHost extends Component{
                             <div>
 
 
-                                <div className="form-row"style={{height:"45px",width:"780px",marginLeft:"350px",border:"2px solid #ff6300",backgroundColor:"white"}} >
+                                <div className="form-row"style={{height:"45px",width:"780px",marginLeft:"350px",border:"1px solid #ff6300",backgroundColor:"white"}} >
 
                                     <div className="form-group col" >
                                         <Input type="email" name="email" id="exampleEmail" placeholder="Dove vuoi andare?" style={{backgroundColor:"white",color:"#FC5902"}} />
@@ -110,7 +110,7 @@ class HomepageHost extends Component{
 
 
                 </section>
-                <Footer/>
+
             </container>
 
         );

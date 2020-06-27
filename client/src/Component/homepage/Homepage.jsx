@@ -19,8 +19,9 @@ class Homepage extends Component{
         return(
 
          <container >
-             <Header/>
+
              <section className="cover" style={{height:"500px"}}>
+
                  <div className="cover_filter"></div>
                  <div className="cover_caption">
                      <div className="cover_caption_copy">
@@ -30,7 +31,7 @@ class Homepage extends Component{
                          <div>
 
 
-                             <div className="form-row"style={{height:"45px",width:"780px",marginLeft:"350px",border:"2px solid #ff6300",backgroundColor:"white"}} >
+                             <div className="form-row"style={{height:"45px",width:"780px",marginLeft:"350px",border:"1px solid #ff6300",backgroundColor:"white"}} >
 
                                  <div className="form-group col" >
                                      <Input type="email" name="email" id="exampleEmail" placeholder="Dove vuoi andare?" style={{backgroundColor:"white",color:"#FC5902"}} />
@@ -114,36 +115,11 @@ class Homepage extends Component{
 
 
              </section>
-             <section className="cards clearfix">
-                 <div className="card">
-                     <img className="card_image" src={simpson}  alt=" Villa "/>
-                     <div className="card_copy">
-                         <h4>Casa di Homer</h4>
-                         <p>La foto parla da se' </p>
-                     </div>
-
-                 </div>
-                 <div className="card">
-                     <img className="card_image" src={flinstones}  alt=" Villa "/>
-                     <div className="card_copy">
-                         <h4>Casale dei Flinstones</h4>
-                         <p>Reggia per gli amanti della semplicita' </p>
-                     </div>
-
-                 </div>
-                 <div className="card">
-                     <img className="card_image" src={villa}  alt=" Villa "/>
-                     <div className="card_copy">
-                         <h4>Villa Maestro</h4>
-                         <p>Nel cuore di San Giuseppe Jato, famosa villa del Boss Luna </p>
-                     </div>
-
-                 </div>
 
 
 
-             </section>
-             <Footer/>
+
+
          </container>
 
         );

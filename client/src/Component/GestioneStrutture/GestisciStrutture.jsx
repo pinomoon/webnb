@@ -21,9 +21,9 @@ class GestisciStrutture extends Component{
                         <p>Nel cuore di San Giuseppe Jato, famosa villa del Boss Luna </p>
                     </div>
                     <div style={{marginLeft:"190px"}}>
-                        <Button  style={{color:"#6495ED"}}>Modifica</Button>
+                        <Button  style={{color:"#ff6300"}}>Modifica</Button>
 
-                        <Button  style={{color:"#6495ED"}}>Elimina</Button>
+                        <Button  style={{color:"#ff6300"}}>Elimina</Button>
                     </div>
                 </div>
 

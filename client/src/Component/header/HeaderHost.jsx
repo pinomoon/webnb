@@ -40,6 +40,7 @@ class HeaderHost extends Component{
                             <Dropdown.Menu>
                                 <Dropdown.Item href="/modificaaccount">Modifica Account</Dropdown.Item>
                                 <Dropdown.Item href="/lemiestrutture">Le mie strutture</Dropdown.Item>
+                                <Dropdown.Item href="/gestisciprenotazioni">Gestisci Prenotazioni</Dropdown.Item>
                                 <Dropdown.Item href="/checkin">Check-in</Dropdown.Item>
                                 <Dropdown.Item href="/checkout">Check-out</Dropdown.Item>
                             </Dropdown.Menu>

@@ -232,7 +232,9 @@ const InserisciStruttura=()=>{
             <div>
 
 
-                <div  className="container mt-10">
+
+
+                <div  className="container mt-10" style={{width:"50%"}}>
                     <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
 
                         <label htmlFor="nome_struttura">Nome struttura*</label>
