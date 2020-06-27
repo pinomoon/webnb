@@ -5,6 +5,7 @@ import BoxAccesso from './boxconferma';
 import {useContext} from "react";
 import {UserContext} from "../../UserContext";
 import {setSessionCookie, setUserCookie} from "../../sessions";
+import Button from "@material-ui/core/Button";
 
 
 
@@ -132,8 +133,9 @@ const Login =()=>{
                     onClose={handleCloseConferma}
                     responseType={tipoRisposta}
                 />
-
-
+                <Button  id="recupero"  href="https://localhost:3000/login/passwordDimenticata">
+                    Hai dimenticato la password?
+                </Button>
 
             </div>
 

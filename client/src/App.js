@@ -21,8 +21,9 @@ import Header from "./Component/header/Header";
 import Footer from "./Component/footer/Footer";
 import {createBrowserHistory} from 'history';
 import {getSessionCookie} from "./sessions";
-import CadutaConnessione from "./Component/Caduta Connessione/CadutaConnessione";
-import GestisciPrenotazioni from "./Component/GestionePrenotazioni/GestisciPrenotazioni";
+import RecuperaPassword from "./Component/pagineFuoriSicurezza/recuperapassword";
+import PasswordDimenticata from "./Component/login/passwordDimenticata";
+import ConfermaAccount from "./Component/pagineFuoriSicurezza/confermaAccount";
 
 
 
@@ -45,7 +46,7 @@ const App= ()=> {
                     <Header/>
 
                     <main>
-
+                        <button onClick={handleAlert}>Prova</button>
 
                         <Switch>
 
@@ -63,8 +64,10 @@ const App= ()=> {
                         <Route path="/lemiestrutture" component={GestisciStrutture} exact/>
                         <Route path="/inseriscistruttura" component={InserisciStruttura} exact/>
                         <Route path="/inseriscistruttura/success" component={Boxconfermainserimento} exact/>
-                        <Route path="/gestisciprenotazione" component={GestisciPrenotazioni} exact/>
-                        <Route path="*" component={CadutaConnessione}/>
+                        <Route path="/recuperaCredenziali" component={RecuperaPassword}/>
+                        <Route path="/login/passwordDimenticata" component={PasswordDimenticata} exact/>
+                        <Route path="/accountConferma" component={ConfermaAccount} />
+                        <Route path="*" component={()=>{"404 NOT FOUND"}}/>
 
                         </Switch>
 

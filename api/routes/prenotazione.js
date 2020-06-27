@@ -17,8 +17,11 @@ async function ricerca(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async() => {
-            await db.query("DECLARE @sql nvarchar(MAX);\
-            SELECT id_struttura,nome_struttura,indirizzo_struttura,citta,regione,stato, \
+            await db.query("DECLARE @sql nvarchar(MAX);")
+                .catch(err=>{
+                    throw err;
+                });
+            results=await db.quaery("SELECT id_struttura,nome_struttura,indirizzo_struttura,citta,regione,stato, \
             tipo,immagine_1 \
             FROM struttura, gallery_struttura\
             WHERE struttura.id_struttura=gallery_struttura.id_struttura \
@@ -27,7 +30,7 @@ async function ricerca(req, res, next) {
             WHERE c.id_struttura=s.id_struttura\
             AND c.id_camera NOT IN(SELECT id_camera FROM camera,prenotazione \
                 WHERE prenotazione.id_camera=camera.id_camera AND (prenotazione.data_fine>? AND \
-                prenotazione.data_inizio<?))' \
+                prenotazione.data_inizio<?))'\
             IF @req.body.regione IS NOT NULL SELECT @sql+=' AND s.regione=@req.body.regione' \
             IF @req.body.stato IS NOT NULL SELECT @sql+=' AND s.stato=@req.body.stato'  \
             IF @req.body.citta IS NOT NULL SELECT @sql+=' AND s.citta=@req.body.citta' \
@@ -71,10 +74,8 @@ async function esplora(req, res, next) {
                 results=await db.query("SELECT * \
                 FROM struttura,camera,gallery_struttura \
                 WHERE camera.id_struttura=struttura.id_struttura \
-                AND gallery_struttura.id_struttura=struttura.id_struttura AND struttura.id_struttura=? \
-                AND camera.id_camera NOT IN(SELECT id_camera FROM camera,prenotazione \
-                    WHERE prenotazione.id_camera=camera.id_camera AND (prenotazione.data_fine>? AND \
-                    prenotazione.data_inizio<?)) ")
+                AND gallery_struttura.id_struttura=struttura.id_struttura AND struttura.id_struttura=?"
+                    ,[req.body.id_struttura])
                     .catch(err=>{
                         throw err;
                     });
@@ -100,7 +101,7 @@ async function dati(req, res, next) {
         await withTransaction(db, async() => {
             results=await db.query("SELECT nome,cognome,data_di_nascita,sesso,indirizzo,citta,cap,cellulare,email,titolare_carta,numero_carta,scadenza,cvc \
             FROM utente, carta_credito \
-            WHERE utente.email=carta_credito.email AND utente.id_utente=req.body.id_utente ")
+            WHERE utente.email=carta_credito.email AND utente.id_utente=? ",[req.body.id_utente])
                 .catch(err=>{
                     throw err;
                 });
@@ -174,17 +175,17 @@ async function prenota(req, res, next) {
                 ]).catch(err=>{
                     throw err;
                 });
-                let filename="RIEPILOGO PRENOTAZIONE \n\n\n\
+            let filename='riepilogoPrenotazione'+req.body.id_utente+'.pdf';
+                let testo="RIEPILOGO PRENOTAZIONE \n\n\n\
                 DATI STRUTTURA:\n\
                 nome struttura:"+req.body.nome_struttura+"\n tipo:"+req.bod.tipo+"\n"+req.body.immagine_1+"\n nome camera:"+req.body.nome_camera+"\
                 \n numero posti letto:"+req.body.npl+"\n\n\n\
                 DATI PRENOTAZIONE:\n\
-                data richiesta prenotazione:"+now+"\n data inizio soggiorno:"+req.body.data_inizio+"\n data fine soggiorno:"+req.body.data_fine+"\n metodo pagamento:"+req.body.metodo_di_pagamento+""+'.pdf'
-                let mydoc=new pdfmaker;
+                data richiesta prenotazione:"+now+"\n data inizio soggiorno:"+req.body.data_inizio+"\n data fine soggiorno:"+req.body.data_fine+"\n metodo pagamento:"+req.body.metodo_di_pagamento;                let mydoc=new pdfmaker;
                 mydoc.pipe(fs.createWriteStream(filename));
                 mydoc.font('Times-Roman');
                 mydoc.fontSize("12");
-                mydoc.text(results,100,100);
+                mydoc.text(testo,100,100);
                 mydoc.end();
                 
                 let mailOptions = {
@@ -218,7 +219,7 @@ async function prenota(req, res, next) {
             .catch(err=>{
                 throw err;
             });
-            let mailOptions = {
+            mailOptions = {
                 from: 'webnb-service@libero.it',
                 to:    results,
                 subject: 'Prenotazione effettuata nella sua struttura',

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const { config } = require("../db/config");
 const { makeDb, withTransaction } = require("../db/dbmiddleware");
+const crypto = require('crypto');
 
 
 router.post('/',modifica);
@@ -38,7 +39,7 @@ async function salvamodifiche(req, res, next) {
   try {
     await withTransaction(db, async() => {
        
-      if(req.body.repassword!=null){
+      if(req.body.repassword!=""){
         let pwdhash = crypto.createHash('sha512');
         pwdhash.update(req.body.password);
         let encpsw= pwdhash.digest('hex');
@@ -49,12 +50,12 @@ async function salvamodifiche(req, res, next) {
             .catch(err=>{
               throw err;
             });
-            if(results==encpsw){
+            if(results[0].password==encpsw){
               let pwdhash = crypto.createHash('sha512');
               pwdhash.update(req.body.repassword);
               let encpsw= pwdhash.digest('hex');
 
-              results = await db.query("UPDATE utente SET nome=?,cognome=?,data_di_nascita=?,indirizzo=?,sesso=?,password=?,citta=?,cap=?,cellulare=?) WHERE id_utente=?"
+              results = await db.query("UPDATE utente SET nome=?,cognome=?,data_di_nascita=?,indirizzo=?,sesso=?,password=?,citta=?,cap=?,cellulare=? WHERE id_utente=?"
                , 
                    
                      [
@@ -75,7 +76,7 @@ async function salvamodifiche(req, res, next) {
 
 
                     
-                        results= await db.query("UPDATE carta_credito SET titolare_carta=? numero_carta=?,scadenza=?,cvc=? WHERE carta_credito.email=?",
+                        results= await db.query("UPDATE carta_credito SET titolare_carta=?, numero_carta=?,scadenza=?,cvc=? WHERE email=?",
                         [
                          
                              req.body.titolare_carta,
