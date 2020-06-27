@@ -112,12 +112,12 @@ async function recupero(req,res, next){
                         console.log('Email sent: ' + info.response);
                     }
                 });
-           
+           res.send("1") // inviata mail per recupero credenziali
             
         })
     }catch (err) {
         console.log('Utente non trovato!');
-        res.send("Utente non trovato!");
+        res.send("2"); //"Utente non trovato!"
         next(createError(500));
     }
 }
