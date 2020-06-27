@@ -9,9 +9,9 @@ class PaginaRegistrazione extends Component{
         return(
 
             <div>
-                <Header/>
+
                 <Registrazione/>
-                <Footer/>
+
             </div>
         );
 

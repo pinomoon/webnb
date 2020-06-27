@@ -17,18 +17,30 @@ async function ricerca(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async() => {
-            results = await db.query("SELECT id_struttura,nome_struttura,indirizzo_struttura,citta,regione,stato, \
+            results = await db.query("DECLARE @sql nvarchar(MAX);DECLARE paramlist navchar(4000);\
+            IF @req.body.regione IS NOT NULL SELECT @sql+=' AND s.regione=@req.body.regione' \
+            IF @req.body.stato IS NOT NULL SELECT @sql+=' AND s.stato=@req.body.stato'  \
+            IF @req.body.citta IS NOT NULL SELECT @sql+=' AND s.citta=@req.body.citta' \
+            IF @req.body.npl IS NOT NULL SELECT @sql+=' AND s.numero_posti_letto=@req.body.npl' \
+            IF @req.body.tipo IS NOT NULL SELECT @sql+=' AND s.tipo=@req.body.tipo'  \
+            IF @req.body.disdetta_gratuita IS NOT NULL SELECT @sql+=' AND s.disdetta_gratuita>0' \
+            IF @req.body.modalita_di_pagamento IS NOT NULL SELECT @sql+=' AND s.modalità_di_pagamento=@req.body.modalita_di_pagamento' \
+            IF @req.body.costo_camera IS NOT NULL SELECT @sql+=' AND c.costo_camera<=@req.body.costo_camera'\
+            IF @req.body.colazione_inclusa IS NOT NULL SELECT @sql+=' AND c.colazione_inclusa==@req.body.colazione_inclusa' \                                
+            "SELECT id_struttura,nome_struttura,indirizzo_struttura,citta,regione,stato, \
             tipo,immagine_1 \
             FROM struttura, gallery_struttura\
             WHERE struttura.id_struttura=gallery_struttura.id_struttura \
-            AND id_struttura=(SELECT id_struttura \
-            FROM struttura,camera, \
-            WHERE camera.id_struttura=struttura.id_struttura AND struttura.citta=? AND camera.numero_posti_letto>=? \
-            AND camera.id_camera NOT IN(SELECT id_camera FROM camera,prenotazione \
+            AND id_struttura=(SELECT @sql='SELECT id_struttura \
+            FROM struttura AS s,camera AS c, \
+            WHERE c.id_struttura=s.id_struttura\
+            AND c.id_camera NOT IN(SELECT id_camera FROM camera,prenotazione \
                 WHERE prenotazione.id_camera=camera.id_camera AND (prenotazione.data_fine>? AND \
-                prenotazione.data_inizio<?)) \
+                prenotazione.data_inizio<?)) AND 1=1' \
                 GROUP BY id_struttura) ORDER BY nome_struttura ASC",
                 [
+                    req.body.regione,
+                    req.body.stato,
                     req.body.citta,
                     req.body.npl,
                     req.body.data_inizio,
@@ -103,17 +115,19 @@ async function dati(req, res, next) {
     }
 }
 
-router.post('/prenota',prenota);
+router.post('/',prenota);
 
 async function prenota(req, res, next) {
 
     const db = await makeDb(config);
     let results = {};
     try {
+        let date= new Date();
+        year=date.getFullYear();
         await withTransaction(db, async() => {
             results=await db.query("SELECT SUM(data_fine-data_inizio) AS giorni_soggiorno \
             FROM prenotazione,camera \
-            WHERE prenotazione.id_camera=camera.id_camera AND prenotazione.id_utente=? AND camera.id_struttura=? ",
+            WHERE (data_inizio>=year-01-01 AND data_fine<=year-12-31) AND prenotazione.id_camera=camera.id_camera AND prenotazione.id_utente=? AND camera.id_struttura=? ",
                 [
                     req.body.id_utente,
                     req.body.id_struttura
@@ -136,7 +150,12 @@ async function prenota(req, res, next) {
                 ]).catch(err=>{
                     throw err;
                 });
-                let now=Date.now();
+                
+                
+                let now= new Date();
+                now=Date.now();
+                
+                
             await db.query("INSERT INTO prenotazione(id_utente, data_prenotazione, id_camera, data_inizio, data_fine,\
                 metodo_di_pagamento,importo, stato_pagamento, stato_rimborso) VALUES ?"
                 ,[
@@ -168,6 +187,7 @@ async function prenota(req, res, next) {
                 mydoc.fontSize("12");
                 mydoc.text(results,100,100);
                 mydoc.end();
+                
                 let mailOptions = {
                     from: 'webnb-service@libero.it',
                     to:    req.body.email,
@@ -193,10 +213,37 @@ async function prenota(req, res, next) {
                     }
     
                 });
-            reaults= await db.query("SELECT email FROM utente,struttura WHERE struttura.id_utente=utente.id_utente\
+            
+            results= await db.query("SELECT email FROM utente,struttura WHERE struttura.id_utente=utente.id_utente\
             AND struttura.id_struttura=req.body.id_struttura")
             .catch(err=>{
                 throw err;
+            });
+            let mailOptions = {
+                from: 'webnb-service@libero.it',
+                to:    results,
+                subject: 'Prenotazione effettuata nella sua struttura',
+                text: "E' stata effettuata una prenotazione presso una tua struttura.\
+                Puoi in qualsiasi momento, effettuando l'accesso, \
+                gestire le prenotazioni effettuate presso le tue strutture alla voce Gestisci Prenotazioni\
+                Ricorda che dopo 48 ore la richiesta di prenotazione verrà rifiutata in automatico. \
+                    '\n Saluti,\n\n Staff WeB&B.",
+                    attachments:[
+                        {   filename: filename,
+                            path: './'+filename
+                        }
+                    ]
+            };
+            transport.sendMail(mailOptions, function(error, info){
+                if (error) {
+                    console.log(error);
+                } else {
+                    fs.unlinkSync(filename);
+                    console.log('File deleted!: '+filename);
+                    console.log('Email sent: ' + info.response);
+
+                }
+
             });
     })
     }catch(err){
