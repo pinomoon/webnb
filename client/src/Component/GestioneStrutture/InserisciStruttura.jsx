@@ -9,6 +9,8 @@ import axios from "axios";
 import {UserContext} from "../../UserContext";
 import {getSessionCookie} from "../../sessions";
 import BoxConfermaInserimento from "./boxconfermainserimento";
+import home from "../login/home.jpg";
+import personale from "./personale1.jpg"
 
 
 const InserisciStruttura=()=>{
@@ -229,12 +231,15 @@ const InserisciStruttura=()=>{
 
         return(
 
+
+
             <div>
 
 
 
 
-                <div  className="container mt-10" style={{width:"50%"}}>
+                <div  className="container mt-10" style={{margin:"auto",marginTop:"50px", border:"2px solid orange",borderRadius:"25px",width:"50%"}}>
+                    <img src={personale} style={{marginLeft:"280px",marginTop:"30px",height:"120px",width:"210px"}}/>
                     <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
 
                         <label htmlFor="nome_struttura">Nome struttura*</label>
@@ -244,24 +249,27 @@ const InserisciStruttura=()=>{
                             Inserire nome della struttura
                         </div>
                     <div className="form-group">
-
-                        <p className="lead text-uppercase">Indirizzo Struttura</p>
-                    <div class="col-3">
-                        <label htmlFor="stato">Stato*</label>
-                        <input id="stato" name="stato" type="text" className="form-control" maxLength="40"
-                               value={state.stato} onChange={handleChangeStato} required/>
-                        <div className="invalid-feedback">
-                            Inserire Stato
+                    <div className="row">
+                        <div class="col-4">
+                            <label htmlFor="stato">Stato*</label>
+                            <input id="stato" name="stato" type="text" className="form-control" maxLength="40"
+                                   value={state.stato} onChange={handleChangeStato} required/>
+                            <div className="invalid-feedback">
+                                Inserire Stato
+                            </div>
                         </div>
-                    </div>
-                        <div className="col-3">
+                        <div className="col-4">
                         <label htmlFor="regione">Regione*</label>
                         <input id="regione" name="regione" type="text" className="form-control" maxLength="40"
                                value={state.regione} onChange={handleChangeRegione} required/>
                         <div className="invalid-feedback">
                             Inserire Regione
                         </div>
+
+
                         </div>
+
+
                             <div className="col-4">
                         <label htmlFor="citta">Città*</label>
                         <input id="citta" name="citta" type="text" className="form-control" maxLength="40"
@@ -270,6 +278,7 @@ const InserisciStruttura=()=>{
                             Inserire Città
                         </div>
                             </div>
+                    </div>
                         <label htmlFor="indirizzo_struttura">Indirizzo*</label>
                         <input id="indirizzo_struttura" name="indirizzo_struttura" type="text" className="form-control"
                                maxLength="40" value={state.indirizzo_struttura} onChange={handleChangeIndirizzoStruttura}
@@ -285,7 +294,6 @@ const InserisciStruttura=()=>{
                         </div>
                     </div>
                         <div className="form-group">
-                            <p className="lead text-uppercase">Dati Struttura</p>
                             <label htmlFor="tipo">Tipo Struttura*</label>
                             <br></br>
                             <div className="custom-control custom-radio custom-control-inline mt-2">
@@ -348,23 +356,21 @@ const InserisciStruttura=()=>{
                             </div>
                         </div>
                         <div className="form-group">
-                            <p className="lead text-uppercase">Immagini della Struttura</p>
-                            <label htmlFor="immagine1">Immagine 1</label>
-                            <input id="immagine1" name="immagine1" type="file" className="form-control" maxLength="40"
-                                   value={state.immagine1} onChange={handleChangeImg1} />
+                            <h5>Immagini della Struttura</h5>
 
-                            <label htmlFor="immagine2">Immagine 2</label>
-                            <input id="immagine2" name="immagine2" type="file" className="form-control" maxLength="40"
-                                   value={state.immagine2} onChange={handleChangeImg2} />
-
-                            <label htmlFor="immagine3">Immagine 3</label>
-                            <input id="immagine3" name="immagine3" type="file" className="form-control" maxLength="40"
-                                   value={state.immagine3} onChange={handleChangeImg3} />
-
+                            <Button id="immagine1" name="immagine1" type="file" className="form-control" maxLength="40"
+                                    value={state.immagine1} onChange={handleChangeImg1}
+                                    color="inherit" href="/login" style={{color:"#ff6300"}}>Clicca per inserire una immagine</Button>
+                            <Button id="immagine2" name="immagine2" type="file" className="form-control" maxLength="40"
+                                    value={state.immagine2} onChange={handleChangeImg1}
+                                    color="inherit" href="/login" style={{color:"#ff6300"}}>Clicca per inserire una immagine</Button>
+                            <Button id="immagine3" name="immagine3" type="file" className="form-control" maxLength="40"
+                                    value={state.immagine3} onChange={handleChangeImg1}
+                                    color="inherit" href="/login" style={{color:"#ff6300"}}>Clicca per inserire una immagine</Button>
 
                         </div>
                         <div className="form-group">
-                            <p className="lead text-uppercase">Inserimento Prima Camera</p>
+                            <h5>Inserimento Prima Camera</h5>
                             <label htmlFor="numero_posti_letto">Numero di Posti Letto*</label>
                             <input id="numero_posti_letto" name="numero_posti_letto" type="number" className="form-control" maxLength="40"
                                    value={state.numero_posti_letto} onChange={handleChangeNumPostiLetto} required/>
@@ -402,8 +408,10 @@ const InserisciStruttura=()=>{
                             <Form.Label>Breve Descrizione della Struttura</Form.Label>
                             <Form.Control as="textarea" rows="3" onChange={handleChangeDescrizione} />
                         </Form.Group>
+                        <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"400px",color:"#ff6300"}}>Invia</Button>
+                        <br></br>
+                        <br></br>
 
-                        <button name="ok" id='ok' type="submit" onClick={handleSubmit} className="btn btn-primary mt-3">Invia</button>
                     </form>
                     <BoxConfermaInserimento
                     open={open}

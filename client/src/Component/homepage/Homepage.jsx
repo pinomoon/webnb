@@ -34,7 +34,7 @@ class Homepage extends Component{
                              <div className="form-row"style={{height:"45px",width:"780px",marginLeft:"350px",border:"1px solid #ff6300",backgroundColor:"white"}} >
 
                                  <div className="form-group col" >
-                                     <Input type="email" name="email" id="exampleEmail" placeholder="Dove vuoi andare?" style={{backgroundColor:"white",color:"#FC5902"}} />
+                                     <Input type="email" name="email" id="exampleEmail" placeholder="Dove vuoi andare?" style={{backgroundColor:"white"}}/>
 
                                  </div>
 

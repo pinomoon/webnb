@@ -5,7 +5,7 @@ import HomepageHost from "./Component/homepage/HomepageHost";
 import Homepage from "./Component/homepage/Homepage";
 import {Switch,Route} from "react-router"
 import {BrowserRouter} from "react-router-dom";
-import PaginaLogin from "./Component/login/PaginaLogin"
+import PaginaLogin from "./Component/login/login"
 import PaginaRegistrazione from "./Component/registrazione/PaginaRegistrazione"
 import PaginaModificaAccount from "./Component/modifica_account/PaginaModificaAccount"
 import PaginaProfilo from "./Component/profilo/PaginaProfilo";
@@ -24,6 +24,8 @@ import {getSessionCookie} from "./sessions";
 import RecuperaPassword from "./Component/pagineFuoriSicurezza/recuperapassword";
 import PasswordDimenticata from "./Component/login/passwordDimenticata";
 import ConfermaAccount from "./Component/pagineFuoriSicurezza/confermaAccount";
+import GestisciPrenotazioni from "./Component/GestionePrenotazioni/GestisciPrenotazioni";
+import CadutaConnessione from "./Component/Caduta Connessione/CadutaConnessione";
 
 
 
@@ -46,7 +48,7 @@ const App= ()=> {
                     <Header/>
 
                     <main>
-                        <button onClick={handleAlert}>Prova</button>
+
 
                         <Switch>
 
@@ -67,7 +69,9 @@ const App= ()=> {
                         <Route path="/recuperaCredenziali" component={RecuperaPassword}/>
                         <Route path="/login/passwordDimenticata" component={PasswordDimenticata} exact/>
                         <Route path="/accountConferma" component={ConfermaAccount} />
-                        <Route path="*" component={()=>{"404 NOT FOUND"}}/>
+                            <Route path="/gestisciprenotazione" component={GestisciPrenotazioni} />
+
+                            <Route path="*" component={CadutaConnessione}/>
 
                         </Switch>
 
