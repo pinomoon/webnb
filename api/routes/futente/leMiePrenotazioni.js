@@ -15,19 +15,21 @@ async function elenco(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async() => {
-            results = await db.query("SELECT * FROM utente,prenotazione WHERE prenotazione.id_utente=utente.id_utente \
+            results = await db.query("SELECT *\
+            FROM utente,prenotazione \
+            WHERE prenotazione.id_utente=utente.id_utente \
             AND utente.id_utente=?\
              ORDER BY stato_prenotazione ASC ,data_prenotazione DESC ",[req.body.id_utente])
                 .catch(err=>{
                     throw err;
                 });
-            var risultato=['1',results];
+            var risultato=['1',results]; //elenco prenotazioni inviato correttamente
             res.send(risultato);
         })
 
     }catch(err){
         console.log(err);
-        res.send('2');
+        res.send('2'); //errore nel recupero dell'elenco prenotazioni
         next(createError(500));
     }
 }
@@ -42,7 +44,8 @@ async function annulla(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async() => {
-            results = await db.query("SELECT data_inizio,disdetta_gratuita,modalita_di_pagamento FROM prenotazione \
+            results = await db.query("SELECT data_inizio,disdetta_gratuita,modalita_di_pagamento \
+            FROM prenotazione \
             WHERE prenotazione.id_prenotazione=?",[req.body.id_prenotazione ])
                 .catch(err=>{
                     throw err;
@@ -55,7 +58,7 @@ async function annulla(req, res, next) {
                 WHERE prenotazione.id_prenotazione=",[req.body.id_prenotazione]).catch(err=>{
                     throw err;
                 })
-                res.rend('1');
+                res.rend('1'); //Prenotazione annullata e pagamento effettuato
             }
             else if((results[0].modalita_di_pagamento=='carta') && (data_inizio.getTime()-datenow.getTime()>=(results[0].disdetta_gratuita*86400000))){
                 /* effettua rimborso */
@@ -63,12 +66,12 @@ async function annulla(req, res, next) {
                 WHERE prenotazione.id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{
                     throw err;
                 })
-                res.rend('2');
+                res.rend('2'); //prenotazione annullata e rimborso effettuato
             }
         })
     }catch(err){
         console.log(err);
-        res.send('3');
+        res.send('3'); 
         next(createError(500));
     }
 }
@@ -101,7 +104,7 @@ async function recensisci(req, res, next) {
                 .catch(err=>{
                     throw err;
                 });
-            res.send('1');
+            res.send('1'); //recensione effettuata correttamente
         })
     }catch(err){
         console.log(err);

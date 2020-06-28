@@ -23,15 +23,16 @@ async function gestisciPrenotazioni(req,res,next){
     let results={};
 try {
     await withTransaction(db, async () => {
-        results = (await db).query("SELECT nome_struttura,nome_camera,stato_prenotazione FROM utente AS u, camera AS c, struttura AS s ,prenotazione AS p\
+        results = await db.query("SELECT nome_struttura,nome_camera,stato_prenotazione FROM utente AS u, camera AS c, struttura AS s ,prenotazione AS p\
             WHERE p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND s.id_utente=u.id_utente \
             AND u.id_utente=? ORDER BY stato_prenotazione ASC ,data_prenotazione DESC " , [req.body.id_utente]).catch(err => {
             throw err;
         })
-        res.send(results);
+        var risultato=['1',results];
+        res.send(risultato); //
     })
 }catch (error) {
-    res.send('error');
+    res.send('2');
     throw error;
 }
 
@@ -112,10 +113,10 @@ async function confermaPrenotazione(res,req,next){
             }
             
             
-            res.send("success");
+            res.send("1");
         })
     }catch(error){
-        res.send('error');
+        res.send('2');
         throw error;
     }
 }
@@ -157,12 +158,12 @@ async function rifiutaPrenotazione(req,res,next){
                     console.log('Email sent: ' + info.response);
                 }
             })
-            res.send("success");
+            res.send("1");
             
         })
         
     }catch (error) {
-        res.send("error");
+        res.send("2");
         throw error;
     }
 
@@ -269,11 +270,11 @@ async function checkinQuestura(res,req,next){
                 req.body.id_prenotazione
             ])
 
-            res.send("success");
+            res.send("1");
 
         })
     }catch(error){
-        res.send("error");
+        res.send("2");
         throw error;
     }
 }
@@ -307,10 +308,10 @@ async function inserisciOspiti(res,req,next){
             })
 
 
-            res.send("success");
+            res.send("1");
         })
     }catch (error) {
-        res.send("error");
+        res.send("2");
         throw error
     }
 }
@@ -330,10 +331,10 @@ async function eliminaOspiti(req,res,next){
          }).catch(err=>{
              throw err;
          })
-
+         res.send('1'); // Ospite eliminato
      });
      }catch(err){
-         res.send("error");
+         res.send("2");
          throw err;}
 }
 
@@ -360,11 +361,11 @@ async function modificaDatiOspiti(res,req,next){
             ]).catch(err=>{
                 throw err;
             })
-            res.send("success");
+            res.send("1");
         })
 
     }catch(err){
-        res.send("error");
+        res.send("2");
     }
 }
 
@@ -379,9 +380,10 @@ async function checkIN(res,req,next){
         results= await withTransaction(db,async ()=>{
             (await db).query("SELECT * FROM dati_ospiti WHERE id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{throw err;})
         })
-        res.send(results);
+        var risultato=['1',results];
+        res.send(risultato);
     }catch (error) {
-        res.send("error");
+        res.send("2");
         throw error;
 
     }
@@ -428,10 +430,10 @@ async function checkoutAutomatico(res,req,next){
             })
 
         }
-        res.send("success")
+        res.send("1");
 
     }catch (error) {
-        res.send('error');
+        res.send('2');
     }
 
 }
@@ -449,10 +451,10 @@ async function checkoutManuale(req,res,next){
             await db.query("UPDATE prenotazione SET stato_prenotazione='soggiorno concluso' WHERE id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{
                 throw err;
             })
-            res.send("success");
+            res.send("1");
         })
     }catch(error){
-        res.send('error');
+        res.send('2');
     }
 }
 

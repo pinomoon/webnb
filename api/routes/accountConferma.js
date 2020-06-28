@@ -17,11 +17,13 @@ async function confermacc(req,res,next){
     try {
 
         await withTransaction(db, async() => {
-            results=await  db.query("SELECT conferma_account FROM utente WHERE utente.token=?",[req.body.token]).catch(err=>{})
+            results=await  db.query("SELECT conferma_account FROM utente WHERE utente.token=?"
+            ,[req.body.token]).catch(err=>{});
             if(results[0].conferma_account==true){
                 res.send("3"); //La tua email è già stata verificata, effettua l'accesso
             }else{
-                results = await db.query("UPDATE `utente` SET conferma_account=true WHERE `utente`.token=?",[req.body.token])
+                results = await db.query("UPDATE `utente` SET conferma_account=true WHERE `utente`.token=?"
+                ,[req.body.token])
                 .catch(err => {
                     throw err;
                 });
