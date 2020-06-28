@@ -238,7 +238,7 @@ const InserisciStruttura=()=>{
 
 
 
-                <div  className="container mt-10" style={{margin:"auto",marginTop:"50px", border:"2px solid orange",borderRadius:"25px",width:"50%"}}>
+                <div  className="container mt-10" style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"50%"}}>
                     <img src={personale} style={{marginLeft:"280px",marginTop:"30px",height:"120px",width:"210px"}}/>
                     <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
 

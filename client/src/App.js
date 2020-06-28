@@ -69,9 +69,8 @@ const App= ()=> {
                         <Route path="/recuperaCredenziali" component={RecuperaPassword}/>
                         <Route path="/login/passwordDimenticata" component={PasswordDimenticata} exact/>
                         <Route path="/accountConferma" component={ConfermaAccount} />
-                            <Route path="/gestisciprenotazione" component={GestisciPrenotazioni} />
-
-                            <Route path="*" component={CadutaConnessione}/>
+                        <Route path="/gestisciprenotazione" component={GestisciPrenotazioni} />
+                        <Route path="*" component={CadutaConnessione}/>
 
                         </Switch>
 

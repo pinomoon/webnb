@@ -28,7 +28,7 @@ const Header =()=>{
       return(
 
           <div style={{position:"relative", height:"7%" ,width:"100%"} }>
-              <Navbar bg="light" style={{color:"#6495ED"}} >
+              <Navbar bg="light" style={{color:"#6495ED",borderBottom:"2px solid #ff6300",borderTop:"2px solid #ff6300"}} >
                       <Navbar.Brand href="/"><img src={logo} width="100" height="50"/></Navbar.Brand>
                       <Navbar.Toggle aria-controls="basic-navbar-nav" />
                       <Navbar.Collapse id="basic-navbar-nav">
@@ -70,8 +70,8 @@ const Header =()=>{
 
                                       <Dropdown.Menu>
                                           <Dropdown.Item href="/modificaaccount">Modifica Account</Dropdown.Item>
-                                          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                                          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                                          <Dropdown.Item href="/gestisciprenotazione">Gestisci prenotazioni</Dropdown.Item>
+                                          <Dropdown.Item href="/ufficioturismo">Ufficio Turismo</Dropdown.Item>
                                       </Dropdown.Menu>
                                   </Dropdown>
                                   <Logout/>
