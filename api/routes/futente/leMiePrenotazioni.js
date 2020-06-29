@@ -18,7 +18,7 @@ async function elenco(req, res, next) {
             results = await db.query("SELECT *\
             FROM utente,prenotazione \
             WHERE prenotazione.id_utente=utente.id_utente \
-            AND utente.id_utente=?\
+            AND utente.id_utente=? AND prenotazione.conferma=1\
              ORDER BY stato_prenotazione ASC ,data_prenotazione DESC ",[req.body.id_utente])
                 .catch(err=>{
                     throw err;
@@ -44,14 +44,14 @@ async function annulla(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async() => {
-            results = await db.query("SELECT data_inizio,disdetta_gratuita,modalita_di_pagamento \
+            results = await db.query("SELECT stato_prenotazione,data_inizio,disdetta_gratuita,modalita_di_pagamento \
             FROM prenotazione \
             WHERE prenotazione.id_prenotazione=?",[req.body.id_prenotazione ])
                 .catch(err=>{
                     throw err;
                 });
             let datenow=new Date();
-
+        if(results[0].stato_prenotazione=='confermata'){
             if((results[0].modalita_di_pagamento=='struttura') && (data_inizio.getTime()-datenow.getTime()<(results[0].disdetta_gratuita*86400000))){
                 /* effettua pagaemento */
                 result= await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione=annullata AND prenotazione.stato_pagamento=true \
@@ -68,6 +68,18 @@ async function annulla(req, res, next) {
                 })
                 res.rend('2'); //prenotazione annullata e rimborso effettuato
             }
+        }
+        else if(results[0].stato_prenotazione=='in attesa di conferma'){
+            result= await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione=annullata \
+                WHERE prenotazione.id_prenotazione=?"
+                ,[
+                    req.body.id_prenotazione
+                ]).catch(err=>{
+                    throw err;
+                })
+                res.rend('3'); //prenotazione annullata//
+            }
+        
         })
     }catch(err){
         console.log(err);
