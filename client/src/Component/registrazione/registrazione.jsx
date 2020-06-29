@@ -182,7 +182,7 @@ const Registrazione=()=>{
                     <div className="col">
 
                     </div>
-                    <div className="col-6">
+                    <div className="col-sm-12 col-md-9 col-lg-6">
             <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
                 <img src={user} style={{margin:"auto",marginTop:"30px",width:"30%",height:"30%",display:"block"}}/>
 

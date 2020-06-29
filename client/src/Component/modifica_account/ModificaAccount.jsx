@@ -201,7 +201,7 @@ const ModificaAccount=()=>{
                     <div className="col">
 
                     </div>
-                    <div className="col-6">
+                    <div className="col-sm-12 col-md-9 col-lg-6">
             <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
 
                 <img src={ma} style={{margin:"auto",marginTop:"30px",height:"30%",width:"40%",display:"block"}}/>
@@ -264,7 +264,7 @@ const ModificaAccount=()=>{
                                 </div>
                             </div>
 
-                            <div className="col-3">
+                            <div className="col-6">
                                 <label htmlFor="name">Città</label>
                                 <input id="citta" name="citta" type="text" className="form-control" maxLength="40"
                                        value={state.citta} onChange={handleChangeCitta} required/>
@@ -272,16 +272,20 @@ const ModificaAccount=()=>{
                                     Inserire Città
                                 </div>
                             </div>
-
-                            <div className="col-3">
+                        </div>
+                            <div className="row">
+                            <div className="col-5">
                                 <label htmlFor="name">CAP</label>
                                 <input id="cap" name="cap" type="text" className="form-control" maxLength="40"
                                        value={state.cap} onChange={handleChangeCap} required/>
                                 <div className="invalid-feedback">
                                     Inserire CAP
                                 </div>
-                            </div>
-                        </div>
+
+                    </div>
+                    </div>
+
+
                     </div>
 
                     <h5>Dati di Pagamento</h5>

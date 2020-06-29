@@ -54,7 +54,7 @@ const App= ()=> {
 
                         <Switch>
 
-                        <PrivateRoute path="/aboutus" component={PaginaAboutUs} exact/>
+                        <Route path="/aboutus" component={PaginaAboutUs} exact/>
                         <Route path="/" component={Homepage} exact/>
                         <Route path="/profilo" component={PaginaProfilo} exact/>
                         <Route path="/host" component={HomepageHost} exact/>
@@ -73,9 +73,8 @@ const App= ()=> {
                         <Route path="/accountConferma" component={ConfermaAccount} />
                         <Route path="/gestisciprenotazione" component={GestisciPrenotazioni} />
                         <Route path="/ricercastruttura" component={RicercaStruttura} />
-                            <Route path="/prova" component={Prova} />
-
-                            <Route path="*" component={CadutaConnessione}/>
+                        <Route path="/prova" component={Prova} />
+                        <Route path="*" component={CadutaConnessione}/>
 
                         </Switch>
 

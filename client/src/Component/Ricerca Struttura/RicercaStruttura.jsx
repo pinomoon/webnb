@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
-import Footer from "../footer/Footer";
 import Input from "@material-ui/core/Input/Input";
-import Button1 from "@material-ui/core/Button";
 
 import { Collapse, Button, CardBody, Card } from 'reactstrap';
 import UncontrolledCollapse from "reactstrap/es/UncontrolledCollapse";
-import ListGroup from "react-bootstrap/ListGroup";
 import simpson from "./casa-simpson-690x362.jpg"
 
 

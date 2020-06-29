@@ -105,7 +105,7 @@ const Login =()=>{
                     <div className="col">
 
                     </div>
-                    <div className="col-6">
+                    <div className="col-sm-12 col-md-9 col-lg-6">
             <div style={{marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
                 <img src={home} style={{margin:"auto",marginTop:"30px",width:"30%",height:"20%",display:"block"}}/>
 

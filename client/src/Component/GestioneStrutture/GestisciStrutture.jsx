@@ -17,7 +17,7 @@ class GestisciStrutture extends Component{
                     <div className="col-1">
 
                     </div>
-                    <div className="col-10">
+                    <div className="col-sm-12 col-md-12 col-lg-10">
                        <div className="row">
                            <div className="col-3">
                 <section className="cards clearfix">

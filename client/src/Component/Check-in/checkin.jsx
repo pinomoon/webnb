@@ -16,7 +16,7 @@ class checkin extends Component{
                     <div className="col">
 
                     </div>
-                    <div className="col-6">
+                    <div className="col-sm-12 col-md-9 col-lg-6">
 
 
                 <div style={{margin:"auto", width:"100%",marginTop:"30px"}}>

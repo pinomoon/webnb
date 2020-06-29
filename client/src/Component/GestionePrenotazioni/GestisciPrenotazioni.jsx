@@ -14,30 +14,30 @@ class GestisciPrenotazioni extends Component{
                     <div className="col-1">
 
                     </div>
-                    <div className="col-10">
+                    <div className="col-sm-12 col-md-12 col-lg-10">
                 <div style={{margin:"auto",width:"100%"}}>
                     <h3>Lista prenotazioni</h3>
                     <br/>
                 <ListGroup variant="flush">
                     <ListGroup.Item>
                         <div className="row">
-                            <div className="col-4"><h5>Id Prenotazione</h5></div>
-                            <div className="col-6"> <h5> Stato</h5></div>
-                            <div className="col-2"></div>
+                            <div className="col-4"><h5>Id:</h5></div>
+                            <div className="col-5"> <h5> Stato:</h5></div>
+                            <div className="col-3"></div>
                         </div>
                     </ListGroup.Item>
                     <ListGroup.Item>
                         <div className="row">
                             <div className="col-4"> Prenotazione #0001</div>
-                            <div className="col-6"> <a style={{color:"#00ff55"}}>Confermato</a></div>
-                            <div className="col-2"><Button color="inherit" href="/checkin" style={{color:"#ff6300"}}>Check-in</Button></div>
+                            <div className="col-5"> <a style={{color:"#00ff55"}}>Confermato</a></div>
+                            <div className="col-3"><Button color="inherit" href="/checkin" style={{color:"#ff6300"}}>Check-in</Button></div>
                         </div>
                     </ListGroup.Item>
                     <ListGroup.Item>
                         <div className="row">
                             <div className="col-4"> Prenotazione #0002</div>
-                            <div className="col-6"> In attesa di conferma</div>
-                            <div className="col-2">
+                            <div className="col-5"> In attesa di conferma</div>
+                            <div className="col-3">
                                 <Button color="inherit" href="/" style={{color:"#ff6300"}}>Accetta</Button>
                                 <br/>
                                 <Button color="inherit" href="/" style={{color:"#ff6300"}}>Rifiuta</Button>
