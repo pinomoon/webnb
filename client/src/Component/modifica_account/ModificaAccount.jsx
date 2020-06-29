@@ -4,6 +4,9 @@ import {getSessionCookie, getUserCookie, setUserCookie} from "../../sessions";
 import BoxConferma from "../registrazione/boxconferma";
 import BoxRifiuto from "../registrazione/boxrifiuto";
 import BoxConfermaModifica from "./boxconfermamodifica";
+import user from "../registrazione/user.png";
+import Button from "@material-ui/core/Button";
+import ma from "./ma.png"
 
 
 
@@ -192,11 +195,13 @@ const ModificaAccount=()=>{
 
 
         return(
+            <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"650px",height:"auto"}}>
 
+                <img src={ma} style={{marginLeft:"220px",marginTop:"30px",height:"150px",width:"190px"}}/>
             <div className="container mt-10" >
                 <form name="form" id="form"  className="container was-validated col-sm-8 mt-3" method="POST">
 
-                    <p className="lead text-uppercase">Dati anagrafici</p>
+                    <h5>Modfica dati anagrafici</h5>
 
                     <div className="form-group">
                         <label htmlFor="name">Nome *</label>
@@ -229,6 +234,8 @@ const ModificaAccount=()=>{
                         </div>
                     </div>
                     <div className="form-group">
+                        <br/>
+
                         <label htmlFor="birthdate">Data di Nascita *</label>
                         <input name="data_di_nascita" id="birthdate" type="date" className="form-control"
                                value={state.data_di_nascita} onChange={handleChangeDataNascita} required/>
@@ -236,70 +243,78 @@ const ModificaAccount=()=>{
                             Selezionare la data di nascita
                         </div>
                     </div>
-
-                    <p className="lead text-uppercase mt-3">Indirizzo di Residenza</p>
+                    <h5>Indirizzo di Residenza</h5>
 
                     <div className="form-group">
-                        <div className="col-6">
-                            <label htmlFor="name">Via/Piazza</label>
-                            <input id="indirizzo" name="indirizzo" type="text" className="form-control"
-                                   maxLength="40" value={state.indirizzo} onChange={handleChangeIndirizzo}
-                                   required/>
-                            <div className="invalid-feedback">
-                                Inserire Via e Numero Civico
+                        <div className="row">
+                            <div className="col-6">
+                                <label htmlFor="name">Via/Piazza</label>
+                                <input id="indirizzo" name="indirizzo" type="text" className="form-control"
+                                       maxLength="40" value={state.indirizzo} onChange={handleChangeIndirizzo}
+                                       required/>
+                                <div className="invalid-feedback">
+                                    Inserire Via e Numero Civico
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="col-3">
-                            <label htmlFor="name">Città</label>
-                            <input id="citta" name="citta" type="text" className="form-control" maxLength="40"
-                                   value={state.citta} onChange={handleChangeCitta} required/>
-                            <div className="invalid-feedback">
-                                Inserire Città
+                            <div className="col-3">
+                                <label htmlFor="name">Città</label>
+                                <input id="citta" name="citta" type="text" className="form-control" maxLength="40"
+                                       value={state.citta} onChange={handleChangeCitta} required/>
+                                <div className="invalid-feedback">
+                                    Inserire Città
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="col-3">
-                            <label htmlFor="name">CAP</label>
-                            <input id="cap" name="cap" type="text" className="form-control" maxLength="40"
-                                   value={state.cap} onChange={handleChangeCap} required/>
-                            <div className="invalid-feedback">
-                                Inserire CAP
+                            <div className="col-3">
+                                <label htmlFor="name">CAP</label>
+                                <input id="cap" name="cap" type="text" className="form-control" maxLength="40"
+                                       value={state.cap} onChange={handleChangeCap} required/>
+                                <div className="invalid-feedback">
+                                    Inserire CAP
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <p className="lead text-uppercase mt-3">Dati di Pagamento</p>
+                    <h5>Dati di Pagamento</h5>
 
                     <div className="form-group">
-                        <div className="col-6">
-                            <label htmlFor="credit-card">Titolare Carta di Credito</label>
-                            <input name="titolare_carta" id="titolare_carta" type="name" className="form-control"
-                                   size="32" maxLength="40"
-                                   value={state.titolare_carta} onChange={handleChangeTitolareCarta}/>
+                        <div className="row">
+                            <div className="col-6">
+                                <label htmlFor="credit-card">Titolare Carta di Credito</label>
+                                <input name="titolare_carta" id="titolare_carta" type="name" className="form-control"
+                                       size="32" maxLength="40"
+                                       value={state.titolare_carta} onChange={handleChangeTitolareCarta}/>
+                            </div>
+                            <div className="col-6">
+                                <label htmlFor="credit-card">Carta di Credito</label>
+                                <input name="numero_carta" id="numero_carta" type="credit-card" className="form-control"
+                                       size="32" maxLength="40"
+                                       value={state.numero_carta} onChange={handleChangeNumeroCarta}/>
+                            </div>
                         </div>
-                        <div className="col-6">
-                            <label htmlFor="credit-card">Carta di Credito</label>
-                            <input name="numero_carta" id="numero_carta" type="credit-card" className="form-control"
-                                   size="32" maxLength="40"
-                                   value={state.numero_carta} onChange={handleChangeNumeroCarta}/>
-                        </div>
+                        <br/>
+                        <div className="row">
+                            <div className="col-3">
+                                <label htmlFor="credit-card">Scadenza</label>
+                                <input name="scadenza" id="scadenza" type="text" className="form-control"
+                                       size="32" maxLength="40"
+                                       value={state.scadenza} onChange={handleChangeScadenza}/>
+                            </div>
 
-                        <div className="col-3">
-                            <label htmlFor="credit-card">Scadenza</label>
-                            <input name="scadenza" id="scadenza" type="text" className="form-control"
-                                   size="32" maxLength="40"
-                                   value={state.scadenza} onChange={handleChangeScadenza}/>
-                        </div>
 
-                        <div className="col-3">
-                            <label htmlFor="credit-card">CVC</label>
-                            <input name="cvc" id="cvc" type="text" className="form-control"
-                                   size="32" maxLength="40"
-                                   value={state.cvc} onChange={handleChangeCvc}/>
+                            <div className="col-3">
+                                <label htmlFor="credit-card">CVC</label>
+                                <input name="cvc" id="cvc" type="text" className="form-control"
+                                       size="32" maxLength="40"
+                                       value={state.cvc} onChange={handleChangeCvc}/>
+                            </div>
                         </div>
+                        <br/>
 
-                        <p className="lead text-uppercase mt-3">Modifica Password</p>
+
+                        <h5>Modifica Password</h5>
 
                         <div className="form-group">
                             <label htmlFor="repass">Vecchia Password </label>
@@ -331,10 +346,12 @@ const ModificaAccount=()=>{
 
                     </div>
 
-                    <button name="ok" id="ok" type="submit" onClick={handleSubmit}
-                            className="btn btn-primary mt-3">Invia
-                    </button>
+                    <br></br>
+
+                    <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"400px",color:"#ff6300"}}>Invia</Button>
+
                 </form>
+            </div>
                 <BoxConfermaModifica
                     open={openConferma}
                     onClose={handleCloseConferma}

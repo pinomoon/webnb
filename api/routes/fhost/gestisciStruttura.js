@@ -17,14 +17,20 @@ async function elencoStrutture(req,res,next) {
 
 
         await withTransaction(db, async () => {
-            results = await db.query("SELECT id_struttura,nome_struttura, tipo, immagine_1 FROM strutture, gallery_strutture WHERE id_utente=?", [req.body.id_utente])
-            res.send(results);
-        }).catch(err => {
-            throw err;
+            results = await db.query("SELECT id_struttura,nome_struttura, tipo, immagine_1 \
+            FROM strutture, gallery_strutture \
+            WHERE id_utente=?"
+            , [
+                req.body.id_utente
+            ]).catch(err=>{
+                throw err;
+            });
+            var risultato=['1',results];
+            res.send(risultato); //elenco strutture caricato correttamente
         })
 
-    }catch (error) {
-        res.send('siamo spiacenti si è verificato un errore inatteso');
+    }catch(err) {
+        res.send('2'); //'siamo spiacenti si è verificato un errore inatteso'
     }
 }
 
@@ -42,16 +48,20 @@ async function modificaStruttura(req,res,next){
 
 
         await withTransaction(db, async () => {
-            results = await db.query("SELECT * FROM struttura,camera WHERE struttura.id_struttura=? AND struttura.id_struttura=camera.id_struttura", [req.body.id_struttura]);
-            res.send(results);
-        }).catch(err => {
+            results = await db.query("SELECT * \
+            FROM struttura,camera \
+            WHERE struttura.id_struttura=? AND struttura.id_struttura=camera.id_struttura"
+            , [req.body.id_struttura])
+            .catch(err => {
             throw  err;
 
         });
-        res.send("success");
+        var risultato=['1',results];
+        res.send(risultato);
+    })
 
     }catch (error) {
-        res.send('spiacenti si è verificato un errore inatteso')
+        res.send('2');//'spiacenti si è verificato un errore inatteso'
 
     }
 
@@ -87,12 +97,12 @@ async function salvaModificheStruttura(req,res,next) {
             ]).catch(err => {
                 throw err;
             })
-            res.send("success");
+            res.send("1"); //Modifiche apportate con successo
         })
 
 
     }catch (error) {
-        res.send('error');
+        res.send('2'); //Errore
         throw error;
     }
 
@@ -120,11 +130,11 @@ async function aggiungiCamera(res,req,next){
             ]).catch(err => {
                 throw err;
             });
-            res.send("success");
+            res.send("1");//  Camera aggiunta con successo
         })
 
     }catch(err) {
-        res.send('error');
+        res.send('2');
         throw error;
     }
 }
@@ -144,7 +154,7 @@ async function modificaCamera(res,req,next){
             ]).catch(err=>{
                 throw err;
             })
-            res.send("success");
+            res.send("1");// Camera modificata con successo
         })
 
     }catch (error) {
@@ -166,11 +176,11 @@ async function eliminaCamera(req,res,next) {
             ]).catch(err => {
                 throw err;
             })
-            res.send("success");
+            res.send("1"); //Camera eliminata
         })
 
     }catch(err){
-        res.send('error');
+        res.send('2');
     }
 }
 
@@ -187,10 +197,10 @@ async function  eliminaStruttura(res,req,next){
         ]).catch(err=>{
             throw err;
         })
-        res.send("success");
+        res.send("1"); // elimina struttura
         });
     }catch (error) {
-        res.send("error");
+        res.send("2"); //
         throw error;
     }
 }

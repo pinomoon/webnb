@@ -3,7 +3,7 @@ html,body{height: 100%;}
 .cover{
 
     height: 100%;
-    background-image: url(https://source.unsplash.com/user/erondu);
+    background-image: url(https://source.unsplash.com/1280x720/?travel);
     background-size: cover;
     -o-background-size:cover;
     -moz-background-size:cover;

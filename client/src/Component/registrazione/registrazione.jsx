@@ -3,6 +3,9 @@ import {Component} from 'react'
 import axios from 'axios';
 import BoxConferma from './boxconferma';
 import BoxRifiuto from "./boxrifiuto";
+import personale from "../GestioneStrutture/personale1.jpg";
+import Button from "@material-ui/core/Button";
+import user from "./user.png"
 
 
 const Registrazione=()=>{
@@ -174,12 +177,17 @@ const Registrazione=()=>{
 
 
         return(
+            <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"650px",height:"auto"}}>
+                <img src={user} style={{marginLeft:"240px",marginTop:"30px",width:"180px",height:"150px"}}/>
 
-                <div className="container mt-10">
-                    <form name="form" id="form"  className="container was-validated col-sm-8 mt-3" method="POST">
+            <div  className="container mt-10" >
 
+                <form name="form" id="form"  className="container was-validated col-sm-8 mt-3" method="POST">
+                    <h5>Per cominciare, sei un ...</h5>
 
-                        <div className="custom-control custom-radio custom-control-inline mt-2">
+                    <div className="row" style={{marginLeft:"130px"}}>
+
+                            <div className="custom-control custom-radio custom-control-inline mt-2">
                             <input type="radio" className="custom-control-input" id="host" name="tipo"
                                    value="0" onChange={handleChangeTipo} required/>
                             <label className="custom-control-label" htmlFor="host">Host</label>
@@ -188,13 +196,12 @@ const Registrazione=()=>{
                             <input type="radio" className="custom-control-input" id="cliente" name="tipo"
                                    value="1" onChange={handleChangeTipo}  required/>
                             <label className="custom-control-label" htmlFor="cliente">Cliente</label>
-                            <br></br>
-                            <div className="invalid-feedback ml-2">
-                                Seleziona il tipo di registrazione da effettuare
-                            </div>
+
                         </div>
 
-                        <p className="lead text-uppercase">Dati anagrafici</p>
+                        </div>
+                        <br/>
+                        <h5>Dati anagrafici</h5>
 
                         <div className="form-group">
                             <label htmlFor="name">Nome *</label>
@@ -227,6 +234,8 @@ const Registrazione=()=>{
                             </div>
                         </div>
                         <div className="form-group">
+                            <br/>
+
                             <label htmlFor="birthdate">Data di Nascita *</label>
                             <input name="data_di_nascita" id="birthdate" type="date" className="form-control"
                                    value={state.data_di_nascita} onChange={handleChangeDataNascita} required/>
@@ -235,9 +244,10 @@ const Registrazione=()=>{
                             </div>
                         </div>
 
-                        <p className="lead text-uppercase mt-3">Indirizzo di Residenza</p>
+                        <h5>Indirizzo di Residenza</h5>
 
                         <div className="form-group">
+                            <div className="row">
                             <div class="col-6">
                                 <label htmlFor="name">Via/Piazza</label>
                                 <input id="indirizzo" name="indirizzo" type="text" className="form-control"
@@ -266,10 +276,12 @@ const Registrazione=()=>{
                                 </div>
                             </div>
                         </div>
+                        </div>
 
-                        <p className="lead text-uppercase mt-3">Dati di Pagamento</p>
+                        <h5 >Dati di Pagamento</h5>
 
                         <div className="form-group">
+                            <div className="row">
                             <div className="col-6">
                                 <label htmlFor="credit-card">Titolare Carta di Credito</label>
                                 <input name="titolare_carta" id="titolare_carta" type="name" className="form-control"
@@ -282,7 +294,9 @@ const Registrazione=()=>{
                                        size="32" maxLength="40"
                                        value={state.numero_carta} onChange={handleChangeNumeroCarta}/>
                             </div>
-
+                            </div>
+                            <br/>
+                            <div className="row">
                             <div className="col-3">
                                 <label htmlFor="credit-card">Scadenza</label>
                                 <input name="scadenza" id="scadenza" type="text" className="form-control"
@@ -290,11 +304,13 @@ const Registrazione=()=>{
                                        value={state.scadenza} onChange={handleChangeScadenza}/>
                             </div>
 
+
                             <div className="col-3">
                                 <label htmlFor="credit-card">CVC</label>
                                 <input name="cvc" id="cvc" type="text" className="form-control"
                                        size="32" maxLength="40"
                                        value={state.cvc} onChange={handleChangeCvc}/>
+                            </div>
                             </div>
 
                         </div>
@@ -335,8 +351,11 @@ const Registrazione=()=>{
                                 Le password devono coincidere
                             </div>
                         </div>
-                        <button name="ok" id="ok" type="submit"  onClick={handleSubmit} className="btn btn-primary mt-3">Invia</button>
-                    </form>
+
+
+                    <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"400px",color:"#ff6300"}}>Invia</Button>
+
+                </form>
                     <BoxConferma
                         open={openConferma}
                         onClose={handleCloseConferma}
@@ -349,6 +368,7 @@ const Registrazione=()=>{
 
 
                 </div>
+            </div>
 
                     );
 

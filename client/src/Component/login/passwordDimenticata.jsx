@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import BoxConfermaRecPass from "./boxconfermarecpass";
+import user from "../registrazione/user.png";
+import Button from "@material-ui/core/Button";
+import ops from "./ops.png"
 const PasswordDimenticata=()=>{
     const [openConferma, setOpenConferma]=React.useState(false);
     const [tipoRisposta, setTipoRisposta]=React.useState("");
@@ -49,9 +52,12 @@ const PasswordDimenticata=()=>{
     const state={email};
 
     return(
+        <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"650px",height:"auto"}}>
+
+            <img src={ops} style={{marginLeft:"290px",marginTop:"30px",height:"200px",width:"80px"}}/>
         <div className="container mt-10">
             <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
-                <p className="lead text-uppercase mt-3">Inserisci E-Mail per Recupero Credenziali</p>
+                <h5 >Inserisci E-Mail per Recupero Credenziali</h5>
 
                     <label htmlFor="email">E-mail</label>
                     <input name="email" id="email" type="email" className="form-control" size="32" maxLength="40" value={state.email}
@@ -59,8 +65,11 @@ const PasswordDimenticata=()=>{
                     <div className="invalid-feedback">
                         Inserire indirizzo e-mail
                     </div>
-                <button name="invia" id="invia" type="submit" onClick={handleSubmit} className="btn btn-primary mt-3">Invia</button>
+                <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"400px",color:"#ff6300"}}>Invia</Button>
+                <br></br>
+                <br></br>
             </form>
+        </div>
         <BoxConfermaRecPass
             open={openConferma}
             onClose={handleClose}

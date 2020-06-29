@@ -1,10 +1,13 @@
 import  * as React from "react";
 import axios from 'axios';
+import home from "./home.jpg"
 import BoxAccesso from './boxconferma';
 import {useContext} from "react";
 import {UserContext} from "../../UserContext";
 import {setSessionCookie, setUserCookie} from "../../sessions";
 import Button from "@material-ui/core/Button";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 
 
 
@@ -97,12 +100,15 @@ const Login =()=>{
             });
     };
         return(
+            <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"450px",height:"450px"}}>
+                <img src={home} style={{marginLeft:"140px",marginTop:"30px",width:"160px",height:"80px"}}/>
 
             <div className="container mt-10">
-            <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
+            <div name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
 
-                <p className="lead text-uppercase mt-3">Autenticazione</p>
+
                 <div className="form-group">
+
                     <label htmlFor="email">E-mail *</label>
                     <input name="email" id="email" type="email" className="form-control" size="32" maxLength="40" value={state.email}
                            onChange={handleChangeEmail} required/>
@@ -121,21 +127,28 @@ const Login =()=>{
                     <div className="valid-feedback text-warning">
                         Password media
                     </div>
+                    <Button id="recupero"  href="https://localhost:3000/login/passwordDimenticata" style={{fontSize:"11px",marginLeft:"-10px",color:"#ff6300"}}><h7>Password dimenticata?</h7></Button>
+
                 </div>
 
-                <button name="ok" id="ok" type="submit" onClick={handleSubmit}className="btn btn-primary mt-3">Login</button>
-            </form>
+
+                <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"190px",color:"#ff6300"}}>Login</Button>
+
+
+
+
+
+            </div>
+
                 <BoxAccesso
                     open={openConferma}
                     onClose={handleCloseConferma}
                     responseType={tipoRisposta}
                 />
-                <Button  id="recupero"  href="https://localhost:3000/login/passwordDimenticata">
-                    Hai dimenticato la password?
-                </Button>
+
 
             </div>
-
+            </div>
 
         );
 

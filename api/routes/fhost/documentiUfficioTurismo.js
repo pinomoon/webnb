@@ -16,6 +16,7 @@ const { makeDb, withTransaction } = require("../../db/dbmiddleware");
 router.post("/",resocontoTrimestre);
 
 async function resocontoTrimestre(req,res,next){
+    try{
     const db = makeDb(config);
 
     let results={};
@@ -76,9 +77,12 @@ async function resocontoTrimestre(req,res,next){
             }
         })
 
-
+        res.send('1');
     })
 
+}catch(err){
+    throw err;
+}
 }
 
 
