@@ -52,7 +52,7 @@ async function registrazione(req, res, next) {
             ]).catch(()=>{
 
 
-                throw res.send("1");
+                throw res.send("1"); //Inserimento utente fallito
             });
 
 
@@ -70,14 +70,14 @@ async function registrazione(req, res, next) {
                     ]
                 ])
                 .catch(err => {
-                    res.send('inserimento carta fallito ');
+                    res.send('3'); //Inserimento carta fallito
                     throw err;
                 });
 
 
             console.log(results);
             console.log(`Utente ${req.body.email} inserito!`);
-            res.send("2");
+            
 
 
 
@@ -111,11 +111,11 @@ async function registrazione(req, res, next) {
                 }
 
             });
-
+            res.send("2");  //Utente inserito correttamente ed email inviata
         });
     } catch (err) {
         console.log(err);
-        res.send("Registrazione fallita");
+        res.send("5"); //Registrazione fallita
         next(createError(500));
     }
 }

@@ -22,7 +22,9 @@ async function autenticazione(req,res, next){
 
         await withTransaction(db, async() => {
 
-            results = await db.query('SELECT *FROM  utente as u,carta_credito as c WHERE u.email = ? AND u.email=c.email', [
+            results = await db.query('SELECT * \
+            FROM  utente as u,carta_credito as c \
+            WHERE u.email = ? AND u.email=c.email', [
                 req.body.email
             ]).catch(err => {
                     throw err;
@@ -44,9 +46,10 @@ async function autenticazione(req,res, next){
                     next(createError(403, 'Password errata'));
                 } else {
 
-                    await db.query('UPDATE `utente` SET `autenticazione`=true WHERE `utente`.id_utente = ?', [
+                    await db.query('UPDATE `utente` SET `autenticazione`=true WHERE `utente`.id_utente = ?', 
+                    [
                     results[0].id_utente,
-                ])
+                    ])
                     .catch(err => {
                         throw err;
                     });
@@ -167,7 +170,7 @@ async function nuovecredenziali(req,res, next){
                 .catch(err => {
                  throw err;
                 });
-                res.send("10");
+                res.send("10"); //Logout effettuato con successo
             })
         }catch(err){
             console.log('Logout fallito, riprova');

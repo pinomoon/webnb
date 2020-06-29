@@ -215,7 +215,10 @@ async function prenota(req, res, next) {
                 });
             
             results= await db.query("SELECT email FROM utente,struttura WHERE struttura.id_utente=utente.id_utente\
-            AND struttura.id_struttura=req.body.id_struttura")
+            AND struttura.id_struttura=?",
+            [
+                req.body.id_struttura
+            ])
             .catch(err=>{
                 throw err;
             });
@@ -245,6 +248,7 @@ async function prenota(req, res, next) {
                 }
 
             });
+            res.send('1'); //Prenotazione effettuata con successo! Email inviate
     })
     }catch(err){
         console.log(err);

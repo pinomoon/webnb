@@ -15,18 +15,20 @@ async function modifica(req, res, next) {
   try {
     await withTransaction(db, async() => {
 
-      results = await db.query('SELECT nome,cognome,data_di_nascita,indirizzo,sesso,citta,cap,cellulare,titolare_carta,numero_carta,scadenza,cvc  FROM utente,carta_credito WHERE utente.email=carta_credito.email AND id_utente = ?', [
+      results = await db.query('SELECT nome,cognome,data_di_nascita,indirizzo,sesso,citta,cap,cellulare,titolare_carta,numero_carta,scadenza,cvc  \
+      FROM utente,carta_credito \
+      WHERE utente.email=carta_credito.email AND id_utente = ?', [
           req.body.id_utente
       ])
           .catch(err => {
               throw err;
           });
-          var risultato=['1',results[0]];
+          var risultato=['1',results[0]]; //Dati ottenuti correttamente
           res.send(risultato);
     })
   }catch(err) {
     console.log(err);
-    res.send("2");
+    res.send("2"); //Ottenimento dati fallito
     next(createError(500));
   }
 }
@@ -131,11 +133,11 @@ async function salvamodifiche(req, res, next) {
             
         ])
         .catch(err => {
-            res.send('2');
+            res.send('2'); //Errore inserimento carta
             throw err;
         });
 
-        res.send("1");
+        res.send("1"); //Modifiche effettuate con successo
   
   }
 })
