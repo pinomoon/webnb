@@ -11,6 +11,7 @@ import {setSessionCookie} from "../../sessions";
 import historyContext from "react-router/modules/HistoryContext";
 import {Redirect, Route} from "react-router";
 import Logout from "../logout/logout";
+import NavDropdown from "react-bootstrap/NavDropdown";
 
 
 
@@ -26,18 +27,21 @@ const Header =()=>{
 
 
       return(
+    <div>
+          <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+              <Navbar.Brand href="/"><img src={logo} width="100" height="50"/></Navbar.Brand>
+              <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+              <Navbar.Collapse id="responsive-navbar-nav">
+                  <Nav className="mr-auto">
+                      <Nav.Link href="/" style={{color:"#ff6300"}}>Home</Nav.Link>
+                      <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>About</Nav.Link>
+                      <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>Lorem</Nav.Link>
+                      <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>Ipsum</Nav.Link>
 
-          <div style={{position:"relative", height:"7%" ,width:"100%"} }>
-              <Navbar bg="light" style={{color:"#6495ED",borderBottom:"2px solid #ff6300"}} >
-                      <Navbar.Brand href="/"><img src={logo} width="100" height="50"/></Navbar.Brand>
-                      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                      <Navbar.Collapse id="basic-navbar-nav">
-                          <Nav className="mr-auto">
-                              <Nav.Link href="/" style={{color:"#ff6300"}}>Home</Nav.Link>
-                              <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>About</Nav.Link>
-                              <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>Lorem</Nav.Link>
-                              <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>Ipsum</Nav.Link>
-                          </Nav>
+                  </Nav>
+
+
+
                           {user.id==null &&
                               <div>
                               <Button color="inherit" href="/login" style={{color:"#ff6300"}}>Accedi</Button>
