@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
-import Footer from "../footer/Footer";
 import Input from "@material-ui/core/Input/Input";
-import Button1 from "@material-ui/core/Button";
 
 import { Collapse, Button, CardBody, Card } from 'reactstrap';
 import UncontrolledCollapse from "reactstrap/es/UncontrolledCollapse";
-import ListGroup from "react-bootstrap/ListGroup";
 import simpson from "./casa-simpson-690x362.jpg"
 
 
@@ -13,7 +10,14 @@ import simpson from "./casa-simpson-690x362.jpg"
 class RicercaStruttura extends Component{
     render(){
         return(
-        <div style={{width:"100%",height:"100%",marginTop:"30px"}}>
+
+        <div className="container">
+            <div className="row">
+                <div className="col-1">
+
+                </div>
+                <div className="col-10">
+        <div style={{width:"auto",height:"100%",marginTop:"30px"}}>
             <div className="row">
             <div className="col-2" style={{backgroundColor:"orange",marginLeft:"150px",height:"auto"}}>
 
@@ -191,6 +195,13 @@ class RicercaStruttura extends Component{
 
 
 
+            </div>
+
+        </div>
+                </div>
+                <div className="col">
+
+                </div>
             </div>
 
         </div>

@@ -177,15 +177,21 @@ const Registrazione=()=>{
 
 
         return(
-            <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"650px",height:"auto"}}>
-                <img src={user} style={{marginLeft:"240px",marginTop:"30px",width:"180px",height:"150px"}}/>
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+
+                    </div>
+                    <div className="col-sm-12 col-md-9 col-lg-6">
+            <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
+                <img src={user} style={{margin:"auto",marginTop:"30px",width:"30%",height:"30%",display:"block"}}/>
 
             <div  className="container mt-10" >
 
                 <form name="form" id="form"  className="container was-validated col-sm-8 mt-3" method="POST">
                     <h5>Per cominciare, sei un ...</h5>
 
-                    <div className="row" style={{marginLeft:"130px"}}>
+                    <div className="row" style={{marginLeft:"auto",display:"block"}}>
 
                             <div className="custom-control custom-radio custom-control-inline mt-2">
                             <input type="radio" className="custom-control-input" id="host" name="tipo"
@@ -283,13 +289,13 @@ const Registrazione=()=>{
                         <div className="form-group">
                             <div className="row">
                             <div className="col-6">
-                                <label htmlFor="credit-card">Titolare Carta di Credito</label>
+                                <label htmlFor="credit-card">Titolare</label>
                                 <input name="titolare_carta" id="titolare_carta" type="name" className="form-control"
                                        size="32" maxLength="40"
                                        value={state.titolare_carta} onChange={handleChangeTitolareCarta}/>
                             </div>
                             <div class="col-6">
-                                <label htmlFor="credit-card">Carta di Credito</label>
+                                <label htmlFor="credit-card">Numero</label>
                                 <input name="numero_carta" id="numero_carta" type="credit-card" className="form-control"
                                        size="32" maxLength="40"
                                        value={state.numero_carta} onChange={handleChangeNumeroCarta}/>
@@ -353,7 +359,7 @@ const Registrazione=()=>{
                         </div>
 
 
-                    <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"400px",color:"#ff6300"}}>Invia</Button>
+                    <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"auto",color:"#ff6300",display:"block"}}>Invia</Button>
 
                 </form>
                     <BoxConferma
@@ -367,6 +373,12 @@ const Registrazione=()=>{
 
 
 
+                </div>
+            </div>
+                    </div>
+                    <div className="col">
+
+                    </div>
                 </div>
             </div>
 

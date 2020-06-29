@@ -195,9 +195,16 @@ const ModificaAccount=()=>{
 
 
         return(
-            <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"650px",height:"auto"}}>
 
-                <img src={ma} style={{marginLeft:"220px",marginTop:"30px",height:"150px",width:"190px"}}/>
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+
+                    </div>
+                    <div className="col-sm-12 col-md-9 col-lg-6">
+            <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
+
+                <img src={ma} style={{margin:"auto",marginTop:"30px",height:"30%",width:"40%",display:"block"}}/>
             <div className="container mt-10" >
                 <form name="form" id="form"  className="container was-validated col-sm-8 mt-3" method="POST">
 
@@ -257,7 +264,7 @@ const ModificaAccount=()=>{
                                 </div>
                             </div>
 
-                            <div className="col-3">
+                            <div className="col-6">
                                 <label htmlFor="name">Città</label>
                                 <input id="citta" name="citta" type="text" className="form-control" maxLength="40"
                                        value={state.citta} onChange={handleChangeCitta} required/>
@@ -265,16 +272,20 @@ const ModificaAccount=()=>{
                                     Inserire Città
                                 </div>
                             </div>
-
-                            <div className="col-3">
+                        </div>
+                            <div className="row">
+                            <div className="col-5">
                                 <label htmlFor="name">CAP</label>
                                 <input id="cap" name="cap" type="text" className="form-control" maxLength="40"
                                        value={state.cap} onChange={handleChangeCap} required/>
                                 <div className="invalid-feedback">
                                     Inserire CAP
                                 </div>
-                            </div>
-                        </div>
+
+                    </div>
+                    </div>
+
+
                     </div>
 
                     <h5>Dati di Pagamento</h5>
@@ -282,13 +293,13 @@ const ModificaAccount=()=>{
                     <div className="form-group">
                         <div className="row">
                             <div className="col-6">
-                                <label htmlFor="credit-card">Titolare Carta di Credito</label>
+                                <label htmlFor="credit-card">Titolare </label>
                                 <input name="titolare_carta" id="titolare_carta" type="name" className="form-control"
                                        size="32" maxLength="40"
                                        value={state.titolare_carta} onChange={handleChangeTitolareCarta}/>
                             </div>
                             <div className="col-6">
-                                <label htmlFor="credit-card">Carta di Credito</label>
+                                <label htmlFor="credit-card">Numero</label>
                                 <input name="numero_carta" id="numero_carta" type="credit-card" className="form-control"
                                        size="32" maxLength="40"
                                        value={state.numero_carta} onChange={handleChangeNumeroCarta}/>
@@ -348,7 +359,7 @@ const ModificaAccount=()=>{
 
                     <br></br>
 
-                    <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"400px",color:"#ff6300"}}>Invia</Button>
+                    <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"auto",color:"#ff6300",display:"block"}}>Invia</Button>
 
                 </form>
             </div>
@@ -358,6 +369,13 @@ const ModificaAccount=()=>{
                     responseType={tipoRisposta}
                 />
 
+
+            </div>
+                    </div>
+                    <div className="col">
+
+                    </div>
+                </div>
 
             </div>
 
