@@ -177,14 +177,17 @@ const Registrazione=()=>{
 
 
         return(
+            <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"650px",height:"auto"}}>
+                <img src={user} style={{marginLeft:"240px",marginTop:"30px",width:"180px",height:"150px"}}/>
 
-            <div  className="container mt-10" style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"50%"}}>
-                <img src={user} style={{marginLeft:"280px",marginTop:"30px",height:"150px",width:"190px"}}/>
-                    <form name="form" id="form"  className="container was-validated col-sm-8 mt-3" method="POST">
+            <div  className="container mt-10" >
 
-                        <div className="row" style={{marginLeft:"180px"}}>
+                <form name="form" id="form"  className="container was-validated col-sm-8 mt-3" method="POST">
+                    <h5>Per cominciare, sei un ...</h5>
 
-                        <div className="custom-control custom-radio custom-control-inline mt-2">
+                    <div className="row" style={{marginLeft:"130px"}}>
+
+                            <div className="custom-control custom-radio custom-control-inline mt-2">
                             <input type="radio" className="custom-control-input" id="host" name="tipo"
                                    value="0" onChange={handleChangeTipo} required/>
                             <label className="custom-control-label" htmlFor="host">Host</label>
@@ -197,6 +200,7 @@ const Registrazione=()=>{
                         </div>
 
                         </div>
+                        <br/>
                         <h5>Dati anagrafici</h5>
 
                         <div className="form-group">
@@ -348,10 +352,10 @@ const Registrazione=()=>{
                             </div>
                         </div>
 
-                        <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"400px",color:"#ff6300"}}>Invia</Button>
-                        <br></br>
-                        <br></br>
-                    </form>
+
+                    <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"400px",color:"#ff6300"}}>Invia</Button>
+
+                </form>
                     <BoxConferma
                         open={openConferma}
                         onClose={handleCloseConferma}
@@ -364,6 +368,7 @@ const Registrazione=()=>{
 
 
                 </div>
+            </div>
 
                     );
 

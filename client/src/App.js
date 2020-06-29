@@ -26,6 +26,7 @@ import PasswordDimenticata from "./Component/login/passwordDimenticata";
 import ConfermaAccount from "./Component/pagineFuoriSicurezza/confermaAccount";
 import GestisciPrenotazioni from "./Component/GestionePrenotazioni/GestisciPrenotazioni";
 import CadutaConnessione from "./Component/Caduta Connessione/CadutaConnessione";
+import RicercaStruttura from "./Component/Ricerca Struttura/RicercaStruttura";
 
 
 
@@ -70,6 +71,7 @@ const App= ()=> {
                         <Route path="/login/passwordDimenticata" component={PasswordDimenticata} exact/>
                         <Route path="/accountConferma" component={ConfermaAccount} />
                         <Route path="/gestisciprenotazione" component={GestisciPrenotazioni} />
+                        <Route path="/ricercastruttura" component={RicercaStruttura} />
                         <Route path="*" component={CadutaConnessione}/>
 
                         </Switch>

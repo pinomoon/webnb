@@ -11,7 +11,8 @@ import Button from "@material-ui/core/Button";
 class GestisciStrutture extends Component{
     render(){
         return(
-            <div>
+            <div style={{margin:"auto",marginTop:"50px",width:"100%",height:"auto"}}>
+
 
             <section className="cards clearfix">
                 <div className="card">
@@ -19,12 +20,13 @@ class GestisciStrutture extends Component{
                     <div className="card_copy">
                         <h4>Villa Maestro</h4>
                         <p>Nel cuore di San Giuseppe Jato, famosa villa del Boss Luna </p>
-                    </div>
-                    <div style={{marginLeft:"190px"}}>
-                        <Button  style={{color:"#ff6300"}}>Modifica</Button>
+                        <div style={{margin:"auto"}}>
+                            <Button  style={{color:"#ff6300"}}>Modifica</Button>
 
-                        <Button  style={{color:"#ff6300"}}>Elimina</Button>
+                            <Button  style={{color:"#ff6300"}}>Elimina</Button>
+                        </div>
                     </div>
+
                 </div>
 
 

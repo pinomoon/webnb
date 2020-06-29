@@ -233,15 +233,13 @@ const InserisciStruttura=()=>{
 
 
 
-            <div>
+              <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"650px",height:"auto"}}>
+            <img src={personale} style={{marginLeft:"240px",marginTop:"30px",width:"180px",height:"100px"}}/>
 
 
 
-
-                <div  className="container mt-10" style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"50%"}}>
-                    <img src={personale} style={{marginLeft:"280px",marginTop:"30px",height:"120px",width:"210px"}}/>
+                <div  className="container mt-10" >
                     <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
-
                         <label htmlFor="nome_struttura">Nome struttura*</label>
                         <input id="nome_struttura" name="nome_struttura" type="text" className="form-control" maxLength="40"
                                value={state.nome_struttura} onChange={handleChangeNomeStruttura} required/>
@@ -408,9 +406,9 @@ const InserisciStruttura=()=>{
                             <Form.Label>Breve Descrizione della Struttura</Form.Label>
                             <Form.Control as="textarea" rows="3" onChange={handleChangeDescrizione} />
                         </Form.Group>
+                        <br></br>
+
                         <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"400px",color:"#ff6300"}}>Invia</Button>
-                        <br></br>
-                        <br></br>
 
                     </form>
                     <BoxConfermaInserimento

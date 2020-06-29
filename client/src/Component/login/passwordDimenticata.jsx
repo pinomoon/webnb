@@ -52,8 +52,9 @@ const PasswordDimenticata=()=>{
     const state={email};
 
     return(
-        <div  className="container mt-10" style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"50%"}}>
-            <img src={ops} style={{marginLeft:"320px",marginTop:"30px",height:"200px",width:"80px"}}/>
+        <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"650px",height:"auto"}}>
+
+            <img src={ops} style={{marginLeft:"290px",marginTop:"30px",height:"200px",width:"80px"}}/>
         <div className="container mt-10">
             <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
                 <h5 >Inserisci E-Mail per Recupero Credenziali</h5>

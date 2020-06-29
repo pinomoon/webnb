@@ -102,6 +102,7 @@ const Login =()=>{
         return(
             <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"450px",height:"450px"}}>
                 <img src={home} style={{marginLeft:"140px",marginTop:"30px",width:"160px",height:"80px"}}/>
+
             <div className="container mt-10">
             <div name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
 

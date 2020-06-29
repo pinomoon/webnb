@@ -20,21 +20,23 @@ class Homepage extends Component{
 
          <container >
 
-             <section className="cover" style={{height:"500px"}}>
+             <section className="cover" style={{height:"500px",width:"100%"}}>
 
                  <div className="cover_filter"></div>
                  <div className="cover_caption">
                      <div className="cover_caption_copy">
                          <h1>Benvenuti in </h1>
                          <h2>WeB&B</h2>
+                         <h3 style={{color:"#ff6300"}}> Prenota la tua vacanza!</h3>
                          <br></br>
-                         <div>
+                         <div style={{height:"60px",width:"60%",margin:"auto",border:"2px solid #ff6300",borderRadius:"5px",backgroundColor:"white"}}>
 
 
-                             <div className="form-row"style={{height:"45px",width:"780px",marginLeft:"350px",border:"1px solid #ff6300",backgroundColor:"white"}} >
+
+                         <div className="form-row" >
 
                                  <div className="form-group col" >
-                                     <Input type="email" name="email" id="exampleEmail" placeholder="Dove vuoi andare?" style={{backgroundColor:"white"}}/>
+                                     <Input type="email" name="email" id="exampleEmail" placeholder="Dove vuoi andare?" style={{backgroundColor:"white",marginTop:"9px"}}/>
 
                                  </div>
 
@@ -42,7 +44,7 @@ class Homepage extends Component{
 
 
 
-                                     <Input style={{width:"150px",backgroundColor:"white"}}
+                                     <Input style={{width:"150px",backgroundColor:"white",marginTop:"9px"}}
                                             type="date"
                                             name="date"
                                             id="exampleDate"
@@ -52,7 +54,7 @@ class Homepage extends Component{
 
                                  <div className="form-group col" >
 
-                                     <Input style={{width:"150px",backgroundColor:"white"}}
+                                     <Input style={{width:"150px",backgroundColor:"white",marginTop:"9px"}}
                                             type="date"
                                             name="date"
                                             id="exampleDate"
@@ -66,7 +68,7 @@ class Homepage extends Component{
 
                                  <div className="form-group col">
                                      <Form.Group controlId="exampleForm.ControlSelect1" style={{width:"150px"}}>
-                                         <Input type="select" name="select" id="exampleSelect" placeholder="Ospiti" style={{backgroundColor:"white"}}>
+                                         <Input type="select" name="select" id="exampleSelect" placeholder="Ospiti" style={{backgroundColor:"white",marginTop:"9px"}}>
                                              <option>Ospiti</option>
                                              <option>1</option>
                                              <option>2</option>
@@ -78,7 +80,9 @@ class Homepage extends Component{
                                      </Form.Group>
 
                                  </div>
-                                 <Button color="inherit" href="/login"style={{fontSize:"12px",marginTop:"10px",height:"20px",color:"#ff6300",backgroundColor:"white"}}>Conferma</Button>
+
+
+                                 <Button color="inherit" href="/"style={{fontSize:"12px",color:"white",height:"57px",backgroundColor:"#ff6300"}}>Conferma</Button>
 
                              </div>
                          </div>
