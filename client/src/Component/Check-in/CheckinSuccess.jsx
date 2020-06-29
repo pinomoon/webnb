@@ -7,13 +7,23 @@ import Button from "@material-ui/core/Button";
 class CheckinSuccess extends Component{
     render(){
         return(
-            <div>
+            <div className="container">
+                <div className="row">
+                    <div className="col">
 
-                <h3 style={{textAlign:"center",marginTop:"150px",marginBottom:"150px"}}>Check-in effettuato correttamente</h3>
-                <Button color="inherit" href="/host"style={{color:"#6495ED",marginLeft:"30px"}}>Indietro</Button>
+                    </div>
+                    <div className="col-6">
+
+                        <h3 style={{textAlign:"center",marginTop:"150px",marginBottom:"150px"}}>Check-in effettuato correttamente</h3>
+                        <Button color="inherit" href="/checkin"style={{color:"#ff6300",marginLeft:"30px"}}>Indietro</Button>
+                    </div>
+
+                    <div className="col">
+
+                    </div>
 
 
-
+                </div>
             </div>
 
         );
