@@ -359,7 +359,16 @@ const Registrazione=()=>{
                         </div>
 
 
-                    <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"auto",color:"#ff6300",display:"block"}}>Invia</Button>
+                    <div className="row">
+                        <div className="col-1">
+                            <Button name="ok" id="ok"  onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
+                        </div>
+                        <div className="col-9">
+                        </div>
+                        <div className="col-1">
+                            <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Invia</Button>
+                        </div>
+                    </div>
 
                 </form>
                     <BoxConferma
