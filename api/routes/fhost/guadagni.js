@@ -16,7 +16,7 @@ async function guadagni(req,res, next){
 
         await withTransaction(db, async() => {
 
-            results = await db.query('SELECT SUM(importo) AS guadagno \
+            results = await db.query('SELECT SUM(*) as num_pren, SUM(importo) AS guadagno \
              FROM prenotazione,camera,struttura \
               WHERE prenotazione.id_camera=camera.id_camera \
               AND camera.id_struttura=struttura.id_struttura AND \
