@@ -11,7 +11,7 @@ class AboutUs extends Component{
         return(
             <container>
 
-            <section class="team-section text-center my-5" style={{height:"1px",width:"100%"}}>
+            <section class="team-section text-center my-5" style={{height:"auto",width:"100%"}}>
 
                 <h2 class="h1-responsive font-weight-bold my-5">Il nostro team</h2>
                 <p class="grey-text w-responsive mx-auto mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -20,7 +20,7 @@ class AboutUs extends Component{
 
                 <div class="row" >
 
-                    <div class="col-lg-3 col-md-6 mb-lg-0 mb-5">
+                    <div class="col-lg-3 col-md-6 mb-lg-0 mb-5" >
                         <div class="avatar mx-auto">
                             <img src={paperino} width="300" height="300"class="rounded-circle z-depth-1"
                                  alt="Sample avatar"/>

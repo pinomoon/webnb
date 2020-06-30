@@ -231,10 +231,17 @@ const InserisciStruttura=()=>{
 
         return(
 
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+
+                    </div>
+                    <div className="col-6">
 
 
-              <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"650px",height:"auto"}}>
-            <img src={personale} style={{marginLeft:"240px",marginTop:"30px",width:"180px",height:"100px"}}/>
+
+              <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"auto",height:"auto"}}>
+            <img src={personale} style={{margin:"auto",marginTop:"30px",width:"40%",height:"30%",display:"block"}}/>
 
 
 
@@ -358,13 +365,13 @@ const InserisciStruttura=()=>{
 
                             <Button id="immagine1" name="immagine1" type="file" className="form-control" maxLength="40"
                                     value={state.immagine1} onChange={handleChangeImg1}
-                                    color="inherit" href="/login" style={{color:"#ff6300"}}>Clicca per inserire una immagine</Button>
+                                    color="inherit" href="/login" style={{color:"#ff6300"}}>Immagine 1</Button>
                             <Button id="immagine2" name="immagine2" type="file" className="form-control" maxLength="40"
                                     value={state.immagine2} onChange={handleChangeImg1}
-                                    color="inherit" href="/login" style={{color:"#ff6300"}}>Clicca per inserire una immagine</Button>
+                                    color="inherit" href="/login" style={{color:"#ff6300"}}>Immagine 2</Button>
                             <Button id="immagine3" name="immagine3" type="file" className="form-control" maxLength="40"
                                     value={state.immagine3} onChange={handleChangeImg1}
-                                    color="inherit" href="/login" style={{color:"#ff6300"}}>Clicca per inserire una immagine</Button>
+                                    color="inherit" href="/login" style={{color:"#ff6300"}}>Immagine 3</Button>
 
                         </div>
                         <div className="form-group">
@@ -407,9 +414,15 @@ const InserisciStruttura=()=>{
                             <Form.Control as="textarea" rows="3" onChange={handleChangeDescrizione} />
                         </Form.Group>
                         <br></br>
+                        <div className="row">
+                        <div className="col-10">
+                        </div>
+                            <div className="col-2">
+                        <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{color:"#ff6300"}}>Invia</Button>
+                            </div>
 
-                        <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"400px",color:"#ff6300"}}>Invia</Button>
 
+                        </div>
                     </form>
                     <BoxConfermaInserimento
                     open={open}
@@ -421,6 +434,14 @@ const InserisciStruttura=()=>{
 
 
 
+
+            </div>
+
+                    </div>
+                    <div className="col">
+
+                    </div>
+                </div>
 
             </div>
 

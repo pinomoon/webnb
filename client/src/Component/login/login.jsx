@@ -100,8 +100,14 @@ const Login =()=>{
             });
     };
         return(
-            <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"450px",height:"450px"}}>
-                <img src={home} style={{marginLeft:"140px",marginTop:"30px",width:"160px",height:"80px"}}/>
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+
+                    </div>
+                    <div className="col-sm-12 col-md-9 col-lg-6">
+            <div style={{marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
+                <img src={home} style={{margin:"auto",marginTop:"30px",width:"30%",height:"20%",display:"block"}}/>
 
             <div className="container mt-10">
             <div name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
@@ -128,13 +134,19 @@ const Login =()=>{
                         Password media
                     </div>
                     <Button id="recupero"  href="https://localhost:3000/login/passwordDimenticata" style={{fontSize:"11px",marginLeft:"-10px",color:"#ff6300"}}><h7>Password dimenticata?</h7></Button>
+                    <div className="row">
+                        <div className="col-1">
+                            <Button name="ok" id="ok"  onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
+                        </div>
+                        <div className="col-9">
+                        </div>
+                        <div className="col-1">
+                            <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Invia</Button>
+                        </div>
+                    </div>
+
 
                 </div>
-
-
-                <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"190px",color:"#ff6300"}}>Login</Button>
-
-
 
 
 
@@ -148,7 +160,15 @@ const Login =()=>{
 
 
             </div>
+                <br/>
             </div>
+                    </div>
+                    <div className="col">
+
+                    </div>
+                </div>
+            </div>
+
 
         );
 

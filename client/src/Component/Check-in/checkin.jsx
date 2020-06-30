@@ -11,10 +11,15 @@ class checkin extends Component{
 
     render(){
         return(
-            <div>
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+
+                    </div>
+                    <div className="col-sm-12 col-md-9 col-lg-6">
 
 
-                <div style={{marginLeft:"550px", width:"30%",marginTop:"30px"}}>
+                <div style={{margin:"auto", width:"100%",marginTop:"30px"}}>
             <Form>
                 <Form>
                     <Form.Label>Dati</Form.Label>
@@ -53,11 +58,23 @@ class checkin extends Component{
 
 
                 </div>
-                <Button color="inherit" href="/host"style={{color:"#6495ED",marginLeft:"540px"}}>Indietro</Button>
-                <Button color="inherit" href="/checkin/success"style={{color:"#6495ED",marginLeft:"330px"}}>Invia</Button>
-
+                        <div className="row">
+                            <div className="col-2">
+                            <Button color="inherit" href="/gestisciprenotazione"style={{color:"#ff6300",marginLeft:"auto",display:"block"}}>Indietro</Button>
+                            </div>
+                        <div className="col-8">
+                        </div>
+                        <div className="col-2">
+                            <Button color="inherit" href="/checkin/success"style={{color:"#ff6300",marginRight:"auto",display:"block"}}>Invia</Button>
+                        </div>
+                        </div>
 
             </div>
+                    <div className="col">
+
+                    </div>
+                </div>
+                </div>
 
 
         );

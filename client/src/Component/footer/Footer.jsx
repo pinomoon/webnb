@@ -11,7 +11,7 @@ class Footer extends Component{
                     <div className="row">
                         <div className="col-lg-5 col-xs-12 about-company">
                             <h2>Heading</h2>
-                            <p className="pr-5 text-white-50">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            <p className="pr-5 text-50">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                                 Nullam ac ante mollis quam tristique convallis </p>
                             <p><a href="#"><i className="fa fa-facebook-square mr-1"></i></a><a href="#"><i
                                 className="fa fa-linkedin-square"></i></a></p>
@@ -41,6 +41,7 @@ class Footer extends Component{
                     </div>
                 </div>
             </div>
+
 
         );
 

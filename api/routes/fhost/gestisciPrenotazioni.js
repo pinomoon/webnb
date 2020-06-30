@@ -25,7 +25,8 @@ try {
     await withTransaction(db, async () => {
         results = await db.query("SELECT nome_struttura,nome_camera,stato_prenotazione FROM utente AS u, camera AS c, struttura AS s ,prenotazione AS p\
             WHERE p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND s.id_utente=u.id_utente \
-            AND u.id_utente=? ORDER BY stato_prenotazione ASC ,data_prenotazione DESC " , [req.body.id_utente]).catch(err => {
+            AND u.id_utente=? AND p.conferma=1 \
+            ORDER BY stato_prenotazione ASC ,data_prenotazione DESC " , [req.body.id_utente]).catch(err => {
             throw err;
         })
         var risultato=['1',results];
