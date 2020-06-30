@@ -74,9 +74,10 @@ const App= ()=> {
                         <Route path="/accountConferma" component={ConfermaAccount} />
                         <Route path="/gestisciprenotazione" component={GestisciPrenotazioni} />
                         <Route path="/ricercastruttura" component={RicercaStruttura} />
-                        <Route path="/prova" component={Prova} />
-                        <Route path="/guadagni" component={MieiGuadagni} exact/>
+                        <Route path="/guadagni" component={MieiGuadagni} exact />
+
                         <Route path="*" component={CadutaConnessione}/>
+
 
                         </Switch>
 

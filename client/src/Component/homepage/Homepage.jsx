@@ -98,7 +98,7 @@ class Homepage extends Component{
 
 
                                          <div className="col-md-1 col-lg-1">
-                                             <Button style={{marginTop:"-2px",backgroundColor:"#ff6300",height:"106%",color:"white",borderRadius:0}}>Conferma</Button>
+                                             <Button href="/ricercastruttura" style={{marginTop:"-2px",backgroundColor:"#ff6300",height:"106%",color:"white",borderRadius:0}}>Conferma</Button>
                                          </div>
 
 
