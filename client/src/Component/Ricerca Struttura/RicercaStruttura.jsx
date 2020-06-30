@@ -1,27 +1,86 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import Input from "@material-ui/core/Input/Input";
 
 import { Collapse, Button, CardBody, Card } from 'reactstrap';
 import UncontrolledCollapse from "reactstrap/es/UncontrolledCollapse";
 import simpson from "./casa-simpson-690x362.jpg"
+import axios from 'axios';
 
 
 
-class RicercaStruttura extends Component{
-    render(){
+const RicercaStruttura=(props)=> {
+    const [strutture, setStrutture]=useState(props);
+    const [stato, setStato]=React.useState("");
+    const [regione, setRegione]=React.useState("");
+    const [citta, setCitta]=React.useState("");
+    const [data_inizio, setDataInizio]=React.useState("");
+    const [data_fine, setDataFine]=React.useState("");
+    const [npl, setNpl]=React.useState("");//numero posti letto
+    const state={stato,regione,citta,data_inizio,data_fine,npl};
+
+    const handleSubmit=(event)=>{
+        event.preventDefault();
+
+        axios.post("https://localhost:9000/ricercaStruttura", state)
+            .then((response)=>{
+                alert(response.data);
+            })
+            .catch((error)=>{
+                alert(error);
+            })
+    };
+    const handleChangeStato=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setStato(valore);
+        state.stato=valore;
+    };
+    const handleChangeRegione=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setRegione(valore);
+        state.regione=valore;
+    };
+    const handleChangeCitta=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setCitta(valore);
+        state.citta=valore;
+    };
+    const handleChangeDataInizio=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setDataInizio(valore);
+        state.data_inizio=valore;
+    };
+    const handleChangeDataFine=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setDataFine(valore);
+        state.data_fine=valore;
+    };
+    const handleChangeNpl=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setNpl(valore);
+        state.npl=valore;
+    };
+
+
         return(
 
             <div className="container">
                 <div className="row">
 
                     <div className="col-sm-5 col-md-4 col-lg-3">
-                        <div style={{backgroundColor:"#f9db3e",width:"100%",height:"auto",marginTop:"30px"}}>
-                            <Button color="inherit" href="/login" style={{backgroundColor:"#32508f",color:"white",margin:"auto",display:"block"}}>Cerca</Button>
+                        <form  style={{backgroundColor:"#f9db3e",width:"100%",height:"auto",marginTop:"30px"}}name="form" id="form"  method="POST">
+                            <Button color="inherit" name="ok" id="ok "type="submit" onClick={handleSubmit} style={{backgroundColor:"#32508f",color:"white",margin:"auto",display:"block"}}>Cerca</Button>
 
                             <div className="form-group col" style={{margin:"auto" }}>
                                 <h10>Destinazione:</h10>
-                                <Input type="email" name="email" id="exampleEmail" placeholder="Dove vuoi andare?" style={{backgroundColor:"white",width:"100%"}}/>
-
+                                <Input type="text" name="stato" id="stato" placeholder="Stato" value={state.stato} onChange={handleChangeStato} style={{backgroundColor:"white",width:"100%"}}/>
+                                <Input type="text" name="regione" id="regione" placeholder="Regione" value={state.regione} onChange={handleChangeRegione} style={{backgroundColor:"white",width:"100%"}}/>
+                                <Input type="text" name="citta" id="citta" placeholder="Città" value={state.citta} onChange={handleChangeCitta} style={{backgroundColor:"white",width:"100%"}}/>
                             </div>
 
                             <div className="form-group col" style={{margin:"auto" }}>
@@ -29,9 +88,12 @@ class RicercaStruttura extends Component{
 
                                 <Input style={{width:"100%",backgroundColor:"white",margin:"auto"}}
                                        type="date"
-                                       name="date"
-                                       id="exampleDate"
+                                       name="data_inizio"
+                                       id="data_inizio"
                                        placeholder="date placeholder"
+                                       value={state.data_inizio}
+                                       onChange={handleChangeDataInizio}
+
                                 />
                             </div>
                             <div className="form-group col" style={{margin:"auto"}}>
@@ -39,9 +101,11 @@ class RicercaStruttura extends Component{
 
                                 <Input style={{width:"100%",backgroundColor:"white",margin:"auto"}}
                                        type="date"
-                                       name="date"
-                                       id="exampleDate"
+                                       name="data_fine"
+                                       id="data_fine"
                                        placeholder="date placeholder"
+                                       value={state.data_fine}
+                                       onChange={handleChangeDataFine}
                                 />
                             </div>
                             <div className="form-group col" style={{margin:"auto" }}>
@@ -49,26 +113,7 @@ class RicercaStruttura extends Component{
                                 <h10>Numero Persone:</h10>
 
 
-                                <select className="form-control" id="exampleSelect1">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                </select>
-                            </div>
-
-                            <div className="form-group col" style={{margin:"auto" }}>
-
-                                <h10>Notti:</h10>
-
-
-                                <select className="form-control" id="exampleSelect1">
+                                <select className="form-control" id="npl" value={state.npl} onChange={handleChangeNpl}>
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
@@ -84,7 +129,7 @@ class RicercaStruttura extends Component{
 
                             <div>
                                 <br/>
-                                <Button color="inherit" href="/login" id="toggler"style={{backgroundColor:"#32508f",color:"white",margin:"auto",display:"block"}}>Filtri Avanzati</Button>
+                                <Button color="inherit"  id="toggler"style={{backgroundColor:"#32508f",color:"white",margin:"auto",display:"block"}}>Filtri Avanzati</Button>
 
                                 <UncontrolledCollapse toggler="#toggler">
                                     <br/>
@@ -120,7 +165,7 @@ class RicercaStruttura extends Component{
                                 </UncontrolledCollapse>
                             </div>
 
-                        </div>
+                        </form>
 
                     </div>
 
@@ -175,6 +220,5 @@ class RicercaStruttura extends Component{
 
 
         );
-    }
-}
+};
 export default RicercaStruttura;
