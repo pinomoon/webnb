@@ -31,9 +31,7 @@ async function ricerca(req, res, next) {
             AND c.id_camera NOT IN(SELECT id_camera FROM camera,prenotazione \
                 WHERE prenotazione.id_camera=camera.id_camera AND (prenotazione.data_fine>? AND \
                 prenotazione.data_inizio<?))'\
-            IF @req.body.regione IS NOT NULL SELECT @sql+=' AND s.regione=@req.body.regione' \
-            IF @req.body.stato IS NOT NULL SELECT @sql+=' AND s.stato=@req.body.stato'  \
-            IF @req.body.citta IS NOT NULL SELECT @sql+=' AND s.citta=@req.body.citta' \
+            IF @req.body.luogo IS NOT NULL SELECT @sql+=' AND (s.nome_struttura=@req.body.luogo OR s.regione=@req.body.luogo OR s.citta=@req.body.luogo OR s.stato=@req.body.luogo)' \
             IF @req.body.npl IS NOT NULL SELECT @sql+=' AND c.numero_posti_letto>=@req.body.npl' \
             IF @req.body.tipo IS NOT NULL SELECT @sql+=' AND s.tipo=@req.body.tipo'  \
             IF @req.body.disdetta_gratuita IS NOT NULL SELECT @sql+=' AND s.disdetta_gratuita>0' \
