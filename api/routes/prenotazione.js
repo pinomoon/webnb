@@ -71,10 +71,14 @@ async function esplora(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async() => {
-                results=await db.query("SELECT * \
-                FROM struttura,camera,gallery_struttura \
+                results=await db.query("SELECT nome_struttura,indirizzo_struttura,cap,punti_di_interesse,\
+                citta,regione,stato,tipo, disdetta_gratuita, modalita_di_pagamento, tassa_soggiorno, servizi,\
+                ora_checkin,ora_checkout,descrizione,immagine_1,immagine_2,immagine_3,id_camera,nome_camera,\
+                numero_posti_letto, costo_camera, colazione_inclusa,recensione \
+                FROM struttura,camera,gallery_struttura,recensione \
                 WHERE camera.id_struttura=struttura.id_struttura \
-                AND gallery_struttura.id_struttura=struttura.id_struttura AND struttura.id_struttura=?"
+                AND gallery_struttura.id_struttura=struttura.id_struttura \
+                 AND struttura.id_struttura=recensione.id_struttura AND struttura.id_struttura=?"
                     ,[req.body.id_struttura])
                     .catch(err=>{
                         throw err;
