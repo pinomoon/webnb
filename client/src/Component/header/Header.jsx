@@ -70,15 +70,18 @@ const Header =()=>{
                                             variant="primary">
                                       <Button href="/profilo" style={{color:"#ff6300"}}>Profilo</Button>
 
-                                      <Dropdown.Toggle split variant="primary" id="dropdown-split-basic"/>
+                                      <Dropdown.Toggle id="dropdown-split-basic" style={{backgroundColor:"#ff6300",color:"white",borderRadius:"3px",border:"2px solid #ff6300 "}}/>
 
                                       <Dropdown.Menu>
-                                          <Dropdown.Item href="/modificaaccount">Modifica Account</Dropdown.Item>
-                                          <Dropdown.Item href="/gestisciprenotazione">Gestisci prenotazioni</Dropdown.Item>
-                                          <Dropdown.Item href="/ufficioturismo">Ufficio Turismo</Dropdown.Item>
+                                          <Dropdown.Item href="/modificaaccount" style={{margin:"auto",display:"block"}}>Modifica Account</Dropdown.Item>
+                                          <Dropdown.Item href="/gestisciprenotazione"style={{margin:"auto",display:"block"}}>Gestisci prenotazioni</Dropdown.Item>
+                                          <Dropdown.Item href="/ufficioturismo" style={{margin:"auto",display:"block"}}>Ufficio Turismo</Dropdown.Item>
+                                          <Logout/>
+
+
+
                                       </Dropdown.Menu>
                                   </Dropdown>
-                                  <Logout/>
                               </div>
                           }
 

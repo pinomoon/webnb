@@ -16,7 +16,8 @@ class EsploraStruttura extends Component{
                 <div className="row">
 
                     <div className="col-sm-5 col-md-4 col-lg-3">
-                        <div style={{backgroundColor:"#f9db3e",width:"100%",height:"auto",marginTop:"30px"}}>
+                        <div style={{backgroundColor:"orange",width:"100%",height:"auto",marginTop:"30px"}}>
+
                             <Button color="inherit" href="/login" style={{backgroundColor:"#32508f",color:"white",margin:"auto",display:"block"}}>Cerca</Button>
 
                             <div className="form-group col" style={{margin:"auto" }}>
@@ -205,6 +206,37 @@ class EsploraStruttura extends Component{
                                     </p>
                                     <br/>
                                 </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+
+                        <div className="row">
+                            <div className="col">
+                            <h3 className="text-center">Disponibilità camere</h3>
+                        </div>
+                        </div>
+                        <div className="row">
+
+                            <div className="col-sm-8 col-lg-4" style={{borderRight:"2px solid black",borderTop:"2px solid black"}}>
+                                <p>Ciao</p>
+
+                            </div>
+                            <div className="col-sm-2 col-lg-1" style={{borderRight:"2px solid black",borderTop:"2px solid black"}}>
+                                <p>Ciao</p>
+                            </div>
+                            <div className="col-sm-4 col-lg-2" style={{borderRight:"2px solid black",borderTop:"2px solid black"}}>
+                                <p>Ciao</p>
+                            </div>
+                            <div className="col-sm-2 col-lg-3" style={{borderRight:"2px solid black",borderTop:"2px solid black"}}>
+                                <p>Ciao</p>
+                            </div>
+                            <div className="col-sm-2 col-lg-1" style={{borderRight:"2px solid black",borderTop:"2px solid black"}}>
+                                <p>Ciao</p>
+                            </div>
+                            <div className="col-sm-2 col-lg-1" >
+                                <Button color="inherit" href="/prenotazione" style={{width:"100%",backgroundColor:"white",color:"#ff6300"}}>Prenota</Button>
+
                             </div>
                         </div>
 

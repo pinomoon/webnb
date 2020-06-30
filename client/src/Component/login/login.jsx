@@ -1,6 +1,7 @@
 import  * as React from "react";
 import axios from 'axios';
-import home from "./home.jpg"
+import cliente from "./home.jpg";
+import host from "./2.jpg"
 import BoxAccesso from './boxconferma';
 import {useContext} from "react";
 import {UserContext} from "../../UserContext";
@@ -107,9 +108,9 @@ const Login =()=>{
                     </div>
                     <div className="col-sm-12 col-md-9 col-lg-6">
             <div style={{marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
-                <img src={home} style={{margin:"auto",marginTop:"30px",width:"30%",height:"20%",display:"block"}}/>
+                <img src={cliente} style={{margin:"auto",marginTop:"30px",width:"30%",height:"auto%",display:"block"}}/>
 
-            <div className="container mt-10">
+                <div className="container mt-10">
             <div name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
 
 
@@ -136,7 +137,7 @@ const Login =()=>{
                     <Button id="recupero"  href="https://localhost:3000/login/passwordDimenticata" style={{fontSize:"11px",marginLeft:"-10px",color:"#ff6300"}}><h7>Password dimenticata?</h7></Button>
                     <div className="row">
                         <div className="col-1">
-                            <Button name="ok" id="ok"  onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
+                            <Button href="/" style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
                         </div>
                         <div className="col-9">
                         </div>

@@ -44,7 +44,7 @@ const Homepage =()=>{
                          <h1>Benvenuti in </h1>
                          <h2>WeB&B</h2>
 
-                         {(user.id==null || (user.tipo=1)) &&
+                         {(user.id==null || (user.tipo==1)) &&
                          <div>
                          <h3 style={{color:"#ff6300"}}> Prenota la tua vacanza!</h3>
                          <br></br>
@@ -135,7 +135,7 @@ const Homepage =()=>{
                                      <div className="col-md-1 col-lg-4">
                                      </div>
                                      <div className="col-sm-12 col-md-9 col-lg-4">
-                                         <Button href="/inseriscistruttura" style={{marginTop:"-2px",backgroundColor:"#ff6300",height:"auto%",width:"30%",color:"white",borderRadius:0}}>Conferma</Button>
+                                         <Button href="/inseriscistruttura" style={{marginTop:"-2px",backgroundColor:"#ff6300",height:"auto%",width:"50%",color:"white",borderRadius:0}}>Inserisci la tua struttura!</Button>
 
                                      </div>
                                      <div className="col-md-1 col-lg-4">
