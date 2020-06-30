@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import Slide from "@material-ui/core/Slide/Slide";
 import {setSessionCookie, setUserCookie} from "../../sessions";
+import Dropdown from "react-bootstrap/Dropdown";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -31,7 +32,8 @@ const Logout =()=>{
 
     return(
         <div>
-        <Button onClick={handleOpenDialog}>Logout</Button>
+            <Dropdown.Item onClick={handleOpenDialog} style={{margin:"auto",display:"block"}}>Logout</Dropdown.Item>
+
             <Dialog
                 open={open}
                 TransitionComponent={Transition}
