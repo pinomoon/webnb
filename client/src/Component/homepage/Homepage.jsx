@@ -3,6 +3,7 @@ import sfondo from '../images/best-hd-wallpapers-pc-background-laptop.jpg'
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import "./Homepage.css"
+
 import Card from "@material-ui/core/Card/Card";
 import Button from "@material-ui/core/Button";
 import villa from "../GestioneStrutture/villa.jpg";
@@ -19,12 +20,21 @@ import Dropdown from "react-bootstrap/Dropdown";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Logout from "../logout/logout";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import {UserContext} from "../../UserContext";
 
-class Homepage extends Component{
-    render(){
+const Homepage =()=>{
+
+        const user=React.useContext(UserContext);
+        const handleChange = date => {
+            this.setState({
+                startDate: date
+            });
+        };
+
         return(
 
-         <container >
+
+         <container>
 
              <section className="cover" style={{height:"500px",width:"100%"}}>
 
@@ -33,6 +43,9 @@ class Homepage extends Component{
                      <div className="cover_caption_copy">
                          <h1>Benvenuti in </h1>
                          <h2>WeB&B</h2>
+
+                         {(user.id==null || (user.tipo=1)) &&
+                         <div>
                          <h3 style={{color:"#ff6300"}}> Prenota la tua vacanza!</h3>
                          <br></br>
                         <div className="row">
@@ -106,15 +119,39 @@ class Homepage extends Component{
 
 
                                             </div>
-
                             </div>
+                                <div className="col-lg-1">
+                                </div>
+                            </div>
+                            </div>
+
                         </div>
 
-                        <div className="col-lg-1">
-                        </div>
-                        </div>
+
+                             }
+                         {user.tipo==0 &&
+                             <div>
+                                 <div className="row">
+                                     <div className="col-md-1 col-lg-4">
+                                     </div>
+                                     <div className="col-sm-12 col-md-9 col-lg-4">
+                                         <Button href="/inseriscistruttura" style={{marginTop:"-2px",backgroundColor:"#ff6300",height:"auto%",width:"30%",color:"white",borderRadius:0}}>Conferma</Button>
+
+                                     </div>
+                                     <div className="col-md-1 col-lg-4">
+                                     </div>
+                                 </div>
+                             </div>
+
+
+                         }
                      </div>
                  </div>
+
+
+
+
+
              </section>
 
 
@@ -159,9 +196,10 @@ class Homepage extends Component{
 
          </container>
 
+
         );
 
-    }
+
 }
 
 export default Homepage;
