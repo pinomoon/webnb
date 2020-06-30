@@ -21,7 +21,7 @@ async function ricerca(req, res, next) {
                 .catch(err=>{
                     throw err;
                 });
-            results=await db.quaery("SELECT id_struttura,nome_struttura,indirizzo_struttura,citta,regione,stato, \
+            results=await db.quaery("SELECT id_struttura,nome_struttura,tipo,indirizzo_struttura,citta,regione,stato, \
             tipo,immagine_1 \
             FROM struttura, gallery_struttura\
             WHERE struttura.id_struttura=gallery_struttura.id_struttura \
