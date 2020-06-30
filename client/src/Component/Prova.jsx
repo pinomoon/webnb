@@ -9,7 +9,10 @@ class Prova extends Component{
 
             <div className="container">
                 <div className="row">
-                    <div className="col">
+                    <div className="col-1">
+
+                    </div>
+                    <div className="col-2">
 
                     </div>
                     <div className="col-6">

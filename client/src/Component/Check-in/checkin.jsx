@@ -60,7 +60,7 @@ class checkin extends Component{
                 </div>
                         <div className="row">
                             <div className="col-2">
-                            <Button color="inherit" href="/host"style={{color:"#ff6300",marginLeft:"auto",display:"block"}}>Indietro</Button>
+                            <Button color="inherit" href="/gestisciprenotazione"style={{color:"#ff6300",marginLeft:"auto",display:"block"}}>Indietro</Button>
                             </div>
                         <div className="col-8">
                         </div>
