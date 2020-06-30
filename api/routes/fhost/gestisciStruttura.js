@@ -168,7 +168,7 @@ async function modificaCamera(res,req,next){
 router.post("/eliminaCamera",eliminaCamera);
 
 async function eliminaCamera(req,res,next) {
-    const db = makeDb(config);
+    const db = await makeDb(config);
     try {
         await withTransaction(db, async () => {
             await db.query("DELETE FROM `camera` WHERE `camera`.`id_camera` =?", [
@@ -189,7 +189,7 @@ async function eliminaCamera(req,res,next) {
 router.post("/eliminaStruttura",eliminaStruttura);
 
 async function  eliminaStruttura(res,req,next){
-    const db= makeDb(config);
+    const db= await makeDb(config);
     try{
         await withTransaction(db,async ()=>{
         await db.query("DELETE FROM `struttura` WHERE `struttura`.`id_struttura` =? ",[

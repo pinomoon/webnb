@@ -19,7 +19,7 @@ const { makeDb, withTransaction } = require("../../db/dbmiddleware");
 router.post("/",gestisciPrenotazioni);
 
 async function gestisciPrenotazioni(req,res,next){
-    const db= makeDb(config);
+    const db= await makeDb(config);
     let results={};
 try {
     await withTransaction(db, async () => {
@@ -43,7 +43,7 @@ try {
 
 router.post('/confermaPrenotazione',confermaPrenotazione);
 
-async function confermaPrenotazione(res,req,next){
+async function confermaPrenotazione(req,res,next){
     const db= makeDb(config);
     try{
         await  withTransaction(db,async()=>{
@@ -129,7 +129,7 @@ async function confermaPrenotazione(res,req,next){
 router.post('/rifiutaPrenotazione',rifiutaPrenotazione);
 
 async function rifiutaPrenotazione(req,res,next){
-    const db=makeDb(config);
+    const db=await makeDb(config);
     try{
         let results={};
         
@@ -176,7 +176,7 @@ var rejecPrenotazioneAutomatica= setInterval(rifiutaPrenotazioneAutomatica,36000
 
 async function rifiutaPrenotazioneAutomatica(){
 
-    const db= makeDb(config);
+    const db= await makeDb(config);
     let results={};
     try {
         await withTransaction(db, async () => {
@@ -221,12 +221,12 @@ async function rifiutaPrenotazioneAutomatica(){
 
 router.post('/checkinQuestura',checkinQuestura);
 
-async function checkinQuestura(res,req,next){
+async function checkinQuestura(req,res,next){
     const db= makeDb(config);
     let results={};
     try {
         await withTransaction(db,async ()=>{
-            results= (await db).query("SELECT nome,cognome,nome_struttura,nome_camera dati_ospiti.*\
+            results= await db.query("SELECT nome,cognome,nome_struttura,nome_camera dati_ospiti.*\
                                             FROM utente AS u, dati_ospiti AS dat,prenotazione AS p, camera AS c,struttura AS s \
                                              WHERE id_prenotazione=? AND u.id_utente=dat.id_utente AND dat.id_prenotazione=p.id_prenotazione AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura",
                 [req.body.id_prenotazione])
@@ -267,7 +267,7 @@ async function checkinQuestura(res,req,next){
                 throw  err;
             })
 
-            (await db).query("UPDATE prenotazione SET stato_prenotazione='soggiorno in corso' WHERE id_prenotazione=?",[
+            await db.query("UPDATE prenotazione SET stato_prenotazione='soggiorno in corso' WHERE id_prenotazione=?",[
                 req.body.id_prenotazione
             ])
 
@@ -284,12 +284,12 @@ async function checkinQuestura(res,req,next){
 
 router.post('/inserisciOspiti',inserisciOspiti);
 
-async function inserisciOspiti(res,req,next){
-    const db=makeDb(config);
+async function inserisciOspiti(req,res,next){
+    const db= await makeDb(config);
     let results= {};
     try{
         await withTransaction(db,async ()=>{
-            (await db).query("INSERT INTO `dati_ospiti`(`id_dati_ospiti`, `id_prenotazione`, `id_utente`, `nome_ospite`, `cognome_ospite`, `data_nascita`, `sesso`, `residenza`, `n_documento`, `foto_documento`) VALUES?",
+            await db.query("INSERT INTO dati_ospiti(id_prenotazione, id_utente, nome_ospite, cognome_ospite, data_nascita, sesso, residenza, n_documento, foto_documento) VALUES?",
                 [
                 [
                     [
@@ -306,7 +306,7 @@ async function inserisciOspiti(res,req,next){
                 ]
         ]).catch(err=>{
                 throw err;
-            })
+            });
 
 
             res.send("1");
@@ -323,7 +323,7 @@ async function inserisciOspiti(res,req,next){
 router.post("/eliminaOspiti",eliminaOspiti);
 
 async function eliminaOspiti(req,res,next){
-     const db =makeDb(config);
+     const db =await makeDb(config);
      try{ await withTransaction(db,async ()=>{
 
 
@@ -343,12 +343,12 @@ async function eliminaOspiti(req,res,next){
 
 router.post("/modificaDatiOspiti",modificaDatiOspiti);
 
-async function modificaDatiOspiti(res,req,next){
+async function modificaDatiOspiti(req,res,next){
     const db=makeDb(config);
 
     try{
         await  withTransaction(db,async ()=>{
-            (await db).query("UPDATE dati_ospiti SET id_dati_ospiti=? ,id_prenotazione=?, \
+            await db.query("UPDATE dati_ospiti SET id_dati_ospiti=? ,id_prenotazione=?, \
                 id_utente=?, nome_ospitet=?, cognome_ospite=?, data_nascita=?,sesso=?,residenza=?,n_documento=? foto_documento=?",[
                 req.body.id_prenotazione,
                 req.body.id_utente,
@@ -374,7 +374,7 @@ async function modificaDatiOspiti(res,req,next){
 
 router.post("/checkIN",checkIN);
 
-async function checkIN(res,req,next){
+async function checkIN(req,res,next){
     const db=makeDb(config);
     let results={};
     try {
@@ -398,7 +398,7 @@ async function checkIN(res,req,next){
 let rejectcheckoutAutomatico= setInterval(checkoutAutomatico, 86400000);
 
 
-async function checkoutAutomatico(res,req,next){
+async function checkoutAutomatico(req,res,next){
     const db=makeDb(config);
     let results={};
     let now=new Date();
