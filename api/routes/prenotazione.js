@@ -18,39 +18,40 @@ async function ricerca(req, res, next) {
     try {
         await withTransaction(db, async() => {
             let sql="";
-            if(req.body.luogo!=''){
-                sql=sql+" (s.nome_struttura="+req.body.luogo+" OR s.regione="+req.body.luogo+" OR s.citta="+req.body.luogo+" OR s.stato="+req.body.luogo+")";
+            if(req.body.luogo!=undefined){
+                sql=sql+" (struttura.nome_struttura="+req.body.luogo+" OR struttura.regione="+req.body.luogo+" OR struttura.citta="+req.body.luogo+" OR struttura.stato="+req.body.luogo+")";
             }
-            if(req.body.npl!=''){
-                sql=sql+" AND c.numero_posti_letto>="+req.body.npl;
+            if(req.body.npl!=undefined){
+                sql=sql+" AND camera.numero_posti_letto>="+req.body.npl;
             }
-            if(req.body.tipo!=''){
-                sql=sql+" AND s.tipo="+req.body.tipo;
+            if(req.body.tipo!=undefined){
+                sql=sql+" AND struttura.tipo="+req.body.tipo;
             }
             if(req.body.disdetta_gratuita==1){
-                sql=sql+" AND s.disdetta_gratuita>"+0;
+                sql=sql+" AND struttura.disdetta_gratuita>"+0;
             }
-            if(req.body.modalita_di_pagamento!=''){
-                sql=sql+" AND s.modalita_di_pagamento="+req.body.modalita_di_pagamento;
+            if(req.body.modalita_di_pagamento!=undefined){
+                sql=sql+" AND struttura.modalita_di_pagamento="+req.body.modalita_di_pagamento;
             }
-            if(req.body.costo_camera!=''){
-                sql=sql+" AND c.costo_camera<="+req.body.costo_camera;
+            if(req.body.costo_camera!=undefined){
+                sql=sql+" AND camera.costo_camera<="+req.body.costo_camera;
             }
             if(req.body.colazione_inclusa==1){
-                sql=sql+" AND c.colazione_inclusa=="+1;
+                sql=sql+" AND camera.colazione_inclusa=="+1;
             }
-            results=await db.query("SELECT id_struttura,nome_struttura,tipo,indirizzo_struttura,citta,regione,stato, \
+            console.log(sql);
+            results=await db.query("SELECT struttura.id_struttura,nome_struttura,tipo,indirizzo_struttura,citta,regione,stato, \
             tipo,immagine_1 \
             FROM struttura, gallery_struttura\
             WHERE struttura.id_struttura=gallery_struttura.id_struttura \
-            AND id_struttura=(SELECT id_struttura \
-            FROM struttura AS s,camera AS c, \
-            WHERE c.id_struttura=s.id_struttura\
-            AND c.id_camera NOT IN(SELECT id_camera FROM camera,prenotazione \
+            AND struttura.id_struttura=((SELECT struttura.id_struttura \
+            FROM struttura , camera \
+            WHERE camera.id_struttura=struttura.id_struttura AND ?\
+            GROUP BY struttura.id_struttura)EXCEPT (SELECT camera.id_struttura FROM camera,prenotazione \
                 WHERE prenotazione.id_camera=camera.id_camera AND (prenotazione.data_fine>? AND \
-                prenotazione.data_inizio<?)) AND @sql \
-                GROUP BY id_struttura) ORDER BY nome_struttura ASC "
+                prenotazione.data_inizio<?))) ORDER BY nome_struttura ASC "
                 , [
+                    sql,
                     req.body.data_inizio,
                     req.body.data_fine
 
