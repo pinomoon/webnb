@@ -17,29 +17,39 @@ async function ricerca(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async() => {
-            await db.query("DECLARE @sql nvarchar(MAX);")
-                .catch(err=>{
-                    throw err;
-                });
-            results=await db.quaery("SELECT id_struttura,nome_struttura,tipo,indirizzo_struttura,citta,regione,stato, \
+            let sql="";
+            if(req.body.luogo!=''){
+                sql=sql+" (s.nome_struttura="+req.body.luogo+" OR s.regione="+req.body.luogo+" OR s.citta="+req.body.luogo+" OR s.stato="+req.body.luogo+")";
+            }
+            if(req.body.npl!=''){
+                sql=sql+" AND c.numero_posti_letto>="+req.body.npl;
+            }
+            if(req.body.tipo!=''){
+                sql=sql+" AND s.tipo="+req.body.tipo;
+            }
+            if(req.body.disdetta_gratuita==1){
+                sql=sql+" AND s.disdetta_gratuita>"+0;
+            }
+            if(req.body.modalita_di_pagamento!=''){
+                sql=sql+" AND s.modalita_di_pagamento="+req.body.modalita_di_pagamento;
+            }
+            if(req.body.costo_camera!=''){
+                sql=sql+" AND c.costo_camera<="+req.body.costo_camera;
+            }
+            if(req.body.colazione_inclusa==1){
+                sql=sql+" AND c.colazione_inclusa=="+1;
+            }
+            results=await db.query("SELECT id_struttura,nome_struttura,tipo,indirizzo_struttura,citta,regione,stato, \
             tipo,immagine_1 \
             FROM struttura, gallery_struttura\
             WHERE struttura.id_struttura=gallery_struttura.id_struttura \
-            AND id_struttura=(SELECT @sql='SELECT id_struttura \
+            AND id_struttura=(SELECT id_struttura \
             FROM struttura AS s,camera AS c, \
             WHERE c.id_struttura=s.id_struttura\
             AND c.id_camera NOT IN(SELECT id_camera FROM camera,prenotazione \
                 WHERE prenotazione.id_camera=camera.id_camera AND (prenotazione.data_fine>? AND \
-                prenotazione.data_inizio<?))'\
-            IF @req.body.luogo IS NOT NULL SELECT @sql+=' AND (s.nome_struttura=@req.body.luogo OR s.regione=@req.body.luogo OR s.citta=@req.body.luogo OR s.stato=@req.body.luogo)' \
-            IF @req.body.npl IS NOT NULL SELECT @sql+=' AND c.numero_posti_letto>=@req.body.npl' \
-            IF @req.body.tipo IS NOT NULL SELECT @sql+=' AND s.tipo=@req.body.tipo'  \
-            IF @req.body.disdetta_gratuita IS NOT NULL SELECT @sql+=' AND s.disdetta_gratuita>0' \
-            IF @req.body.modalita_di_pagamento IS NOT NULL SELECT @sql+=' AND s.modalità_di_pagamento=@req.body.modalita_di_pagamento' \
-            IF @req.body.costo_camera IS NOT NULL SELECT @sql+=' AND c.costo_camera<=@req.body.costo_camera'\
-            IF @req.body.colazione_inclusa IS NOT NULL SELECT @sql+=' AND c.colazione_inclusa==@req.body.colazione_inclusa'\
-                GROUP BY id_struttura\
-                EXEC sp_executesql @sql) ORDER BY nome_struttura ASC "
+                prenotazione.data_inizio<?)) AND @sql \
+                GROUP BY id_struttura) ORDER BY nome_struttura ASC "
                 , [
                     req.body.data_inizio,
                     req.body.data_fine
