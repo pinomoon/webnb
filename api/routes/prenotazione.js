@@ -34,7 +34,7 @@ async function ricerca(req, res, next) {
             IF @req.body.regione IS NOT NULL SELECT @sql+=' AND s.regione=@req.body.regione' \
             IF @req.body.stato IS NOT NULL SELECT @sql+=' AND s.stato=@req.body.stato'  \
             IF @req.body.citta IS NOT NULL SELECT @sql+=' AND s.citta=@req.body.citta' \
-            IF @req.body.npl IS NOT NULL SELECT @sql+=' AND s.numero_posti_letto=@req.body.npl' \
+            IF @req.body.npl IS NOT NULL SELECT @sql+=' AND c.numero_posti_letto>=@req.body.npl' \
             IF @req.body.tipo IS NOT NULL SELECT @sql+=' AND s.tipo=@req.body.tipo'  \
             IF @req.body.disdetta_gratuita IS NOT NULL SELECT @sql+=' AND s.disdetta_gratuita>0' \
             IF @req.body.modalita_di_pagamento IS NOT NULL SELECT @sql+=' AND s.modalità_di_pagamento=@req.body.modalita_di_pagamento' \
