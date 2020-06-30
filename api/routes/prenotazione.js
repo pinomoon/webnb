@@ -98,6 +98,16 @@ async function dati(req, res, next) {
     const db = await makeDb(config);
     let results = {};
     try {
+        results=await db.query("INSERT INTO prenotazione(id_utente,id_camera,data_inizio,data_fine) VALUES ?"
+        ,[
+            req.body.id_utente,
+            req.body.id_camera,
+            req.body.data_inizio,
+            req.body.data_fine
+
+        ] ).catch(err=>{
+            throw err;
+        });
         await withTransaction(db, async() => {
             results=await db.query("SELECT nome,cognome,data_di_nascita,sesso,indirizzo,citta,cap,cellulare,email,titolare_carta,numero_carta,scadenza,cvc \
             FROM utente, carta_credito \
@@ -125,16 +135,7 @@ async function prenota(req, res, next) {
         let date= new Date();
         year=date.getFullYear();
         await withTransaction(db, async() => {
-            results=await db.query("INSERT INTO prenotazione(id_utente,id_camera,data_inizio,data_fine) VALUES ?"
-            ,[
-                req.body.id_utente,
-                req.body.id_camera,
-                req.body.data_inizio,
-                req.body.data_fine
-
-            ] ).catch(err=>{
-                throw err;
-            });
+           
             results=await db.query("SELECT SUM(data_fine-data_inizio) AS giorni_soggiorno \
             FROM prenotazione,camera \
             WHERE (data_inizio>=year-01-01 AND data_fine<=year-12-31) AND prenotazione.id_camera=camera.id_camera AND prenotazione.id_utente=? AND camera.id_struttura=? ",

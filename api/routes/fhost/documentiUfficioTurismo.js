@@ -37,8 +37,8 @@ async function resocontoTrimestre(req,res,next){
                 throw err;
         })
 
-        totale_tasse= (await db).query("SELECT SUM(tassa_soggiorno) AS totale_tasse_soggiorno FROM struttura AS s , prenotzaione  AS p,camera AS c \
-            WHERE p.stato_prenotazione='soggiorno concluso' AND s.id_utente=? AND p.id_camera=c.id_camera AND c.id_camera AND c.id_struttura=s.id_struttura AND (?-p.data_prenotazione)>=7889400000",
+        totale_tasse= (await db).query("SELECT SUM(p.tasse_soggiorno) AS totale_tasse_soggiorno FROM struttura AS s , prenotzaione  AS p,camera AS c \
+            WHERE p.stato_prenotazione='soggiorno concluso' AND s.id_utente=? AND p.id_camera=c.id_camera  AND c.id_struttura=s.id_struttura AND (?-p.data_prenotazione)>=7889400000",
             [req.body.id_utente,
                 data.getTime()]).catch(err=>{
                     throw err;
