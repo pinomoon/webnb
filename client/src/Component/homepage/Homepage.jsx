@@ -40,7 +40,7 @@ const Homepage=()=> {
         event.preventDefault();
         alert("Dati inseriti "+luogo+" "+data_inizio+" "+data_fine+" "+npl);
 
-        axios.post("https://localhost:9000/ricercaStruttura", state)
+        axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
             .then((response)=>{
                 setStrutture(response.data);
                 alert(response.data);

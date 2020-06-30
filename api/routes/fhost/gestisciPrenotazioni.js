@@ -43,7 +43,7 @@ try {
 
 router.post('/confermaPrenotazione',confermaPrenotazione);
 
-async function confermaPrenotazione(res,req,next){
+async function confermaPrenotazione(req,res,next){
     const db= makeDb(config);
     try{
         await  withTransaction(db,async()=>{
@@ -221,7 +221,7 @@ async function rifiutaPrenotazioneAutomatica(){
 
 router.post('/checkinQuestura',checkinQuestura);
 
-async function checkinQuestura(res,req,next){
+async function checkinQuestura(req,res,next){
     const db= makeDb(config);
     let results={};
     try {
@@ -284,12 +284,12 @@ async function checkinQuestura(res,req,next){
 
 router.post('/inserisciOspiti',inserisciOspiti);
 
-async function inserisciOspiti(res,req,next){
-    const db=makeDb(config);
+async function inserisciOspiti(req,res,next){
+    const db= await makeDb(config);
     let results= {};
     try{
         await withTransaction(db,async ()=>{
-            (await db).query("INSERT INTO `dati_ospiti`(`id_dati_ospiti`, `id_prenotazione`, `id_utente`, `nome_ospite`, `cognome_ospite`, `data_nascita`, `sesso`, `residenza`, `n_documento`, `foto_documento`) VALUES?",
+            await db.query("INSERT INTO dati_ospiti(id_prenotazione, id_utente, nome_ospite, cognome_ospite, data_nascita, sesso, residenza, n_documento, foto_documento) VALUES?",
                 [
                 [
                     [
@@ -306,7 +306,7 @@ async function inserisciOspiti(res,req,next){
                 ]
         ]).catch(err=>{
                 throw err;
-            })
+            });
 
 
             res.send("1");
@@ -343,7 +343,7 @@ async function eliminaOspiti(req,res,next){
 
 router.post("/modificaDatiOspiti",modificaDatiOspiti);
 
-async function modificaDatiOspiti(res,req,next){
+async function modificaDatiOspiti(req,res,next){
     const db=makeDb(config);
 
     try{
@@ -374,7 +374,7 @@ async function modificaDatiOspiti(res,req,next){
 
 router.post("/checkIN",checkIN);
 
-async function checkIN(res,req,next){
+async function checkIN(req,res,next){
     const db=makeDb(config);
     let results={};
     try {
@@ -398,7 +398,7 @@ async function checkIN(res,req,next){
 let rejectcheckoutAutomatico= setInterval(checkoutAutomatico, 86400000);
 
 
-async function checkoutAutomatico(res,req,next){
+async function checkoutAutomatico(req,res,next){
     const db=makeDb(config);
     let results={};
     let now=new Date();
