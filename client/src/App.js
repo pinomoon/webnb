@@ -28,6 +28,7 @@ import GestisciPrenotazioni from "./Component/GestionePrenotazioni/GestisciPreno
 import CadutaConnessione from "./Component/Caduta Connessione/CadutaConnessione";
 import RicercaStruttura from "./Component/Ricerca Struttura/RicercaStruttura";
 import Prova from "./Component/Prova";
+import MieiGuadagni from "./Component/iMieiGuadagni/mieiguadagni";
 
 
 
@@ -73,7 +74,10 @@ const App= ()=> {
                         <Route path="/accountConferma" component={ConfermaAccount} />
                         <Route path="/gestisciprenotazione" component={GestisciPrenotazioni} />
                         <Route path="/ricercastruttura" component={RicercaStruttura} />
+                        <Route path="/guadagni" component={MieiGuadagni} exact />
+
                         <Route path="*" component={CadutaConnessione}/>
+
 
                         </Switch>
 
