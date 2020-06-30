@@ -44,7 +44,7 @@ const Homepage =()=>{
                          <h1>Benvenuti in </h1>
                          <h2>WeB&B</h2>
 
-                         {(user.id==null || (user.tipo=1)) &&
+                         {(user.id==null || (user.tipo==1)) &&
                          <div>
                          <h3 style={{color:"#ff6300"}}> Prenota la tua vacanza!</h3>
                          <br></br>
