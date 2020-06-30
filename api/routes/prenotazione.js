@@ -21,7 +21,7 @@ async function ricerca(req, res, next) {
                 .catch(err=>{
                     throw err;
                 });
-            results=await db.quaery("SELECT id_struttura,nome_struttura,indirizzo_struttura,citta,regione,stato, \
+            results=await db.quaery("SELECT id_struttura,nome_struttura,tipo,indirizzo_struttura,citta,regione,stato, \
             tipo,immagine_1 \
             FROM struttura, gallery_struttura\
             WHERE struttura.id_struttura=gallery_struttura.id_struttura \
@@ -31,10 +31,8 @@ async function ricerca(req, res, next) {
             AND c.id_camera NOT IN(SELECT id_camera FROM camera,prenotazione \
                 WHERE prenotazione.id_camera=camera.id_camera AND (prenotazione.data_fine>? AND \
                 prenotazione.data_inizio<?))'\
-            IF @req.body.regione IS NOT NULL SELECT @sql+=' AND s.regione=@req.body.regione' \
-            IF @req.body.stato IS NOT NULL SELECT @sql+=' AND s.stato=@req.body.stato'  \
-            IF @req.body.citta IS NOT NULL SELECT @sql+=' AND s.citta=@req.body.citta' \
-            IF @req.body.npl IS NOT NULL SELECT @sql+=' AND s.numero_posti_letto=@req.body.npl' \
+            IF @req.body.luogo IS NOT NULL SELECT @sql+=' AND (s.nome_struttura=@req.body.luogo OR s.regione=@req.body.luogo OR s.citta=@req.body.luogo OR s.stato=@req.body.luogo)' \
+            IF @req.body.npl IS NOT NULL SELECT @sql+=' AND c.numero_posti_letto>=@req.body.npl' \
             IF @req.body.tipo IS NOT NULL SELECT @sql+=' AND s.tipo=@req.body.tipo'  \
             IF @req.body.disdetta_gratuita IS NOT NULL SELECT @sql+=' AND s.disdetta_gratuita>0' \
             IF @req.body.modalita_di_pagamento IS NOT NULL SELECT @sql+=' AND s.modalità_di_pagamento=@req.body.modalita_di_pagamento' \
@@ -71,10 +69,14 @@ async function esplora(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async() => {
-                results=await db.query("SELECT * \
-                FROM struttura,camera,gallery_struttura \
+                results=await db.query("SELECT nome_struttura,indirizzo_struttura,cap,punti_di_interesse,\
+                citta,regione,stato,tipo, disdetta_gratuita, modalita_di_pagamento, tassa_soggiorno, servizi,\
+                ora_checkin,ora_checkout,descrizione,immagine_1,immagine_2,immagine_3,id_camera,nome_camera,\
+                numero_posti_letto, costo_camera, colazione_inclusa,recensione \
+                FROM struttura,camera,gallery_struttura,recensione \
                 WHERE camera.id_struttura=struttura.id_struttura \
-                AND gallery_struttura.id_struttura=struttura.id_struttura AND struttura.id_struttura=?"
+                AND gallery_struttura.id_struttura=struttura.id_struttura \
+                 AND struttura.id_struttura=recensione.id_struttura AND struttura.id_struttura=?"
                     ,[req.body.id_struttura])
                     .catch(err=>{
                         throw err;
