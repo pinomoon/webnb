@@ -52,9 +52,15 @@ const PasswordDimenticata=()=>{
     const state={email};
 
     return(
-        <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"650px",height:"auto"}}>
+        <div className="container">
+            <div className="row">
+                <div className="col">
 
-            <img src={ops} style={{marginLeft:"290px",marginTop:"30px",height:"200px",width:"80px"}}/>
+                </div>
+                <div className="col-sm-12 col-md-9 col-lg-6">
+        <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
+
+            <img src={ops} style={{margin:"auto",marginTop:"30px",height:"20%",width:"20%",display:"block"}}/>
         <div className="container mt-10">
             <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
                 <h5 >Inserisci E-Mail per Recupero Credenziali</h5>
@@ -65,7 +71,16 @@ const PasswordDimenticata=()=>{
                     <div className="invalid-feedback">
                         Inserire indirizzo e-mail
                     </div>
-                <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"400px",color:"#ff6300"}}>Invia</Button>
+                <div className="row">
+                    <div className="col-1">
+                        <Button name="ok" id="ok"  onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
+                    </div>
+                    <div className="col-9">
+                    </div>
+                    <div className="col-1">
+                        <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{color:"#ff6300"}}>Invia</Button>
+                    </div>
+                </div>
                 <br></br>
                 <br></br>
             </form>
@@ -76,6 +91,13 @@ const PasswordDimenticata=()=>{
             responseType={tipoRisposta}
             email={email}
         />
+        </div>
+                </div>
+                <div className="col">
+
+                </div>
+            </div>
+
         </div>
 
     );
