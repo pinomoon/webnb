@@ -31,6 +31,9 @@ import Prova from "./Component/Prova";
 import MieiGuadagni from "./Component/iMieiGuadagni/mieiguadagni";
 import EsploraStruttura from"./Component/Ricerca Struttura/EsploraStruttura";
 import AggiungiCamera from "./Component/GestisciCamera/AggiungiCamera";
+import ElencoPrenotazioni from "./Component/FunzionalitaCliente/ElencoPrenotazioni";
+import Recensione from "./Component/GestionePrenotazioni/Recensione";
+import ElencoPreferiti from "./Component/FunzionalitaCliente/ElencoPreferiti";
 
 
 
@@ -68,7 +71,7 @@ const App= ()=> {
                         <Route path="/checkin" component={PaginaCheckin} exact/>
                         <Route path="/checkin/success" component={PaginaCheckinSuccess} exact/>
                         <Route path="/checkin/error" component={CheckinFail} exact/>
-                        <Route path="/lemiestrutture" component={GestisciStrutture} exact/>
+                        <Route path="/gestiscistrutture" component={GestisciStrutture} exact/>
                         <Route path="/inseriscistruttura" component={InserisciStruttura} exact/>
                         <Route path="/inseriscistruttura/success" component={Boxconfermainserimento} exact/>
                         <Route path="/recuperaCredenziali" component={RecuperaPassword}/>
@@ -79,6 +82,9 @@ const App= ()=> {
                         <Route path="/prenotazione" component={EsploraStruttura} />
                         <Route path="/aggiungicamera" component={AggiungiCamera} />
                         <Route path="/guadagni" component={MieiGuadagni} exact />
+                        <Route path="/lemieprenotazioni" component={ElencoPrenotazioni} exact />
+                        <Route path="/recensisci" component={Recensione} exact />
+                        <Route path="/imieipreferiti" component={ElencoPreferiti} exact />
 
                         <Route path="*" component={CadutaConnessione}/>
 

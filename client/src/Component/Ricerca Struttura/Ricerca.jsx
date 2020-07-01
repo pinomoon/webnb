@@ -14,7 +14,7 @@ const Ricerca=(props)=> {
     const [data_fine, setDataFine]=React.useState("");
     const [npl, setNpl]=React.useState("");//numero posti letto
     const [tipo, setTipo]=React.useState("");
-    const [disdetta_gratuita, setDisdettaGratuita]=("");
+    const [disdetta_gratuita, setDisdettaGratuita]=React.useState("");
     const [modalita_di_pagamento, setModalitaPagamento]=React.useState("");
     const [costo_camera, setCostoCamera]=React.useState("");
     const [colazione_inclusa, setColazioneInclusa]=React.useState("");
@@ -192,16 +192,16 @@ const Ricerca=(props)=> {
                                     <div className="row">
                                         <div className="col-3">
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                <input type="radio" className="custom-control-input" id="no" name="disdetta_gratuita"
+                                                <input type="radio" className="custom-control-input" id="no_disdetta" name="disdetta_gratuita"
                                                        value="0" onChange={handleChangeDisdettaGratuita} />
-                                                <label className="custom-control-label" htmlFor="no">No</label>
+                                                <label className="custom-control-label" htmlFor="no_disdetta">No</label>
                                             </div>
                                         </div>
                                         <div className="col-3">
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                <input type="radio" className="custom-control-input" id="si" name="disdetta_gratuita"
+                                                <input type="radio" className="custom-control-input" id="si_disdetta" name="disdetta_gratuita"
                                                        value="1" onChange={handleChangeDisdettaGratuita} />
-                                                <label className="custom-control-label" htmlFor="si">Si</label>
+                                                <label className="custom-control-label" htmlFor="si_disdetta">Si</label>
                                             </div>
                                         </div>
                                     </div>
@@ -289,6 +289,8 @@ const Ricerca=(props)=> {
                                         <br/>
                                     </div>
                                 </div>
+                                <Button color="inherit" type="submit" onClick={handleSubmit} style={{backgroundColor:"#32508f",color:"white",margin:"auto",display:"block",width:"100%"}}>Cerca</Button>
+
 
 
                             </UncontrolledCollapse>

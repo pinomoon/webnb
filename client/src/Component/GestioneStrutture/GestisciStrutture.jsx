@@ -14,12 +14,17 @@ class GestisciStrutture extends Component{
 
             <div className="container">
                 <div className="row">
+                    <div className="col">
+                    <h4 style={{textAlign:"center"}}>Le mie strutture</h4>
+                    </div>
+                </div>
+                <div className="row">
                     <div className="col-1">
 
                     </div>
                     <div className="col-sm-12 col-md-12 col-lg-10">
                        <div className="row">
-                           <div className="col-3">
+                           <div className="col-sm-6 col-md-4 col-lg-3">
                 <section className="cards clearfix">
                 <div className="card" style={{width:"auto",height:"20%"}}>
                     <img className="card_image" src={villa}  alt=" Villa "/>
@@ -38,7 +43,7 @@ class GestisciStrutture extends Component{
 
             </section>
                            </div>
-                           <div className="col-3">
+                           <div className="col-sm-6 col-md-4 col-lg-3">
                                <section className="cards clearfix">
                                    <div className="card" style={{width:"auto",height:"20%"}}>
                                        <img className="card_image" src={villa}  alt=" Villa "/>

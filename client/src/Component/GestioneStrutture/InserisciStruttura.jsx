@@ -418,7 +418,7 @@ const InserisciStruttura=()=>{
                         <div className="col-10">
                         </div>
                             <div className="col-2">
-                        <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Invia</Button>
+                        <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-15px",color:"#ff6300"}}>Invia</Button>
                             </div>
 
 
