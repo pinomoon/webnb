@@ -206,6 +206,7 @@ const InserisciStruttura=()=>{
 
     const handleSubmit=(event) =>{
         alert(JSON.stringify(state));
+        console.log(immagine1);
         event.preventDefault();
         axios.post('https://localhost:9000/inserisciStruttura', state)
             .then((response)=>{
@@ -363,15 +364,15 @@ const InserisciStruttura=()=>{
                         <div className="form-group">
                             <h5>Immagini della Struttura</h5>
 
-                            <Button id="immagine1" name="immagine1" type="file" className="form-control" maxLength="40"
+                            <input id="immagine1" name="immagine1" type="file"  maxLength="40"
                                     value={state.immagine1} onChange={handleChangeImg1}
-                                    color="inherit" href="/login" style={{color:"#ff6300"}}>Immagine 1</Button>
-                            <Button id="immagine2" name="immagine2" type="file" className="form-control" maxLength="40"
-                                    value={state.immagine2} onChange={handleChangeImg1}
-                                    color="inherit" href="/login" style={{color:"#ff6300"}}>Immagine 2</Button>
-                            <Button id="immagine3" name="immagine3" type="file" className="form-control" maxLength="40"
-                                    value={state.immagine3} onChange={handleChangeImg1}
-                                    color="inherit" href="/login" style={{color:"#ff6300"}}>Immagine 3</Button>
+                                    color="inherit"  style={{color:"#ff6300"}}></input>
+                            <input id="immagine2" name="immagine2" type="file"  maxLength="40"
+                                    value={state.immagine2} onChange={handleChangeImg2}
+                                    color="inherit"  style={{color:"#ff6300"}}></input>
+                            <input id="immagine3" name="immagine3" type="file" maxLength="40"
+                                    value={state.immagine3} onChange={handleChangeImg3}
+                                    color="inherit"  style={{color:"#ff6300"}}></input>
 
                         </div>
                         <div className="form-group">
