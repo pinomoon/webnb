@@ -18,39 +18,47 @@ async function ricerca(req, res, next) {
     try {
         await withTransaction(db, async() => {
             let sql="";
-            if(req.body.luogo!=''){
-                sql=sql+" (s.nome_struttura="+req.body.luogo+" OR s.regione="+req.body.luogo+" OR s.citta="+req.body.luogo+" OR s.stato="+req.body.luogo+")";
+            if(req.body.luogo===''){
+                req.body.luogo='%';
             }
-            if(req.body.npl!=''){
-                sql=sql+" AND c.numero_posti_letto>="+req.body.npl;
+            if(req.body.npl===''){
+                req.body.npl='%';
             }
-            if(req.body.tipo!=''){
-                sql=sql+" AND s.tipo="+req.body.tipo;
+            if(req.body.tipo===''){
+                req.body.tipo='%';
             }
-            if(req.body.disdetta_gratuita==1){
-                sql=sql+" AND s.disdetta_gratuita>"+0;
+            if(req.body.disdetta_gratuita!==1){
+                req.body.disdetta_gratuita='%';
             }
-            if(req.body.modalita_di_pagamento!=''){
-                sql=sql+" AND s.modalita_di_pagamento="+req.body.modalita_di_pagamento;
+            if(req.body.modalita_di_pagamento===''){
+                req.body.modalita_di_pagamento='%';
             }
-            if(req.body.costo_camera!=''){
-                sql=sql+" AND c.costo_camera<="+req.body.costo_camera;
+            if(req.body.costo_camera===''){
+                req.body.costo_camera=100000;
             }
-            if(req.body.colazione_inclusa==1){
-                sql=sql+" AND c.colazione_inclusa=="+1;
+            if(req.body.colazione_inclusa!==1){
+               req.body.colazione_inclusa='%';
             }
-            results=await db.query("SELECT id_struttura,nome_struttura,tipo,indirizzo_struttura,citta,regione,stato, \
-            tipo,immagine_1 \
-            FROM struttura, gallery_struttura\
-            WHERE struttura.id_struttura=gallery_struttura.id_struttura \
-            AND id_struttura=(SELECT id_struttura \
-            FROM struttura AS s,camera AS c, \
-            WHERE c.id_struttura=s.id_struttura\
-            AND c.id_camera NOT IN(SELECT id_camera FROM camera,prenotazione \
-                WHERE prenotazione.id_camera=camera.id_camera AND (prenotazione.data_fine>? AND \
-                prenotazione.data_inizio<?)) AND @sql \
-                GROUP BY id_struttura) ORDER BY nome_struttura ASC "
+            //console.log(req.body.luogo);
+            results=await db.query("SELECT struttura.id_struttura,nome_struttura,tipo,indirizzo_struttura,citta,regione,stato, tipo,immagine_1\
+                FROM struttura, gallery_struttura\
+                WHERE struttura.id_struttura=gallery_struttura.id_struttura \ \
+                AND struttura.id_struttura=((SELECT struttura.id_struttura FROM struttura , camera WHERE camera.id_struttura=struttura.id_struttura\
+                AND (struttura.nome_struttura LIKE ? OR struttura.regione LIKE ? OR struttura.citta LIKE ? OR struttura.stato LIKE ?) AND camera.numero_posti_letto>=? AND struttura.tipo LIKE ? \
+                AND struttura.disdetta_gratuita LIKE ? AND struttura.modalita_di_pagamento LIKE ? AND camera.costo_camera<=? AND camera.colazione_inclusa LIKE ? )\
+                EXCEPT (SELECT camera.id_struttura FROM camera,prenotazione WHERE prenotazione.id_camera=camera.id_camera \
+                AND (prenotazione.data_fine>? AND prenotazione.data_inizio<?))) ORDER BY nome_struttura ASC"
                 , [
+                    req.body.luogo,
+                    req.body.luogo,
+                    req.body.luogo,
+                    req.body.luogo,
+                    req.body.npl,
+                    req.body.tipo,
+                    req.body.disdetta_gratuita,
+                    req.body.modalita_di_pagamento,
+                    req.body.costo_camera,
+                    req.body.colazione_inclusa,
                     req.body.data_inizio,
                     req.body.data_fine
 
@@ -61,6 +69,7 @@ async function ricerca(req, res, next) {
             
               
                 var risultato=['1',results];
+                console.log(risultato);
                 res.send(risultato);
         })
     }catch(err){
