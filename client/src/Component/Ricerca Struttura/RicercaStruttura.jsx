@@ -5,6 +5,11 @@ import { Collapse, Button, CardBody, Card } from 'reactstrap';
 import UncontrolledCollapse from "reactstrap/es/UncontrolledCollapse";
 import simpson from "./casa-simpson-690x362.jpg"
 import axios from "axios";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
+import CardActions from "@material-ui/core/CardActions";
 
 
 
@@ -230,6 +235,30 @@ const RicercaStruttura=(props)=> {
 
                     </div>
 
+                    {strutture.map((struttura)=>(
+                        <div className="col-md-4" key={struttura.id_struttura}>
+                            <Card >
+                                <CardHeader title={struttura.nome_struttura}/>
+                                <CardContent>
+                                    <CardContent >
+                                        <Typography variant="h5" component="h2">
+                                            {struttura.costo_camera} €
+                                        </Typography>
+                                        <Typography variant="body2" component="p">
+                                            {struttura.immagine1}
+                                        </Typography>
+                                    </CardContent>
+                                </CardContent>
+                                <CardActions>
+                                    <Tooltip title="Esplora Struttura" placement="bottom-start">
+                                        <Button color="inherit" href="/prenotazione" style={{width:"40%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
+                                    </Tooltip>
+                                </CardActions>
+                            </Card>
+                        </div>
+                        )
+
+                    )}
 
 
 
@@ -240,6 +269,7 @@ const RicercaStruttura=(props)=> {
 
 
 
+/*
                 <div className="col-md-7 col-lg-8" style={{backgroundColor:"white",width:"100%",height:"auto",marginTop:"30px"}}>
 
                         <div className="card mb-3" style={{width:"100%",height:"auto"}}>
@@ -259,12 +289,8 @@ const RicercaStruttura=(props)=> {
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
                 </div>
+                    */
 
                     <div className="col-1">
 
