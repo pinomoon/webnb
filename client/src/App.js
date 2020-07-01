@@ -30,6 +30,7 @@ import RicercaStruttura from "./Component/Ricerca Struttura/RicercaStruttura";
 import Prova from "./Component/Prova";
 import MieiGuadagni from "./Component/iMieiGuadagni/mieiguadagni";
 import EsploraStruttura from"./Component/Ricerca Struttura/EsploraStruttura";
+import AggiungiCamera from "./Component/GestisciCamera/AggiungiCamera";
 
 
 
@@ -76,6 +77,7 @@ const App= ()=> {
                         <Route path="/gestisciprenotazione" component={GestisciPrenotazioni} />
                         <Route path="/ricercastruttura" component={RicercaStruttura} />
                             <Route path="/prenotazione" component={EsploraStruttura} />
+                            <Route path="/aggiungicamera" component={AggiungiCamera} />
 
                             <Route path="/guadagni" component={MieiGuadagni} exact />
 

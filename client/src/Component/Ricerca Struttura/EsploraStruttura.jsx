@@ -6,6 +6,7 @@ import simpson from "./casa-simpson-690x362.jpg"
 import cucina from "./cucina.jpg";
 import giardino from "./1.png"
 import ListGroup from "react-bootstrap/ListGroup";
+import icon from "./User-01.jpg";
 
 
 class EsploraStruttura extends Component{
@@ -175,7 +176,7 @@ class EsploraStruttura extends Component{
                                 </div>
                             </div>
                             <div className="col-6">
-                                <div style={{margin:"auto",border:"1px solid #ff6300",height:"auto",width:"70%"}}>
+                                <div style={{margin:"auto",border:"3px solid #ff6300",height:"auto",width:"70%",backgroundColor:"white smoke"}}>
                                     <h5 style={{textAlign:"center"}}>Servizi</h5>
                                     <ListGroup variant="flush">
                                         <ListGroup.Item>
@@ -183,7 +184,12 @@ class EsploraStruttura extends Component{
                                         </ListGroup.Item>
 
                                         <ListGroup.Item>
-                                            <p>Wifi</p>
+                                            <p>Colazione in camera</p>
+                                        </ListGroup.Item>
+
+
+                                        <ListGroup.Item>
+                                            <p>Palestra</p>
                                         </ListGroup.Item>
                                     </ListGroup>
 
@@ -209,42 +215,57 @@ class EsploraStruttura extends Component{
                             </div>
                         </div>
                         <br/>
-                        <br/>
+
 
                         <div className="row">
                             <div className="col">
                             <h3 className="text-center">Disponibilità camere</h3>
-                        </div>
+                            </div>
                         </div>
                         <div className="row">
 
-                            <div className="col-sm-8 col-lg-4" style={{borderRight:"2px solid black",borderTop:"2px solid black"}}>
-                                <p>Ciao</p>
+                                <table className="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Camera</th>
+                                        <th scope="col">N.Persone</th>
+                                        <th scope="col">Prezzo</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">Camera Luigi</th>
+                                        <td>
+                                            <img src={icon} style={{width:"5%",height:"20%",margin:"auto"}}/>
+                                            <img src={icon} style={{width:"5%",height:"20%",margin:"auto"}}/>
+                                            <img src={icon} style={{width:"5%",height:"20%",margin:"auto"}}/>
+                                            <img src={icon} style={{width:"5%",height:"20%",margin:"auto"}}/>
+                                        </td>
+                                        <td>70,00$</td>
+                                        <td><Button name="ok" id="ok" type="submit" style={{marginLeft:"-10px",color:"#ff6300"}}>Prenota!</Button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Camera Mario</th>
+                                        <td><img src={icon} style={{width:"5%",height:"20%",margin:"auto"}}/>
+                                            <img src={icon} style={{width:"5%",height:"20%",margin:"auto"}}/></td>
+                                        <td>70,00$</td>
 
-                            </div>
-                            <div className="col-sm-2 col-lg-1" style={{borderRight:"2px solid black",borderTop:"2px solid black"}}>
-                                <p>Ciao</p>
-                            </div>
-                            <div className="col-sm-4 col-lg-2" style={{borderRight:"2px solid black",borderTop:"2px solid black"}}>
-                                <p>Ciao</p>
-                            </div>
-                            <div className="col-sm-2 col-lg-3" style={{borderRight:"2px solid black",borderTop:"2px solid black"}}>
-                                <p>Ciao</p>
-                            </div>
-                            <div className="col-sm-2 col-lg-1" style={{borderRight:"2px solid black",borderTop:"2px solid black"}}>
-                                <p>Ciao</p>
-                            </div>
-                            <div className="col-sm-2 col-lg-1" >
-                                <Button color="inherit" href="/prenotazione" style={{width:"100%",backgroundColor:"white",color:"#ff6300"}}>Prenota</Button>
+                                            <td> <Button name="ok" id="ok" type="submit" style={{marginLeft:"-10px",color:"#ff6300"}}>Prenota!</Button>
 
-                            </div>
-                        </div>
+                                            </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
 
 
 
 
                     </div>
                 </div>
+            </div>
             </div>
         );
 
