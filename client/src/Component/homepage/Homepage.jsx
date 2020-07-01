@@ -115,7 +115,7 @@ const Homepage =()=>{
                                                  <Input type="text" name="luogo" id="luogo"
                                                         placeholder="Dove vuoi andare?"
                                                         value={state.luogo} onChange={handleChangeLuogo}
-                                                        style={{backgroundColor: "white", width: "100%"}}/>
+                                                        style={{backgroundColor: "white", marginTop:"9px"}}/>
                                              </div>
                                              <div className="form-group col-sm-6 col-md-3 col-lg-3">
                                                  <Input style={{backgroundColor: "white", marginTop: "9px"}}

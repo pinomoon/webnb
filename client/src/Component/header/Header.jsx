@@ -28,10 +28,10 @@ const Header =()=>{
 
       return(
     <div>
-          <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+          <Navbar collapseOnSelect expand="lg" bg="light" variant="light" >
               <Navbar.Brand href="/"><img src={logo} width="100" height="50"/></Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-              <Navbar.Collapse id="responsive-navbar-nav">
+              <Navbar.Collapse id="responsive-navbar-nav" >
                   <Nav className="mr-auto">
                       <Nav.Link href="/" style={{color:"#ff6300"}}>Home</Nav.Link>
                       <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>About</Nav.Link>

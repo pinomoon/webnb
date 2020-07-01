@@ -78,7 +78,7 @@ const PasswordDimenticata=()=>{
                     <div className="col-9">
                     </div>
                     <div className="col-1">
-                        <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{color:"#ff6300"}}>Invia</Button>
+                        <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Invia</Button>
                     </div>
                 </div>
                 <br></br>

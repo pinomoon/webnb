@@ -3,6 +3,8 @@ import querystring from 'querystring';
 import url from 'url';
 import axios from "axios";
 import BoxConfermaRecupero from "./boxconfermarecupero";
+import ops from "../login/ops.png";
+import Button from "@material-ui/core/Button";
 
 
 const RecuperaPassword=()=>{
@@ -77,9 +79,18 @@ const RecuperaPassword=()=>{
     const state={token, password};
 
     return(
+        <div className="container">
+            <div className="row">
+                <div className="col">
+
+                </div>
+                <div className="col-sm-12 col-md-9 col-lg-6">
+                    <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
+
+                        <img src={ops} style={{margin:"auto",marginTop:"30px",height:"20%",width:"20%",display:"block"}}/>
         <div className="container mt-10">
             <form name="form" id="form"  className="container was-validated col-sm-8 mt-3" method="POST">
-                <p className="lead text-uppercase">Recupero Credenziali</p>
+                <h5>Recupero Credenziali</h5>
                 <div className="form-group">
 
                     <label htmlFor="pass">Nuova Password</label>
@@ -103,13 +114,30 @@ const RecuperaPassword=()=>{
                         Le password devono coincidere
                     </div>
                 </div>
-                <button name="ok" id="ok" type="submit"  onClick={handleSubmit} className="btn btn-primary mt-3">Invia</button>
+                <div className="row">
+                    <div className="col-1">
+                        <Button name="ok" id="ok"  onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
+                    </div>
+                    <div className="col-9">
+                    </div>
+                    <div className="col-1">
+                        <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Invia</Button>
+                    </div>
+                </div>
+
+
             </form>
             <BoxConfermaRecupero
                 open={openConferma}
                 onClose={handleCloseConferma}
                 responseType={tipoRisposta}
             />
+        </div>
+                    </div>
+                </div>
+                <div className="col">
+                </div>
+            </div>
         </div>
 
     );

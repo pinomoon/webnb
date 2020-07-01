@@ -1,7 +1,6 @@
 import  * as React from "react";
 import axios from 'axios';
 import cliente from "./home.jpg";
-import host from "./2.jpg"
 import BoxAccesso from './boxconferma';
 import {useContext} from "react";
 import {UserContext} from "../../UserContext";
