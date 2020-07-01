@@ -7,7 +7,7 @@ import cucina from "./cucina.jpg";
 import giardino from "./1.png"
 import ListGroup from "react-bootstrap/ListGroup";
 import icon from "./User-01.jpg";
-
+import Ricerca from"./Ricerca";
 
 class EsploraStruttura extends Component{
     render(){
@@ -17,114 +17,7 @@ class EsploraStruttura extends Component{
                 <div className="row">
 
                     <div className="col-sm-5 col-md-4 col-lg-3">
-                        <div style={{backgroundColor:"orange",width:"100%",height:"auto",marginTop:"30px"}}>
-
-                            <Button color="inherit" href="/login" style={{backgroundColor:"#32508f",color:"white",margin:"auto",display:"block"}}>Cerca</Button>
-
-                            <div className="form-group col" style={{margin:"auto" }}>
-                                <h10>Destinazione:</h10>
-                                <Input type="email" name="email" id="exampleEmail" placeholder="Dove vuoi andare?" style={{backgroundColor:"white",width:"100%"}}/>
-
-                            </div>
-
-                            <div className="form-group col" style={{margin:"auto" }}>
-                                <h10>Check-in:</h10>
-
-                                <Input style={{width:"100%",backgroundColor:"white",margin:"auto"}}
-                                       type="date"
-                                       name="date"
-                                       id="exampleDate"
-                                       placeholder="date placeholder"
-                                />
-                            </div>
-                            <div className="form-group col" style={{margin:"auto"}}>
-                                <h10>Check-out:</h10>
-
-                                <Input style={{width:"100%",backgroundColor:"white",margin:"auto"}}
-                                       type="date"
-                                       name="date"
-                                       id="exampleDate"
-                                       placeholder="date placeholder"
-                                />
-                            </div>
-                            <div className="form-group col" style={{margin:"auto" }}>
-
-                                <h10>Numero Persone:</h10>
-
-
-                                <select className="form-control" id="exampleSelect1">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                </select>
-                            </div>
-
-                            <div className="form-group col" style={{margin:"auto" }}>
-
-                                <h10>Notti:</h10>
-
-
-                                <select className="form-control" id="exampleSelect1">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <br/>
-                                <Button color="inherit" href="/login" id="toggler"style={{backgroundColor:"#32508f",color:"white",margin:"auto",display:"block"}}>Filtri Avanzati</Button>
-
-                                <UncontrolledCollapse toggler="#toggler">
-                                    <br/>
-                                    <div className="form-group col" style={{margin:"auto" }}>
-                                        <h10>Destinazione:</h10>
-                                        <Input type="email" name="email" id="exampleEmail" placeholder="Dove vuoi andare?" style={{backgroundColor:"white",width:"100%"}}/>
-
-                                    </div>
-
-                                    <div className="form-group col" style={{margin:"auto" }}>
-                                        <h10>Destinazione:</h10>
-                                        <Input type="email" name="email" id="exampleEmail" placeholder="Dove vuoi andare?" style={{backgroundColor:"white",width:"100%"}}/>
-
-                                    </div>
-
-                                    <div className="form-group col" style={{margin:"auto" }}>
-                                        <h10>Destinazione:</h10>
-                                        <Input type="email" name="email" id="exampleEmail" placeholder="Dove vuoi andare?" style={{backgroundColor:"white",width:"100%"}}/>
-
-                                    </div>
-
-                                    <div className="form-check form-check-inline" style={{marginLeft:"15px"}}>
-                                        <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"/>
-                                        <label className="form-check-label" htmlFor="inlineCheckbox1">1</label>
-                                    </div>
-
-                                    <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"/>
-                                        <label className="form-check-label" htmlFor="inlineCheckbox2">2</label>
-                                    </div>
-
-
-                                </UncontrolledCollapse>
-                            </div>
-
-                        </div>
-
+                    <Ricerca/>
                     </div>
 
 

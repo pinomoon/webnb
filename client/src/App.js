@@ -76,10 +76,9 @@ const App= ()=> {
                         <Route path="/accountConferma" component={ConfermaAccount} />
                         <Route path="/gestisciprenotazione" component={GestisciPrenotazioni} />
                         <Route path="/ricercastruttura" component={RicercaStruttura} />
-                            <Route path="/prenotazione" component={EsploraStruttura} />
-                            <Route path="/aggiungicamera" component={AggiungiCamera} />
-
-                            <Route path="/guadagni" component={MieiGuadagni} exact />
+                        <Route path="/prenotazione" component={EsploraStruttura} />
+                        <Route path="/aggiungicamera" component={AggiungiCamera} />
+                        <Route path="/guadagni" component={MieiGuadagni} exact />
 
                         <Route path="*" component={CadutaConnessione}/>
 
