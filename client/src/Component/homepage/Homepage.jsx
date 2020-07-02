@@ -123,7 +123,7 @@ const Homepage =()=>{
                                                         value={state.luogo} onChange={handleChangeLuogo}
                                                         style={{backgroundColor: "white", marginTop:"9px"}}/>
                                              </div>
-                                             <div className="form-group col-sm-6 col-md-3 col-lg-3">
+                                             <div className="form-group col-sm-6 col-md-6 col-lg-3">
                                                  <Input style={{backgroundColor: "white", marginTop: "9px"}}
                                                         type="date"
                                                         name="data_inizio"
@@ -133,7 +133,7 @@ const Homepage =()=>{
                                                         onChange={handleChangeDataInizio}
                                                  />
                                              </div>
-                                             <div className="form-group col-sm-6 col-md-3 col-lg-3">
+                                             <div className="form-group col-sm-6 col-md-6 col-lg-3">
                                                  <Input style={{backgroundColor: "white", marginTop: "9px"}}
                                                         type="date"
                                                         name="data_fine"
@@ -179,10 +179,11 @@ const Homepage =()=>{
                              {user.tipo == 0 &&
                              <div>
                                  <div className="row">
-                                     <div className="col-md-1 col-lg-4">
+                                     <div className="col-md-2 col-lg-4">
                                      </div>
-                                     <div className="col-sm-12 col-md-9 col-lg-4">
+                                     <div className="col-sm-12 col-md-8 col-lg-4">
                                          <Button href="/inseriscistruttura" style={{
+                                             margin:"auto",
                                              marginTop: "-2px",
                                              backgroundColor: "#ff6300",
                                              height: "auto%",
@@ -192,7 +193,7 @@ const Homepage =()=>{
                                          }}>Inserisci la tua struttura!</Button>
 
                                      </div>
-                                     <div className="col-md-1 col-lg-4">
+                                     <div className="col-md-2 col-lg-4">
                                      </div>
                                  </div>
                              </div>

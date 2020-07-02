@@ -154,30 +154,7 @@ async function nuovecredenziali(req,res, next){
         }
     }
 
-    /**logout */
-    router.post('/logout',logout);
-
-    async function logout(req,res, next){
-
-        const db = await makeDb(config);
-        let results = {};
-        try {
-    
-            await withTransaction(db, async() => {
-                
-                results = await db.query("UPDATE `utente` SET autenticazione=false WHERE `utente`.id_utente=?",
-                [req.body.id_utente])
-                .catch(err => {
-                 throw err;
-                });
-                res.send("10"); //Logout effettuato con successo
-            })
-        }catch(err){
-            console.log('Logout fallito, riprova');
-            res.send('Logout fallito,riprova');
-            next(createError(500));
-        }
-    }
+  
 
 
 

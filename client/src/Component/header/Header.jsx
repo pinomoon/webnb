@@ -44,42 +44,42 @@ const Header =()=>{
 
                           {user.id==null &&
                               <div>
-                              <Button color="inherit" href="/login" style={{color:"#ff6300"}}>Accedi</Button>
+                              <Button color="inherit" href="/login" style={{marginLeft:"-10px",color:"#ff6300"}}>Accedi</Button>
                               <Button color="inherit" href="/registrazione"style={{color:"#ff6300"}}>Registrati</Button>
                               </div>
                           }
                           {user.tipo=="1"&&
                               <div>
-                              <Dropdown as={ButtonGroup} style={{marginRight: "70px"}} variant="primary">
-                                  <Button href="/profilo" style={{color:"#ff6300"}}>Profilo</Button>
-                                  <Dropdown.Toggle split variant="primary" id="dropdown-split-basic"/>
+                                  <Dropdown as={ButtonGroup} style={{marginRight: "70px", color:"#ff6300"}}
+                                            variant="primary">
+                                      <Button href="/profilo" style={{marginLeft:"-17px",color:"#ff6300"}}>Profilo</Button>
+
+                                      <Dropdown.Toggle id="dropdown-split-basic" style={{backgroundColor:"#ff6300",color:"white",borderRadius:"3px",border:"2px solid #ff6300 "}}/>
                                   <Dropdown.Menu>
-                                      <Dropdown.Item href="/modificaaccount">Modifica Account</Dropdown.Item>
-                                      <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                                      <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                                      <Dropdown.Item href="/modificaaccount" style={{margin:"auto",display:"block"}}>Modifica Account</Dropdown.Item>
+                                      <Dropdown.Item href="/lemieprenotazioni"style={{margin:"auto",display:"block"}}>Le mie prenotazioni</Dropdown.Item>
+                                      <Dropdown.Item href="/imieipreferiti" style={{margin:"auto",display:"block"}}>I miei preferiti</Dropdown.Item>
+                                      <Logout/>
                                   </Dropdown.Menu>
                               </Dropdown>
-                          <Logout />
                               </div>
                           }
                           {user.tipo=="0"&&
                               <div>
-                                  <Button href="/inserisciStruttura" style={{color:"#ff6300"}}>Inserisci la tua
-                                      struttura</Button>
+
                                   <Dropdown as={ButtonGroup} style={{marginRight: "70px", color:"#ff6300"}}
                                             variant="primary">
-                                      <Button href="/profilo" style={{color:"#ff6300"}}>Profilo</Button>
+                                      <Button href="/inserisciStruttura" style={{marginLeft:"-15px",color:"#ff6300"}}>Inserisci la tua struttura</Button>
+
 
                                       <Dropdown.Toggle id="dropdown-split-basic" style={{backgroundColor:"#ff6300",color:"white",borderRadius:"3px",border:"2px solid #ff6300 "}}/>
 
                                       <Dropdown.Menu>
                                           <Dropdown.Item href="/modificaaccount" style={{margin:"auto",display:"block"}}>Modifica Account</Dropdown.Item>
                                           <Dropdown.Item href="/gestisciprenotazione"style={{margin:"auto",display:"block"}}>Gestisci prenotazioni</Dropdown.Item>
+                                          <Dropdown.Item href="/gestiscistrutture" style={{margin:"auto",display:"block"}}>Gestisci strutture</Dropdown.Item>
                                           <Dropdown.Item href="/ufficioturismo" style={{margin:"auto",display:"block"}}>Ufficio Turismo</Dropdown.Item>
                                           <Logout/>
-
-
-
                                       </Dropdown.Menu>
                                   </Dropdown>
                               </div>

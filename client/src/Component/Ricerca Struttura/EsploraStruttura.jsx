@@ -9,6 +9,8 @@ import ListGroup from "react-bootstrap/ListGroup";
 import icon from "./User-01.jpg";
 import Ricerca from"./Ricerca";
 
+
+
 class EsploraStruttura extends Component{
     render(){
         return (
@@ -32,6 +34,17 @@ class EsploraStruttura extends Component{
 
                     <div className="col-md-7 col-lg-9" style={{backgroundColor:"white",width:"100%",height:"auto",marginTop:"30px"}}>
                         <div className="row">
+                            <div className="col-sm-7 col-lg-7">
+                            </div>
+                            <div className="col-sm-1 col-lg-1">
+
+                            </div>
+                            <div className="col-sm-4 col-lg-4">
+                                <Button color="inherit" href="/prenotazione" style={{textAlign:"center",width:"100%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Aggiungi ai preferiti</Button>
+                                <br/>
+                            </div>
+                        </div>
+                        <div className="row">
                             <div className="col">
                                 <img src={simpson} style={{width:"100%"}}/>
                                 <br/>
@@ -44,17 +57,16 @@ class EsploraStruttura extends Component{
 
                         <div className="row">
                             <div className="col-6">
-                                <img src={cucina} style={{width:"100%",height:"80%"}}/>
+                                <img src={cucina} style={{width:"100%",height:"90%"}}/>
 
 
                             </div>
                             <div className="col-6">
 
-                                <img src={giardino} style={{width:"100%",height:"80%"}}/>
+                                <img src={giardino} style={{width:"100%",height:"90%"}}/>
 
                             </div>
                         </div>
-
 
 
                         <div className="row">
@@ -115,13 +127,14 @@ class EsploraStruttura extends Component{
                             <h3 className="text-center">Disponibilità camere</h3>
                             </div>
                         </div>
-                        <div className="row">
-
-                                <table className="table table-hover">
+                        <div className="row" style={{borderBottom:"2px solid #ff6300"}}>
+                            <div className="col">
+                                <table className="table table-hover table-responsive">
                                     <thead>
                                     <tr>
-                                        <th scope="col">Camera</th>
+                                        <th scope="col">Nome Camera</th>
                                         <th scope="col">N.Persone</th>
+                                        <th scope="col">Colazione Inclusa</th>
                                         <th scope="col">Prezzo</th>
                                         <th scope="col"></th>
                                     </tr>
@@ -130,20 +143,27 @@ class EsploraStruttura extends Component{
                                     <tr>
                                         <th scope="row">Camera Luigi</th>
                                         <td>
-                                            <img src={icon} style={{width:"5%",height:"20%",margin:"auto"}}/>
-                                            <img src={icon} style={{width:"5%",height:"20%",margin:"auto"}}/>
-                                            <img src={icon} style={{width:"5%",height:"20%",margin:"auto"}}/>
-                                            <img src={icon} style={{width:"5%",height:"20%",margin:"auto"}}/>
+                                            <img className="img-fluid" src={icon} style={{width:"10%",height:"auto",margin:"auto"}}/>
+                                            <img className="img-fluid" src={icon} style={{width:"10%",height:"auto",margin:"auto"}}/>
+                                            <img className="img-fluid" src={icon} style={{width:"10%",height:"auto",margin:"auto"}}/>
+                                            <img className="img-fluid" src={icon} style={{width:"10%",height:"auto",margin:"auto"}}/>
+
                                         </td>
+                                        <td>Si</td>
+
                                         <td>70,00$</td>
                                         <td><Button name="ok" id="ok" type="submit" style={{marginLeft:"-10px",color:"#ff6300"}}>Prenota!</Button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Camera Mario</th>
-                                        <td><img src={icon} style={{width:"5%",height:"20%",margin:"auto"}}/>
-                                            <img src={icon} style={{width:"5%",height:"20%",margin:"auto"}}/></td>
-                                        <td>70,00$</td>
+                                        <td>
+                                            <img className="img-fluid" src={icon} style={{width:"10%",height:"auto",margin:"auto"}}/>
+                                            <img className="img-fluid" src={icon} style={{width:"10%",height:"auto",margin:"auto"}}/>
+
+                                        </td>
+                                        <td>No</td>
+                                        <td>60,00$</td>
 
                                             <td> <Button name="ok" id="ok" type="submit" style={{marginLeft:"-10px",color:"#ff6300"}}>Prenota!</Button>
 
@@ -153,10 +173,52 @@ class EsploraStruttura extends Component{
                                     </tbody>
                                 </table>
 
-
+                            </div>
 
 
                     </div>
+                        <div className="row">
+                            <div className="col">
+                                <br/>
+                                <h3 className="text-center">Recensioni</h3>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <ListGroup variant="flush">
+                                <ListGroup.Item>
+                                <div className="row">
+                                    <div className="col-3"><h5></h5></div>
+                                    <div className="col-9"> <h5> </h5></div>
+
+                                </div>
+                            </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <div className="row">
+                                        <div className="col-3"><h5>Saro</h5></div>
+                                        <div className="col-9"> <p> Aenean dapibus accumsan pellentesque. Ut scelerisque, ante suscipit varius eleifend, erat lacus consectetur magna,
+                                            vel euismod erat lectus nec massa. Etiam non accumsan diam. Vivamus tincidunt tellus tristique justo vehicula,
+                                            ut imperdiet metus rutrum. Etiam et orci nec ante consectetur feugiat ac sit amet dolor. Aliquam erat volutpat.
+                                            Cras feugiat, nunc at pellentesque commodo, purus risus pellentesque massa, quis tincidunt dolor nunc sed ante.
+                                            Donec vel nulla placerat, fermentum eros ac, efficitur felis. Mauris consequat sem ex, sit amet sollicitudin justo placerat quis.
+                                            Aenean non elit vel lacus cursus ornare. Duis et dui urna.</p></div>
+
+                                    </div>
+                                </ListGroup.Item>
+
+                                <ListGroup.Item>
+                                    <div className="row">
+                                        <div className="col-3"><h5>Ezio</h5></div>
+                                        <div className="col-9"> <p> Aenean dapibus accumsan pellentesque. Ut scelerisque, ante suscipit varius eleifend, erat lacus consectetur magna,
+                                            vel euismod erat lectus nec massa. Etiam non accumsan diam. Vivamus tincidunt tellus tristique justo vehicula,
+                                            ut imperdiet metus rutrum. Etiam et orci nec ante consectetur feugiat ac sit amet dolor. Aliquam erat volutpat.
+                                            Cras feugiat, nunc at pellentesque commodo, purus risus pellentesque massa, quis tincidunt dolor nunc sed ante.
+                                            Donec vel nulla placerat, fermentum eros ac, efficitur felis. Mauris consequat sem ex, sit amet sollicitudin justo placerat quis.
+                                            Aenean non elit vel lacus cursus ornare. Duis et dui urna.</p></div>
+
+                                    </div>
+                                </ListGroup.Item>
+                            </ListGroup>
+                        </div>
                 </div>
             </div>
             </div>
