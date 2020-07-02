@@ -23,6 +23,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import {UserContext} from "../../UserContext";
 import axios from 'axios';
 import RicercaStruttura from "../Ricerca Struttura/RicercaStruttura";
+import {setStructureCookie} from "../../sessions";
 
 const Homepage =()=>{
     const [luogo,setLuogo]=React.useState("");
@@ -31,7 +32,9 @@ const Homepage =()=>{
     const [npl, setNpl]=React.useState("");//numero posti letto
     const [ricerca, setRicerca]=React.useState(false);
     const state={luogo,data_inizio,data_fine,npl};
-    const [strutture, setStrutture]=React.useState(null);
+    const [strutture, setStrutture]=React.useState([]);
+    const href="https://localhost:3000/ricercastruttura?luogo="+luogo+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?npl="+npl;
+
 
     const handleClickRicerca=()=>{
         setRicerca(true);
@@ -41,14 +44,13 @@ const Homepage =()=>{
     const handleSubmit=(event)=>{
         event.preventDefault();
         alert("Dati inseriti "+luogo+" "+data_inizio+" "+data_fine+" "+npl);
-
+        setStructureCookie({luogo,data_inizio,data_fine,npl});
         axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
             .then((response)=>{
+                alert(JSON.stringify(response.data[1]));
+
                 setStrutture(response.data[1]);
-                console.log(JSON.stringify(response.data[1][0].immagine_1));
                 handleClickRicerca();
-
-
             })
             .catch((error)=>{
                 alert(error);
@@ -59,6 +61,7 @@ const Homepage =()=>{
         const valore=  target.value;
         setLuogo(valore);
         state.luogo=valore;
+
     };
 
     const handleChangeDataInizio=(event)=>{
@@ -66,18 +69,21 @@ const Homepage =()=>{
         const valore=  target.value;
         setDataInizio(valore);
         state.data_inizio=valore;
+
     };
     const handleChangeDataFine=(event)=>{
         const target=event.target;
         const valore=  target.value;
         setDataFine(valore);
         state.data_fine=valore;
+
     };
     const handleChangeNpl=(event)=>{
         const target=event.target;
         const valore=  target.value;
         setNpl(valore);
         state.npl=valore;
+
     };
 
     const user=React.useContext(UserContext);
@@ -110,7 +116,7 @@ const Homepage =()=>{
                                          margin: "auto",
                                          border: "2px solid #ff6300"
                                      }}>
-                                         <form className="row" name="form" id="form" method="POST">
+                                         <form className="row" name="form" id="form" method="POST" >
                                              <div className="form-group  col-sm-12 col-md-3 col-lg-3">
                                                  <Input type="text" name="luogo" id="luogo"
                                                         placeholder="Dove vuoi andare?"
@@ -154,7 +160,7 @@ const Homepage =()=>{
                                                  </select>
                                              </div>
                                              <div className="col-md-1 col-lg-1">
-                                                 <Button type="submit" onClick={handleSubmit} style={{
+                                                 <Button type="submit" onClick={handleSubmit}  style={{
                                                      marginTop: "-2px",
                                                      backgroundColor: "#ff6300",
                                                      height: "106%",

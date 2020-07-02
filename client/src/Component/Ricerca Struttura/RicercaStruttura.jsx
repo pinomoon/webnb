@@ -10,70 +10,69 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import CardActions from "@material-ui/core/CardActions";
+import {getStructureCookie} from "../../sessions";
 
 
 
 
 const RicercaStruttura=(props)=> {
-    const [luogo,setLuogo]=React.useState("");
-    const [data_inizio, setDataInizio]=React.useState("");
-    const [data_fine, setDataFine]=React.useState("");
-    const [npl, setNpl]=React.useState("");//numero posti letto
+    function getUrlVars() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+    var token = getUrlVars()["token"];
+
+
+    const [luogo,setLuogo]=React.useState(getStructureCookie().luogo);
+    const [data_inizio, setDataInizio]=React.useState(getStructureCookie().data_inizio);
+    const [data_fine, setDataFine]=React.useState(getStructureCookie().data_fine);
+    const [npl, setNpl]=React.useState(getStructureCookie().npl);//numero posti letto
     const [tipo, setTipo]=React.useState("");
     const [disdetta_gratuita, setDisdettaGratuita]=React.useState("");
     const [modalita_di_pagamento, setModalitaPagamento]=React.useState("");
+    const [modalita_carta, setModalitaCarta]=React.useState("");
+    const [modalita_struttura, setModalitaStruttura]=React.useState("");
+    const [modalita_acconto, setModalitaAcconto]=React.useState("");
     const [costo_camera, setCostoCamera]=React.useState("");
     const [colazione_inclusa, setColazioneInclusa]=React.useState("");
+    const [struttureRicerca, setStruttureRicerca]=React.useState([]);
     let {strutture}=props;
 
-    const struttureList=strutture.map(struttura=>{
-        var blob=new Blob([struttura.immagine_1], {type:'image/bmp'});
-        var image=new Image();
-       // image.src='data:image/bmp;base64,'+punycode.encode(blob);
-        //console.log(image.src);
-
-        return(
-
-            <div className="col-md-4" key={struttura.id_struttura}>
-                <Card >
-                    <CardHeader title={struttura.nome_struttura}/>
-                    <CardContent>
-                        <p> {struttura.tipo} </p>
-                        <p> {struttura.indirizzo_struttura} </p>
-                        <p> {struttura.citta} </p>
-                        <p> {struttura.regione} </p>
-                        <p> {struttura.stato} </p>
-                        <p > {struttura.prezzo[0].prezzo_struttura} €</p>
-                        <img id="image" src={image.src} alt="nnnnnnnnn"></img>
 
 
-                    </CardContent>
-                    <CardActions>
-                        <Tooltip title="Esplora Struttura" placement="bottom-start">
-                            <Button color="inherit" href="/prenotazione" style={{backgroundColor:"#32508f",color:"white"}}>Esplora</Button>
-                        </Tooltip>
-                    </CardActions>
-                </Card>
-            </div>
 
-        );
-    });
+
 
     const state={luogo,data_inizio,data_fine,npl, tipo, disdetta_gratuita, modalita_di_pagamento, costo_camera, colazione_inclusa};
 
     const handleSubmit=(event)=>{
+
+
+        handleChangeModalitaPagamento();
         event.preventDefault();
-        alert("Dati inseriti "+luogo+" "+data_inizio+" "+data_fine+" "+npl);
+        alert("Dati inseriti "+JSON.stringify(state));
+        console.log(modalita_di_pagamento);
+        alert("parametri"+luogo+" "+data_inizio+" "+data_fine+" "+npl);
 
         axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
             .then((response)=>{
+                setModalitaPagamento("");
+                if(strutture!=[]){
+                    strutture[0]=null;
+                }
+
+
+                    setStruttureRicerca(response.data[1]);
+
                 alert(JSON.stringify(response.data[1]));
-                strutture=(response.data[1]);
+
             })
             .catch((error)=>{
                 alert(error);
-            })
-    };
+            })    };
     const handleChangeLuogo=(event)=>{
         const target=event.target;
         const valore=  target.value;
@@ -105,11 +104,25 @@ const RicercaStruttura=(props)=> {
         setDisdettaGratuita(valore);
         state.disdetta_gratuita=valore;
     };
-    const handleChangeModalitaPagamento=(event)=>{
+    const handleChangeModalitaPagamento=()=>{
+        setModalitaPagamento(modalita_carta+","+modalita_struttura+","+modalita_acconto);
+    };
+    const handleChangeModalitaCarta=(event)=>{
         const target=event.target;
         const valore=  target.value;
-        setModalitaPagamento(valore);
-        state.modalita_di_pagamento=valore;
+        setModalitaCarta(valore);
+    };
+    const handleChangeModalitaStruttura=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setModalitaStruttura(valore);
+
+    };
+    const handleChangeModalitaAcconto=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setModalitaAcconto(valore);
+
     };
     const handleChangeNpl=(event)=>{
         const target=event.target;
@@ -257,7 +270,7 @@ const RicercaStruttura=(props)=> {
                                         <div className="col-1">
                                         </div>
                                         <div className="col-1">
-                                            <input className="form-check-input" type="checkbox" id="carta" name="carta" value="carta" onChange={handleChangeModalitaPagamento}/>
+                                            <input className="form-check-input" type="checkbox" id="carta" name="carta" value="carta" onChange={handleChangeModalitaCarta}/>
                                         </div>
                                         <div className="col-8">
                                             <label className="form-check-label " htmlFor="carta" > Carta di Credito</label>
@@ -269,7 +282,7 @@ const RicercaStruttura=(props)=> {
                                         <div className="col-1">
                                         </div>
                                         <div className="col-1">
-                                            <input className="form-check-input " type="checkbox" id="struttura" name="struttura" value="struttura" onChange={handleChangeModalitaPagamento}/>
+                                            <input className="form-check-input " type="checkbox" id="struttura" name="struttura" value="struttura" onChange={handleChangeModalitaStruttura}/>
                                         </div>
                                         <div className="col-8">
                                             <label className="form-check-label " htmlFor="struttura"> Pagamento in Struttura</label>
@@ -281,7 +294,7 @@ const RicercaStruttura=(props)=> {
                                         <div className="col-1">
                                         </div>
                                         <div className="col-1">
-                                            <input className="form-check-input " type="checkbox" id="anticipo_carta" name="anticipo_carta" value="anticipo_carta" onChange={handleChangeModalitaPagamento}/>
+                                            <input className="form-check-input " type="checkbox" id="anticipo_carta" name="anticipo_carta" value="anticipo_carta" onChange={handleChangeModalitaAcconto}/>
                                         </div>
                                         <div className="col-8">
                                             <label className="form-check-label " htmlFor="anticipo_carta"> Acconto con Carta di Credito</label>
@@ -297,12 +310,12 @@ const RicercaStruttura=(props)=> {
                                     <h6 >Costo Camera Massimo a Notte:</h6>
                                     <select className="form-control" id="costo_camera" value={state.costo_camera} onChange={handleChangeCostoCamera}>
                                         <option value="null">-</option>
-                                        <option value="25">Costo &#60 €25 </option>
-                                        <option value="50">Costo &#60 €50 </option>
-                                        <option value="75">Costo &#60 €75</option>
-                                        <option value="100">Costo &#60 €100</option>
-                                        <option value="150">Costo &#60 €150</option>
-                                        <option value="200">Costo &#60 €200</option>
+                                        <option value="25">Costo &le; €25 </option>
+                                        <option value="50">Costo &le; €50 </option>
+                                        <option value="75">Costo &le; €75</option>
+                                        <option value="100">Costo &le; €100</option>
+                                        <option value="150">Costo &le; €150</option>
+                                        <option value="200">Costo &le; €200</option>
                                     </select>
                                     <br/>
                                 </div>
@@ -327,22 +340,83 @@ const RicercaStruttura=(props)=> {
                                     </div>
                                     <div className="row">
                                         <br/>
+                                        <Button color="inherit" type="submit" onClick={handleSubmit} style={{backgroundColor:"#32508f",color:"white",margin:"auto",display:"block",width:"100%"}}>Cerca</Button>
                                     </div>
                                 </div>
 
 
                             </UncontrolledCollapse>
                         </div>
-
                     </div>
                     </div>
+                        <div className="col-sm-5 col-md-4 col-lg-9" style={{marginTop:"30px"}}>
+                        {struttureRicerca!=[] &&(struttureRicerca.map((struttura)=>{
+                            console.log("Ciao");
+                            var image=new Image();
+                            return (
+                                <div key={struttura.id_struttura}>
+                                    <div className="card mb-3" style={{width:"100%",height:"auto"}}>
+                                        <div className="row no-gutters">
+                                            <div className="col-md-4">
+                                                <img id="image" src={image.src} alt="nnnnnnnnn" className="card-img" style={{height:"100%"}}/>
+                                            </div>
+                                            <div className="col-md-8">
+                                                <div className="card-body">
+                                                    <h5 className="card-title">{struttura.nome_struttura}</h5>
+                                                    <p className="card-text"> Indirizzo: {struttura.indirizzo_struttura},{struttura.citta},{struttura.regione} .</p>
+                                                    <p > Prezzo: {struttura.prezzo[0].prezzo_struttura} €</p>
+                                                    <Tooltip title="Esplora Struttura" placement="bottom-start">
+                                                        <Button color="inherit" href="/prenotazione" style={{width:"40%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
+                                                    </Tooltip>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                    {struttureList}
+
+                            );
+                        }))}{struttureRicerca[0]==null&& strutture[0]!=null&&(strutture.map((struttura)=>{
+                            console.log("Ciao");
+                            var image=new Image();
+                            return (
+
+                                <div key={struttura.id_struttura}>
+                                    <div className="card mb-3" style={{width:"100%",height:"auto"}}>
+                                        <div className="row no-gutters">
+                                            <div className="col-md-4">
+                                                <img id="image" src={image.src} alt="nnnnnnnnn" className="card-img" style={{height:"100%"}}/>
+                                            </div>
+                                            <div className="col-md-8">
+                                                <div className="card-body">
+                                                    <h5 className="card-title">{struttura.nome_struttura}</h5>
+                                                    <p className="card-text"> Indirizzo: {struttura.indirizzo_struttura},{struttura.citta},{struttura.regione} .</p>
+                                                    <p > Prezzo: {struttura.prezzo[0].prezzo_struttura} €</p>
+
+
+                                                    <Tooltip title="Esplora Struttura" placement="bottom-start">
+                                                        <Button color="inherit" href="/prenotazione" style={{width:"40%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
+                                                    </Tooltip>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            );
+                        }))}
+                        </div>
+                    </div>
+
+
+
 
                     <div className="col-1">
 
                     </div>
-                </div>
+
 
 
 
