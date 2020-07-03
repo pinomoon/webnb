@@ -351,14 +351,22 @@ const RicercaStruttura=(props)=> {
                     </div>
                         <div className="col-sm-5 col-md-4 col-lg-9" style={{marginTop:"30px"}}>
                         {struttureRicerca!=[] &&(struttureRicerca.map((struttura)=>{
-                            console.log("Ciao");
-                            var image=new Image();
+
+                            var arrayBufferView = new Uint8Array( struttura.immagine_1 );
+                            var blob = new Blob( [ arrayBufferView ], { type: "image/*" } );
+                            var urlCreator = window.URL || window.webkitURL;
+                            var imageUrl = urlCreator.createObjectURL( blob );
+                            console.log(imageUrl);
+                            var href="/prenotazione?struttura="+struttura.id_struttura;
+
+
+
                             return (
                                 <div key={struttura.id_struttura}>
                                     <div className="card mb-3" style={{width:"100%",height:"auto"}}>
                                         <div className="row no-gutters">
                                             <div className="col-md-4">
-                                                <img id="image" src={image.src} alt="nnnnnnnnn" className="card-img" style={{height:"100%"}}/>
+                                                <img id="image" src={imageUrl} alt="nnnnnnnnn" className="card-img" style={{height:"100%"}}/>
                                             </div>
                                             <div className="col-md-8">
                                                 <div className="card-body">
@@ -366,7 +374,7 @@ const RicercaStruttura=(props)=> {
                                                     <p className="card-text"> Indirizzo: {struttura.indirizzo_struttura},{struttura.citta},{struttura.regione} .</p>
                                                     <p > Prezzo: {struttura.prezzo[0].prezzo_struttura} €</p>
                                                     <Tooltip title="Esplora Struttura" placement="bottom-start">
-                                                        <Button color="inherit" href="/prenotazione" style={{width:"40%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
+                                                        <Button color="inherit" href={href} style={{width:"40%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
                                                     </Tooltip>
                                                 </div>
                                             </div>
@@ -377,15 +385,20 @@ const RicercaStruttura=(props)=> {
 
                             );
                         }))}{struttureRicerca[0]==null&& strutture[0]!=null&&(strutture.map((struttura)=>{
-                            console.log("Ciao");
-                            var image=new Image();
+                            var arrayBufferView = new Uint8Array( struttura.immagine_1 );
+                            var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
+                            var urlCreator = window.URL || window.webkitURL;
+                            var imageUrl = urlCreator.createObjectURL( blob );
+                            console.log(imageUrl);
+                            var href="/prenotazione?struttura="+struttura.id_struttura;
+
                             return (
 
                                 <div key={struttura.id_struttura}>
                                     <div className="card mb-3" style={{width:"100%",height:"auto"}}>
                                         <div className="row no-gutters">
                                             <div className="col-md-4">
-                                                <img id="image" src={image.src} alt="nnnnnnnnn" className="card-img" style={{height:"100%"}}/>
+                                                <img id="image" src={imageUrl}  className="card-img" style={{height:"100%"}}/>
                                             </div>
                                             <div className="col-md-8">
                                                 <div className="card-body">
@@ -395,7 +408,7 @@ const RicercaStruttura=(props)=> {
 
 
                                                     <Tooltip title="Esplora Struttura" placement="bottom-start">
-                                                        <Button color="inherit" href="/prenotazione" style={{width:"40%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
+                                                        <Button color="inherit" href={href} style={{width:"40%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
                                                     </Tooltip>
                                                 </div>
                                             </div>

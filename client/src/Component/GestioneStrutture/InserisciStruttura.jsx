@@ -38,6 +38,7 @@ const InserisciStruttura=()=>{
     const [costo_camera, setCostoCamera]=useState("");
     const [colazione_inclusa, setColazioneInclusa]=useState("");
     const [descrizione, setDescrizione]=useState("");
+    const [nomeimg, setNomeImg]=useState();
 
     const state={id_utente,nome_struttura,indirizzo_struttura,cap,punti_di_interesse,citta,regione,
                  stato,tipo,disdetta_gratuita,modalita_di_pagamento, tassa_soggiorno, servizi,
@@ -138,8 +139,38 @@ const InserisciStruttura=()=>{
     const handleChangeImg1=(event)=>{
         const target=event.target;
         const valore=  target.value;
-        setImmagine1(valore);
-        state.immagine1=valore;
+       /* Bitmap bm=BitmapFactory.decodeFile(valore);
+        ByteArrayOutputStream baos= new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        byte[] b=baos.toByteArray();
+
+        */
+       setNomeImg(valore);
+       /* var img_stringa= new Uint8Array(valore);
+        var bin= String.fromCharCode.apply(null,img_stringa);
+        var b64= btoa(bin);
+        console.log(bin);
+        */
+
+        /*var reader = new FileReader();
+        var b64 = reader.readAsBinaryString(valore);
+        var stringa= btoa(reader.result);
+        console.log(b64);
+        console.log(stringa);
+        setImmagine1(b64);
+        state.immagine1=b64;
+        */
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+
+            const file = valore;
+            console.log(toBase64(file));
+
     };
     const handleChangeImg2=(event)=>{
         const target=event.target;
@@ -365,8 +396,8 @@ const InserisciStruttura=()=>{
                             <h5>Immagini della Struttura</h5>
 
                             <input id="immagine1" name="immagine1" type="file"  maxLength="40"
-                                    value={state.immagine1} onChange={handleChangeImg1}
-                                    color="inherit"  style={{color:"#ff6300"}}></input>
+                                    value={nomeimg} onChange={handleChangeImg1}
+                                    color="inherit"  style={{color:"#ff6300"}} accept="image/*"></input>
                             <input id="immagine2" name="immagine2" type="file"  maxLength="40"
                                     value={state.immagine2} onChange={handleChangeImg2}
                                     color="inherit"  style={{color:"#ff6300"}}></input>
