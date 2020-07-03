@@ -36,6 +36,11 @@ const RicercaStruttura=(props)=> {
     const [modalita_carta, setModalitaCarta]=React.useState("");
     const [modalita_struttura, setModalitaStruttura]=React.useState("");
     const [modalita_acconto, setModalitaAcconto]=React.useState("");
+    let servizi="";
+    const [wifi, setWifi]=React.useState("");
+    const [parcheggio, setParcheggio]=React.useState("");
+    const [piscina, setPiscina]=React.useState("");
+    const [animali, setAnimali]=React.useState("");
     const [costo_camera, setCostoCamera]=React.useState("");
     const [colazione_inclusa, setColazioneInclusa]=React.useState("");
     const [struttureRicerca, setStruttureRicerca]=React.useState([]);
@@ -46,11 +51,12 @@ const RicercaStruttura=(props)=> {
 
 
 
-    const state={luogo,data_inizio,data_fine,npl, tipo, disdetta_gratuita, modalita_di_pagamento, costo_camera, colazione_inclusa};
+    const state={luogo,data_inizio,data_fine,npl, tipo, disdetta_gratuita, modalita_di_pagamento,servizi, costo_camera, colazione_inclusa};
 
     const handleSubmit=(event)=>{
         event.preventDefault();
         handleChangeModalitaPagamento();
+        handleChangeServizi();
         alert("Dati inseriti "+JSON.stringify(state));
         alert("parametri"+luogo+" "+data_inizio+" "+data_fine+" "+npl);
 
@@ -105,13 +111,22 @@ const RicercaStruttura=(props)=> {
         if(modalita_carta!==''){
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_carta+",";
         }
+        else{
+            state.modalita_di_pagamento=state.modalita_di_pagamento+"%,";
+        }
         if(modalita_struttura!==''){
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_struttura+",";
+        }
+        else{
+            state.modalita_di_pagamento=state.modalita_di_pagamento+"%,";
         }
         if(modalita_acconto!==''){
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_acconto;
         }
-    }
+        else{
+            state.modalita_di_pagamento=state.modalita_di_pagamento+"%";
+        }
+    };
     const handleChangeModalitaCarta=(event)=>{
         const target=event.target;
         const valore=target.value;
@@ -147,6 +162,80 @@ const RicercaStruttura=(props)=> {
         }
         else{
             setModalitaAcconto("");
+        }
+    };
+    const handleChangeServizi=()=>{
+        if(wifi!==''){
+            state.servizi=state.servizi+""+wifi+",";
+        }
+        else{
+            state.servizi=state.servizi+"%,";
+        }
+        if(parcheggio!==''){
+            state.servizi=state.servizi+""+parcheggio+",";
+        }
+        else{
+            state.servizi=state.servizi+"%,";
+        }
+        if(piscina!==''){
+            state.servizi=state.servizi+""+piscina+",";
+        }
+        else{
+            state.servizi=state.servizi+"%";
+        }
+        if(animali!==''){
+            state.servizi=state.servizi+""+animali;
+        }
+        else{
+            state.servizi=state.servizi+"%";
+        }
+    };
+    const handleChangeWifi=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setWifi(valore);
+        }
+        else{
+            setWifi("");
+        }
+    };
+    const handleChangeParcheggio=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setParcheggio(valore);
+        }
+        else{
+            setParcheggio("");
+        }
+    };
+    const handleChangePiscina=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setPiscina(valore);
+        }
+        else{
+            setPiscina("");
+        }
+    };
+    const handleChangeAnimali=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setAnimali(valore);
+        }
+        else{
+            setAnimali("");
         }
     };
     const handleChangeNpl=(event)=>{
@@ -326,13 +415,68 @@ const RicercaStruttura=(props)=> {
                                             <label className="form-check-label " htmlFor="anticipo_carta"> Acconto con Carta di Credito</label>
                                         </div>
                                     </div>
+
+
+                                </div>
+                                <div className="form-group col" style={{margin:"auto"}}>
                                     <br/>
+                                    <h6 >Servizi</h6>
+
+
+
+                                    <div className="row" >
+                                        <div className="col-1">
+                                        </div>
+                                        <div className="col-1">
+
+                                            <input className="form-check-input" type="checkbox" id="wifi" name="wifi" value="wifi" defaultValue="" onChange={handleChangeWifi}/>
+                                        </div>
+                                        <div className="col-8">
+                                            <label className="form-check-label " htmlFor="wifi" > Wi-fi</label>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="row">
+                                        <div className="col-1">
+                                        </div>
+                                        <div className="col-1">
+                                            <input className="form-check-input " type="checkbox" id="parcheggio" name="parcheggio" defaultValue="" value="parcheggio" onChange={handleChangeParcheggio}/>
+                                        </div>
+                                        <div className="col-8">
+                                            <label className="form-check-label " htmlFor="parcheggio"> Parcheggio</label>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="row">
+                                        <div className="col-1">
+                                        </div>
+                                        <div className="col-1">
+                                            <input className="form-check-input " type="checkbox" id="piscina" name="piscina" value="piscina" onChange={handleChangePiscina}/>
+                                        </div>
+                                        <div className="col-8">
+                                            <label className="form-check-label " htmlFor="piscina"> Piscina</label>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-1">
+                                        </div>
+                                        <div className="col-1">
+                                            <input className="form-check-input " type="checkbox" id="animali" name="animali" value="animali" onChange={handleChangeAnimali}/>
+                                        </div>
+                                        <div className="col-8">
+                                            <label className="form-check-label " htmlFor="animali"> Animali domestici ammessi</label>
+                                        </div>
+                                    </div>
+
 
 
                                 </div>
 
 
                                 <div className="form-group col" style={{margin:"auto" }}>
+                                    <br/>
                                     <h6 >Costo Camera Massimo a Notte:</h6>
                                     <select className="form-control" id="costo_camera" value={state.costo_camera} onChange={handleChangeCostoCamera}>
                                         <option value="null">-</option>
@@ -345,6 +489,8 @@ const RicercaStruttura=(props)=> {
                                     </select>
                                     <br/>
                                 </div>
+
+
 
                                 <div className="form-group col" style={{margin:"auto" }}>
                                     <h6>Colazione Inclusa</h6>

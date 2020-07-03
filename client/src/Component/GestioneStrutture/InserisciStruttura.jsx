@@ -28,7 +28,11 @@ const InserisciStruttura=()=>{
     const [tipo, setTipo]=useState("");
     const [disdetta_gratuita, setDisdettaGratuita]=useState("");
     const [tassa_soggiorno,setTassaSoggiorno]=useState("");
-    const [servizi, setServizi]=useState("");
+    let servizi="";
+    const [wifi, setWifi]=React.useState("");
+    const [parcheggio, setParcheggio]=React.useState("");
+    const [piscina, setPiscina]=React.useState("");
+    const [animali, setAnimali]=React.useState("");
     const [ora_checkin,setOraCheckin]=useState("");
     const [ora_checkout, setOraCheckout]=useState("");
     const [immagine1, setImmagine1]=useState("");
@@ -38,7 +42,7 @@ const InserisciStruttura=()=>{
     const [costo_camera, setCostoCamera]=useState("");
     const [colazione_inclusa, setColazioneInclusa]=useState("");
     const [descrizione, setDescrizione]=useState("");
-    const [modalita_di_pagamento, setModalitaPagamento]=React.useState("");
+    let modalita_di_pagamento="";
     const [modalita_carta, setModalitaCarta]=React.useState("");
     const [modalita_struttura, setModalitaStruttura]=React.useState("");
     const [modalita_acconto, setModalitaAcconto]=React.useState("");
@@ -117,11 +121,79 @@ const InserisciStruttura=()=>{
         setTassaSoggiorno(valore);
         state.tassa_soggiorno=valore;
     };
-    const handleChangeServizi=(event)=>{
+    const handleChangeServizi=()=>{
+        if(wifi!==''){
+            state.servizi=state.servizi+""+wifi+",";
+        }
+        else{
+            state.servizi=state.servizi+"%,";
+        }
+        if(parcheggio!==''){
+            state.servizi=state.servizi+""+parcheggio+",";
+        }
+        else{
+            state.servizi=state.servizi+"%,";
+        }
+        if(piscina!==''){
+            state.servizi=state.servizi+""+piscina+",";
+        }
+        else{
+            state.servizi=state.servizi+"%";
+        }
+        if(animali!==''){
+            state.servizi=state.servizi+""+animali;
+        }
+        else{
+            state.servizi=state.servizi+"%";
+        }
+    };
+    const handleChangeWifi=(event)=>{
         const target=event.target;
         const valore=  target.value;
-        setServizi(valore);
-        state.servizi=valore;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setWifi(valore);
+        }
+        else{
+            setWifi("");
+        }
+    };
+    const handleChangeParcheggio=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setParcheggio(valore);
+        }
+        else{
+            setParcheggio("");
+        }
+    };
+    const handleChangePiscina=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setPiscina(valore);
+        }
+        else{
+            setPiscina("");
+        }
+    };
+    const handleChangeAnimali=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setAnimali(valore);
+        }
+        else{
+            setAnimali("");
+        }
     };
     const handleChangeOraCheckin=(event)=>{
         const target=event.target;
@@ -208,7 +280,24 @@ const InserisciStruttura=()=>{
         state.descrizione=valore;
     };
     const handleChangeModalitaPagamento=()=>{
-        setModalitaPagamento(modalita_carta+","+modalita_struttura+","+modalita_acconto);
+        if(modalita_carta!==''){
+            state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_carta+",";
+        }
+        else{
+            state.modalita_di_pagamento=state.modalita_di_pagamento+"%,";
+        }
+        if(modalita_struttura!==''){
+            state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_struttura+",";
+        }
+        else{
+            state.modalita_di_pagamento=state.modalita_di_pagamento+"%,";
+        }
+        if(modalita_acconto!==''){
+            state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_acconto;
+        }
+        else{
+            state.modalita_di_pagamento=state.modalita_di_pagamento+"%";
+        }
     };
     const handleChangeModalitaCarta=(event)=>{
         const target=event.target;
@@ -237,9 +326,8 @@ const InserisciStruttura=()=>{
         setStato("");
         setTipo("");
         setDisdettaGratuita("");
-        setModalitaPagamento("");
         setTassaSoggiorno("");
-        setServizi("");
+
         setOraCheckin("");
         setOraCheckout("");
         setImmagine1("");
@@ -256,6 +344,7 @@ const InserisciStruttura=()=>{
 
     const handleSubmit=(event) =>{
         handleChangeModalitaPagamento();
+        handleChangeServizi();
         console.log(modalita_di_pagamento);
         alert(JSON.stringify(state));
         console.log(immagine1);
@@ -415,6 +504,61 @@ const InserisciStruttura=()=>{
                                     </div>
                                 </div>
                                 <br/>
+
+
+                            </div>
+                            <div className="form-group col" style={{margin:"auto"}}>
+                                <label htmlFor="servizi">Servizi*</label>
+
+
+
+
+                                <div className="row" >
+                                    <div className="col-1">
+                                    </div>
+                                    <div className="col-1">
+
+                                        <input className="form-check-input" type="checkbox" id="wifi" name="wifi" value="wifi" defaultValue="" onChange={handleChangeWifi}/>
+                                    </div>
+                                    <div className="col-8">
+                                        <label className="form-check-label " htmlFor="wifi" > Wi-fi</label>
+                                    </div>
+                                </div>
+
+
+                                <div className="row">
+                                    <div className="col-1">
+                                    </div>
+                                    <div className="col-1">
+                                        <input className="form-check-input " type="checkbox" id="parcheggio" name="parcheggio" defaultValue="" value="parcheggio" onChange={handleChangeParcheggio}/>
+                                    </div>
+                                    <div className="col-8">
+                                        <label className="form-check-label " htmlFor="parcheggio"> Parcheggio</label>
+                                    </div>
+                                </div>
+
+
+                                <div className="row">
+                                    <div className="col-1">
+                                    </div>
+                                    <div className="col-1">
+                                        <input className="form-check-input " type="checkbox" id="piscina" name="piscina" value="piscina" onChange={handleChangePiscina}/>
+                                    </div>
+                                    <div className="col-8">
+                                        <label className="form-check-label " htmlFor="piscina"> Piscina</label>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-1">
+                                    </div>
+                                    <div className="col-1">
+                                        <input className="form-check-input " type="checkbox" id="animali" name="animali" value="animali" onChange={handleChangeAnimali}/>
+                                    </div>
+                                    <div className="col-8">
+                                        <label className="form-check-label " htmlFor="animali"> Animali domestici ammessi</label>
+                                    </div>
+                                </div>
+
 
 
                             </div>
