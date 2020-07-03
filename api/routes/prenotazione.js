@@ -50,6 +50,9 @@ async function ricerca(req, res, next) {
             if(req.body.colazione_inclusa=='' || req.body.colazione_inclusa === undefined){
                req.body.colazione_inclusa='%';
             }
+            if(req.body.servizi==='' || req.body.servizi===undefined){
+                req.body.servizi='%';
+            }
 
             console.log("la disdetta è:" + req.body.disdetta_gratuita);
             results=await db.query("SELECT struttura.id_struttura,nome_struttura,tipo,indirizzo_struttura,citta,regione,stato,  tipo,immagine_1\
@@ -57,7 +60,7 @@ async function ricerca(req, res, next) {
                 WHERE struttura.id_struttura=gallery_struttura.id_struttura AND struttura.id_struttura=camera.id_struttura \
                 AND struttura.id_struttura IN ((SELECT struttura.id_struttura FROM struttura , camera WHERE camera.id_struttura=struttura.id_struttura\
                 AND (struttura.nome_struttura LIKE ? OR struttura.regione LIKE ? OR struttura.citta LIKE ? OR struttura.stato LIKE ?) AND camera.numero_posti_letto>=? AND struttura.tipo LIKE ? \
-                AND (struttura.disdetta_gratuita<? AND struttura.disdetta_gratuita>?) AND struttura.modalita_di_pagamento LIKE ? AND camera.costo_camera<=? AND camera.colazione_inclusa LIKE ? )\
+                AND (struttura.disdetta_gratuita<? AND struttura.disdetta_gratuita>?) AND struttura.modalita_di_pagamento LIKE ? AND camera.costo_camera<=? AND camera.colazione_inclusa LIKE ? AND struttura.servizi LIKE ?)\
                 EXCEPT (SELECT camera.id_struttura FROM camera,prenotazione WHERE prenotazione.id_camera=camera.id_camera \
                 AND (prenotazione.data_fine>? AND prenotazione.data_inizio<?))) GROUP BY struttura.id_struttura, nome_struttura, tipo, indirizzo_struttura, citta, regione, stato, tipo, immagine_1 ORDER BY nome_struttura ASC"
                 , [
@@ -72,6 +75,7 @@ async function ricerca(req, res, next) {
                     req.body.modalita_di_pagamento,
                     req.body.costo_camera,
                     req.body.colazione_inclusa,
+                    req.body.servizi,
                     req.body.data_inizio,
                     req.body.data_fine
 

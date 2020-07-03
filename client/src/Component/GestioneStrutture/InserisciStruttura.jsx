@@ -126,25 +126,25 @@ const InserisciStruttura=()=>{
             state.servizi=state.servizi+""+wifi+",";
         }
         else{
-            state.servizi=state.servizi+"%,";
+            state.servizi=state.servizi+",";
         }
         if(parcheggio!==''){
             state.servizi=state.servizi+""+parcheggio+",";
         }
         else{
-            state.servizi=state.servizi+"%,";
+            state.servizi=state.servizi+",";
         }
         if(piscina!==''){
             state.servizi=state.servizi+""+piscina+",";
         }
         else{
-            state.servizi=state.servizi+"%";
+            state.servizi=state.servizi+",";
         }
         if(animali!==''){
             state.servizi=state.servizi+""+animali;
         }
         else{
-            state.servizi=state.servizi+"%";
+            state.servizi=state.servizi+"";
         }
     };
     const handleChangeWifi=(event)=>{
@@ -284,19 +284,19 @@ const InserisciStruttura=()=>{
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_carta+",";
         }
         else{
-            state.modalita_di_pagamento=state.modalita_di_pagamento+"%,";
+            state.modalita_di_pagamento=state.modalita_di_pagamento+",";
         }
         if(modalita_struttura!==''){
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_struttura+",";
         }
         else{
-            state.modalita_di_pagamento=state.modalita_di_pagamento+"%,";
+            state.modalita_di_pagamento=state.modalita_di_pagamento+",";
         }
         if(modalita_acconto!==''){
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_acconto;
         }
         else{
-            state.modalita_di_pagamento=state.modalita_di_pagamento+"%";
+            state.modalita_di_pagamento=state.modalita_di_pagamento+"";
         }
     };
     const handleChangeModalitaCarta=(event)=>{
@@ -565,23 +565,22 @@ const InserisciStruttura=()=>{
 
 
                             <label htmlFor="tassa_soggiorno">Tassa di Soggiorno*</label>
-                            <input id="tassa_soggiorno" name="tassa_soggiorno" type='number' className="form-control" maxLength="40"
+                            <input id="tassa_soggiorno" name="tassa_soggiorno" type='number' min="0" className="form-control" maxLength="40"
                                    value={state.tassa_soggiorno} onChange={handleChangeTassaSoggiorno} required/>
                             <div className="invalid-feedback">
                                 Inserire Prezzo Tassa di Soggiorno
                             </div>
-                            <label htmlFor="servizi">Servizi*</label>
-                            <input id="servizi" name="servizi" type="text" className="form-control" maxLength="40"
-                                   value={state.servizi} onChange={handleChangeServizi} required/>
-                            <div className="invalid-feedback">
-                                Inserire Servizi
-                            </div>
+
                             <label htmlFor="punti_di_interesse">Punti di Interesse*</label>
-                            <input id="punti_di_interesse" name="punti_di_interesse" type="text" className="form-control" maxLength="40"
-                                   value={state.punti_di_interesse} onChange={handleChangePuntiInteresse} required/>
+                            <Form.Group controlId="exampleForm.ControlTextarea1">
+                                <Form.Control as="textarea" rows="3" value={state.punti_di_interesse} onChange={handleChangePuntiInteresse}
+                                />
+
                             <div className="invalid-feedback">
                                 Inserire Punti di Interesse
                             </div>
+                            </Form.Group>
+
                             <label htmlFor="name">Ora Check-In*</label>
                             <input id="ora_checkin" name="ora_checkin" type="time" className="form-control" maxLength="40"
                                    value={state.ora_checkin} onChange={handleChangeOraCheckin} required/>
@@ -612,13 +611,13 @@ const InserisciStruttura=()=>{
                         <div className="form-group">
                             <h5>Inserimento Prima Camera</h5>
                             <label htmlFor="numero_posti_letto">Numero di Posti Letto*</label>
-                            <input id="numero_posti_letto" name="numero_posti_letto" type="number" className="form-control" maxLength="40"
+                            <input id="numero_posti_letto" name="numero_posti_letto" type="number" min="0" className="form-control" maxLength="40"
                                    value={state.numero_posti_letto} onChange={handleChangeNumPostiLetto} required/>
                             <div className="invalid-feedback">
                                 Inserire Il Numero di Posti Letto
                             </div>
                             <label htmlFor="costo_camera">Costo della Camera a Notte*</label>
-                            <input id="costo_camera" name="costo_camera" type="number" className="form-control" maxLength="40"
+                            <input id="costo_camera" name="costo_camera" type="number"  min="0" className="form-control" maxLength="40"
                                    value={state.costo_camera} onChange={handleChangeCostoCamera} required/>
                             <div className="invalid-feedback">
                                 Inserire il Costo della Camera

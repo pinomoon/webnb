@@ -181,7 +181,7 @@ const RicercaStruttura=(props)=> {
             state.servizi=state.servizi+""+piscina+",";
         }
         else{
-            state.servizi=state.servizi+"%";
+            state.servizi=state.servizi+"%,";
         }
         if(animali!==''){
             state.servizi=state.servizi+""+animali;
