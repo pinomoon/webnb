@@ -245,16 +245,16 @@ const RicercaStruttura=(props)=> {
                                     <div className="row">
                                         <div className="col-3">
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                <input type="radio" className="custom-control-input" id="no" name="disdetta_gratuita"
+                                                <input type="radio" className="custom-control-input" id="no_disdetta" name="disdetta_gratuita"
                                                        value="0" onChange={handleChangeDisdettaGratuita} />
-                                                <label className="custom-control-label" htmlFor="no">No</label>
+                                                <label className="custom-control-label" htmlFor="no_disdetta">No</label>
                                             </div>
                                         </div>
                                         <div className="col-3">
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                <input type="radio" className="custom-control-input" id="si" name="disdetta_gratuita"
+                                                <input type="radio" className="custom-control-input" id="si_disdetta" name="disdetta_gratuita"
                                                        value="1" onChange={handleChangeDisdettaGratuita} />
-                                                <label className="custom-control-label" htmlFor="si">Si</label>
+                                                <label className="custom-control-label" htmlFor="si_disdetta">Si</label>
                                             </div>
                                         </div>
                                     </div>
