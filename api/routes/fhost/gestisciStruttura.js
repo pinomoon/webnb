@@ -17,15 +17,16 @@ async function elencoStrutture(req,res,next) {
 
 
         await withTransaction(db, async () => {
-            results = await db.query("SELECT id_struttura,nome_struttura, tipo, immagine_1 \
-            FROM strutture, gallery_strutture \
-            WHERE id_utente=?"
+            results = await db.query("SELECT s.id_struttura,s.nome_struttura,s.descrizione, s.tipo, g.immagine_1 \
+            FROM struttura as s, gallery_struttura as g \
+            WHERE s.id_struttura=g.id_struttura AND s.id_utente=?"
             , [
                 req.body.id_utente
             ]).catch(err=>{
                 throw err;
             });
             var risultato=['1',results];
+            console.log(risultato);
             res.send(risultato); //elenco strutture caricato correttamente
         })
 

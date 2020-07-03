@@ -29,7 +29,7 @@ const ModificaAccount=()=>{
     const[password, setPassword]=React.useState("");
     const[repassword,setRepassword]=React.useState("");
     const[check_repass, setCheckRepass]=React.useState("");
-    const[cellulare,setCellulare]=React.useState("");
+    const[cellulare,setCellulare]=React.useState(getUserCookie().cellulare);
 
 
 
@@ -49,6 +49,7 @@ const ModificaAccount=()=>{
         setSesso(getUserCookie().sesso);
         setCitta(getUserCookie().citta);
         setCap(getUserCookie().cap);
+        setCellulare(getUserCookie().cellulare);
         setTitolareCarta(getUserCookie().titolare_carta);
         setNumeroCarta(getUserCookie().numero_carta);
         setScadenza(getUserCookie().scadenza);

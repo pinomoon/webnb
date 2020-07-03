@@ -290,7 +290,7 @@ const Registrazione=()=>{
                         </div>
                             <div className="row">
                                 <div className="col-9">
-                                <label htmlFor="name">Numero Cellulare</label>
+                                <label htmlFor="cellulare">Numero Cellulare</label>
                                 <input id="cellulare" name="cellulare" type="text" className="form-control" maxLength="40"
                                        value={state.cellulare} onChange={handleChangeCellulare} required/>
                                 <div className="invalid-feedback">
