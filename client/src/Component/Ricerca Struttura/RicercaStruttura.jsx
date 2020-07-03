@@ -32,7 +32,7 @@ const RicercaStruttura=(props)=> {
     const [npl, setNpl]=React.useState(getStructureCookie().npl);//numero posti letto
     const [tipo, setTipo]=React.useState("");
     const [disdetta_gratuita, setDisdettaGratuita]=React.useState("");
-    const [modalita_di_pagamento, setModalitaPagamento]=React.useState("");
+    let modalita_di_pagamento=[];
     const [modalita_carta, setModalitaCarta]=React.useState("");
     const [modalita_struttura, setModalitaStruttura]=React.useState("");
     const [modalita_acconto, setModalitaAcconto]=React.useState("");
@@ -49,17 +49,14 @@ const RicercaStruttura=(props)=> {
     const state={luogo,data_inizio,data_fine,npl, tipo, disdetta_gratuita, modalita_di_pagamento, costo_camera, colazione_inclusa};
 
     const handleSubmit=(event)=>{
-
-
-        handleChangeModalitaPagamento();
         event.preventDefault();
+        handleChangeModalitaPagamento();
         alert("Dati inseriti "+JSON.stringify(state));
-        console.log(modalita_di_pagamento);
         alert("parametri"+luogo+" "+data_inizio+" "+data_fine+" "+npl);
 
         axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
             .then((response)=>{
-                setModalitaPagamento("");
+
                 if(strutture!=[]){
                     strutture[0]=null;
                 }
@@ -105,23 +102,32 @@ const RicercaStruttura=(props)=> {
         state.disdetta_gratuita=valore;
     };
     const handleChangeModalitaPagamento=()=>{
-        setModalitaPagamento(modalita_carta+","+modalita_struttura+","+modalita_acconto);
-    };
+        state.modalita_di_pagamento[0]=modalita_carta;
+        state.modalita_di_pagamento[1]=modalita_struttura;
+        state.modalita_di_pagamento[2]=modalita_acconto;
+    }
     const handleChangeModalitaCarta=(event)=>{
         const target=event.target;
-        const valore=  target.value;
+        const valore=target.value;
+        const stato=target.checked;
+        if(stato==1)
         setModalitaCarta(valore);
+
     };
     const handleChangeModalitaStruttura=(event)=>{
         const target=event.target;
         const valore=  target.value;
         setModalitaStruttura(valore);
 
+
+
     };
     const handleChangeModalitaAcconto=(event)=>{
         const target=event.target;
         const valore=  target.value;
         setModalitaAcconto(valore);
+
+
 
     };
     const handleChangeNpl=(event)=>{
@@ -246,7 +252,7 @@ const RicercaStruttura=(props)=> {
                                         <div className="col-3">
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
                                                 <input type="radio" className="custom-control-input" id="no_disdetta" name="disdetta_gratuita"
-                                                       value="0" onChange={handleChangeDisdettaGratuita} />
+                                                        defaultValue="unchecked" value="0" onChange={handleChangeDisdettaGratuita} />
                                                 <label className="custom-control-label" htmlFor="no_disdetta">No</label>
                                             </div>
                                         </div>
@@ -270,7 +276,8 @@ const RicercaStruttura=(props)=> {
                                         <div className="col-1">
                                         </div>
                                         <div className="col-1">
-                                            <input className="form-check-input" type="checkbox" id="carta" name="carta" value="carta" onChange={handleChangeModalitaCarta}/>
+
+                                            <input className="form-check-input" type="checkbox" id="carta" name="carta" value="carta" checked="si"  onChange={handleChangeModalitaCarta}/>
                                         </div>
                                         <div className="col-8">
                                             <label className="form-check-label " htmlFor="carta" > Carta di Credito</label>
@@ -282,7 +289,7 @@ const RicercaStruttura=(props)=> {
                                         <div className="col-1">
                                         </div>
                                         <div className="col-1">
-                                            <input className="form-check-input " type="checkbox" id="struttura" name="struttura" value="struttura" onChange={handleChangeModalitaStruttura}/>
+                                            <input className="form-check-input " type="checkbox" id="struttura" name="struttura" defaultValue="" value="struttura" onChange={handleChangeModalitaStruttura}/>
                                         </div>
                                         <div className="col-8">
                                             <label className="form-check-label " htmlFor="struttura"> Pagamento in Struttura</label>

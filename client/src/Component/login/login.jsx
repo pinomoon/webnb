@@ -66,6 +66,7 @@ const Login =()=>{
                                     indirizzo:response.data[1].indirizzo,
                                     citta:response.data[1].citta,
                                     cap:response.data[1].cap,
+                                    cellulare:response.data[1].cellulare,
                                     titolare_carta:response.data[1].titolare_carta,
                                     numero_carta:response.data[1].numero_carta,
                                     scadenza:response.data[1].scadenza,
