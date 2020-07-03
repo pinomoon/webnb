@@ -4,6 +4,7 @@ var createError= require('http-errors');
 const { config } = require("../../db/config");
 const { makeDb, withTransaction } = require("../../db/dbmiddleware");
 const {configmail}= require('../../servermail/configmail');
+var nodemailer = require('nodemailer');
 let transport=nodemailer.createTransport(configmail);
 
 /*Elenco prenotazioni */
@@ -83,7 +84,7 @@ async function annulla(req, res, next) {
                         console.log('Email sent: ' + info.response);
                     }
                 });
-                let mailOptions = {
+                mailOptions = {
                     from: 'webnb-service@libero.it',
                     to:results_c[0].email,
                     subject: 'Prenotazione annullata',
@@ -105,7 +106,7 @@ async function annulla(req, res, next) {
                 WHERE prenotazione.id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{
                     throw err;
                 });
-                let mailOptions = {
+                 mailOptions = {
                     from: 'webnb-service@libero.it',
                     to:results_h[0].email,
                     subject: 'Prenotazione annullata',
@@ -119,7 +120,7 @@ async function annulla(req, res, next) {
                         console.log('Email sent: ' + info.response);
                     }
                 });
-                let mailOptions = {
+                 mailOptions = {
                     from: 'webnb-service@libero.it',
                     to:results_c[0].email,
                     subject: 'Prenotazione annullata',

@@ -11,6 +11,7 @@ import {getSessionCookie} from "../../sessions";
 import BoxConfermaInserimento from "./boxconfermainserimento";
 import home from "../login/home.jpg";
 import personale from "./personale1.jpg"
+import UncontrolledCollapse from "reactstrap/es/UncontrolledCollapse";
 
 
 const InserisciStruttura=()=>{
@@ -26,7 +27,6 @@ const InserisciStruttura=()=>{
     const [stato, setStato]=useState("");
     const [tipo, setTipo]=useState("");
     const [disdetta_gratuita, setDisdettaGratuita]=useState("");
-    const [modalita_di_pagamento, setModalitaPagamento]=useState("");
     const [tassa_soggiorno,setTassaSoggiorno]=useState("");
     const [servizi, setServizi]=useState("");
     const [ora_checkin,setOraCheckin]=useState("");
@@ -38,6 +38,10 @@ const InserisciStruttura=()=>{
     const [costo_camera, setCostoCamera]=useState("");
     const [colazione_inclusa, setColazioneInclusa]=useState("");
     const [descrizione, setDescrizione]=useState("");
+    const [modalita_di_pagamento, setModalitaPagamento]=React.useState("");
+    const [modalita_carta, setModalitaCarta]=React.useState("");
+    const [modalita_struttura, setModalitaStruttura]=React.useState("");
+    const [modalita_acconto, setModalitaAcconto]=React.useState("");
     const [nomeimg, setNomeImg]=useState();
 
     const state={id_utente,nome_struttura,indirizzo_struttura,cap,punti_di_interesse,citta,regione,
@@ -106,12 +110,7 @@ const InserisciStruttura=()=>{
         setDisdettaGratuita(valore);
         state.disdetta_gratuita=valore;
     };
-    const handleChangeModalitaPagamento=(event)=>{
-        const target=event.target;
-        const valore=  target.value;
-        setModalitaPagamento(valore);
-        state.modalita_di_pagamento=valore;
-    };
+
     const handleChangeTassaSoggiorno=(event)=>{
         const target=event.target;
         const valore=  target.value;
@@ -208,6 +207,26 @@ const InserisciStruttura=()=>{
         setDescrizione(valore);
         state.descrizione=valore;
     };
+    const handleChangeModalitaPagamento=()=>{
+        setModalitaPagamento(modalita_carta+","+modalita_struttura+","+modalita_acconto);
+    };
+    const handleChangeModalitaCarta=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setModalitaCarta(valore);
+    };
+    const handleChangeModalitaStruttura=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setModalitaStruttura(valore);
+
+    };
+    const handleChangeModalitaAcconto=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setModalitaAcconto(valore);
+
+    };
     const svuotaCampi=()=>{
         setNomeStruttura("");
         setIndirizzoStruttura("");
@@ -236,6 +255,8 @@ const InserisciStruttura=()=>{
 
 
     const handleSubmit=(event) =>{
+        handleChangeModalitaPagamento();
+        console.log(modalita_di_pagamento);
         alert(JSON.stringify(state));
         console.log(immagine1);
         event.preventDefault();
@@ -356,11 +377,48 @@ const InserisciStruttura=()=>{
                                 Inserire Giorni Disdetta Gratuita, 0 se non è prevista
                             </div>
                             <label htmlFor="modalita_di_pagamento">Modalità di Pagamento*</label>
-                            <input id="modalita_di_pagamento" name="modalita_di_pagamento" type="text" className="form-control" maxLength="40"
-                                   value={state.modalita_di_pagamento} onChange={handleChangeModalitaPagamento} required/>
-                            <div className="invalid-feedback">
-                                Inserire Modalità di Pagamento
+
+                            <div className="form-group col" style={{margin:"auto"}}>
+                                <div className="row" >
+                                    <div className="col-1">
+                                    </div>
+                                    <div className="col-1">
+                                        <input className="form-check-input" type="checkbox" id="carta" name="carta" value="carta" onChange={handleChangeModalitaCarta}/>
+                                    </div>
+                                    <div className="col-8">
+                                        <label className="form-check-label " htmlFor="carta" > Carta di Credito</label>
+                                    </div>
+                                </div>
+
+
+                                <div className="row">
+                                    <div className="col-1">
+                                    </div>
+                                    <div className="col-1">
+                                        <input className="form-check-input " type="checkbox" id="struttura" name="struttura" value="struttura" onChange={handleChangeModalitaStruttura}/>
+                                    </div>
+                                    <div className="col-8">
+                                        <label className="form-check-label " htmlFor="struttura"> Pagamento in Struttura</label>
+                                    </div>
+                                </div>
+
+
+                                <div className="row">
+                                    <div className="col-1">
+                                    </div>
+                                    <div className="col-1">
+                                        <input className="form-check-input " type="checkbox" id="anticipo_carta" name="anticipo_carta" value="anticipo_carta" onChange={handleChangeModalitaAcconto}/>
+                                    </div>
+                                    <div className="col-8">
+                                        <label className="form-check-label " htmlFor="anticipo_carta"> Acconto con Carta di Credito</label>
+                                    </div>
+                                </div>
+                                <br/>
+
+
                             </div>
+
+
                             <label htmlFor="tassa_soggiorno">Tassa di Soggiorno*</label>
                             <input id="tassa_soggiorno" name="tassa_soggiorno" type='number' className="form-control" maxLength="40"
                                    value={state.tassa_soggiorno} onChange={handleChangeTassaSoggiorno} required/>

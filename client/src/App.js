@@ -71,7 +71,7 @@ const App= ()=> {
                         <Route path="/checkin" component={PaginaCheckin} exact/>
                         <Route path="/checkin/success" component={PaginaCheckinSuccess} exact/>
                         <Route path="/checkin/error" component={CheckinFail} exact/>
-                        <Route path="/gestiscistrutture" component={GestisciStrutture} exact/>
+                        <Route path="/lemiestrutture" component={GestisciStrutture} exact/>
                         <Route path="/inseriscistruttura" component={InserisciStruttura} exact/>
                         <Route path="/inseriscistruttura/success" component={Boxconfermainserimento} exact/>
                         <Route path="/recuperaCredenziali" component={RecuperaPassword}/>
