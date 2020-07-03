@@ -46,13 +46,6 @@ async function autenticazione(req,res, next){
                     next(createError(403, 'Password errata'));
                 } else {
 
-                    await db.query('UPDATE `utente` SET `autenticazione`=true WHERE `utente`.id_utente = ?', 
-                    [
-                    results[0].id_utente,
-                    ])
-                    .catch(err => {
-                        throw err;
-                    });
                     console.log('Utente autenticato');
                     console.log(results);
                    // res.send("Utente autenticato");

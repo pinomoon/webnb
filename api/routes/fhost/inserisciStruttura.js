@@ -39,7 +39,7 @@ async function inserisciStruttura(req,res,next) {
                             req.body.servizi,
                             req.body.ora_checkin,
                             req.body.ora_checkout,
-                            req.body.descrzione
+                            req.body.descrizione
                         ]
                     ]
                 ]).catch(err=>{

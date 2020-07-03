@@ -100,22 +100,44 @@ router.post('/esploraStruttura', esplora);
 async function esplora(req, res, next) {
 
     const db = await makeDb(config);
-    let results = {};
+    let results1 = {};
+    let results2 ={};
+    let results3 ={};
     try {
         await withTransaction(db, async() => {
-                results=await db.query("SELECT nome_struttura,indirizzo_struttura,cap,punti_di_interesse,\
+                results1=await db.query("SELECT nome_struttura,indirizzo_struttura,cap,punti_di_interesse,\
                 citta,regione,stato,tipo, disdetta_gratuita, modalita_di_pagamento, tassa_soggiorno, servizi,\
-                ora_checkin,ora_checkout,descrizione,immagine_1,immagine_2,immagine_3,id_camera,nome_camera,\
-                numero_posti_letto, costo_camera, colazione_inclusa,recensione \
-                FROM struttura,camera,gallery_struttura,recensione \
-                WHERE camera.id_struttura=struttura.id_struttura \
-                AND gallery_struttura.id_struttura=struttura.id_struttura \
-                 AND struttura.id_struttura=recensione.id_struttura AND struttura.id_struttura=?"
+                ora_checkin,ora_checkout,descrizione,immagine_1,immagine_2,immagine_3\
+                FROM struttura,gallery_struttura\
+                WHERE  gallery_struttura.id_struttura=struttura.id_struttura \
+                  AND struttura.id_struttura=?"
                     ,[req.body.id_struttura])
                     .catch(err=>{
                         throw err;
                     });
-                    var risultato=['1',results];
+                results2 = await db.query("SELECT c.id_camera, nome_camera,numero_posti_letto, costo_camera, colazione_inclusa \
+                    FROM camera AS c, struttura AS s\
+                    WHERE c.id_struttura=s.id_struttura AND c.id_struttura=? EXCEPT (SELECT camera.id_camera, nome_camera,numero_posti_letto, costo_camera, colazione_inclusa\
+                    FROM camera,prenotazione WHERE prenotazione.id_camera=camera.id_camera \
+                    AND (prenotazione.data_fine>? AND prenotazione.data_inizio<?) AND camera.numero_posti_letto<?) \
+                    ",[
+                          req.body.id_struttura,
+                          req.body.data_fine,
+                          req.body.data_inizio,
+                    req.body.npl
+                ]).catch(err=>{
+                    throw  err;
+                });
+                results3= await db.query("SELECT id_recensione, recensione,recensione.id_utente,nome\
+                FROM  recensione,utente\
+                WHERE recensione.id_struttura=? AND recensione.id_utente=utente.id_utente"
+                ,[
+                    req.body.id_struttura
+                    ]).catch(err=>{
+                        throw err;
+                    })
+                    var risultato=['1',results1,results2,results3];
+                    console.log(risultato);
                     res.send(risultato);
         })
     }catch(err){

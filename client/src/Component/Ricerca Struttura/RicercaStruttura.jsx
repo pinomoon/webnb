@@ -357,7 +357,7 @@ const RicercaStruttura=(props)=> {
                             var urlCreator = window.URL || window.webkitURL;
                             var imageUrl = urlCreator.createObjectURL( blob );
                             console.log(imageUrl);
-                            var href="/prenotazione?struttura="+struttura.id_struttura;
+                            var href="/prenotazione?struttura="+struttura.id_struttura+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?npl="+npl;
 
 
 
@@ -390,7 +390,7 @@ const RicercaStruttura=(props)=> {
                             var urlCreator = window.URL || window.webkitURL;
                             var imageUrl = urlCreator.createObjectURL( blob );
                             console.log(imageUrl);
-                            var href="/prenotazione?struttura="+struttura.id_struttura;
+                            var href="/prenotazione?struttura="+struttura.id_struttura+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?npl="+npl;
 
                             return (
 
