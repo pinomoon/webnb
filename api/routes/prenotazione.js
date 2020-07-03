@@ -17,7 +17,7 @@ async function ricerca(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async() => {
-            let sql="";
+            let flag;
             if((req.body.luogo==='') || (req.body.luogo===undefined)){
                 req.body.luogo='%';
             }
@@ -27,8 +27,17 @@ async function ricerca(req, res, next) {
             if(req.body.tipo==='' || req.body.tipo===undefined){
                 req.body.tipo='%';
             }
-            if(req.body.disdetta_gratuita >0 || req.body.disdetta_gratuita===undefined){
-                req.body.disdetta_gratuita='%';
+            if(req.body.disdetta_gratuita===undefined || req.body.disdetta_gratuita===''){
+                req.body.disdetta_gratuita=100000;
+                flag=-1;
+            }
+            if(req.body.disdetta_gratuita==='0'){
+                req.body.disdetta_gratuita=1;
+                flag=-1;
+            }
+            if(req.body.disdetta_gratuita==='1'){
+                req.body.disdetta_gratuita=100000;
+                flag=0;
             }
             if(req.body.modalita_di_pagamento==='' || req.body.modalita_di_pagamento===undefined){
                 req.body.modalita_di_pagamento='%';
@@ -40,13 +49,13 @@ async function ricerca(req, res, next) {
                req.body.colazione_inclusa='%';
             }
 
-
+            console.log("la disdetta è:" + req.body.disdetta_gratuita);
             results=await db.query("SELECT struttura.id_struttura,nome_struttura,tipo,indirizzo_struttura,citta,regione,stato,  tipo,immagine_1\
                 FROM struttura, gallery_struttura,camera\
                 WHERE struttura.id_struttura=gallery_struttura.id_struttura AND struttura.id_struttura=camera.id_struttura \
                 AND struttura.id_struttura IN ((SELECT struttura.id_struttura FROM struttura , camera WHERE camera.id_struttura=struttura.id_struttura\
                 AND (struttura.nome_struttura LIKE ? OR struttura.regione LIKE ? OR struttura.citta LIKE ? OR struttura.stato LIKE ?) AND camera.numero_posti_letto>=? AND struttura.tipo LIKE ? \
-                AND struttura.disdetta_gratuita LIKE ? AND struttura.modalita_di_pagamento LIKE ? AND camera.costo_camera<=? AND camera.colazione_inclusa LIKE ? )\
+                AND (struttura.disdetta_gratuita<? AND struttura.disdetta_gratuita>?) AND struttura.modalita_di_pagamento LIKE ? AND camera.costo_camera<=? AND camera.colazione_inclusa LIKE ? )\
                 EXCEPT (SELECT camera.id_struttura FROM camera,prenotazione WHERE prenotazione.id_camera=camera.id_camera \
                 AND (prenotazione.data_fine>? AND prenotazione.data_inizio<?))) GROUP BY struttura.id_struttura, nome_struttura, tipo, indirizzo_struttura, citta, regione, stato, tipo, immagine_1 ORDER BY nome_struttura ASC"
                 , [
@@ -57,6 +66,7 @@ async function ricerca(req, res, next) {
                     req.body.npl,
                     req.body.tipo,
                     req.body.disdetta_gratuita,
+                    flag,
                     req.body.modalita_di_pagamento,
                     req.body.costo_camera,
                     req.body.colazione_inclusa,
@@ -70,7 +80,7 @@ async function ricerca(req, res, next) {
 
                 let i=0;
                 for (i; i<results.length;i++) {
-                    console.log(results[i]);
+                    //console.log(results[i]);
                     results[i].prezzo = ((await db.query("SELECT  MIN (camera.costo_camera) AS prezzo_struttura\
                 FROM struttura, camera\
                 WHERE struttura.id_struttura=camera.id_struttura AND struttura.id_struttura=? GROUP BY struttura.id_struttura"
