@@ -32,7 +32,7 @@ const RicercaStruttura=(props)=> {
     const [npl, setNpl]=React.useState(getStructureCookie().npl);//numero posti letto
     const [tipo, setTipo]=React.useState("");
     const [disdetta_gratuita, setDisdettaGratuita]=React.useState("");
-    let modalita_di_pagamento=[];
+    let modalita_di_pagamento="";
     const [modalita_carta, setModalitaCarta]=React.useState("");
     const [modalita_struttura, setModalitaStruttura]=React.useState("");
     const [modalita_acconto, setModalitaAcconto]=React.useState("");
@@ -102,33 +102,52 @@ const RicercaStruttura=(props)=> {
         state.disdetta_gratuita=valore;
     };
     const handleChangeModalitaPagamento=()=>{
-        state.modalita_di_pagamento[0]=modalita_carta;
-        state.modalita_di_pagamento[1]=modalita_struttura;
-        state.modalita_di_pagamento[2]=modalita_acconto;
+        if(modalita_carta!==''){
+            state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_carta+",";
+        }
+        if(modalita_struttura!==''){
+            state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_struttura+",";
+        }
+        if(modalita_acconto!==''){
+            state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_acconto;
+        }
     }
     const handleChangeModalitaCarta=(event)=>{
         const target=event.target;
         const valore=target.value;
         const stato=target.checked;
-        if(stato==1)
-        setModalitaCarta(valore);
+
+        if(stato===true) {
+            setModalitaCarta(valore);
+        }
+        else{
+            setModalitaCarta("");
+        }
 
     };
     const handleChangeModalitaStruttura=(event)=>{
         const target=event.target;
         const valore=  target.value;
-        setModalitaStruttura(valore);
+        const stato=target.checked;
 
-
-
+        if(stato===true) {
+            setModalitaStruttura(valore);
+        }
+        else{
+            setModalitaStruttura("");
+        }
     };
     const handleChangeModalitaAcconto=(event)=>{
         const target=event.target;
         const valore=  target.value;
-        setModalitaAcconto(valore);
+        const stato=target.checked;
 
-
-
+        if(stato===true) {
+            setModalitaAcconto(valore);
+        }
+        else{
+            setModalitaAcconto("");
+        }
     };
     const handleChangeNpl=(event)=>{
         const target=event.target;
@@ -277,7 +296,7 @@ const RicercaStruttura=(props)=> {
                                         </div>
                                         <div className="col-1">
 
-                                            <input className="form-check-input" type="checkbox" id="carta" name="carta" value="carta" checked="si"  onChange={handleChangeModalitaCarta}/>
+                                            <input className="form-check-input" type="checkbox" id="carta" name="carta" value="carta" defaultValue="" onChange={handleChangeModalitaCarta}/>
                                         </div>
                                         <div className="col-8">
                                             <label className="form-check-label " htmlFor="carta" > Carta di Credito</label>
