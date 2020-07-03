@@ -28,7 +28,11 @@ const InserisciStruttura=()=>{
     const [tipo, setTipo]=useState("");
     const [disdetta_gratuita, setDisdettaGratuita]=useState("");
     const [tassa_soggiorno,setTassaSoggiorno]=useState("");
-    const [servizi, setServizi]=useState("");
+    let servizi="";
+    const [wifi, setWifi]=React.useState("");
+    const [parcheggio, setParcheggio]=React.useState("");
+    const [piscina, setPiscina]=React.useState("");
+    const [animali, setAnimali]=React.useState("");
     const [ora_checkin,setOraCheckin]=useState("");
     const [ora_checkout, setOraCheckout]=useState("");
     const [immagine1, setImmagine1]=useState("");
@@ -38,7 +42,7 @@ const InserisciStruttura=()=>{
     const [costo_camera, setCostoCamera]=useState("");
     const [colazione_inclusa, setColazioneInclusa]=useState("");
     const [descrizione, setDescrizione]=useState("");
-    const [modalita_di_pagamento, setModalitaPagamento]=React.useState("");
+    let modalita_di_pagamento="";
     const [modalita_carta, setModalitaCarta]=React.useState("");
     const [modalita_struttura, setModalitaStruttura]=React.useState("");
     const [modalita_acconto, setModalitaAcconto]=React.useState("");
@@ -117,11 +121,79 @@ const InserisciStruttura=()=>{
         setTassaSoggiorno(valore);
         state.tassa_soggiorno=valore;
     };
-    const handleChangeServizi=(event)=>{
+    const handleChangeServizi=()=>{
+        if(wifi!==''){
+            state.servizi=state.servizi+""+wifi+",";
+        }
+        else{
+            state.servizi=state.servizi+",";
+        }
+        if(parcheggio!==''){
+            state.servizi=state.servizi+""+parcheggio+",";
+        }
+        else{
+            state.servizi=state.servizi+",";
+        }
+        if(piscina!==''){
+            state.servizi=state.servizi+""+piscina+",";
+        }
+        else{
+            state.servizi=state.servizi+",";
+        }
+        if(animali!==''){
+            state.servizi=state.servizi+""+animali;
+        }
+        else{
+            state.servizi=state.servizi+"";
+        }
+    };
+    const handleChangeWifi=(event)=>{
         const target=event.target;
         const valore=  target.value;
-        setServizi(valore);
-        state.servizi=valore;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setWifi(valore);
+        }
+        else{
+            setWifi("");
+        }
+    };
+    const handleChangeParcheggio=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setParcheggio(valore);
+        }
+        else{
+            setParcheggio("");
+        }
+    };
+    const handleChangePiscina=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setPiscina(valore);
+        }
+        else{
+            setPiscina("");
+        }
+    };
+    const handleChangeAnimali=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setAnimali(valore);
+        }
+        else{
+            setAnimali("");
+        }
     };
     const handleChangeOraCheckin=(event)=>{
         const target=event.target;
@@ -208,7 +280,24 @@ const InserisciStruttura=()=>{
         state.descrizione=valore;
     };
     const handleChangeModalitaPagamento=()=>{
-        setModalitaPagamento(modalita_carta+","+modalita_struttura+","+modalita_acconto);
+        if(modalita_carta!==''){
+            state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_carta+",";
+        }
+        else{
+            state.modalita_di_pagamento=state.modalita_di_pagamento+",";
+        }
+        if(modalita_struttura!==''){
+            state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_struttura+",";
+        }
+        else{
+            state.modalita_di_pagamento=state.modalita_di_pagamento+",";
+        }
+        if(modalita_acconto!==''){
+            state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_acconto;
+        }
+        else{
+            state.modalita_di_pagamento=state.modalita_di_pagamento+"";
+        }
     };
     const handleChangeModalitaCarta=(event)=>{
         const target=event.target;
@@ -237,9 +326,8 @@ const InserisciStruttura=()=>{
         setStato("");
         setTipo("");
         setDisdettaGratuita("");
-        setModalitaPagamento("");
         setTassaSoggiorno("");
-        setServizi("");
+
         setOraCheckin("");
         setOraCheckout("");
         setImmagine1("");
@@ -256,6 +344,7 @@ const InserisciStruttura=()=>{
 
     const handleSubmit=(event) =>{
         handleChangeModalitaPagamento();
+        handleChangeServizi();
         console.log(modalita_di_pagamento);
         alert(JSON.stringify(state));
         console.log(immagine1);
@@ -418,26 +507,80 @@ const InserisciStruttura=()=>{
 
 
                             </div>
+                            <div className="form-group col" style={{margin:"auto"}}>
+                                <label htmlFor="servizi">Servizi*</label>
+
+
+
+
+                                <div className="row" >
+                                    <div className="col-1">
+                                    </div>
+                                    <div className="col-1">
+
+                                        <input className="form-check-input" type="checkbox" id="wifi" name="wifi" value="wifi" defaultValue="" onChange={handleChangeWifi}/>
+                                    </div>
+                                    <div className="col-8">
+                                        <label className="form-check-label " htmlFor="wifi" > Wi-fi</label>
+                                    </div>
+                                </div>
+
+
+                                <div className="row">
+                                    <div className="col-1">
+                                    </div>
+                                    <div className="col-1">
+                                        <input className="form-check-input " type="checkbox" id="parcheggio" name="parcheggio" defaultValue="" value="parcheggio" onChange={handleChangeParcheggio}/>
+                                    </div>
+                                    <div className="col-8">
+                                        <label className="form-check-label " htmlFor="parcheggio"> Parcheggio</label>
+                                    </div>
+                                </div>
+
+
+                                <div className="row">
+                                    <div className="col-1">
+                                    </div>
+                                    <div className="col-1">
+                                        <input className="form-check-input " type="checkbox" id="piscina" name="piscina" value="piscina" onChange={handleChangePiscina}/>
+                                    </div>
+                                    <div className="col-8">
+                                        <label className="form-check-label " htmlFor="piscina"> Piscina</label>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-1">
+                                    </div>
+                                    <div className="col-1">
+                                        <input className="form-check-input " type="checkbox" id="animali" name="animali" value="animali" onChange={handleChangeAnimali}/>
+                                    </div>
+                                    <div className="col-8">
+                                        <label className="form-check-label " htmlFor="animali"> Animali domestici ammessi</label>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
 
 
                             <label htmlFor="tassa_soggiorno">Tassa di Soggiorno*</label>
-                            <input id="tassa_soggiorno" name="tassa_soggiorno" type='number' className="form-control" maxLength="40"
+                            <input id="tassa_soggiorno" name="tassa_soggiorno" type='number' min="0" className="form-control" maxLength="40"
                                    value={state.tassa_soggiorno} onChange={handleChangeTassaSoggiorno} required/>
                             <div className="invalid-feedback">
                                 Inserire Prezzo Tassa di Soggiorno
                             </div>
-                            <label htmlFor="servizi">Servizi*</label>
-                            <input id="servizi" name="servizi" type="text" className="form-control" maxLength="40"
-                                   value={state.servizi} onChange={handleChangeServizi} required/>
-                            <div className="invalid-feedback">
-                                Inserire Servizi
-                            </div>
+
                             <label htmlFor="punti_di_interesse">Punti di Interesse*</label>
-                            <input id="punti_di_interesse" name="punti_di_interesse" type="text" className="form-control" maxLength="40"
-                                   value={state.punti_di_interesse} onChange={handleChangePuntiInteresse} required/>
+                            <Form.Group controlId="exampleForm.ControlTextarea1">
+                                <Form.Control as="textarea" rows="3" value={state.punti_di_interesse} onChange={handleChangePuntiInteresse}
+                                />
+
                             <div className="invalid-feedback">
                                 Inserire Punti di Interesse
                             </div>
+                            </Form.Group>
+
                             <label htmlFor="name">Ora Check-In*</label>
                             <input id="ora_checkin" name="ora_checkin" type="time" className="form-control" maxLength="40"
                                    value={state.ora_checkin} onChange={handleChangeOraCheckin} required/>
@@ -468,13 +611,13 @@ const InserisciStruttura=()=>{
                         <div className="form-group">
                             <h5>Inserimento Prima Camera</h5>
                             <label htmlFor="numero_posti_letto">Numero di Posti Letto*</label>
-                            <input id="numero_posti_letto" name="numero_posti_letto" type="number" className="form-control" maxLength="40"
+                            <input id="numero_posti_letto" name="numero_posti_letto" type="number" min="0" className="form-control" maxLength="40"
                                    value={state.numero_posti_letto} onChange={handleChangeNumPostiLetto} required/>
                             <div className="invalid-feedback">
                                 Inserire Il Numero di Posti Letto
                             </div>
                             <label htmlFor="costo_camera">Costo della Camera a Notte*</label>
-                            <input id="costo_camera" name="costo_camera" type="number" className="form-control" maxLength="40"
+                            <input id="costo_camera" name="costo_camera" type="number"  min="0" className="form-control" maxLength="40"
                                    value={state.costo_camera} onChange={handleChangeCostoCamera} required/>
                             <div className="invalid-feedback">
                                 Inserire il Costo della Camera
