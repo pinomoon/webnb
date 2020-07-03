@@ -18,6 +18,7 @@ async function ricerca(req, res, next) {
     try {
         await withTransaction(db, async() => {
             let flag;
+            let string;
             if((req.body.luogo==='') || (req.body.luogo===undefined)){
                 req.body.luogo='%';
             }
@@ -41,6 +42,9 @@ async function ricerca(req, res, next) {
             }
             if(req.body.modalita_di_pagamento==='' || req.body.modalita_di_pagamento===undefined){
                 req.body.modalita_di_pagamento='%';
+            }
+            if(req.body.modalita_di_pagamento!=='' || req.body.modalita_di_pagamento!==undefined){
+                string="%"+req.body.modalita_di_pagamento+"%";
             }
             if(req.body.costo_camera==='' || req.body.costo_camera===undefined){
                 req.body.costo_camera=100000;
@@ -67,7 +71,7 @@ async function ricerca(req, res, next) {
                     req.body.tipo,
                     req.body.disdetta_gratuita,
                     flag,
-                    req.body.modalita_di_pagamento,
+                    string,
                     req.body.costo_camera,
                     req.body.colazione_inclusa,
                     req.body.data_inizio,

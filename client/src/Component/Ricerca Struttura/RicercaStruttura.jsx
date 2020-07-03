@@ -105,23 +105,29 @@ const RicercaStruttura=(props)=> {
         state.disdetta_gratuita=valore;
     };
     const handleChangeModalitaPagamento=()=>{
+
         setModalitaPagamento(modalita_carta+","+modalita_struttura+","+modalita_acconto);
+
     };
     const handleChangeModalitaCarta=(event)=>{
         const target=event.target;
         const valore=  target.value;
         setModalitaCarta(valore);
+        setModalitaPagamento(valore);
     };
     const handleChangeModalitaStruttura=(event)=>{
         const target=event.target;
         const valore=  target.value;
         setModalitaStruttura(valore);
+        setModalitaPagamento(valore);
+
 
     };
     const handleChangeModalitaAcconto=(event)=>{
         const target=event.target;
         const valore=  target.value;
         setModalitaAcconto(valore);
+        setModalitaPagamento(valore);
 
     };
     const handleChangeNpl=(event)=>{
