@@ -26,3 +26,17 @@ export const getUserCookie=()=>{
         return JSON.parse(userCookie);
     }
 };
+
+export const setStructureCookie=(structure)=>{
+  Cookies.remove("structure");
+  Cookies.set("structure",structure,{expires:1});
+};
+export const getStructureCookie=()=>{
+  const structureCookie=Cookies.get("structure");
+  if(structureCookie===undefined){
+      return{};
+  }
+  else {
+      return JSON.parse(structureCookie);
+  }
+};

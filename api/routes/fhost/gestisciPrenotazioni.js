@@ -44,7 +44,7 @@ try {
 router.post('/confermaPrenotazione',confermaPrenotazione);
 
 async function confermaPrenotazione(req,res,next){
-    const db= makeDb(config);
+    const db=  await makeDb(config);
     try{
         await  withTransaction(db,async()=>{
             (await db).query("UPDATE prenotazione SET stato_prenotazione='confermata' WHERE id_prenotazione=?",[
@@ -222,7 +222,7 @@ async function rifiutaPrenotazioneAutomatica(){
 router.post('/checkinQuestura',checkinQuestura);
 
 async function checkinQuestura(req,res,next){
-    const db= makeDb(config);
+    const db= await makeDb(config);
     let results={};
     try {
         await withTransaction(db,async ()=>{
@@ -344,7 +344,7 @@ async function eliminaOspiti(req,res,next){
 router.post("/modificaDatiOspiti",modificaDatiOspiti);
 
 async function modificaDatiOspiti(req,res,next){
-    const db=makeDb(config);
+    const db= await makeDb(config);
 
     try{
         await  withTransaction(db,async ()=>{
@@ -375,7 +375,7 @@ async function modificaDatiOspiti(req,res,next){
 router.post("/checkIN",checkIN);
 
 async function checkIN(req,res,next){
-    const db=makeDb(config);
+    const db=await makeDb(config);
     let results={};
     try {
         results= await withTransaction(db,async ()=>{
@@ -399,7 +399,7 @@ let rejectcheckoutAutomatico= setInterval(checkoutAutomatico, 86400000);
 
 
 async function checkoutAutomatico(req,res,next){
-    const db=makeDb(config);
+    const db= await makeDb(config);
     let results={};
     let now=new Date();
     try{
@@ -445,7 +445,7 @@ async function checkoutAutomatico(req,res,next){
 router.post("/checkoutManuale",checkoutManuale);
 
 async function checkoutManuale(req,res,next){
-    const db= makeDb(config);
+    const db= await makeDb(config);
 
     try{
         await withTransaction(db,async ()=>{
