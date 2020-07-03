@@ -27,7 +27,7 @@ const Registrazione=()=>{
     const[scadenza,setScadenza]=React.useState("");
     const[cvc,setCvc]=React.useState("");
     const[repass,setRepass]=React.useState("");
-
+    const[cellulare,setCellulare]=React.useState("");
     const handleClickOpenConferma = () => {
         setOpenConferma(true);
         };
@@ -115,6 +115,12 @@ const Registrazione=()=>{
         setTitolareCarta(valore);
         state.titolare_carta=valore;
     };
+    const handleChangeCellulare=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setCellulare(valore);
+        state.cellulare=valore;
+    };
     const handleChangeNumeroCarta=(event)=>{
         const target=event.target;
         const valore=  target.value;
@@ -133,7 +139,7 @@ const Registrazione=()=>{
         setCvc(valore);
         state.cvc=valore;
     };
-    const state={nome, cognome, tipo, data_di_nascita,indirizzo,sesso,password,email,citta,cap,titolare_carta,numero_carta,scadenza,cvc};
+    const state={nome, cognome, tipo, data_di_nascita,indirizzo,sesso,password,email,citta,cap,cellulare,titolare_carta,numero_carta,scadenza,cvc};
     const svuotaCampi=()=>{
         setEmail("");
         setPassword("");
@@ -182,7 +188,7 @@ const Registrazione=()=>{
                     <div className="col">
 
                     </div>
-                    <div className="col-sm-12 col-md-9 col-lg-6">
+                    <div className="col-sm-12 col-md-9 col-lg-8">
             <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
                 <img src={user} style={{margin:"auto",marginTop:"30px",width:"30%",height:"30%",display:"block"}}/>
 
@@ -254,7 +260,7 @@ const Registrazione=()=>{
 
                         <div className="form-group">
                             <div className="row">
-                            <div class="col-6">
+                            <div class="col-5">
                                 <label htmlFor="name">Via/Piazza</label>
                                 <input id="indirizzo" name="indirizzo" type="text" className="form-control"
                                        maxLength="40" value={state.indirizzo} onChange={handleChangeIndirizzo}
@@ -264,7 +270,7 @@ const Registrazione=()=>{
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-5">
                                 <label htmlFor="name">Città</label>
                                 <input id="citta" name="citta" type="text" className="form-control" maxLength="40"
                                        value={state.citta} onChange={handleChangeCitta} required/>
@@ -273,7 +279,7 @@ const Registrazione=()=>{
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-2">
                                 <label htmlFor="name">CAP</label>
                                 <input id="cap" name="cap" type="text" className="form-control" maxLength="40"
                                        value={state.cap} onChange={handleChangeCap} required/>
@@ -282,6 +288,16 @@ const Registrazione=()=>{
                                 </div>
                             </div>
                         </div>
+                            <div className="row">
+                                <div className="col-9">
+                                <label htmlFor="name">Numero Cellulare</label>
+                                <input id="cellulare" name="cellulare" type="text" className="form-control" maxLength="40"
+                                       value={state.cellulare} onChange={handleChangeCellulare} required/>
+                                <div className="invalid-feedback">
+                                    Inserire cellulare
+                                </div>
+                                </div>
+                            </div>
                         </div>
 
                         <h5 >Dati di Pagamento</h5>

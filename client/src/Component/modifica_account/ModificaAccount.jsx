@@ -29,6 +29,7 @@ const ModificaAccount=()=>{
     const[password, setPassword]=React.useState("");
     const[repassword,setRepassword]=React.useState("");
     const[check_repass, setCheckRepass]=React.useState("");
+    const[cellulare,setCellulare]=React.useState("");
 
 
 
@@ -75,6 +76,7 @@ const ModificaAccount=()=>{
                         indirizzo:indirizzo,
                         citta:citta,
                         cap:cap,
+                        cellulare:cellulare,
                         titolare_carta:titolare_carta,
                         numero_carta:numero_carta,
                         scadenza:scadenza,
@@ -147,6 +149,12 @@ const ModificaAccount=()=>{
         setCap(valore);
         state.cap=valore;
     };
+    const handleChangeCellulare=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setCellulare(valore);
+        state.cellulare=valore;
+    };
     const handleChangeTitolareCarta=(event)=>{
         const target=event.target;
         const valore=  target.value;
@@ -190,7 +198,7 @@ const ModificaAccount=()=>{
 
     };
 
-    const state={id_utente, email, nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,titolare_carta,numero_carta,scadenza,cvc, password, repassword};
+    const state={id_utente, email, nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,cellulare,titolare_carta,numero_carta,scadenza,cvc, password, repassword};
 
 
 
@@ -201,7 +209,7 @@ const ModificaAccount=()=>{
                     <div className="col">
 
                     </div>
-                    <div className="col-sm-12 col-md-9 col-lg-6">
+                    <div className="col-sm-12 col-md-9 col-lg-8">
             <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
 
                 <img src={ma} style={{margin:"auto",marginTop:"30px",height:"30%",width:"40%",display:"block"}}/>
@@ -270,6 +278,16 @@ const ModificaAccount=()=>{
                                        value={state.citta} onChange={handleChangeCitta} required/>
                                 <div className="invalid-feedback">
                                     Inserire Città
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-9">
+                                <label htmlFor="name">Numero Cellulare</label>
+                                <input id="cellulare" name="cellulare" type="text" className="form-control" maxLength="40"
+                                       value={state.cellulare} onChange={handleChangeCellulare} required/>
+                                <div className="invalid-feedback">
+                                    Inserire cellulare
                                 </div>
                             </div>
                         </div>

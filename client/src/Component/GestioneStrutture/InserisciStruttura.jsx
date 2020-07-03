@@ -289,7 +289,7 @@ const InserisciStruttura=()=>{
                     <div className="col">
 
                     </div>
-                    <div className="col-sm-12 col-md-9 col-lg-6">
+                    <div className="col-sm-12 col-md-9 col-lg-8">
 
 
 
@@ -308,7 +308,7 @@ const InserisciStruttura=()=>{
                         </div>
                     <div className="form-group">
                     <div className="row">
-                        <div class="col-4">
+                        <div class="col-6">
                             <label htmlFor="stato">Stato*</label>
                             <input id="stato" name="stato" type="text" className="form-control" maxLength="40"
                                    value={state.stato} onChange={handleChangeStato} required/>
@@ -316,19 +316,20 @@ const InserisciStruttura=()=>{
                                 Inserire Stato
                             </div>
                         </div>
-                        <div className="col-4">
+                        <div className="col-6">
                         <label htmlFor="regione">Regione*</label>
                         <input id="regione" name="regione" type="text" className="form-control" maxLength="40"
                                value={state.regione} onChange={handleChangeRegione} required/>
                         <div className="invalid-feedback">
                             Inserire Regione
                         </div>
+                        </div>
 
 
                         </div>
 
-
-                            <div className="col-4">
+                        <div className="row">
+                            <div className="col-8">
                         <label htmlFor="citta">Città*</label>
                         <input id="citta" name="citta" type="text" className="form-control" maxLength="40"
                                value={state.citta} onChange={handleChangeCitta} required/>
@@ -336,7 +337,7 @@ const InserisciStruttura=()=>{
                             Inserire Città
                         </div>
                             </div>
-                    </div>
+                        </div>
                         <label htmlFor="indirizzo_struttura">Indirizzo*</label>
                         <input id="indirizzo_struttura" name="indirizzo_struttura" type="text" className="form-control"
                                maxLength="40" value={state.indirizzo_struttura} onChange={handleChangeIndirizzoStruttura}
@@ -370,7 +371,7 @@ const InserisciStruttura=()=>{
                             </div>
                             <br></br>
                             <label htmlFor="disdetta_gratuita">Disdetta Gratuita*</label>
-                            <input id="disdetta_gratuita" name="disdetta_gratuita" type="number" className="form-control" maxLength="40"
+                            <input id="disdetta_gratuita" name="disdetta_gratuita" type="number" min="0" className="form-control" maxLength="40"
                                    value={state.disdetta_gratuita} onChange={handleChangeDisdettaGratuita}
                                    placeholder="Inserisci il numero di giorni entro cui la disdetta sarà gratuita" required/>
                             <div className="invalid-feedback">
