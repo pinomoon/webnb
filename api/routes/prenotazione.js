@@ -30,6 +30,10 @@ async function ricerca(req, res, next) {
             if(req.body.disdetta_gratuita===undefined || req.body.disdetta_gratuita===''){
                 req.body.disdetta_gratuita='%';
             }
+            if(req.body.disdetta_gratuita===1){
+                req.body.disdetta_gratuita='^[0]';
+
+            }
             if(req.body.modalita_di_pagamento==='' || req.body.modalita_di_pagamento===undefined){
                 req.body.modalita_di_pagamento='%';
             }
