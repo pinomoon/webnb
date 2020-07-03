@@ -27,7 +27,7 @@ async function ricerca(req, res, next) {
             if(req.body.tipo==='' || req.body.tipo===undefined){
                 req.body.tipo='%';
             }
-            if(req.body.disdetta_gratuita!==1){
+            if(req.body.disdetta_gratuita >0 || req.body.disdetta_gratuita===undefined){
                 req.body.disdetta_gratuita='%';
             }
             if(req.body.modalita_di_pagamento==='' || req.body.modalita_di_pagamento===undefined){
@@ -36,9 +36,10 @@ async function ricerca(req, res, next) {
             if(req.body.costo_camera==='' || req.body.costo_camera===undefined){
                 req.body.costo_camera=100000;
             }
-            if(req.body.colazione_inclusa!==1){
+            if(req.body.colazione_inclusa=='' || req.body.colazione_inclusa === undefined){
                req.body.colazione_inclusa='%';
             }
+
 
             results=await db.query("SELECT struttura.id_struttura,nome_struttura,tipo,indirizzo_struttura,citta,regione,stato,  tipo,immagine_1\
                 FROM struttura, gallery_struttura,camera\
