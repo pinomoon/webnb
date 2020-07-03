@@ -7,7 +7,6 @@ import simpson from "./casa-simpson-690x362.jpg"
 import axios from "axios";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import CardActions from "@material-ui/core/CardActions";
 
@@ -24,7 +23,7 @@ const RicercaStruttura=(props)=> {
     const [modalita_di_pagamento, setModalitaPagamento]=React.useState("");
     const [costo_camera, setCostoCamera]=React.useState("");
     const [colazione_inclusa, setColazioneInclusa]=React.useState("");
-    let {strutture}=props;
+    const [{strutture}, setStrutture]=React.useState(props);
 
     const struttureList=strutture.map(struttura=>{
         var blob=new Blob([struttura.immagine_1], {type:'image/bmp'});
@@ -34,26 +33,30 @@ const RicercaStruttura=(props)=> {
 
         return(
 
-            <div className="col-md-4" key={struttura.id_struttura}>
-                <Card >
-                    <CardHeader title={struttura.nome_struttura}/>
-                    <CardContent>
-                        <p> {struttura.tipo} </p>
-                        <p> {struttura.indirizzo_struttura} </p>
-                        <p> {struttura.citta} </p>
-                        <p> {struttura.regione} </p>
-                        <p> {struttura.stato} </p>
-                        <p > {struttura.prezzo[0].prezzo_struttura} €</p>
-                        <img id="image" src={image.src} alt="nnnnnnnnn"></img>
+            <div key={struttura.id_struttura}>
 
 
-                    </CardContent>
-                    <CardActions>
-                        <Tooltip title="Esplora Struttura" placement="bottom-start">
-                            <Button color="inherit" href="/prenotazione" style={{backgroundColor:"#32508f",color:"white"}}>Esplora</Button>
-                        </Tooltip>
-                    </CardActions>
-                </Card>
+
+                        <div className="card mb-3" style={{width:"100%",height:"auto"}}>
+                            <div className="row no-gutters">
+                                <div className="col-md-4">
+                                    <img id="image" src={image.src} alt="nnnnnnnnn" className="card-img" style={{height:"100%"}}/>
+                                </div>
+                                <div className="col-md-8">
+                                    <div className="card-body">
+                                        <h5 className="card-title">{struttura.nome_struttura}</h5>
+                                        <p className="card-text"> Indirizzo: {struttura.indirizzo_struttura},{struttura.citta},{struttura.regione} .</p>
+                                        <p > Prezzo: {struttura.prezzo[0].prezzo_struttura} €</p>
+
+
+                                        <Tooltip title="Esplora Struttura" placement="bottom-start">
+                                        <Button color="inherit" href="/prenotazione" style={{width:"40%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
+                                        </Tooltip>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
             </div>
 
         );
@@ -68,7 +71,8 @@ const RicercaStruttura=(props)=> {
         axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
             .then((response)=>{
                 alert(JSON.stringify(response.data[1]));
-                strutture=(response.data[1]);
+                setStrutture(response.data[1]);
+                alert(JSON.stringify(strutture));
             })
             .catch((error)=>{
                 alert(error);
@@ -322,12 +326,18 @@ const RicercaStruttura=(props)=> {
                                                 <input type="radio" className="custom-control-input" id="si" name="colazione_inclusa"
                                                        value="1" onChange={handleChangeColazioneInclusa} />
                                                 <label className="custom-control-label" htmlFor="si">Si</label>
+                                                <br/>
+
                                             </div>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <br/>
+
+                                        <Button color="inherit" type="submit" onClick={handleSubmit} style={{backgroundColor:"#32508f",color:"white",margin:"auto",display:"block",width:"100%"}}>Cerca</Button>
+
                                     </div>
+
                                 </div>
 
 
@@ -337,7 +347,43 @@ const RicercaStruttura=(props)=> {
                     </div>
                     </div>
 
-                    {struttureList}
+                    <div className="col-sm-5 col-md-4 col-lg-9" style={{marginTop:"30px"}}>
+                    {strutture!==null ? (strutture.map(struttura=>{
+
+
+                        return(
+
+                            <div key={struttura.id_struttura}>
+
+
+
+                                <div className="card mb-3" style={{width:"100%",height:"auto"}}>
+                                    <div className="row no-gutters">
+                                        <div className="col-md-4">
+                                            <img id="image"  alt="nnnnnnnnn" className="card-img" style={{height:"100%"}}/>
+                                        </div>
+                                        <div className="col-md-8">
+                                            <div className="card-body">
+                                                <h5 className="card-title">{struttura.nome_struttura}</h5>
+                                                <p className="card-text"> Indirizzo: {struttura.indirizzo_struttura},{struttura.citta},{struttura.regione} .</p>
+                                                <p > Prezzo: {struttura.prezzo[0].prezzo_struttura} €</p>
+
+
+                                                <Tooltip title="Esplora Struttura" placement="bottom-start">
+                                                    <Button color="inherit" href="/prenotazione" style={{width:"40%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
+                                                </Tooltip>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        );
+                    })):(<div>
+                        <p>Nessuna camera presente</p>
+                        </div>)}
+                    </div>
 
                     <div className="col-1">
 

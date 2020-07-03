@@ -22,16 +22,6 @@ class EsploraStruttura extends Component{
                     <Ricerca/>
                     </div>
 
-
-
-
-
-
-
-
-
-
-
                     <div className="col-md-7 col-lg-9" style={{backgroundColor:"white",width:"100%",height:"auto",marginTop:"30px"}}>
                         <div className="row">
                             <div className="col-sm-7 col-lg-7">

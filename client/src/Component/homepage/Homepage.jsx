@@ -45,7 +45,7 @@ const Homepage =()=>{
         axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
             .then((response)=>{
                 setStrutture(response.data[1]);
-                console.log(JSON.stringify(response.data[1][0].immagine_1));
+                // console.log(JSON.stringify(response.data[1][0].immagine_1));
                 handleClickRicerca();
 
 
