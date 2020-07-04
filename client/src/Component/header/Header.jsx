@@ -52,7 +52,7 @@ const Header =()=>{
                               <div>
                                   <Dropdown as={ButtonGroup} style={{marginRight: "70px", color:"#ff6300"}}
                                             variant="primary">
-                                      <Button href="/profilo" style={{marginLeft:"-17px",color:"#ff6300"}}>Profilo</Button>
+                                      <Button href="/modificaaccount" style={{marginLeft:"-17px",color:"#ff6300"}}>Modifica Account</Button>
 
                                       <Dropdown.Toggle id="dropdown-split-basic" style={{backgroundColor:"#ff6300",color:"white",borderRadius:"3px",border:"2px solid #ff6300 "}}/>
                                   <Dropdown.Menu>
@@ -77,7 +77,7 @@ const Header =()=>{
                                       <Dropdown.Menu>
                                           <Dropdown.Item href="/modificaaccount" style={{margin:"auto",display:"block"}}>Modifica Account</Dropdown.Item>
                                           <Dropdown.Item href="/gestisciprenotazione"style={{margin:"auto",display:"block"}}>Gestisci prenotazioni</Dropdown.Item>
-                                          <Dropdown.Item href="/gestiscistrutture" style={{margin:"auto",display:"block"}}>Gestisci strutture</Dropdown.Item>
+                                          <Dropdown.Item href="/lemiestrutture" style={{margin:"auto",display:"block"}}>Gestisci strutture</Dropdown.Item>
                                           <Dropdown.Item href="/ufficioturismo" style={{margin:"auto",display:"block"}}>Ufficio Turismo</Dropdown.Item>
                                           <Logout/>
                                       </Dropdown.Menu>

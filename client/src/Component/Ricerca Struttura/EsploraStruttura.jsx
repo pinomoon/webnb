@@ -50,18 +50,16 @@ class EsploraStruttura extends Component{
 
             <div className="container">
                 <div className="row">
-
-                    <div className="col-sm-5 col-md-4 col-lg-3">
-                        <Ricerca/>
+                    <div className="col-1">
                     </div>
-                    <div className="col-md-7 col-lg-9"
+                    <div className="col-sm-12 col-md-7 col-lg-10"
                          style={{backgroundColor: "white", width: "100%", height: "auto", marginTop: "30px"}}>
                         <div className="row">
                             <div className="col-sm-7 col-lg-7">
                             </div>
-                            <div className="col-sm-1 col-lg-1">
+                            <div className="col-sm-1 col-lg-3">
                             </div>
-                            <div className="col-sm-4 col-lg-4">
+                            <div className="col-sm-4 col-lg-2">
                                 <Button color="inherit" href="/prenotazione" style={{
                                     textAlign: "center",
                                     width: "100%",

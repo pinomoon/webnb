@@ -260,7 +260,7 @@ const Registrazione=()=>{
 
                         <div className="form-group">
                             <div className="row">
-                            <div class="col-5">
+                            <div class="col-6">
                                 <label htmlFor="name">Via/Piazza</label>
                                 <input id="indirizzo" name="indirizzo" type="text" className="form-control"
                                        maxLength="40" value={state.indirizzo} onChange={handleChangeIndirizzo}
@@ -270,7 +270,7 @@ const Registrazione=()=>{
                                 </div>
                             </div>
 
-                            <div class="col-5">
+                            <div class="col-6">
                                 <label htmlFor="name">Città</label>
                                 <input id="citta" name="citta" type="text" className="form-control" maxLength="40"
                                        value={state.citta} onChange={handleChangeCitta} required/>
@@ -278,8 +278,10 @@ const Registrazione=()=>{
                                     Inserire Città
                                 </div>
                             </div>
+                            </div>
+                            <div className="row">
 
-                            <div class="col-2">
+                            <div class="col-5">
                                 <label htmlFor="name">CAP</label>
                                 <input id="cap" name="cap" type="text" className="form-control" maxLength="40"
                                        value={state.cap} onChange={handleChangeCap} required/>
@@ -319,7 +321,7 @@ const Registrazione=()=>{
                             </div>
                             <br/>
                             <div className="row">
-                            <div className="col-3">
+                            <div className="col-4">
                                 <label htmlFor="credit-card">Scadenza</label>
                                 <input name="scadenza" id="scadenza" type="text" className="form-control"
                                        size="32" maxLength="40"
@@ -327,7 +329,7 @@ const Registrazione=()=>{
                             </div>
 
 
-                            <div className="col-3">
+                            <div className="col-4">
                                 <label htmlFor="credit-card">CVC</label>
                                 <input name="cvc" id="cvc" type="text" className="form-control"
                                        size="32" maxLength="40"

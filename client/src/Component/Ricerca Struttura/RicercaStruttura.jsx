@@ -264,14 +264,14 @@ const RicercaStruttura=(props)=> {
                 <div className="row">
 
                     <div className="col-sm-5 col-md-4 col-lg-3">
-                    <div style={{backgroundColor:"#f9db3e",width:"100%",height:"auto",marginTop:"30px"}}>
+                    <div style={{backgroundColor:"#e07e06",width:"100%",height:"auto",marginTop:"30px"}}>
 
                         <Button color="inherit" type="submit" onClick={handleSubmit} style={{backgroundColor:"#32508f",color:"white",margin:"auto",display:"block",width:"100%"}}>Cerca</Button>
 
                         <div className="form-group col" style={{margin:"auto"}}>
                             <br/>
                             <h6>Destinazione:</h6>
-                            <Input type="text" name="luogo" id="luogo" value={state.luogo} onChange={handleChangeLuogo} placeholder="Dove vuoi andare?" style={{backgroundColor:"white",width:"90%"}}/>
+                            <Input type="text" name="luogo" id="luogo" value={state.luogo} onChange={handleChangeLuogo} placeholder="Dove vuoi andare?" style={{backgroundColor:"white",width:"100%"}}/>
 
 
                         </div>
@@ -544,7 +544,7 @@ const RicercaStruttura=(props)=> {
                                                 <div className="card-body">
                                                     <h5 className="card-title">{struttura.nome_struttura}</h5>
                                                     <p className="card-text"> Indirizzo: {struttura.indirizzo_struttura},{struttura.citta},{struttura.regione} .</p>
-                                                    <p > Prezzo: {struttura.prezzo[0].prezzo_struttura} €</p>
+                                                    <p> Prezzo: {struttura.prezzo[0].prezzo_struttura} €</p>
                                                     <Tooltip title="Esplora Struttura" placement="bottom-start">
                                                         <Button color="inherit" href={href} style={{width:"40%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
                                                     </Tooltip>

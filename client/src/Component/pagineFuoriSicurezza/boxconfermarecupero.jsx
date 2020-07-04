@@ -50,7 +50,7 @@ const BoxConfermaRecupero=(props)=> {
                 </DialogContent>
                 <DialogActions id="action">
                     {responseType == "1"&&
-                    < Button href="https://localhost:3000/accesso" onClick={handleClose}color="primary">Vai al Login</Button>
+                    < Button href="https://localhost:3000/login" onClick={handleClose}color="primary">Vai al Login</Button>
                     }
                     {responseType == "2"&&
                     < Button onClick={handleClose}color="primary">Chiudi</Button>
