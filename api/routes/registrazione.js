@@ -33,7 +33,7 @@ async function registrazione(req, res, next) {
             pwdhash.update(req.body.password);
             let encpsw= pwdhash.digest('hex');
 
-            results = await db.query("INSERT INTO utente (nome,cognome,tipo,data_di_nascita,indirizzo,sesso,password,email,citta,cap) VALUES ?"
+            results = await db.query("INSERT INTO utente (nome,cognome,tipo,data_di_nascita,indirizzo,sesso,password,email,citta,cap,cellulare) VALUES ?"
        , [
            [
            [
@@ -46,7 +46,8 @@ async function registrazione(req, res, next) {
                 encpsw,
                 req.body.email,
                 req.body.citta,
-                req.body.cap
+                req.body.cap,
+                req.body.cellulare
                     ]
            ]
             ]).catch(()=>{
