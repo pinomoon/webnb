@@ -9,6 +9,10 @@ import ListGroup from "react-bootstrap/ListGroup";
 import icon from "./User-01.jpg";
 import Ricerca from"./Ricerca";
 import axios from "axios";
+import WifiRoundedIcon from '@material-ui/icons/WifiRounded';
+import PoolRoundedIcon from '@material-ui/icons/PoolRounded';
+import PetsRoundedIcon from '@material-ui/icons/PetsRounded';
+import LocalParkingRoundedIcon from '@material-ui/icons/LocalParkingRounded';
 
 function getUrlVars() {
     var vars = {};
@@ -57,13 +61,13 @@ class EsploraStruttura extends Component{
                         <div className="row">
                             <div className="col-sm-7 col-lg-7">
                                 {this.state.struttura.map(value=>
-                                    <h4 style={{marginTop:"30px"}}>{value.nome_struttura}</h4>
+                                    <h4 >{value.nome_struttura}</h4>
                                 )}
 
                             </div>
-                            <div className="col-sm-1 col-lg-3">
+                            <div className="col-sm-1 col-lg-1">
                             </div>
-                            <div className="col-sm-4 col-lg-2">
+                            <div className="col-sm-4 col-lg-4">
                                 <Button color="inherit" href="/prenotazione" style={{
                                     textAlign: "center",
                                     width: "100%",
@@ -117,11 +121,135 @@ class EsploraStruttura extends Component{
                                     <h5 style={{textAlign: "center"}}>Servizi</h5>
                                     <ListGroup variant="flush">
                                         {this.state.struttura.map(value=>
-                                            <ListGroup.Item>
-                                                <p>{value.servizi}</p>
+                                            <ListGroup.Item style={{width:"90%",margin:"auto"}}>
+                                                {value.servizi === "wifi,,," &&
+                                                    <div>
+                                                <p><WifiRoundedIcon/> Wi-Fi</p>
+
+
+                                                    </div>
+                                                }
+                                                {value.servizi === "wifi,parcheggio,," &&
+                                                <div>
+                                                    <p><WifiRoundedIcon/> Wi-Fi</p>
+                                                    <p><LocalParkingRoundedIcon/> Parcheggio in struttura</p>
+
+                                                </div>
+                                                }
+                                                {value.servizi === "wifi,,piscina," &&
+                                                <div>
+                                                    <p><WifiRoundedIcon/> Wi-Fi</p>
+                                                    <p><PoolRoundedIcon/> Piscina</p>
+
+
+
+                                                </div>
+                                                }
+                                                {value.servizi === "wifi,,,animali" &&
+                                                <div>
+                                                    <p><WifiRoundedIcon/> Wi-Fi</p>
+                                                    <p><PetsRoundedIcon/> Animali Domestici Ammessi</p>
+
+                                                </div>
+                                                }
+                                                {value.servizi === "wifi,parcheggio,piscina," &&
+                                                <div>
+                                                    <p><WifiRoundedIcon/> Wi-Fi</p>
+                                                    <p><PoolRoundedIcon/> Piscina</p>
+                                                    <p><LocalParkingRoundedIcon/> Parcheggio in struttura</p>
+
+
+                                                </div>
+                                                }
+                                                {value.servizi === "wifi,,piscina,animali" &&
+                                                <div>
+                                                    <p><WifiRoundedIcon/> Wi-Fi</p>
+                                                    <p><PoolRoundedIcon/> Piscina</p>
+
+                                                    <p><PetsRoundedIcon/> Animali Domestici Ammessi</p>
+
+                                                </div>
+                                                }
+                                                {value.servizi === "wifi,parcheggio,,animali" &&
+                                                <div>
+                                                    <p><WifiRoundedIcon/> Wi-Fi</p>
+                                                    <p><LocalParkingRoundedIcon/> Parcheggio in struttura</p>
+
+                                                    <p><PetsRoundedIcon/> Animali Domestici Ammessi</p>
+
+                                                </div>
+                                                }
+                                                {value.servizi === "wifi,parcheggio,piscina,animali" &&
+                                                <div>
+                                                    <p><WifiRoundedIcon/> Wi-Fi</p>
+                                                    <p><PoolRoundedIcon/> Piscina</p>
+                                                    <p><LocalParkingRoundedIcon/> Parcheggio in struttura</p>
+
+                                                    <p><PetsRoundedIcon/> Animali Domestici Ammessi</p>
+
+                                                </div>
+                                                }
+                                                {value.servizi === ",parcheggio,," &&
+                                                <div>
+                                                    <p><LocalParkingRoundedIcon/> Parcheggio in struttura</p>
+
+                                                </div>
+                                                }
+                                                {value.servizi === ",parcheggio,piscina," &&
+                                                <div>
+                                                    <p><PoolRoundedIcon/> Piscina</p>
+                                                    <p><LocalParkingRoundedIcon/> Parcheggio in struttura</p>
+
+
+                                                </div>
+                                                }
+                                                {value.servizi === ",parcheggio,,animali" &&
+                                                <div>
+                                                    <p><LocalParkingRoundedIcon/> Parcheggio in struttura</p>
+
+                                                    <p><PetsRoundedIcon/> Animali Domestici Ammessi</p>
+
+                                                </div>
+                                                }
+                                                {value.servizi === ",parcheggio,piscina,animali" &&
+                                                <div>
+                                                    <p><PoolRoundedIcon/> Piscina</p>
+                                                    <p><LocalParkingRoundedIcon/> Parcheggio in struttura</p>
+
+                                                    <p><PetsRoundedIcon/> Animali Domestici Ammessi</p>
+
+                                                </div>
+                                                }
+                                                {value.servizi === ",,piscina," &&
+                                                <div>
+                                                    <p><PoolRoundedIcon/> Piscina</p>
+
+
+                                                </div>
+                                                }
+                                                {value.servizi === ",,piscina,animali" &&
+                                                <div>
+                                                    <p><PoolRoundedIcon/> Piscina</p>
+
+                                                    <p><PetsRoundedIcon/> Animali Domestici Ammessi</p>
+
+                                                </div>
+                                                }
+                                                {value.servizi === ",,,animali" &&
+                                                <div>
+
+
+                                                    <p><PetsRoundedIcon/> Animali Domestici Ammessi</p>
+
+                                                </div>
+                                                }
+
                                             </ListGroup.Item>
                                             )}
                                     </ListGroup>
+                                </div>
+                                <div className="row">
+                                    <br/>
                                 </div>
                             </div>
                         </div>

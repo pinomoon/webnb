@@ -225,9 +225,8 @@ const Homepage =()=>{
                                      borderRadius: 0
                                  }}>I Consigliati da WeB&B</Button>
                              </div>
-                             <div className="cards clearfix">
                                  <div key={strutturep.id_struttura}>
-                                     <div className="card mb-3" style={{width:"100%",height:"auto"}}>
+                                     <div className="card mb-3" style={{width:"30%",height:"auto"}}>
                                          <div className="row no-gutters">
                                              <div className="col-md-4">
                                              </div>
@@ -254,7 +253,6 @@ const Homepage =()=>{
                                      </div>
                                  </div>
 
-                             </div>
                          </div>
 
                              }
