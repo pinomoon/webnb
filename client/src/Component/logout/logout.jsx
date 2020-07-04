@@ -8,6 +8,8 @@ import Dialog from "@material-ui/core/Dialog/Dialog";
 import Slide from "@material-ui/core/Slide/Slide";
 import {setSessionCookie, setUserCookie} from "../../sessions";
 import Dropdown from "react-bootstrap/Dropdown";
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -32,7 +34,7 @@ const Logout =()=>{
 
     return(
         <div>
-            <Dropdown.Item onClick={handleOpenDialog} style={{margin:"auto",display:"block"}}>Logout</Dropdown.Item>
+            <Dropdown.Item onClick={handleOpenDialog} style={{margin:"auto",display:"block"}}><ExitToAppRoundedIcon/> Logout</Dropdown.Item>
 
             <Dialog
                 open={open}
@@ -44,13 +46,15 @@ const Logout =()=>{
                 <DialogTitle id="alert-dialog-slide-title">{"Logout"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        Sei sicuro di voler effettuare il logout?
+                        <p style={{color:"#ff6300"}}>
+                            Sei sicuro di voler effettuare il logout?
+                        </p>
                     </DialogContentText>
 
                 </DialogContent>
                 <DialogActions id="action">
-                    <Button  onClick={handleClose}color="primary">Chiudi</Button>
-                    <Button href="https://localhost:3000" onClick={handleLogout} color="primary">Logout</Button>
+                    <Button  onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
+                    <Button href="https://localhost:3000" onClick={handleLogout} style={{color:"#ff6300"}}>Logout</Button>
                 </DialogActions>
             </Dialog>
 

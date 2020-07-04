@@ -56,6 +56,10 @@ class EsploraStruttura extends Component{
                          style={{backgroundColor: "white", width: "100%", height: "auto", marginTop: "30px"}}>
                         <div className="row">
                             <div className="col-sm-7 col-lg-7">
+                                {this.state.struttura.map(value=>
+                                    <h4 style={{marginTop:"30px"}}>{value.nome_struttura}</h4>
+                                )}
+
                             </div>
                             <div className="col-sm-1 col-lg-3">
                             </div>
@@ -148,28 +152,40 @@ class EsploraStruttura extends Component{
                         </div>
                         <div className="row" style={{borderBottom: "2px solid #ff6300"}}>
                             <div className="col">
-                                <table className="table table-hover table-responsive">
+                                <table className="table table-hover table-responsive" style={{width:"80%",margin:"auto",display:"block"}}>
                                     <thead>
                                     <tr>
-                                        <th scope="col">Nome Camera</th>
-                                        <th scope="col">N.Persone</th>
-                                        <th scope="col">Colazione Inclusa</th>
-                                        <th scope="col">Prezzo</th>
+                                        <th scope="col" style={{textAlign:"center"}}>Nome Camera</th>
+                                        <th scope="col" style={{textAlign:"center"}}>N.Persone<img className="img-fluid" src={icon} style={{width:"10%",height:"auto",margin:"auto"}}/>
+                                        </th>
+                                        <th scope="col" style={{textAlign:"center"}}>Colazione Inclusa</th>
+                                        <th scope="col" style={{textAlign:"center"}}>Prezzo</th>
                                         <th scope="col"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {this.state.camere.map((value)=>{
                                         return(
+
                                         <tr key={value.id_camera}>
-                                            <th scope="row">{value.nome_camera}</th>
+                                            <td scope="row" style={{textAlign:"center"}}><b>{value.nome_camera}</b></td>
                                             <td>
-                                                <img className="img-fluid" src={icon} style={{width:"10%",height:"auto",margin:"auto"}}/>
-                                                <p>Numero Posti Letto {value.numero_posti_letto}</p>
+                                                <p style={{textAlign:"center"}}>{value.numero_posti_letto}</p>
                                             </td>
-                                            <td>Colazione inclusa: {value.colazione_inclusa}</td>
-                                            <td>Prezzo: {value.costo_camera}</td>
-                                            <td><Button name="ok" id="ok" type="submit" style={{marginLeft:"-10px",color:"#ff6300"}}>Prenota!</Button>
+                                            <td>
+                                                {value.colazione_inclusa===0 &&
+                                                   <div style={{textAlign:"center"}}>No</div>
+                                                }
+
+                                                {value.colazione_inclusa===1 &&
+                                                <div style={{textAlign:"center"}}>Si</div>
+                                                }
+
+
+
+                                            </td>
+                                            <td style={{textAlign:"center"}}>{value.costo_camera} &euro;</td>
+                                            <td><Button name="ok" id="ok" type="submit" style={{color:"#ff6300"}}>Prenota!</Button>
                                             </td>
                                         </tr>
                                         );

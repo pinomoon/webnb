@@ -41,12 +41,14 @@ export default function BoxRifiuto(props) {
                     <DialogTitle id="alert-dialog-slide-title">{"Registrazione"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-slide-description">
+                            <p style={{color:"#ff6300"}}>
                             Email già presente, riprova con una nuova mail
+                            </p>
                         </DialogContentText>
 
                     </DialogContent>
                     <DialogActions id="action">
-                        <Button  color="primary" onClick={handleClose}>OK</Button>
+                        <Button  style={{color:"#ff6300"}} onClick={handleClose}>OK</Button>
                     </DialogActions>
                 </Dialog>
             </div>

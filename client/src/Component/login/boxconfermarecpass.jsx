@@ -36,13 +36,13 @@ const BoxConfermaRecPass=(props)=> {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
                         {responseType=="1"&&
-                        <p>Ti è stata inviata una e-mail all'indirizzo {email}, segui le istruzioni contenute in essa per recuperare le credenziali</p>
+                        <p style={{color:"#ff6300"}}>Ti è stata inviata una e-mail all'indirizzo {email}, segui le istruzioni contenute in essa per recuperare le credenziali</p>
                         }
                         {responseType=="2"&&
-                        <p>Utente non trovato, riprova</p>
+                        <p style={{color:"#ff6300"}}>Utente non trovato, riprova</p>
                         }
                         {responseType=="3"&&
-                        <p>Errore generico, riprova</p>
+                        <p style={{color:"#ff6300"}}>Errore generico, riprova</p>
                         }
 
                     </DialogContentText>
@@ -53,10 +53,10 @@ const BoxConfermaRecPass=(props)=> {
                     < Button href="https://localhost:3000/" onClick={handleClose}color="primary">HomePage</Button>
                     }
                     {responseType == "2"&&
-                    < Button onClick={handleClose}color="primary">Chiudi</Button>
+                    < Button onClick={handleClose}style={{color:"#ff6300"}}>Chiudi</Button>
                     }
                     {responseType == "3"&&
-                    < Button onClick={handleClose} color="primary">Chiudi</Button>
+                    < Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
                     }
                 </DialogActions>
             </Dialog>

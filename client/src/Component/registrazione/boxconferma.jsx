@@ -40,12 +40,14 @@ export default function BoxConferma(props) {
                     <DialogTitle id="alert-dialog-slide-title">{"Registrazione"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-slide-description">
-                            Registrazione effettuata, è stata inviata una mail di conferma al tuo indirizzo di posta elettronica
-                        </DialogContentText>
+                         <p style={{color:"#ff6300"}}>
+                             Registrazione effettuata, è stata inviata una mail di conferma al tuo indirizzo di posta elettronica
+                         </p>
+                         </DialogContentText>
 
                     </DialogContent>
                     <DialogActions id="action">
-                        <Button  href="https://localhost:3000" onClick={handleClose}color="primary">Torna alla Home</Button>
+                        <Button  href="https://localhost:3000" onClick={handleClose}style={{color:"#ff6300"}}>Torna alla Home</Button>
                     </DialogActions>
                 </Dialog>
             </div>

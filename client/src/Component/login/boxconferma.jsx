@@ -36,32 +36,32 @@ const Transition = React.forwardRef(function Transition(props, ref) {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
                         {responseType=="1"&&
-                            <p>Accesso andato a buon fine! Clicca qui per andare alla tua HomePage!</p>
+                            <p style={{color:"#ff6300"}}>Accesso andato a buon fine! Clicca qui per andare alla tua HomePage!</p>
                         }
                         {responseType=="2"&&
-                            <p>Email non ancora confermata, vai alla tua casella di posta per confermare</p>
+                            <p style={{color:"#ff6300"}}>Email non ancora confermata, vai alla tua casella di posta per confermare</p>
                         }
                         {responseType=="3"&&
-                        <p>Password errata, riprova</p>
+                        <p style={{color:"#ff6300"}}>Password errata, riprova</p>
                         }
                         {responseType=="4"&&
-                        <p>Utente non trovato, riprova</p>
+                        <p style={{color:"#ff6300"}}>Utente non trovato, riprova</p>
                         }
                     </DialogContentText>
 
                 </DialogContent>
                 <DialogActions id="action">
                     {responseType == "1"&&
-                    < Button href="https://localhost:3000" onClick={handleClose}color="primary">Vai alla tua Homepage</Button>
+                    < Button href="https://localhost:3000" onClick={handleClose}style={{color:"#ff6300"}}>Vai alla tua Homepage</Button>
                     }
                     {responseType == "2"&&
-                    < Button href="https://localhost:3000" onClick={handleClose}color="primary">Homepage</Button>
+                    < Button href="https://localhost:3000" onClick={handleClose}style={{color:"#ff6300"}}>Homepage</Button>
                     }
                     {responseType == "3"&&
-                    < Button onClick={handleClose} color="primary">Chiudi</Button>
+                    < Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
                     }
                     {responseType == "4"&&
-                    < Button onClick={handleClose} color="primary">Chiudi</Button>
+                    < Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
                     }
                 </DialogActions>
             </Dialog>

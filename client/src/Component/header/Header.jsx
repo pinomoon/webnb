@@ -12,8 +12,12 @@ import historyContext from "react-router/modules/HistoryContext";
 import {Redirect, Route} from "react-router";
 import Logout from "../logout/logout";
 import NavDropdown from "react-bootstrap/NavDropdown";
-
-
+import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import AccountBalanceRoundedIcon from '@material-ui/icons/AccountBalanceRounded';
+import MenuBookRoundedIcon from '@material-ui/icons/MenuBookRounded';
+import HomeWorkRoundedIcon from '@material-ui/icons/HomeWorkRounded';
+import GavelRoundedIcon from '@material-ui/icons/GavelRounded';
+import StarBorderRoundedIcon from '@material-ui/icons/StarBorderRounded';
 
 
 
@@ -52,13 +56,13 @@ const Header =()=>{
                               <div>
                                   <Dropdown as={ButtonGroup} style={{marginRight: "70px", color:"#ff6300"}}
                                             variant="primary">
-                                      <Button href="/modificaaccount" style={{marginLeft:"-17px",color:"#ff6300"}}>Modifica Account</Button>
+                                      <Button href="/profilo" style={{marginLeft:"-17px",color:"#ff6300"}}>Profilo</Button>
 
                                       <Dropdown.Toggle id="dropdown-split-basic" style={{backgroundColor:"#ff6300",color:"white",borderRadius:"3px",border:"2px solid #ff6300 "}}/>
                                   <Dropdown.Menu>
-                                      <Dropdown.Item href="/modificaaccount" style={{margin:"auto",display:"block"}}>Modifica Account</Dropdown.Item>
-                                      <Dropdown.Item href="/lemieprenotazioni"style={{margin:"auto",display:"block"}}>Le mie prenotazioni</Dropdown.Item>
-                                      <Dropdown.Item href="/imieipreferiti" style={{margin:"auto",display:"block"}}>I miei preferiti</Dropdown.Item>
+                                      <Dropdown.Item href="/modificaaccount" style={{margin:"auto",display:"block"}}><AccountCircleRoundedIcon/> Modifica Account</Dropdown.Item>
+                                      <Dropdown.Item href="/lemieprenotazioni"style={{margin:"auto",display:"block"}}><MenuBookRoundedIcon/> Le mie prenotazioni</Dropdown.Item>
+                                      <Dropdown.Item href="/imieipreferiti" style={{margin:"auto",display:"block"}}><StarBorderRoundedIcon/> I miei preferiti</Dropdown.Item>
                                       <Logout/>
                                   </Dropdown.Menu>
                               </Dropdown>
@@ -75,10 +79,11 @@ const Header =()=>{
                                       <Dropdown.Toggle id="dropdown-split-basic" style={{backgroundColor:"#ff6300",color:"white",borderRadius:"3px",border:"2px solid #ff6300 "}}/>
 
                                       <Dropdown.Menu>
-                                          <Dropdown.Item href="/modificaaccount" style={{margin:"auto",display:"block"}}>Modifica Account</Dropdown.Item>
-                                          <Dropdown.Item href="/gestisciprenotazione"style={{margin:"auto",display:"block"}}>Gestisci prenotazioni</Dropdown.Item>
-                                          <Dropdown.Item href="/lemiestrutture" style={{margin:"auto",display:"block"}}>Gestisci strutture</Dropdown.Item>
-                                          <Dropdown.Item href="/ufficioturismo" style={{margin:"auto",display:"block"}}>Ufficio Turismo</Dropdown.Item>
+                                          <Dropdown.Item href="/modificaaccount" style={{margin:"auto",display:"block"}}> <AccountCircleRoundedIcon/> Modifica Account</Dropdown.Item>
+                                          <Dropdown.Item href="/gestisciprenotazione"style={{margin:"auto",display:"block"}}><MenuBookRoundedIcon/> Gestisci prenotazioni</Dropdown.Item>
+                                          <Dropdown.Item href="/lemiestrutture" style={{margin:"auto",display:"block"}}><HomeWorkRoundedIcon/> Gestisci strutture</Dropdown.Item>
+                                          <Dropdown.Item href="/guadagni" style={{margin:"auto",display:"block"}}><AccountBalanceRoundedIcon/> I miei guadagni</Dropdown.Item>
+                                          <Dropdown.Item href="/ufficioturismo" style={{margin:"auto",display:"block"}}><GavelRoundedIcon/> Ufficio Turismo</Dropdown.Item>
                                           <Logout/>
                                       </Dropdown.Menu>
                                   </Dropdown>
