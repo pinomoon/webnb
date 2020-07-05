@@ -187,7 +187,7 @@ async function rifiutaPrenotazioneAutomatica(){
                 throw err;
             })
             results= await db.query("SELECT id_prenotazione,email,nome, nome_struttura FROM  utente AS u,prenotazione AS p,camera AS c,struttura AS s \
-            WHERE u.id_prenotazione=p.id_utente  AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND data_rifiuto=?",[now]).catch(err=>{
+            WHERE u.id_utente=p.id_utente  AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND data_rifiuto=?",[now]).catch(err=>{
                 throw err;
             })
 

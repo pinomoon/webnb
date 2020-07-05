@@ -17,7 +17,7 @@ router.post("/",resocontoTrimestre);
 
 async function resocontoTrimestre(req,res,next){
     try{
-    const db = makeDb(config);
+    const db = await makeDb(config);
 
     let results={};
     let data=req.body.data_trimestre;
@@ -26,7 +26,7 @@ async function resocontoTrimestre(req,res,next){
 /**prendo tutti i dati delle prenotazioni e degli ospiti di tutte le prenotazioni che vanno dalla data che inserisce l'utente fino a 3 mesi prima ,
  *  così ottengo tutti i dati del trimestre sino a data_trimestre
  *  data_trimestre portata a timestamp e confrontata con data prenotazione, prendo solo le prenotazioni concluse */
-        results= (await db).query("SELECT nome_struttura,nome_camera, p.id_prenotazione,nome,cognome, nome_ospite,cognome_ospite,data_nascita,sesso,residenza,\
+        results= await db.query("SELECT nome_struttura,nome_camera, p.id_prenotazione,nome,cognome, nome_ospite,cognome_ospite,data_nascita,sesso,residenza,\
             FROM dati_ospiti AS dat ,prenotazione AS p,struttura AS s,camera AS c ,utente AS u\
             WHERE p.stato_prenotazione='soggiorno concluso'AND dat.id_prenotazione=p.id_prenotazione AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND dat.id_utente=u.id_utente  AND u.id_utente=? AND (?-p.data_prenotazione)>=7889400000\
              ORDER BY nome_struttura DESC ",
@@ -37,7 +37,7 @@ async function resocontoTrimestre(req,res,next){
                 throw err;
         })
 
-        totale_tasse= (await db).query("SELECT SUM(p.tasse_soggiorno) AS totale_tasse_soggiorno FROM struttura AS s , prenotzaione  AS p,camera AS c \
+        totale_tasse= await db.query("SELECT SUM(p.tasse_soggiorno) AS totale_tasse_soggiorno FROM struttura AS s , prenotzaione  AS p,camera AS c \
             WHERE p.stato_prenotazione='soggiorno concluso' AND s.id_utente=? AND p.id_camera=c.id_camera  AND c.id_struttura=s.id_struttura AND (?-p.data_prenotazione)>=7889400000",
             [req.body.id_utente,
                 data.getTime()]).catch(err=>{

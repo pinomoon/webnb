@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-
-const crypto = require('crypto');
 const { config } = require('../../db/config');
 const { makeDb, withTransaction } = require('../../db/dbmiddleware');
 
