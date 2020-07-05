@@ -85,6 +85,10 @@ const Homepage =()=>{
             return
 
         }
+        if((state.data_inizio >= state.data_fine)){
+            handleClickOpenConferma();
+            return
+        }
         alert("Dati inseriti "+luogo+" "+data_inizio+" "+data_fine+" "+npl);
         setStructureCookie({luogo,data_inizio,data_fine,npl});
         axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
@@ -127,6 +131,7 @@ const Homepage =()=>{
         state.npl=valore;
 
     };
+
 
     const user=React.useContext(UserContext);
 

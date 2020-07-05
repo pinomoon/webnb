@@ -35,7 +35,7 @@ const BoxData=(props)=> {
                 <DialogTitle id="alert-dialog-slide-title">{"Attenzione!"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                     <p style={{color:"#ff6300"}}>Inserire Data check-in e check-out</p>
+                     <p style={{color:"#ff6300"}}>Inserire correttamente Data check-in e check-out</p>
                     </DialogContentText>
 
                 </DialogContent>

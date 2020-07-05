@@ -13,6 +13,7 @@ import CardActions from "@material-ui/core/CardActions";
 import {getStructureCookie} from "../../sessions";
 import Home from '@material-ui/icons/Home';
 import HotelIcon from '@material-ui/icons/Hotel';
+import BoxData from "../homepage/BoxData";
 
 
 
@@ -46,6 +47,8 @@ const RicercaStruttura=(props)=> {
     const [costo_camera, setCostoCamera]=React.useState("");
     const [colazione_inclusa, setColazioneInclusa]=React.useState("");
     const [struttureRicerca, setStruttureRicerca]=React.useState([]);
+    const[openConferma, setOpenConferma]=React.useState(false);
+
     let {strutture}=props;
 
 
@@ -59,8 +62,8 @@ const RicercaStruttura=(props)=> {
         event.preventDefault();
         handleChangeModalitaPagamento();
         handleChangeServizi();
-        if((state.data_inizio==="") || (state.data_fine==="")){
-            alert("Inserire le date per effettuare la ricerca!");
+        if((state.data_inizio> state.data_fine)){
+            handleClickOpenConferma();
             return;
         }
         alert("Dati inseriti "+JSON.stringify(state));
@@ -82,6 +85,12 @@ const RicercaStruttura=(props)=> {
             .catch((error)=>{
                 alert(error);
             })    };
+    const handleCloseConferma = () => {
+        setOpenConferma(false);
+    };
+    const handleClickOpenConferma = () => {
+        setOpenConferma(true);
+    };
     const handleChangeLuogo=(event)=>{
         const target=event.target;
         const valore=  target.value;
@@ -635,7 +644,10 @@ const RicercaStruttura=(props)=> {
 
                     </div>
 
-
+                <BoxData
+                    open={openConferma}
+                    onClose={handleCloseConferma}
+                />;
 
 
 
