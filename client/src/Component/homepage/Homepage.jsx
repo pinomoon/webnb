@@ -12,7 +12,7 @@ import flinstones from "./casa-flin.jpg"
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import FormGroup from "@material-ui/core/FormGroup";
-import {Label} from "@material-ui/icons";
+import {Home, Label} from "@material-ui/icons";
 import Input from "@material-ui/core/Input";
 import Navbar from "react-bootstrap/Navbar";
 import logo from "../../header_trasparente.png";
@@ -24,6 +24,11 @@ import {UserContext} from "../../UserContext";
 import axios from 'axios';
 import RicercaStruttura from "../Ricerca Struttura/RicercaStruttura";
 import {setStructureCookie} from "../../sessions";
+import {Box} from "@material-ui/core";
+import BoxData from "./BoxData";
+import BoxAccesso from "../login/boxconferma";
+import HotelIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 
 const Homepage =()=>{
     const [luogo,setLuogo]=React.useState("");
@@ -34,7 +39,39 @@ const Homepage =()=>{
     const state={luogo,data_inizio,data_fine,npl};
     const [strutture, setStrutture]=React.useState([]);
     const href="https://localhost:3000/ricercastruttura?luogo="+luogo+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?npl="+npl;
+    const[openConferma, setOpenConferma]=React.useState(false);
 
+
+    const [luogop]=React.useState("Sicilia");
+    const [data_iniziop]=React.useState("2020-07-10");
+    const [data_finep]=React.useState("2020-07-13");
+    const [nplp]=React.useState("4");
+    const [disdetta_gratuitap]=React.useState("10000");
+    const [modalita_di_pagamentop]=React.useState("carta,struttura,anticipo_carta");
+    const [servizip]=React.useState("wifi,parcheggio,piscina,animali");
+    const [costo_camerap]=React.useState("75");
+    const [colazione_inclusap]=React.useState("1");
+    const [strutturep, setStrutturep]=React.useState([]);
+    const statep={luogop,data_iniziop,data_finep,nplp,disdetta_gratuitap,modalita_di_pagamentop,servizip,costo_camerap,colazione_inclusap};
+
+    const handleSubmitp=(event)=>{
+        event.preventDefault();
+        alert("Dati inseriti preferiti "+JSON.stringify(statep));
+
+        axios.post("https://localhost:9000/prenotazione/ricercaStrutturap", statep)
+            .then((response)=>{
+                setStrutturep(response.data[1]);
+            })
+            .catch((error)=>{
+                alert(error);
+            })};
+
+    const handleCloseConferma = () => {
+        setOpenConferma(false);
+    };
+    const handleClickOpenConferma = () => {
+        setOpenConferma(true);
+    };
 
     const handleClickRicerca=()=>{
         setRicerca(true);
@@ -43,6 +80,15 @@ const Homepage =()=>{
 
     const handleSubmit=(event)=>{
         event.preventDefault();
+        if((state.data_inizio==="") || (state.data_fine==="")){
+            handleClickOpenConferma();
+            return
+
+        }
+        if((state.data_inizio >= state.data_fine)){
+            handleClickOpenConferma();
+            return
+        }
         alert("Dati inseriti "+luogo+" "+data_inizio+" "+data_fine+" "+npl);
         setStructureCookie({luogo,data_inizio,data_fine,npl});
         axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
@@ -85,6 +131,7 @@ const Homepage =()=>{
         state.npl=valore;
 
     };
+
 
     const user=React.useContext(UserContext);
 
@@ -174,7 +221,45 @@ const Homepage =()=>{
                                      </div>
                                  </div>
                              </div>
+                             <div className="col-md-1 col-lg-1">
+                                 <Button type="submit" onClick={handleSubmitp}  style={{
+                                     marginTop: "-2px",
+                                     backgroundColor: "#ff6300",
+                                     height: "106%",
+                                     color: "white",
+                                     borderRadius: 0
+                                 }}>I Consigliati da WeB&B</Button>
+                             </div>
+                                 <div key={strutturep.id_struttura}>
+                                     <div className="card mb-3" style={{width:"30%",height:"auto"}}>
+                                         <div className="row no-gutters">
+                                             <div className="col-md-4">
+                                             </div>
+                                             <div className="col-md-8">
+                                                 <div className="card-body">
+                                                     <h5 className="card-title">{strutturep.nome_struttura}</h5>
+                                                     {strutturep.tipo==="bnb" &&
+                                                     <div>
+                                                         <p><HotelIcon/> Bed and Breakfast</p>
+                                                     </div>
+
+                                                     }
+                                                     {strutturep.tipo==="casa_vacanze" &&
+                                                     <div>
+                                                         <p><Home/> Casa Vacanze</p>
+                                                     </div>
+
+                                                     }
+                                                     <p className="card-text"> Indirizzo: {strutturep.indirizzo_struttura},{strutturep.citta},{strutturep.regione} .</p>
+
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+
                          </div>
+
                              }
                              {user.tipo == 0 &&
                              <div>
@@ -200,6 +285,7 @@ const Homepage =()=>{
                              }
                      </div>
                  </div>
+
              </section>
              }
              {ricerca&&
@@ -215,37 +301,13 @@ const Homepage =()=>{
 
 
 
-             <section className="cards clearfix">
-                 <div className="card">
-                     <img className="card_image" src={simpson}  alt=" Villa "/>
-                     <div className="card_copy">
-                         <h4>Casa di Homer</h4>
-                         <p>La foto parla da se' </p>
-                     </div>
-
-                 </div>
-                 <div className="card">
-                     <img className="card_image" src={flinstones}  alt=" Villa "/>
-                     <div className="card_copy">
-                         <h4>Casale dei Flinstones</h4>
-                         <p>Reggia per gli amanti della semplicita' </p>
-                     </div>
-
-                 </div>
-                 <div className="card">
-                     <img className="card_image" src={villa}  alt=" Villa "/>
-                     <div className="card_copy">
-                         <h4>Villa Maestro</h4>
-                         <p>Nel cuore di San Giuseppe Jato, famosa villa del Boss Luna </p>
-                     </div>
-
-                 </div>
 
 
 
-             </section>
-
-
+             <BoxData
+                 open={openConferma}
+                 onClose={handleCloseConferma}
+             />;
 
 
 

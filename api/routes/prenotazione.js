@@ -110,6 +110,51 @@ async function ricerca(req, res, next) {
     }
 }
 
+/* */
+router.post('/ricercaStrutturap', ricercap);
+
+async function ricercap(req, res, next) {
+
+    const db = await makeDb(config);
+    let resultsp = {};
+    try {
+        await withTransaction(db, async () => {
+            resultsp=await db.query("SELECT struttura.id_struttura,nome_struttura,tipo,indirizzo_struttura,citta,regione,stato,  tipo,immagine_1\
+                FROM struttura, gallery_struttura,camera\
+                WHERE struttura.id_struttura=gallery_struttura.id_struttura AND struttura.id_struttura=camera.id_struttura \
+                AND struttura.id_struttura IN ((SELECT struttura.id_struttura FROM struttura , camera WHERE camera.id_struttura=struttura.id_struttura\
+                AND (struttura.nome_struttura LIKE ? OR struttura.regione LIKE ? OR struttura.citta LIKE ? OR struttura.stato LIKE ?) AND camera.numero_posti_letto>=?  \
+                AND (struttura.disdetta_gratuita<? AND struttura.disdetta_gratuita>?) AND struttura.modalita_di_pagamento LIKE ? AND camera.costo_camera<=? AND camera.colazione_inclusa LIKE ? AND struttura.servizi LIKE ?)\
+                EXCEPT (SELECT camera.id_struttura FROM camera,prenotazione WHERE prenotazione.id_camera=camera.id_camera \
+                AND (prenotazione.data_fine>? AND prenotazione.data_inizio<?))) GROUP BY struttura.id_struttura, nome_struttura,tipo, indirizzo_struttura, citta, regione, stato, tipo, immagine_1 ORDER BY nome_struttura ASC"
+                , [
+                    req.body.luogop,
+                    req.body.luogop,
+                    req.body.luogop,
+                    req.body.luogop,
+                    req.body.nplp,
+                    req.body.disdetta_gratuitap,
+                    0,
+                    req.body.modalita_di_pagamentop,
+                    req.body.costo_camerap,
+                    req.body.colazione_inclusap,
+                    req.body.servizip,
+                    req.body.data_iniziop,
+                    req.body.data_finep
+
+                ])
+                .catch(err=>{
+                    throw err;
+                });
+                var risultatop=['1',resultsp];
+                console.log("sono i preferiti"+JSON.stringify(risultatop));
+                res.send(risultatop);
+        })
+    }catch(err){
+        throw err;
+    }
+}
+
 /* esplora_struttura */
 router.post('/esploraStruttura', esplora);
 

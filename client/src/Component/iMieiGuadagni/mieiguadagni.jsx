@@ -64,6 +64,7 @@ const MieiGuadagni=()=>{
 
     return(
         <div className="container mt-10">
+
             <div name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
 
                 <h5>Calcola qui i tuoi guadagni</h5>

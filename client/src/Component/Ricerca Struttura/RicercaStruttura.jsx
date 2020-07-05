@@ -11,6 +11,9 @@ import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import CardActions from "@material-ui/core/CardActions";
 import {getStructureCookie} from "../../sessions";
+import Home from '@material-ui/icons/Home';
+import HotelIcon from '@material-ui/icons/Hotel';
+import BoxData from "../homepage/BoxData";
 
 
 
@@ -44,6 +47,8 @@ const RicercaStruttura=(props)=> {
     const [costo_camera, setCostoCamera]=React.useState("");
     const [colazione_inclusa, setColazioneInclusa]=React.useState("");
     const [struttureRicerca, setStruttureRicerca]=React.useState([]);
+    const[openConferma, setOpenConferma]=React.useState(false);
+
     let {strutture}=props;
 
 
@@ -57,6 +62,10 @@ const RicercaStruttura=(props)=> {
         event.preventDefault();
         handleChangeModalitaPagamento();
         handleChangeServizi();
+        if((state.data_inizio> state.data_fine)){
+            handleClickOpenConferma();
+            return;
+        }
         alert("Dati inseriti "+JSON.stringify(state));
         alert("parametri"+luogo+" "+data_inizio+" "+data_fine+" "+npl);
 
@@ -76,6 +85,12 @@ const RicercaStruttura=(props)=> {
             .catch((error)=>{
                 alert(error);
             })    };
+    const handleCloseConferma = () => {
+        setOpenConferma(false);
+    };
+    const handleClickOpenConferma = () => {
+        setOpenConferma(true);
+    };
     const handleChangeLuogo=(event)=>{
         const target=event.target;
         const valore=  target.value;
@@ -86,6 +101,7 @@ const RicercaStruttura=(props)=> {
     const handleChangeDataInizio=(event)=>{
         const target=event.target;
         const valore=  target.value;
+
         setDataInizio(valore);
         state.data_inizio=valore;
     };
@@ -96,10 +112,10 @@ const RicercaStruttura=(props)=> {
         state.data_fine=valore;
     };
     const handleChangeTipo=(event)=>{
-        const target=event.target;
-        const valore=  target.value;
-        setTipo(valore);
-        state.tipo=valore;
+        const target= event.target;
+        const valore= target.value;
+        let stato= target.checked;
+        console.log(stato+" "+valore);
     };
     const handleChangeDisdettaGratuita=(event)=>{
         const target=event.target;
@@ -264,14 +280,14 @@ const RicercaStruttura=(props)=> {
                 <div className="row">
 
                     <div className="col-sm-5 col-md-4 col-lg-3">
-                    <div style={{backgroundColor:"#f9db3e",width:"100%",height:"auto",marginTop:"30px"}}>
+                    <div style={{backgroundColor:"#e07e06",width:"100%",height:"auto",marginTop:"30px"}}>
 
                         <Button color="inherit" type="submit" onClick={handleSubmit} style={{backgroundColor:"#32508f",color:"white",margin:"auto",display:"block",width:"100%"}}>Cerca</Button>
 
                         <div className="form-group col" style={{margin:"auto"}}>
                             <br/>
                             <h6>Destinazione:</h6>
-                            <Input type="text" name="luogo" id="luogo" value={state.luogo} onChange={handleChangeLuogo} placeholder="Dove vuoi andare?" style={{backgroundColor:"white",width:"90%"}}/>
+                            <Input type="text" name="luogo" id="luogo" value={state.luogo} onChange={handleChangeLuogo} placeholder="Dove vuoi andare?" style={{backgroundColor:"white",width:"100%"}}/>
 
 
                         </div>
@@ -339,14 +355,14 @@ const RicercaStruttura=(props)=> {
                                         <div className="col-3">
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
                                                 <input type="radio" className="custom-control-input" id="bnb" name="tipo"
-                                                       value="bnb" onChange={handleChangeTipo} />
+                                                       value="bnb" onClick={handleChangeTipo} />
                                                 <label className="custom-control-label" htmlFor="bnb">B&B</label>
                                             </div>
                                         </div>
                                         <div className="col-9">
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
                                                 <input type="radio" className="custom-control-input" id="casa_vacanze" name="tipo"
-                                                       value="casa_vacanze" onChange={handleChangeTipo} />
+                                                       value="casa_vacanze" onClick={handleChangeTipo} />
                                                 <label className="custom-control-label" htmlFor="casa_vacanze">Casa Vacanze</label>
                                             </div>
                                         </div>
@@ -543,8 +559,20 @@ const RicercaStruttura=(props)=> {
                                             <div className="col-md-8">
                                                 <div className="card-body">
                                                     <h5 className="card-title">{struttura.nome_struttura}</h5>
+                                                    {struttura.tipo==="bnb" &&
+                                                    <div>
+                                                        <p><HotelIcon/> Bed and Breakfast</p>
+                                                    </div>
+
+                                                    }
+                                                    {struttura.tipo==="casa_vacanze" &&
+                                                    <div>
+                                                        <p><Home/> Casa Vacanze</p>
+                                                    </div>
+
+                                                    }
                                                     <p className="card-text"> Indirizzo: {struttura.indirizzo_struttura},{struttura.citta},{struttura.regione} .</p>
-                                                    <p > Prezzo: {struttura.prezzo[0].prezzo_struttura} €</p>
+                                                    <h5> Prezzo: {struttura.prezzo[0].prezzo_struttura} €</h5>
                                                     <Tooltip title="Esplora Struttura" placement="bottom-start">
                                                         <Button color="inherit" href={href} style={{width:"40%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
                                                     </Tooltip>
@@ -575,8 +603,22 @@ const RicercaStruttura=(props)=> {
                                             <div className="col-md-8">
                                                 <div className="card-body">
                                                     <h5 className="card-title">{struttura.nome_struttura}</h5>
+                                                    {struttura.tipo==="bnb" &&
+                                                    <div>
+                                                    <p><HotelIcon/> Bed and Breakfast</p>
+                                                    </div>
+
+                                                    }
+                                                    {struttura.tipo==="casa_vacanze" &&
+                                                    <div>
+                                                         <p><Home/> Casa Vacanze</p>
+                                                    </div>
+
+                                                    }
+
+
                                                     <p className="card-text"> Indirizzo: {struttura.indirizzo_struttura},{struttura.citta},{struttura.regione} .</p>
-                                                    <p > Prezzo: {struttura.prezzo[0].prezzo_struttura} €</p>
+                                                    <h5> Prezzo: {struttura.prezzo[0].prezzo_struttura} €</h5>
 
 
                                                     <Tooltip title="Esplora Struttura" placement="bottom-start">
@@ -602,7 +644,10 @@ const RicercaStruttura=(props)=> {
 
                     </div>
 
-
+                <BoxData
+                    open={openConferma}
+                    onClose={handleCloseConferma}
+                />;
 
 
 

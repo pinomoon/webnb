@@ -94,7 +94,7 @@ const GestisciStrutture=()=>{
                                         <div className="card" style={{width: "auto", height: "20%"}}>
                                             <img className="card_image" src={villa} alt=" Villa "/>
                                             <div className="card_copy">
-                                                <h4>{value.nome_struttura}</h4>
+                                                <h6 style={{textAlign:"center"}}>{value.nome_struttura}</h6>
                                                 <p>{value.descrizione} </p>
                                                 <div style={{margin: "auto"}}>
                                                     <Button href={href}  style={{color: "#ff6300"}}>Modifica Struttura</Button>
