@@ -34,6 +34,7 @@ import AggiungiCamera from "./Component/GestisciCamera/AggiungiCamera";
 import ElencoPrenotazioni from "./Component/FunzionalitaCliente/ElencoPrenotazioni";
 import Recensione from "./Component/GestionePrenotazioni/Recensione";
 import ElencoPreferiti from "./Component/FunzionalitaCliente/ElencoPreferiti";
+import ModificaStruttura from "./Component/GestioneStrutture/modificastruttura";
 
 
 
@@ -85,6 +86,7 @@ const App= ()=> {
                         <Route path="/lemieprenotazioni" component={ElencoPrenotazioni} exact />
                         <Route path="/recensisci" component={Recensione} exact />
                         <Route path="/imieipreferiti" component={ElencoPreferiti} exact />
+                        <Route path="/modificaStruttura" component={ModificaStruttura} />
 
                         <Route path="*" component={CadutaConnessione}/>
 

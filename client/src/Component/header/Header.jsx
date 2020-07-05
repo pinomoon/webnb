@@ -77,7 +77,7 @@ const Header =()=>{
                                       <Dropdown.Menu>
                                           <Dropdown.Item href="/modificaaccount" style={{margin:"auto",display:"block"}}>Modifica Account</Dropdown.Item>
                                           <Dropdown.Item href="/gestisciprenotazione"style={{margin:"auto",display:"block"}}>Gestisci prenotazioni</Dropdown.Item>
-                                          <Dropdown.Item href="/gestiscistrutture" style={{margin:"auto",display:"block"}}>Gestisci strutture</Dropdown.Item>
+                                          <Dropdown.Item href="/lemiestrutture" style={{margin:"auto",display:"block"}}>Gestisci strutture</Dropdown.Item>
                                           <Dropdown.Item href="/ufficioturismo" style={{margin:"auto",display:"block"}}>Ufficio Turismo</Dropdown.Item>
                                           <Logout/>
                                       </Dropdown.Menu>
