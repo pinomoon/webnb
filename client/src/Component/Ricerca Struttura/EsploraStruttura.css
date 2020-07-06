@@ -1,0 +1,36 @@
+
+.button:hover{
+    display: "block";
+    margin: "auto";
+    outline: "0";
+    outline-style: none;
+    outline-width: 0;
+    color: red;
+    border: none;
+    border-bottom: none;
+    background-color: white;
+    
+}
+.button:focus{
+    display: "block";
+    margin: "auto";
+    text-align: center;
+    outline: "0";
+    outline-style: none;
+    outline-width: 0;
+    color: red;
+    border: none;
+    border-bottom: none;
+    background-color: white;
+}
+
+.button{
+    display: "block";
+    margin: "auto";
+    text-align: center;
+    width: auto;
+    color:red;
+    border:none;
+    border-bottom: none;
+    background-color: white;
+}
