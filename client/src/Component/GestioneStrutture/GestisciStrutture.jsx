@@ -88,6 +88,7 @@ const GestisciStrutture=()=>{
                             {strutture.map(value => {
 
                                 var href="/modificaStruttura?id_struttura="+value.id_struttura;
+                                var href2="/eliminaCamera?id_struttura="+value.id_struttura;
                                 return(
                                 <div key={value.id_struttura} className="col-sm-6 col-md-4 col-lg-3">
                                     <section className="cards clearfix">
@@ -100,7 +101,7 @@ const GestisciStrutture=()=>{
                                                     <Button href={href}  style={{color: "#ff6300"}}>Modifica Struttura</Button>
                                                     <Button onClick={()=>handleElimina(value)}style={{color: "#ff6300"}}>Elimina Struttura</Button>
                                                     <Button onClick={()=>handleAggiungiCamera(value)}style={{color: "#ff6300"}}>Aggiungi Camera</Button>
-                                                    <Button onClick={()=>handleEliminaCamera(value)}style={{color: "#ff6300"}}>Elimina Camera</Button>
+                                                    <Button href={href2}style={{color: "#ff6300"}}>Elimina Camera</Button>
 
                                                 </div>
                                             </div>
@@ -133,11 +134,6 @@ const GestisciStrutture=()=>{
                     id_struttura={selectedStruttura}
                 />
 
-                    <EliminaCamera
-                        open={openEliminaCamera}
-                        onClose={handleCloseEliminaCamera}
-                        id_struttura={selectedStruttura}
-                    />
 
 
 

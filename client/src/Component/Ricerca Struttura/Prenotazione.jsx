@@ -1,51 +1,84 @@
-import React from 'React';
+import React from 'react';
 import ma from "../modifica_account/ma.png";
 import Button from "@material-ui/core/Button";
 import BoxConfermaModifica from "../modifica_account/boxconfermamodifica";
-import {getUserCookie} from "../../sessions";
+import {getSessionCookie, getUserCookie} from "../../sessions";
 import {Component} from "react";
+import axios from 'axios';
 
 
 const Prenotazione =()=>{
-    const[nome, setNome]=React.useState(getUserCookie().nome);
-    const[cognome, setCognome]=React.useState(getUserCookie().cognome);
-    const[data_di_nascita, setData_di_nascita]=React.useState(getUserCookie().data_di_nascita);
-    const[indirizzo, setIndirizzo]=React.useState(getUserCookie().indirizzo);
-    const[sesso, setSesso]=React.useState(getUserCookie().sesso);
-    const[citta,setCitta]=React.useState(getUserCookie().citta);
-    const[cap,setCap]=React.useState(getUserCookie().cap);
-    const[titolare_carta, setTitolareCarta]=React.useState(getUserCookie().titolare_carta);
-    const[numero_carta,setNumeroCarta]=React.useState(getUserCookie().numero_carta);
-    const[scadenza,setScadenza]=React.useState(getUserCookie().scadenza);
-    const[cvc,setCvc]=React.useState(getUserCookie().cvc);
+    function getUrlVars() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+    const id_camera = getUrlVars()["id_camera"];
+    const data_inizio=getUrlVars()["data_inizio"];
+    const data_fine=getUrlVars()["data_fine"];
 
-    const state={id_utente, id_struttura, email, nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,titolare_carta,numero_carta,scadenza,cvc};
 
-    const handleSubmit=(event)=>{
-        event.preventDefault();
-        axios.post("https://localhost:9000/prenotazione/datiPrenotazione",state)
+    const[id_utente, setIdUtente]=React.useState(getSessionCookie().id);
+    const[nome, setNome]=React.useState("");
+    const[cognome, setCognome]=React.useState("");
+    const[data_di_nascita, setData_di_nascita]=React.useState("");
+    const[indirizzo, setIndirizzo]=React.useState("");
+    const[sesso, setSesso]=React.useState("");
+    const[citta,setCitta]=React.useState("");
+    const[cap,setCap]=React.useState("");
+    const[email, setEmail]=React.useState("");
+    const[cellulare, setCellulare]=React.useState("");
+    const[titolare_carta, setTitolareCarta]=React.useState("");
+    const[numero_carta,setNumeroCarta]=React.useState("");
+    const[scadenza,setScadenza]=React.useState("");
+    const[cvc,setCvc]=React.useState("");
+
+    const state={id_utente,  nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,cellulare,email,titolare_carta,numero_carta,scadenza,cvc};
+    const state2={id_utente, id_camera,data_inizio,data_fine};
+
+    React.useLayoutEffect(()=>{
+        axios.post("https://localhost:9000/prenotazione/datiPrenotazione",state2)
             .then((response)=>{
-                //2 per giorni sforati
-                //1 ok
+                if(response.data[0]=="1"){
+                    setNome(response.data[1].nome);
+                    setCognome(response.data[1].cognome);
+                    setData_di_nascita(response.data[1].data_di_nascita);
+                    setSesso(response.data[1].sesso);
+                    setIndirizzo(response.data[1].indirizzo);
+                    setCitta(response.data[1].citta);
+                    setCap(response.data[1].cap);
+                    setCellulare(response.data[1].cellulare);
+                    setEmail(response.data[1].email);
+                    setTitolareCarta(response.data[1].titolare_carta);
+                    setNumeroCarta(response.data[1].numero_carta);
+                    setScadenza(response.data[1].scadenza);
+                    setCvc(response.data[1].cvc);
+                }
+                else alert("Errore");
+
             })
             .catch((error)=>{
                 alert(error);
             })
-    };
+    },[]);
 
 
     const svuotaCampi=()=>{
-        setNome(getUserCookie().nome);
-        setCognome(getUserCookie().cognome);
-        setData_di_nascita(getUserCookie().data_di_nascita);
-        setIndirizzo(getUserCookie().indirizzo);
-        setSesso(getUserCookie().sesso);
-        setCitta(getUserCookie().citta);
-        setCap(getUserCookie().cap);
-        setTitolareCarta(getUserCookie().titolare_carta);
-        setNumeroCarta(getUserCookie().numero_carta);
-        setScadenza(getUserCookie().scadenza);
-        setCvc(getUserCookie().cvc);
+        setNome("");
+        setCognome("");
+        setData_di_nascita("");
+        setIndirizzo("");
+        setSesso("");
+        setCitta("");
+        setCap("");
+        setCellulare("");
+        setTitolareCarta("");
+        setNumeroCarta("");
+        setScadenza("");
+        setCvc("");
+        setEmail("");
     };
 
     const handleChangeNome=(event)=>{
@@ -90,6 +123,18 @@ const Prenotazione =()=>{
         setCap(valore);
         state.cap=valore;
     };
+    const handleChangeCellulare=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setCellulare(valore);
+        state.cellulare=valore;
+    };
+    const handleChangeEmail=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setEmail(valore);
+        state.email=valore;
+    };
     const handleChangeTitolareCarta=(event)=>{
         const target=event.target;
         const valore=  target.value;
@@ -114,6 +159,7 @@ const Prenotazione =()=>{
         setCvc(valore);
         state.cvc=valore;
     };
+    const handleSubmit=()=>{};
 
 
 
@@ -132,7 +178,7 @@ const Prenotazione =()=>{
                         <div className="container mt-10" >
                             <form name="form" id="form"  className="container was-validated col-sm-8 mt-3" method="POST">
 
-                                <h5>Modfica dati anagrafici</h5>
+                                <h5>Dati anagrafici per la Prenotazione</h5>
 
                                 <div className="form-group">
                                     <label htmlFor="name">Nome *</label>
@@ -208,10 +254,27 @@ const Prenotazione =()=>{
 
                                         </div>
                                     </div>
-
-                                    //cellulare da inserire anche in registrazione e modifica account
-
-
+                                    <div className="row">
+                                        <div className="col-7">
+                                    <label htmlFor="email">E-mail *</label>
+                                    <input name="email" id="email" type="email" className="form-control" size="32"
+                                           maxLength="40"
+                                           value={state.email} onChange={handleChangeEmail} required/>
+                                    <div className="invalid-feedback">
+                                        Inserire indirizzo e-mail
+                                    </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-9">
+                                            <label htmlFor="cellulare">Numero Cellulare</label>
+                                            <input id="cellulare" name="cellulare" type="text" className="form-control" maxLength="40"
+                                                   value={state.cellulare} onChange={handleChangeCellulare} required/>
+                                            <div className="invalid-feedback">
+                                                Inserire cellulare
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <h5>Dati di Pagamento</h5>

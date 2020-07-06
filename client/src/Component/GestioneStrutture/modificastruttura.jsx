@@ -9,6 +9,7 @@ import Form from "react-bootstrap/Form";
 import Button from "@material-ui/core/Button";
 import BoxConfermaInserimento from "./boxconfermainserimento";
 import DialogActions from "@material-ui/core/DialogActions";
+import BoxConfermaModificaStruttura from "./boxconfermamodificastruttura";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -27,7 +28,7 @@ const ModificaStruttura=(props)=>{
 
 
 
-    var nome_struttura=("prova");
+    const [nome_struttura, setNomeStruttura]=useState("");
     const [indirizzo_struttura,setIndirizzoStruttura]=useState("");
     const [cap, setCap]=useState("");
     const [punti_di_interesse, setPuntiInteresse]=useState("");
@@ -47,51 +48,53 @@ const ModificaStruttura=(props)=>{
     const [ora_checkout, setOraCheckout]=useState("");
     const [servizi, setServizi]=useState("");
     const [descrizione, setDescrizione]=useState("");
+    const [openConfermaModifica, setOpenConfermaModifica]=useState(false);
+    const [tipoRispostaModifica, setTipoRispostaModifica]=useState("");
 
 
 
-
+    const handleClickOpenConfermaModifica=()=>{
+        setOpenConfermaModifica(true);
+    };
+    const handleCloseConfermaModifica=()=>{
+        setOpenConfermaModifica(false);
+        setTipoRispostaModifica("");
+    };
 
     const handleSubmit=async (event)=>{
 
         event.preventDefault();
-        await axios.post("https://localhost:9000/salvaModifiche",state)
+        await axios.post("https://localhost:9000/gestisciStrutture/salvaModifiche",state)
             .then((response)=>{
-                if(response.data[0]=="1"){
-                    alert("ok");
-                   // handleClose();
-                }
-                else alert("errore");
+                setTipoRispostaModifica(response.data);
+                handleClickOpenConfermaModifica()
             })
             .catch((error)=>{
                 alert(error);
             });
     };
-   React.useLayoutEffect(  ()=>{
+   React.useLayoutEffect(()=>{
        console.log(id_struttura);
        async function fetchData(){
        await axios.post("https://localhost:9000/gestisciStrutture/modificaStruttura",{id_struttura})
             .then((response)=>{
                 if(response.data[0]=="1"){
-                    console.log(response.data[1]);
-                    state.nome_struttura=response.data[1].nome_struttura;
-                    console.log(state);
-                    nome_struttura=(response.data[1].nome_struttura);
-                    setIndirizzoStruttura(response.data[1].indirizzo_struttura);
-                    setCap(response.data[1].cap);
-                    setPuntiInteresse(response.data[1].punti_di_interesse);
-                    setCitta(response.data[1].citta);
-                    setRegione(response.data[1].regione);
-                    setStato(response.data[1].stato);
-                    setTipo(response.data[1].tipo);
-                    setDisdettaGratuita(response.data[1].disdetta_gratuita);
-                    setTassaSoggiorno(response.data[1].tassa_soggiorno);
-                    setServizi(response.data[1].servizi);
-                    setOraCheckin(response.data[1].ora_checkin);
-                    setOraCheckout(response.data[1].ora_checkout);
-                    setDescrizione(response.data[1].descrizione);
-                    state={nome_struttura,indirizzo_struttura,cap,punti_di_interesse,citta,regione,stato,tipo
-                        ,modalita_di_pagamento,disdetta_gratuita,tassa_soggiorno,servizi,ora_checkin,ora_checkout,descrizione};
+                    console.log(response.data);
+                    setNomeStruttura(response.data[1][0].nome_struttura);
+                    setIndirizzoStruttura(response.data[1][0].indirizzo_struttura);
+                    setCap(response.data[1][0].cap);
+                    setPuntiInteresse(response.data[1][0].punti_di_interesse);
+                    setCitta(response.data[1][0].citta);
+                    setRegione(response.data[1][0].regione);
+                    setStato(response.data[1][0].stato);
+                    setTipo(response.data[1][0].tipo);
+                    setDisdettaGratuita(response.data[1][0].disdetta_gratuita);
+                    setTassaSoggiorno(response.data[1][0].tassa_soggiorno);
+                    setServizi(response.data[1][0].servizi);
+                    setOraCheckin(response.data[1][0].ora_checkin);
+                    setOraCheckout(response.data[1][0].ora_checkout);
+                    setDescrizione(response.data[1][0].descrizione);
+                    setModalitaPagamento(response.data[1][0].modalita_di_pagamento);
                     console.log(state);
                 }
                 else alert("2");
@@ -103,12 +106,12 @@ const ModificaStruttura=(props)=>{
     }
     fetchData();
     },[]);
-    var state={nome_struttura,indirizzo_struttura,cap,punti_di_interesse,citta,regione,stato,tipo
+    const state={id_struttura,nome_struttura,indirizzo_struttura,cap,punti_di_interesse,citta,regione,stato,tipo
         ,modalita_di_pagamento,disdetta_gratuita,tassa_soggiorno,servizi,ora_checkin,ora_checkout,descrizione};
     const handleChangeNomeStruttura=(event)=>{
         const target=event.target;
         const valore=  target.value;
-        nome_struttura=(valore);
+        setNomeStruttura(valore);
         state.nome_struttura=valore;
     };
     const handleChangeIndirizzoStruttura=(event)=>{
@@ -225,6 +228,7 @@ const ModificaStruttura=(props)=>{
 
 
                                     <div className="container mt-10">
+
                                         <form name="form" id="form" className="container was-validated col-sm-8 mt-3"
                                               method="POST">
                                             <label htmlFor="nome_struttura">Nome struttura*</label>
@@ -340,7 +344,7 @@ const ModificaStruttura=(props)=>{
                                                 <div className="form-group col" style={{margin: "auto"}}>
                                                     <label htmlFor="servizi">Servizi*</label>
                                                     <input id="servizi" name="servizi" type='text'                                                            className="form-control" maxLength="40"
-                                                           value={tassa_soggiorno}
+                                                           value={servizi}
                                                            onChange={handleChangeServizi} required/>
 
                                                 </div>
@@ -387,7 +391,7 @@ const ModificaStruttura=(props)=>{
 
                                             <Form.Group controlId="exampleForm.ControlTextarea1">
                                                 <Form.Label>Breve Descrizione della Struttura</Form.Label>
-                                                <Form.Control as="textarea" rows="3" value={punti_di_interesse}
+                                                <Form.Control as="textarea" rows="3" value={descrizione}
                                                               onChange={handleChangeDescrizione}/>
                                             </Form.Group>
                                             <div className="col-1">
@@ -404,6 +408,11 @@ const ModificaStruttura=(props)=>{
 
                             </div>
                         </div>
+                        <BoxConfermaModificaStruttura
+                            open={openConfermaModifica}
+                            onClose={handleCloseConfermaModifica}
+                            responseType={tipoRispostaModifica}
+                        />
 
                     </div>
 

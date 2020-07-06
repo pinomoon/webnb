@@ -26,7 +26,21 @@ var data_inizio=getUrlVars()["data_inizio"];
 var data_fine=getUrlVars()["data_fine"];
 var npl=getUrlVars()["npl"];
 let {props}=[];
+let href1="";
+//const [num_maggiorenni,setNumeroMaggiorenni]=React.useState("");
 
+const handleChangeNumMaggiorenni=(event)=>{
+    const target=event.target;
+    const valore=  target.value;
+    const max=target.max;
+    if (valore>max){
+        setNumeroMaggiorenni(max);
+        target.value=max;
+    }
+    else {
+        setNumeroMaggiorenni(valore);
+    }
+};
 
 class EsploraStruttura extends Component{
     state = {
@@ -288,11 +302,20 @@ class EsploraStruttura extends Component{
                                         </th>
                                         <th scope="col" style={{textAlign:"center"}}>Colazione Inclusa</th>
                                         <th scope="col" style={{textAlign:"center"}}>Prezzo</th>
+                                        <th scope="col" style={{textAlign:"center"}}>Numero Maggiorenni</th>
                                         <th scope="col"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {this.state.camere.map((value)=>{
+
+
+
+
+                                        const changeHref=()=>{
+                                            let stringa="/prenotazione?id_camera="+value.id_camera+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?num_maggiorenni="+num_maggiorenni;
+                                            return stringa;
+                                        }
                                         return(
 
                                         <tr key={value.id_camera}>
@@ -313,8 +336,20 @@ class EsploraStruttura extends Component{
 
                                             </td>
                                             <td style={{textAlign:"center"}}>{value.costo_camera} &euro;</td>
-                                            <td><Button name="ok" id="ok" type="submit" style={{color:"#ff6300"}}>Prenota!</Button>
+                                            <td style={{textAlign:"center"}}>
+                                                <input id="numero_posti_letto" name="numero_posti_letto" type="number" min="0" max={value.numero_posti_letto} className="form-control" maxLength="40"
+                                                       value={num_maggiorenni} onChange={handleChangeNumMaggiorenni}/>
                                             </td>
+                                            <td>
+                                                {num_maggiorenni!=="" &&
+
+                                                    <Button href={href1 + changeHref()} name="ok" id="ok" type="submit"
+                                                            style={{color: "#ff6300"}}>Prenota!</Button>}
+                                                {num_maggiorenni==="" &&
+                                                    <Button name="ok" id="ok" type="submit" style={{color: "#ff6300"}} disabled>Prenota!</Button>
+                                                }
+                                                </td>
+
                                         </tr>
                                         );
 
