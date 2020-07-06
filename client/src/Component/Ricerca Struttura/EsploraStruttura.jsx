@@ -20,11 +20,14 @@ import DeleteIcon from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import BoxConfermaPreferiti from  './boxConfermaPreferiti';
 import { getSessionCookie } from '../../sessions';
+import './EsploraStruttura.css';
+
 
 
 
 
 const EsploraStruttura=()=>{
+    
     function getUrlVars() {
         var vars = {};
         var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
@@ -126,17 +129,17 @@ const EsploraStruttura=()=>{
                             </div>
                             <div className="col-sm-1 col-lg-1">
                             </div>
-                            <div className="col-sm-4 col-lg-4">
+                            <div className="col-sm-1 col-lg-1">
                                 {preferiti==false ?(
-                                    <Tooltip title="Aggiungi ai preferiti">
+                                    <Tooltip placement="top" title="Aggiungi ai preferiti">
                                     
-                                    <Button onClick={handleClickPreferiti}>
+                                    <Button onClick={handleClickPreferiti} class="button" >
                                         <FavoriteBorderIcon />
                                      </Button>
                                   </Tooltip>)
-                                  :(<Tooltip title="Rimuovi dai preferiti">
+                                  :(<Tooltip placement="top" title="Rimuovi dai preferiti">
                                     
-                                  <Button onClick={handleClickPreferiti}>
+                                  <Button onClick={handleClickPreferiti} class="button">
                                       <FavoriteIcon />
                                    </Button>
                                 </Tooltip>)
