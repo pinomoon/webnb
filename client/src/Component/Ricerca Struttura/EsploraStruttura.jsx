@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Input from "@material-ui/core/Input/Input";
 import UncontrolledCollapse from "reactstrap/es/UncontrolledCollapse";
 import Button from "@material-ui/core/Button";
@@ -13,43 +13,102 @@ import WifiRoundedIcon from '@material-ui/icons/WifiRounded';
 import PoolRoundedIcon from '@material-ui/icons/PoolRounded';
 import PetsRoundedIcon from '@material-ui/icons/PetsRounded';
 import LocalParkingRoundedIcon from '@material-ui/icons/LocalParkingRounded';
-
-function getUrlVars() {
-    var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        vars[key] = value;
-    });
-    return vars;
-}
-var id_struttura = getUrlVars()["struttura"];
-var data_inizio=getUrlVars()["data_inizio"];
-var data_fine=getUrlVars()["data_fine"];
-var npl=getUrlVars()["npl"];
-let {props}=[];
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/core/IconButton';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import BoxConfermaPreferiti from  './boxConfermaPreferiti';
+import { getSessionCookie } from '../../sessions';
 
 
-class EsploraStruttura extends Component{
-    state = {
-        struttura: [],
-        camere:[],
-        recensioni: []
-    };
-    componentDidMount() {
+
+
+const EsploraStruttura=()=>{
+    function getUrlVars() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+    var id_struttura = getUrlVars()["struttura"];
+    var data_inizio=getUrlVars()["data_inizio"];
+    var data_fine=getUrlVars()["data_fine"];
+    var npl=getUrlVars()["npl"];
+
+
+        const [id_utente,setIdUtente]=React.useState(getSessionCookie().id);
+       const [struttura,setStruttura]=React.useState([]);
+        const [camere, setCamere]=React.useState([]);
+        const [recensioni, setRecensioni]=React.useState([]);
+        const [preferiti, setPreferiti]=React.useState(false);
+        const [openConfermaPreferiti, setOpenConfermaPreferiti]=React.useState(false);
+        const [tipoPreferiti, setTipoPreferiti]=React.useState("");
+    
+    React.useLayoutEffect(()=> {
         axios.post("https://localhost:9000/prenotazione/esploraStruttura",{id_struttura,data_inizio,data_fine,npl})
             .then((response)=>{
                 console.log((response.data[1]));
-               const struttura=response.data[1];
-               const camere=response.data[2];
-               const recensioni=response.data[3];
-                this.setState({ struttura,camere,recensioni });
-                console.log(this.state.struttura);
+               setStruttura(response.data[1]);
+               setCamere(response.data[2]);
+               setRecensioni(response.data[3]);
+            
             })
             .catch((error)=>{
                 alert(error);
             });
+    },[]);
+    const handleClickOpenConfermaPreferiti=()=>{
+        setOpenConfermaPreferiti(true);
+    };
+    const handleCloseConfermaPreferiti=()=>{
+        setOpenConfermaPreferiti(false);
+        setTipoPreferiti("");
+    };
+    const handleClickPreferiti=(event)=>{
+        event.preventDefault();
+        if(preferiti==false){
+        axios.post("https://localhost:9000/iMieiPreferiti/aggiungiPreferiti",{id_utente,id_struttura})
+            .then((response)=>{
+                if(response.data=="1"){
+                    setTipoPreferiti("1");
+                    handleClickOpenConfermaPreferiti();
+                    setPreferiti(!preferiti);
+                }
+                else{
+                    setTipoPreferiti("3");
+                    handleClickOpenConfermaPreferiti();
+                }                
+
+            })
+            .catch((error)=>{
+                alert(error);
+            })
+        }
+        else{
+            axios.post("https://localhost:9000/iMieiPreferiti/eliminaPreferiti",{id_utente,id_struttura})
+            .then((response)=>{
+                if(response.data=="1"){
+                    setTipoPreferiti("2");
+                    handleClickOpenConfermaPreferiti();
+                    setPreferiti(!preferiti);
+                }
+                else{
+                    setTipoPreferiti("4");
+                    handleClickOpenConfermaPreferiti();
+                }
+            })
+            .catch((error)=>{
+                alert(error);
+            })
+        }
+        
+        
     }
 
-    render() {
+
+    
         return (
 
             <div className="container">
@@ -60,7 +119,7 @@ class EsploraStruttura extends Component{
                          style={{backgroundColor: "white", width: "100%", height: "auto", marginTop: "30px"}}>
                         <div className="row">
                             <div className="col-sm-7 col-lg-7">
-                                {this.state.struttura.map(value=>
+                                {struttura.map(value=>
                                     <h4 >{value.nome_struttura}</h4>
                                 )}
 
@@ -68,14 +127,20 @@ class EsploraStruttura extends Component{
                             <div className="col-sm-1 col-lg-1">
                             </div>
                             <div className="col-sm-4 col-lg-4">
-                                <Button color="inherit" href="/prenotazione" style={{
-                                    textAlign: "center",
-                                    width: "100%",
-                                    marginLeft: "auto",
-                                    backgroundColor: "#32508f",
-                                    color: "white",
-                                    display: "block"
-                                }}>Aggiungi ai preferiti</Button>
+                                {preferiti==false ?(
+                                    <Tooltip title="Aggiungi ai preferiti">
+                                    
+                                    <Button onClick={handleClickPreferiti}>
+                                        <FavoriteBorderIcon />
+                                     </Button>
+                                  </Tooltip>)
+                                  :(<Tooltip title="Rimuovi dai preferiti">
+                                    
+                                  <Button onClick={handleClickPreferiti}>
+                                      <FavoriteIcon />
+                                   </Button>
+                                </Tooltip>)
+                                }
                                 <br/>
                             </div>
                         </div>
@@ -105,7 +170,7 @@ class EsploraStruttura extends Component{
                                     height: "100%"
                                 }}>
                                     <h5>Descrizione struttura</h5>
-                                    {this.state.struttura.map(value=>
+                                    {struttura.map(value=>
                                         <p>{value.descrizione}</p>
                                     )}
                                     </div>
@@ -120,7 +185,7 @@ class EsploraStruttura extends Component{
                                 }}>
                                     <h5 style={{textAlign: "center"}}>Servizi</h5>
                                     <ListGroup variant="flush">
-                                        {this.state.struttura.map(value=>
+                                        {struttura.map(value=>
                                             <ListGroup.Item style={{width:"90%",margin:"auto"}}>
                                                 {value.servizi === "wifi,,," &&
                                                     <div>
@@ -265,7 +330,7 @@ class EsploraStruttura extends Component{
                                 }}>
                                     <br/>
                                     <h5 style={{textAlign: "center"}}>Punti di interesse</h5>
-                                    {this.state.struttura.map(value =>
+                                    {struttura.map(value =>
                                         <p>{value.punti_di_interesse}</p>
                                     )}
                                     <br/>
@@ -292,7 +357,7 @@ class EsploraStruttura extends Component{
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {this.state.camere.map((value)=>{
+                                    {camere.map((value)=>{
                                         return(
 
                                         <tr key={value.id_camera}>
@@ -336,7 +401,7 @@ class EsploraStruttura extends Component{
                         </div>
                         <div className="row">
                             <ListGroup variant="flush">
-                                {this.state.recensioni.map(value =>
+                                {recensioni.map(value =>
                                     <ListGroup.Item>
                                         <div className="row">
                                             <div className="col-5"><h5>{value.nome}_{value.id_utente} : </h5></div>
@@ -349,9 +414,14 @@ class EsploraStruttura extends Component{
                         </div>
                     </div>
                 </div>
+                <BoxConfermaPreferiti
+                    open={openConfermaPreferiti}
+                    onClose={handleCloseConfermaPreferiti}
+                    responseType={tipoPreferiti}
+                />
             </div>
         );
 
-    }
+    
 };
 export default EsploraStruttura;
