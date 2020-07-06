@@ -216,7 +216,7 @@ const InserisciStruttura=()=>{
         byte[] b=baos.toByteArray();
 
         */
-       setNomeImg(valore);
+       setImmagine1(valore);
        /* var img_stringa= new Uint8Array(valore);
         var bin= String.fromCharCode.apply(null,img_stringa);
         var b64= btoa(bin);
@@ -231,21 +231,15 @@ const InserisciStruttura=()=>{
         setImmagine1(b64);
         state.immagine1=b64;
         */
-        const toBase64 = file => new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        });
+       state.immagine1=valore;
 
 
-            const file = valore;
-            console.log(toBase64(file));
+            
 
     };
     const handleChangeImg2=(event)=>{
         const target=event.target;
-        const valore=  target.value;
+        const valore= target.value;
         setImmagine2(valore);
         state.immagine2=valore;
     };
@@ -388,12 +382,14 @@ const InserisciStruttura=()=>{
 
 
                 <div  className="container mt-10" >
+                
                     <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
                         <label htmlFor="nome_struttura">Nome struttura*</label>
                         <input id="nome_struttura" name="nome_struttura" type="text" className="form-control" maxLength="40"
                                value={state.nome_struttura} onChange={handleChangeNomeStruttura} required/>
                         <div className="invalid-feedback">
                             Inserire nome della struttura
+                            <img src={state.immagine2}/>
                         </div>
                     <div className="form-group">
                     <div className="row">
@@ -598,8 +594,9 @@ const InserisciStruttura=()=>{
                             <h5>Immagini della Struttura</h5>
 
                             <input id="immagine1" name="immagine1" type="file"  maxLength="40"
-                                    value={nomeimg} onChange={handleChangeImg1}
-                                    color="inherit"  style={{color:"#ff6300"}} accept="image/*"></input>
+                                    value={state.immagine1} onChange={handleChangeImg1}
+                                    color="inherit"  style={{color:"#ff6300"}}></input>
+                                                             
                             <input id="immagine2" name="immagine2" type="file"  maxLength="40"
                                     value={state.immagine2} onChange={handleChangeImg2}
                                     color="inherit"  style={{color:"#ff6300"}}></input>
@@ -655,7 +652,7 @@ const InserisciStruttura=()=>{
                         <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-15px",color:"#ff6300"}}>Invia</Button>
                             </div>
 
-
+                        
                         </div>
                     </form>
                     <BoxConfermaInserimento
