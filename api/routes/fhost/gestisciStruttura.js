@@ -50,14 +50,15 @@ async function modificaStruttura(req,res,next){
 
         await withTransaction(db, async () => {
             results = await db.query("SELECT * \
-            FROM struttura,camera \
-            WHERE struttura.id_struttura=? AND struttura.id_struttura=camera.id_struttura"
+            FROM struttura \
+            WHERE struttura.id_struttura=? "
             , [req.body.id_struttura])
             .catch(err => {
             throw  err;
 
         });
         var risultato=['1',results];
+        console.log(risultato);
         res.send(risultato);
     })
 
@@ -113,7 +114,7 @@ async function salvaModificheStruttura(req,res,next) {
         /*******aggiungi camera****/
 router.post('/aggiungiCamera',aggiungiCamera);
 
-async function aggiungiCamera(res,req,next){
+async function aggiungiCamera(req,res,next){
     const db = await makeDb(config);
     try {
 
@@ -121,8 +122,8 @@ async function aggiungiCamera(res,req,next){
             await db.query("INSERT INTO camera(id_struttura,nome_camera,numero_posti_letto,costo_camera,colazione_inclusa) VALUES ?", [
                 [
                     [
-                        req.body.id_stuttura,
-                        req.body.nome_struttura,
+                        req.body.id_struttura,
+                        req.body.nome_camera,
                         req.body.numero_posti_letto,
                         req.body.costo_camera,
                         req.body.colazione_inclusa
@@ -141,25 +142,26 @@ async function aggiungiCamera(res,req,next){
 }
 /******************modifica_camera*************/
 
-router.post("/modificaCamera",modificaCamera);
+router.post("/mostraCamera",mostraCamera);
 
-async function modificaCamera(res,req,next){
+async function mostraCamera(req,res,next){
     const db= await makeDb(config);
+    let results={};
     try{
         await withTransaction(db,async()=>{
-            await db.query("UPDATE camera SET nome_camera=?, numero_posti_letto=?, costo_camera=?, colazione_inclusa=? WHERE id_camera=req.body.id_camera)",[
-                req.body.nome_camera,
-                req.body.numero_posti_letto,
-                req.body.costo_camera,
-                req.body.colazione_inclusa
+            results=await db.query("SELECT * FROM camera WHERE camera.id_struttura=?",[
+                req.body.id_struttura
             ]).catch(err=>{
                 throw err;
-            })
-            res.send("1");// Camera modificata con successo
+            });
+            console.log(req.body.id_struttura);
+            var risultato=['1',results];
+            console.log(risultato);
+            res.send(risultato);// Camera modificata con successo
         })
 
     }catch (error) {
-        res.send('error');
+        res.send('2');
         throw error;
     }
 }
@@ -189,7 +191,7 @@ async function eliminaCamera(req,res,next) {
 
 router.post("/eliminaStruttura",eliminaStruttura);
 
-async function  eliminaStruttura(res,req,next){
+async function  eliminaStruttura(req,res,next){
     const db= await makeDb(config);
     try{
         await withTransaction(db,async ()=>{
@@ -198,6 +200,7 @@ async function  eliminaStruttura(res,req,next){
         ]).catch(err=>{
             throw err;
         })
+            console.log(req.body.id_struttura);
         res.send("1"); // elimina struttura
         });
     }catch (error) {
