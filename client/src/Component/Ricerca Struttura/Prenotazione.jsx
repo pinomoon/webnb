@@ -18,6 +18,7 @@ const Prenotazione =()=>{
     const id_camera = getUrlVars()["id_camera"];
     const data_inizio=getUrlVars()["data_inizio"];
     const data_fine=getUrlVars()["data_fine"];
+    const numero_posti_letto=getUrlVars()["numero_posti_letto"];
 
 
     const[id_utente, setIdUtente]=React.useState(getSessionCookie().id);
