@@ -27,8 +27,8 @@ import {setStructureCookie} from "../../sessions";
 import {Box} from "@material-ui/core";
 import BoxData from "./BoxData";
 import BoxAccesso from "../login/boxconferma";
-import HotelIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
+import HotelIcon from '@material-ui/icons/Hotel';
 
 const Homepage =()=>{
     const [luogo,setLuogo]=React.useState("");
@@ -54,18 +54,15 @@ const Homepage =()=>{
     const [strutturep, setStrutturep]=React.useState([]);
     const statep={luogop,data_iniziop,data_finep,nplp,disdetta_gratuitap,modalita_di_pagamentop,servizip,costo_camerap,colazione_inclusap};
 
-    const handleSubmitp=(event)=>{
-        event.preventDefault();
-        alert("Dati inseriti preferiti "+JSON.stringify(statep));
-
+    React.useLayoutEffect(()=>{
         axios.post("https://localhost:9000/prenotazione/ricercaStrutturap", statep)
             .then((response)=>{
                 setStrutturep(response.data[1]);
             })
             .catch((error)=>{
                 alert(error);
-            })};
-
+            });
+        },[]);
     const handleCloseConferma = () => {
         setOpenConferma(false);
     };
@@ -142,7 +139,7 @@ const Homepage =()=>{
 
          <container>
              {!ricerca &&
-             <section className="cover" style={{height:"500px",width:"100%"}}>
+             <section className="cover" style={{height:"400px",width:"100%"}}>
                  <div className="cover_filter"></div>
                  <div className="cover_caption">
                      <div className="cover_caption_copy">
@@ -221,45 +218,9 @@ const Homepage =()=>{
                                      </div>
                                  </div>
                              </div>
-                             <div className="col-md-1 col-lg-1">
-                                 <Button type="submit" onClick={handleSubmitp}  style={{
-                                     marginTop: "-2px",
-                                     backgroundColor: "#ff6300",
-                                     height: "106%",
-                                     color: "white",
-                                     borderRadius: 0
-                                 }}>I Consigliati da WeB&B</Button>
-                             </div>
-                                 <div key={strutturep.id_struttura}>
-                                     <div className="card mb-3" style={{width:"30%",height:"auto"}}>
-                                         <div className="row no-gutters">
-                                             <div className="col-md-4">
-                                             </div>
-                                             <div className="col-md-8">
-                                                 <div className="card-body">
-                                                     <h5 className="card-title">{strutturep.nome_struttura}</h5>
-                                                     {strutturep.tipo==="bnb" &&
-                                                     <div>
-                                                         <p><HotelIcon/> Bed and Breakfast</p>
-                                                     </div>
-
-                                                     }
-                                                     {strutturep.tipo==="casa_vacanze" &&
-                                                     <div>
-                                                         <p><Home/> Casa Vacanze</p>
-                                                     </div>
-
-                                                     }
-                                                     <p className="card-text"> Indirizzo: {strutturep.indirizzo_struttura},{strutturep.citta},{strutturep.regione} .</p>
-
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-
+                             
                          </div>
-
+                                                   
                              }
                              {user.tipo == 0 &&
                              <div>
@@ -284,8 +245,11 @@ const Homepage =()=>{
                              </div>
                              }
                      </div>
+                     
                  </div>
-
+                
+                               
+                 
              </section>
              }
              {ricerca&&
@@ -296,10 +260,50 @@ const Homepage =()=>{
 
 
 
-            <br/>
-            <br/>
+            
+{!ricerca && (user.id == null || (user.tipo == 1)) &&           
+<section className="cards clearfix">
+<h5 align="center" style={{color: "#ff6300"}}> I consigliati da WeB&B</h5>
+                            
+                            { strutturep[0]!=[] && (strutturep.map((strutturep)=>{
+                                return(
+                                    <div key={strutturep.id_struttura}>
+                                    <div className="card mb-3" style={{width:"100%",height:"auto"}}>
+                                        <div className="row no-gutters">
+                                            <div className="col-md-4">
+                                                <img id="image" src={""}  className="card-img" style={{height:"100%"}}/>
+                                            </div>
+                                            <div className="col-md-8">
+                                                <div className="card-body">
+                                                    <h5 className="card-title">{strutturep.nome_struttura}</h5>
+                                                    {strutturep.tipo==="bnb" &&
+                                                    <div>
+                                                    <p><HotelIcon/> Bed and Breakfast</p>
+                                                    </div>
+
+                                                    }
+                                                    {strutturep.tipo==="casa_vacanze" &&
+                                                    <div>
+                                                         <p><Home/> Casa Vacanze</p>
+                                                    </div>
+
+                                                    }
 
 
+                                                    <p className="card-text"> Indirizzo: {strutturep.indirizzo_struttura},{strutturep.citta},{strutturep.regione} .</p>
+                                                    
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                );
+                                                   }))}
+</section>
+}
 
 
 

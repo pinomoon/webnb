@@ -82,6 +82,7 @@ async function recupero(req,res, next){
                 .catch(err => {
                     throw err;
                 });
+                if(results[0] != null){
                 let time= Date.now().toString(16).toString('hex');
                 let token=crypto.randomBytes(16).toString('hex')+time ;
     
@@ -109,7 +110,12 @@ async function recupero(req,res, next){
                     }
                 });
            res.send("1");// inviata mail per recupero credenziali
-            
+            }
+            else{
+                res.send("2");
+                console.log('Utente non trovato!');
+
+            }  
         })
     }catch (err) {
         console.log('Utente non trovato!');
