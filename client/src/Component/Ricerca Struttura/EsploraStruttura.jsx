@@ -135,21 +135,25 @@ const EsploraStruttura=()=>{
                         <div className="col-sm-1 col-lg-1">
                         </div>
                         {getSessionCookie().tipo=="1" &&
-                        <div className="col-sm-4 col-lg-4">
+                        <div className="col-sm-1 col-mg-1 col-lg-1" class="effetto">
 
                             {preferiti == false ? (
-                                    <Tooltip title="Aggiungi ai preferiti">
+                                
+                                    <Tooltip title="Aggiungi ai preferiti" placement="top" >
 
                                         <Button onClick={handleClickPreferiti} class="button">
-                                            <FavoriteBorderIcon/>
+                                        <FavoriteBorderIcon />
                                         </Button>
-                                    </Tooltip>)
-                                : (<Tooltip title="Rimuovi dai preferiti">
+                                    </Tooltip>
+                                    )
+                                : (
+                                <Tooltip title="Rimuovi dai preferiti" placement="top">
 
                                     <Button onClick={handleClickPreferiti} class="button">
-                                        <FavoriteIcon/>
+                                        <FavoriteIcon />
                                     </Button>
-                                </Tooltip>)
+                                </Tooltip> )
+                                
                             }
 
                             <br/>

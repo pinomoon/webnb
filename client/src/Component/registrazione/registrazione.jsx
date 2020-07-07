@@ -148,6 +148,10 @@ const Registrazione=()=>{
 
 
     const handleSubmit=(event) =>{
+        if(repass!==state.password){
+            alert("Il campo reinserisci password e password devono coincidere");
+            return;
+        }
         event.preventDefault();
         axios.post('https://localhost:9000/registrazione', state)
             .then((response)=>{
