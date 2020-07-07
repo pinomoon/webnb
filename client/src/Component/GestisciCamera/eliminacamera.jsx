@@ -7,17 +7,22 @@ import Dialog from "@material-ui/core/Dialog/Dialog";
 import Slide from "@material-ui/core/Slide/Slide";
 import DialogActions from "@material-ui/core/DialogActions";
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
+
 
 const EliminaCamera=(props)=>{
-    const {open, onClose, id_struttura}=props;
+    function getUrlVars() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+    const id_struttura = getUrlVars()["id_struttura"];
     const [camere, setCamere]=useState([]);
     const [selectedCamera, setSelectedCamera]=useState();
-    const loadData=async()=> {
+    React.useLayoutEffect(()=>{
         alert(id_struttura);
-        await axios.post("https://localhost:9000/gestisciStrutture/mostraCamera", {id_struttura})
+        axios.post("https://localhost:9000/gestisciStrutture/mostraCamera", {id_struttura})
             .then((response) => {
                 if (response.data[0] == "1") {
                     console.log(JSON.stringify(response.data[1]));
@@ -31,13 +36,12 @@ const EliminaCamera=(props)=>{
             .catch((error) => {
                 alert(error);
             })
-    };
+    },[]);
     const handleClose=()=>{
-        onClose();
     }
     const handleElimina=(camera)=>{
         setSelectedCamera(camera.id_camera);
-        axios.post("https://localhost:9000/gestisciStrutture/eliminaCamera",{id_camera:selectedCamera})
+        axios.post("https://localhost:9000/gestisciStrutture/eliminaCamera",{id_camera:camera.id_camera})
             .then((response)=>{
                 if(response.data=="1"){
                     alert("Struttura Eliminata");
@@ -47,25 +51,15 @@ const EliminaCamera=(props)=>{
             .catch((error)=>{
                 alert(error);
             })
+        window.location.reload();
     }
 
     return(
         <div>
-            <Dialog
-                onEntering={loadData}
-                open={open}
-                TransitionComponent={Transition}
-                keepMounted
-                aria-labelledby="alert-dialog-slide-title"
-                aria-describedby="alert-dialog-slide-description"
-                maxWidth="lg"
-            >
-                <DialogTitle id="alert-dialog-slide-title">{"Elimina Camera"}</DialogTitle>
-                <DialogContent>
             <h5>Elenco camere</h5>
             <br/>
             {camere.map(camera=>{
-                console.log(camera.nome_camera);
+                console.log(camera.id_camera);
                 return(
                     <div >
                         <p>Nome Camera:{camera.nome_camera}</p>
@@ -79,11 +73,7 @@ const EliminaCamera=(props)=>{
 
                 );
             })}
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Chiudi</Button>
-                </DialogActions>
-            </Dialog>
+
         </div>
     );
 

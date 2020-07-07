@@ -76,11 +76,10 @@ async function salvaModificheStruttura(req,res,next) {
     try {
 
         await withTransaction(db, async () => {
-            await db.query("UPDATE struttura SET nome_struttura=?, indirizzo_struttura=? ,cap=? punti_di_interesse=?, citta=?, regione=?,\
-                stato=? ,tipo=? ,disdetta_gratuita=? ,modalita_di_pagamento=? ,tassa_soggiorno=? ,servizi=?, ora_checkin=? ,ora_checkout=? WHERE  id_struttura=req.body.id_struttura)",
+           var results= await db.query("UPDATE struttura SET nome_struttura=?, indirizzo_struttura=? ,cap=?, punti_di_interesse=?, citta=?, regione=?,\
+                stato=? ,tipo=? ,disdetta_gratuita=? ,modalita_di_pagamento=? ,tassa_soggiorno=? ,servizi=?, ora_checkin=? ,ora_checkout=?, descrizione=? WHERE  id_struttura=?",
                 [
 
-                req.body.id_utente,
                 req.body.nome_struttura,
                 req.body.indirizzo_struttura,
                 req.body.cap,
@@ -94,11 +93,15 @@ async function salvaModificheStruttura(req,res,next) {
                 req.body.tassa_soggiorno,
                 req.body.servizi,
                 req.body.ora_checkin,
-                req.body.ora_checkout
+                req.body.ora_checkout,
+                    req.body.descrizione,
+                    req.body.id_struttura
+
 
             ]).catch(err => {
                 throw err;
             })
+            console.log(results);
             res.send("1"); //Modifiche apportate con successo
         })
 
@@ -179,6 +182,7 @@ async function eliminaCamera(req,res,next) {
             ]).catch(err => {
                 throw err;
             })
+            console.log(req.body.id_camera);
             res.send("1"); //Camera eliminata
         })
 

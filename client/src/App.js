@@ -35,6 +35,8 @@ import ElencoPrenotazioni from "./Component/FunzionalitaCliente/ElencoPrenotazio
 import Recensione from "./Component/GestionePrenotazioni/Recensione";
 import ElencoPreferiti from "./Component/FunzionalitaCliente/ElencoPreferiti";
 import ModificaStruttura from "./Component/GestioneStrutture/modificastruttura";
+import EliminaCamera from "./Component/GestisciCamera/eliminacamera";
+import Prenotazione from "./Component/Ricerca Struttura/Prenotazione";
 
 
 
@@ -80,13 +82,15 @@ const App= ()=> {
                         <Route path="/accountConferma" component={ConfermaAccount} />
                         <Route path="/gestisciprenotazione" component={GestisciPrenotazioni} />
                         <Route path="/ricercastruttura" component={RicercaStruttura} />
-                        <Route path="/prenotazione" component={EsploraStruttura} />
+                        <Route path="/prenotazione" component={Prenotazione} />
+                        <Route path="/esplora" component={EsploraStruttura}/>
                         <Route path="/aggiungicamera" component={AggiungiCamera} />
                         <Route path="/guadagni" component={MieiGuadagni} exact />
                         <Route path="/lemieprenotazioni" component={ElencoPrenotazioni} exact />
                         <Route path="/recensisci" component={Recensione} exact />
                         <Route path="/imieipreferiti" component={ElencoPreferiti} exact />
                         <Route path="/modificaStruttura" component={ModificaStruttura} />
+                        <Route path="/eliminaCamera" component={EliminaCamera} />
 
                         <Route path="*" component={CadutaConnessione}/>
 

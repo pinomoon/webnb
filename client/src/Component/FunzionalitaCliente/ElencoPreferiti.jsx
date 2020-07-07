@@ -1,11 +1,18 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import villa from "../GestioneStrutture/villa.jpg";
 import Button from "@material-ui/core/Button";
+import {getSessionCookie} from "../../sessions";
+import axios from 'axios';
 
 
 
-class ElencoPreferiti extends Component{
-    render(){
+const ElencoPreferiti=()=> {
+    const [id_utente, setIdUtente]=useState(getSessionCookie().id);
+
+    React.useLayoutEffect(()=>{
+        axios.post("https://localhost:9000/iMieiPreferiti", {id_utente})
+    },[])
+
         return(
 
             <div className="container">
@@ -67,7 +74,7 @@ class ElencoPreferiti extends Component{
             </div>
 
         );
-    }
+
 }
 
 export default ElencoPreferiti;

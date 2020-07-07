@@ -217,24 +217,38 @@ async function dati(req, res, next) {
     const db = await makeDb(config);
     let results = {};
     try {
-        results=await db.query("INSERT INTO prenotazione(id_utente,id_camera,data_inizio,data_fine) VALUES ?"
+        await withTransaction(db, async() => {
+        await db.query("INSERT INTO prenotazione(id_utente,id_camera,data_inizio,data_fine) VALUES ?"
         ,[
-            req.body.id_utente,
-            req.body.id_camera,
-            req.body.data_inizio,
-            req.body.data_fine
+                [
+                    [
+                        req.body.id_utente,
+                        req.body.id_camera,
+                        req.body.data_inizio,
+                        req.body.data_fine
+                    ]
+                ]
 
         ] ).catch(err=>{
             throw err;
         });
-        await withTransaction(db, async() => {
-            results=await db.query("SELECT nome,cognome,data_di_nascita,sesso,indirizzo,citta,cap,cellulare,email,titolare_carta,numero_carta,scadenza,cvc \
+
+            results=await db.query("SELECT nome,cognome,data_di_nascita,sesso,indirizzo,citta,cap,cellulare,utente.email,titolare_carta,numero_carta,scadenza,cvc \
             FROM utente, carta_credito \
             WHERE utente.email=carta_credito.email AND utente.id_utente=? ",[req.body.id_utente])
                 .catch(err=>{
                     throw err;
                 });
-                var risultato=['1',results[0]];
+             let results1=await db.query("SELECT nome_struttura,indirizzo_struttura,cap,stato,regione,citta,tipo,disdetta_gratuita,tassa_soggiorno,modalita_di_pagamento,nome_camera,numero_posti_letto,colazione_inclusa,costo_camera\
+            FROM camera, struttura\
+            WHERE camera.id_struttura=struttura.id_struttura AND camera.id_camera=?",
+                [
+                    req.body.id_camera
+                ]).catch(err=>{
+                    throw  err;
+            })
+
+                var risultato=['1',results[0],results1[0]];
                 res.send(risultato);
     })
     }catch(err){
@@ -243,7 +257,17 @@ async function dati(req, res, next) {
         next(createError(500));
     }
 }
+router.post('/calcoloImporti',importi);
+async function importi(){
+    let results={};
+    results[0].totprezzo=req.body.costo_camera*(req.body.data_fine-req.body.data_inizio);
+    results[0].totsoggiorno=0;
+    if(req.body.lavoro===0) {
+        results[0].totsoggiorno= req.body.tassa_soggiorno * (req.body.data_fine - req.body.data_inizio) * req.body.n18;
+    }
 
+
+}
 router.post('/',prenota);
 
 async function prenota(req, res, next) {
@@ -272,16 +296,7 @@ async function prenota(req, res, next) {
                     res.send(risultato);
                     next(createError(403, '28 giorni superata'));
                 }
-            await db.query("UPDATE carta_credito SET titolare_carta=?,numero_carta=?,scadenza=?,cvc=? WHERE email=?",
-                [
-                    req.body.email,
-                    req.body.titolare_carta,
-                    req.body.numero_carta,
-                    req.body.scadenza,
-                    req.body.cvc
-                ]).catch(err=>{
-                    throw err;
-                });
+
                 
                 
                 let now= new Date();
