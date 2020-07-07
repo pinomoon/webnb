@@ -164,6 +164,7 @@ async function esplora(req, res, next) {
     let results1 = {};
     let results2 ={};
     let results3 ={};
+    let results4={};
     try {
         await withTransaction(db, async() => {
                 results1=await db.query("SELECT nome_struttura,indirizzo_struttura,cap,punti_di_interesse,\
@@ -197,7 +198,15 @@ async function esplora(req, res, next) {
                     ]).catch(err=>{
                         throw err;
                     })
-                    var risultato=['1',results1,results2,results3];
+                    if(req.body.id_utente!==undefined){
+                    results4=await db.query("SELECT id_preferito FROM preferiti WHERE preferiti.id_struttura=?\
+                    AND preferiti.id_utente=?"
+                    ,[
+                        req.body.id_struttura,
+                        req.body.id_utente
+                    ])
+                }
+                    var risultato=['1',results1,results2,results3,results4];
                     console.log(risultato);
                     res.send(risultato);
         })

@@ -41,7 +41,7 @@ const EsploraStruttura=()=>{
 
 
         const [id_utente,setIdUtente]=React.useState(getSessionCookie().id);
-       const [struttura,setStruttura]=React.useState([]);
+        const [struttura,setStruttura]=React.useState([]);
         const [camere, setCamere]=React.useState([]);
         const [recensioni, setRecensioni]=React.useState([]);
         const [preferiti, setPreferiti]=React.useState(false);
@@ -49,13 +49,19 @@ const EsploraStruttura=()=>{
         const [tipoPreferiti, setTipoPreferiti]=React.useState("");
     
     React.useLayoutEffect(()=> {
-        axios.post("https://localhost:9000/prenotazione/esploraStruttura",{id_struttura,data_inizio,data_fine,npl})
+        axios.post("https://localhost:9000/prenotazione/esploraStruttura",{id_struttura,data_inizio,data_fine,npl,id_utente})
             .then((response)=>{
-                console.log((response.data[1]));
+                
                 setStruttura(response.data[1]);
                 setCamere(response.data[2]);
                 setRecensioni(response.data[3]);
-
+                
+                if(response.data[4]!=={}){
+                setPreferiti(true);
+                }
+                else{
+                    setPreferiti(false);
+                }
             })
             .catch((error)=>{
                 alert(error);
@@ -134,13 +140,13 @@ const EsploraStruttura=()=>{
                             {preferiti == false ? (
                                     <Tooltip title="Aggiungi ai preferiti">
 
-                                        <Button onClick={handleClickPreferiti}>
+                                        <Button onClick={handleClickPreferiti} class="button">
                                             <FavoriteBorderIcon/>
                                         </Button>
                                     </Tooltip>)
                                 : (<Tooltip title="Rimuovi dai preferiti">
 
-                                    <Button onClick={handleClickPreferiti}>
+                                    <Button onClick={handleClickPreferiti} class="button">
                                         <FavoriteIcon/>
                                     </Button>
                                 </Tooltip>)
