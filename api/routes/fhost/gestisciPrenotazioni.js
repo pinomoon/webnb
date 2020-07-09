@@ -23,13 +23,15 @@ async function gestisciPrenotazioni(req,res,next){
     let results={};
 try {
     await withTransaction(db, async () => {
-        results = await db.query("SELECT nome_struttura,nome_camera,stato_prenotazione FROM utente AS u, camera AS c, struttura AS s ,prenotazione AS p\
+        results = await db.query("SELECT id_prenotazione, nome_struttura,nome_camera,stato_prenotazione FROM utente AS u, camera AS c, struttura AS s ,prenotazione AS p\
             WHERE p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND s.id_utente=u.id_utente \
-            AND u.id_utente=? AND p.conferma=1 \
+            AND u.id_utente=?\
             ORDER BY stato_prenotazione ASC ,data_prenotazione DESC " , [req.body.id_utente]).catch(err => {
             throw err;
         })
         var risultato=['1',results];
+        console.log(req.body.id_utente)
+        console.log(results)
         res.send(risultato); //
     })
 }catch (error) {
@@ -47,13 +49,13 @@ async function confermaPrenotazione(req,res,next){
     const db=  await makeDb(config);
     try{
         await  withTransaction(db,async()=>{
-            (await db).query("UPDATE prenotazione SET stato_prenotazione='confermata' WHERE id_prenotazione=?",[
+            await db.query("UPDATE prenotazione SET stato_prenotazione='confermata' WHERE id_prenotazione=?",[
                 req.body.id_prenotazione
             ]).catch(err=>{
                 throw err;
             })
             let results=await db.query("SELECT email,nome,nome_struttura,p.metodo_di_pagamento AS metodo_pagamento FROM utente AS u, prenotazione AS p, camera AS c ,struttura AS s\
-                WHERE  u.id_utente=p.id_utente AND p.id_prenotazione=?AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura",[req.body.id_prenotazione]);
+                WHERE  u.id_utente=p.id_utente AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND p.id_prenotazione=? ",[req.body.id_prenotazione]);
             let mailOptions = {
                 from: 'webnb-service@libero.it',
                 to:results[0].email,
@@ -136,7 +138,7 @@ async function rifiutaPrenotazione(req,res,next){
         await withTransaction(db,async ()=>{
             let now=Date.now();
             results= await db.query("SELECT email,nome, nome_struttura FROM  utente as u,prenotazione as p,camera as c,struttura as s \
-            WHERE u.id_prenotazione=p.id_utente AND id_prenotazione=? AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura ",[req.body.id_prenotazione]).catch(err=>{
+            WHERE u.id_utente=p.id_utente AND id_prenotazione=? AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura ",[req.body.id_prenotazione]).catch(err=>{
             throw err;
         })
             await db.query("UPDATE prenotazione SET stato_prenotazione='rifiutata',data_rifiuto=? WHERE id_prenotazione=?",[now,req.body.id_prenotazione]).catch(err=>{
@@ -183,7 +185,7 @@ async function rifiutaPrenotazioneAutomatica(){
 
             let now = Date.now();
 
-            await db.query("UPDATE prenotazione SET stato_prenotazione='rifiutata' , data_rifiuto=? WHERE (?-data_prenotazione)<=86400000", [now,now]).catch(err => {
+            await db.query("UPDATE prenotazione SET stato_prenotazione='rifiutata' , data_rifiuto=? WHERE stato_prenotazione='In attesa di conferma' AND (?-data_prenotazione)>=86400000", [now,now]).catch(err => {
                 throw err;
             })
             results= await db.query("SELECT id_prenotazione,email,nome, nome_struttura FROM  utente AS u,prenotazione AS p,camera AS c,struttura AS s \

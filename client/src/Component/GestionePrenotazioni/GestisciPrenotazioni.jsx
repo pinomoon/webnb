@@ -1,13 +1,60 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import Footer from "../footer/Footer";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "@material-ui/core/Button";
 import HeaderHost from "../header/HeaderHost";
+import axios from "axios";
+import {getSessionCookie} from "../../sessions";
+import BoxAccettaPren from "./BoxAccettaPren";
+import BoxRifiutaPren from "./BoxRifiutaPren";
+import checkin from "../Check-in/checkin";
 
 
 
-class GestisciPrenotazioni extends Component{
-    render(){
+ const GestisciPrenotazioni=()=> {
+ const[id_utente,setIdUtente]=useState(getSessionCookie().id);
+ const[prenotazioni,setPrenotazione]=useState([]);
+ const[selectedPrenotazione,setSelectedPrenotazione]=useState();
+ const[openAccetta,setOpenAccetta]=useState(false);
+ const[openRifiuta,setOpenRifiuta]=useState(false)
+
+     React.useLayoutEffect(()=>{
+         axios.post("https://localhost:9000/gestisciPrenotazioni",{id_utente})
+             .then((response)=>{
+                 /*****/
+                 if(response.data[0]=="1"){
+                     setPrenotazione(response.data[1]);
+                 }
+                 else{
+                     alert("error")
+                 }
+
+             }).catch(err=>{
+
+                 alert(err)
+         })
+     },[])
+
+
+     const handleAccetta=(values)=>{
+         setSelectedPrenotazione(values.id_prenotazione);
+         setOpenAccetta(true);
+     }
+     const handleCloseAccetta=()=>{
+         setSelectedPrenotazione();
+         setOpenAccetta(false);
+         window.location.reload();
+     }
+     const handleRifiuta=(values)=>{
+         setSelectedPrenotazione(values.id_prenotazione);
+         setOpenRifiuta(true);
+
+     }
+     const handleCloseRifiuta=()=>{
+     setSelectedPrenotazione();
+     setOpenRifiuta(false);
+     window.location.reload();
+     }
         return(
             <div className="container">
                 <div className="row">
@@ -26,58 +73,37 @@ class GestisciPrenotazioni extends Component{
                             <div className="col-3"></div>
                         </div>
                     </ListGroup.Item>
-                    <ListGroup.Item>
-                        <div className="row">
-                            <div className="col-4"> Prenotazione #0001</div>
-                            <div className="col-5"> <a style={{color:"#00ff55"}}>Confermato</a></div>
-                            <div className="col-3"><Button color="inherit" href="/checkin" style={{color:"#ff6300"}}>Check-in</Button></div>
-                        </div>
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                        <div className="row">
-                            <div className="col-4"> Prenotazione #0002</div>
-                            <div className="col-5"> In attesa di conferma</div>
-                            <div className="col-3">
-                                <Button color="inherit" href="/" style={{color:"#ff6300"}}>Accetta</Button>
-                                <br/>
-                                <Button color="inherit" href="/" style={{color:"#ff6300"}}>Rifiuta</Button>
+                    {prenotazioni.map((values)=>{
+                        return(
+                            <ListGroup.Item>
+                                <div className="row">
+                                    <div className="col-4"><h5>Id: {values.id_prenotazione}</h5></div>
+                                    <div className="col-5"> <h5> Stato: {values.stato_prenotazione}</h5></div>
+                                    <div className="col-3">
+                                        { values.stato_prenotazione=="In attesa di conferma" &&
+                                            <div>
+                                        <Button color="inherit" onClick={()=>handleAccetta(values)} style={{color:"#ff6300"}}>Accetta</Button>
+                                            <br/>
+                                            <Button color="inherit" onClick={()=>handleRifiuta(values)}  style={{color:"#ff6300"}}>Rifiuta</Button>
+                                            </div>
+                                        }
+                                        { values.stato_prenotazione=="confermata" &&
+                                        <div>
+                                            <Button color="inherit" href="/checkin"  style={{color:"#ff6300"}}>check-in</Button>
+                                        </div>
+                                        }
+                                        { values.stato_prenotazione=="soggiorno in corso" &&
+                                        <div>
+                                            <Button color="inherit" style={{color:"#ff6300"}}>check-out</Button>
 
-                            </div>
-                        </div>
-                    </ListGroup.Item>
+                                        </div>
+                                        }
 
-                    <ListGroup.Item>
-                        <div className="row">
-                            <div className="col-4"> Prenotazione #0003</div>
-                            <div className="col-6"> <a style={{color:"red"}}>Rifiutato</a></div>
-                            <div className="col-2"> </div>
-
-                        </div>
-                    </ListGroup.Item>
-
-                    <ListGroup.Item>
-                        <div className="row">
-                            <div className="col-4"> Prenotazione #0003</div>
-                            <div className="col-6"> <a style={{color:"red"}}>Annullato</a></div>
-                            <div className="col-2"> </div>
-
-                        </div>
-                    </ListGroup.Item>
-
-                    <ListGroup.Item>
-                        <div className="row">
-                            <div className="col-4"> Prenotazione #0005</div>
-                            <div className="col-6"> <a style={{color:"blue"}}>Soggiorno concluso</a></div>
-                            <div className="col-2"> </div>
-
-                        </div>
-                    </ListGroup.Item>
-
-
-
-
-
-
+                                    </div>
+                                </div>
+                            </ListGroup.Item>
+                        )
+                    })}
 
                 </ListGroup>
                 </div>
@@ -88,11 +114,21 @@ class GestisciPrenotazioni extends Component{
 
                     </div>
                 </div>
+                <BoxAccettaPren
+                    open={openAccetta}
+                    onClose={handleCloseAccetta}
+                    prenotazione={selectedPrenotazione}
+                />
+                <BoxRifiutaPren
+                open={openRifiuta}
+                onClose={handleCloseRifiuta}
+                prenotazione={selectedPrenotazione}
+                />
 
             </div>
 
 
         );
-    }
+
 }
 export default GestisciPrenotazioni;
