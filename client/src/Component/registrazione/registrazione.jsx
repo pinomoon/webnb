@@ -148,11 +148,15 @@ const Registrazione=()=>{
 
 
     const handleSubmit=(event) =>{
+        if(state.tipo==="" || state.nome===""||state.cognome===""||state.cellulare===""||state.citta===""||state.indirizzo===""||state.cap===""||state.data_di_nascita===""||state.sesso===""||state.email===""||state.password===""){
+            return;
+        }
         if(repass!==state.password){
             alert("Il campo reinserisci password e password devono coincidere");
             return;
         }
         event.preventDefault();
+        alert(JSON.stringify(state));
         axios.post('https://localhost:9000/registrazione', state)
             .then((response)=>{
                 alert(response.data);
@@ -198,7 +202,7 @@ const Registrazione=()=>{
 
             <div  className="container mt-10" >
 
-                <form name="form" id="form"  className="container was-validated col-sm-8 mt-3" method="POST">
+                <form  name="form" id="form"  className="container was-validated col-sm-8 mt-3">
                     <h5>Per cominciare, sei un ...</h5>
 
                     <div className="row" style={{marginLeft:"auto",display:"block"}}>
@@ -220,13 +224,15 @@ const Registrazione=()=>{
                         <h5>Dati anagrafici</h5>
 
                         <div className="form-group">
-                            <label htmlFor="name">Nome *</label>
+                            <label htmlFor="nome">Nome *</label>
                             <input id="nome" name="nome" type="text" className="form-control" maxLength="40"
-                                   value={state.nome} onChange={handleChangeNome} required/>
+                                    onChange={handleChangeNome} required/>
                             <div className="invalid-feedback">
                                 Inserire nome
                             </div>
+                        </div>
 
+                        <div className="form-group">
                             <label htmlFor="surname">Cognome *</label>
                             <input id="cognome" name="cognome" type="text" className="form-control" maxLength="40"
                                    value={state.cognome} onChange={handleChangeCognome} required/>
@@ -388,7 +394,7 @@ const Registrazione=()=>{
                         <div className="col-9">
                         </div>
                         <div className="col-1">
-                            <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Invia</Button>
+                            <Button name="ok" id="ok" type="submit"  onClick={handleSubmit}  style={{marginLeft:"-10px",color:"#ff6300"}}>Invia</Button>
                         </div>
                     </div>
 
