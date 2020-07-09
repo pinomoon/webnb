@@ -185,33 +185,40 @@ async function rifiutaPrenotazioneAutomatica(){
 
             let now = Date.now();
 
-            await db.query("UPDATE prenotazione SET stato_prenotazione='rifiutata' , data_rifiuto=? WHERE stato_prenotazione='In attesa di conferma' AND (?-data_prenotazione)>=86400000", [now,now]).catch(err => {
+
+            await db.query("UPDATE prenotazione SET stato_prenotazione='rifiutata' , data_rifiuto=? WHERE stato_prenotazione='In attesa di conferma' AND (?-data_prenotazione)<=86400000", [now,now]).catch(err => {
                 throw err;
             })
             results= await db.query("SELECT id_prenotazione,email,nome, nome_struttura FROM  utente AS u,prenotazione AS p,camera AS c,struttura AS s \
             WHERE u.id_utente=p.id_utente  AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND data_rifiuto=?",[now]).catch(err=>{
                 throw err;
             })
+            if (results.length>0) {
 
-            for (let i=0;i<results.length;i++){
+                for (let i = 0; i < results.length; i++) {
 
-                let mailOptions = {
-                    from: 'webnb-service@libero.it',
-                    to:results[i].email,
-                    subject: 'Prenotazione Rifiutata automaticamente',
-                    text: 'Ciao '+results[0].nome+',\n'+"\nLa tua prenotazione : " +
-                        results[i].id_prenotazione+'\npresso: '+results[i].nome_struttura +'  è stata rifiutata automaticamente,\nvisita il nostro sito per trovare altre strutture per il tuo viaggio ' +
-                        '\n Saluti,\n\n Staff WeB&B.'
-                };
-                transport.sendMail(mailOptions,function(error, info){
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log('Email sent: ' + info.response);
-                    }
-                })
+                    let mailOptions = {
+                        from: 'webnb-service@libero.it',
+                        to: results[i].email,
+                        subject: 'Prenotazione Rifiutata automaticamente',
+                        text: 'Ciao ' + results[0].nome + ',\n' + "\nLa tua prenotazione : " +
+                            results[i].id_prenotazione + '\npresso: ' + results[i].nome_struttura + '  è stata rifiutata automaticamente,\nvisita il nostro sito per trovare altre strutture per il tuo viaggio ' +
+                            '\n Saluti,\n\n Staff WeB&B.'
+                    };
+                    transport.sendMail(mailOptions, function (error, info) {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log('Email sent: ' + info.response);
+                        }
+                    })
+                }
+                console.log("rifiuto automatico effettuato con successo !...")
+                console.log(now);
+            }else{
+                console.log("nessuna prenotazione da rifiutare !")
+                console.log("now");
             }
-        console.log("rifiuto automatico effettuato con successo !...")
         });
     }catch(error){
         throw error;
