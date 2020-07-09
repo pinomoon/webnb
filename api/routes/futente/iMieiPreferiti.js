@@ -14,7 +14,7 @@ async function elencoPref(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async() => {
-            results = await db.query("SELECT nome_struttura,regione,citta,indirizzo_struttura,tipo,immagine_1 \
+            results = await db.query("SELECT struttura.id_struttura,nome_struttura,descrizione,regione,citta,indirizzo_struttura,tipo,immagine_1 \
             FROM preferiti,struttura,gallery_struttura WHERE preferiti.id_struttura=struttura.id_struttura \
             AND gallery_struttura.id_struttura=struttura.id_struttura AND preferiti.id_utente=? \
             ORDER BY nome_struttura ASC",[req.body.id_utente])
