@@ -294,7 +294,7 @@ const Registrazione=()=>{
                             <div class="col-5">
                                 <label htmlFor="name">CAP</label>
                                 <input id="cap" name="cap" type="text" className="form-control" maxLength="40"
-                                       value={state.cap} onChange={handleChangeCap} required/>
+                                       value={state.cap} onChange={handleChangeCap} pattern="^[0-9]{5,5}$" required/>
                                 <div className="invalid-feedback">
                                     Inserire CAP
                                 </div>
@@ -302,11 +302,11 @@ const Registrazione=()=>{
                         </div>
                             <div className="row">
                                 <div className="col-9">
-                                <label htmlFor="cellulare">Numero Cellulare</label>
+                                <label htmlFor="numtel">N. telefonico</label>
                                 <input id="cellulare" name="cellulare" type="text" className="form-control" maxLength="40"
-                                       value={state.cellulare} onChange={handleChangeCellulare} required/>
-                                <div className="invalid-feedback">
-                                    Inserire cellulare
+                                       value={state.cellulare} onChange={handleChangeCellulare} pattern="(^[+]{1,1}[0-9]{12,12}$)|(^[0-9]{10,10}$)|(^[0-9]{9,9}$)" required/>
+                                <div className="invalid-feedback" >
+                                    Inserire N. telefonico
                                 </div>
                                 </div>
                             </div>
@@ -325,7 +325,7 @@ const Registrazione=()=>{
                             <div class="col-6">
                                 <label htmlFor="credit-card">Numero</label>
                                 <input name="numero_carta" id="numero_carta" type="credit-card" className="form-control"
-                                       size="32" maxLength="40"
+                                       size="32" maxLength="40" pattern="[0-9]{13,16}"
                                        value={state.numero_carta} onChange={handleChangeNumeroCarta}/>
                             </div>
                             </div>
@@ -334,7 +334,7 @@ const Registrazione=()=>{
                             <div className="col-4">
                                 <label htmlFor="credit-card">Scadenza</label>
                                 <input name="scadenza" id="scadenza" type="text" className="form-control"
-                                       size="32" maxLength="40"
+                                       size="32" maxLength="40" placeholder="MM/AA" pattern="(^[0][1-9]\/[0][1-9]$)|(^[1-2][0-9]\/[0][1-9]$)|(^[0][1-9]\/[1][0-2]$)|(^[1-2][0-9]\/[1][0-2]$)|(^[3][0-1]\/[0][1-9]$)|(^[3][0-1]\/[1][0-2]$)"
                                        value={state.scadenza} onChange={handleChangeScadenza}/>
                             </div>
 
@@ -342,7 +342,7 @@ const Registrazione=()=>{
                             <div className="col-4">
                                 <label htmlFor="credit-card">CVC</label>
                                 <input name="cvc" id="cvc" type="text" className="form-control"
-                                       size="32" maxLength="40"
+                                       size="32" maxLength="40" placeholder="123" pattern="^[0-9]{3,3}$"
                                        value={state.cvc} onChange={handleChangeCvc}/>
                             </div>
                             </div>
@@ -354,6 +354,8 @@ const Registrazione=()=>{
                         <div className="form-group">
                             <label htmlFor="email">E-mail *</label>
                             <input name="email" id="email" type="email" className="form-control" size="32"
+                            placeholder="casa.vacanze@bnb.our"
+                            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                                    maxLength="40"
                                    value={state.email} onChange={handleChangeEmail} required/>
                             <div className="invalid-feedback">
@@ -365,21 +367,19 @@ const Registrazione=()=>{
                             <label htmlFor="pass">Password *</label>
                             <input name="password" id="pass" type="password" className="form-control"
                                    title="Almeno 8 caratteri, una lettera maiuscola e un numero"
-                                //pattern="^(?=.[a-z])(?=.[A-Z])(?=.*[0-9]).{8,}$"
+                                   pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
                                    size="32" maxLength="40" value={state.password} onChange={handleChangePassword}
                                    required/>
                             <div className="invalid-feedback">
-                                Almeno 8 caratteri di cui uno maiusciolo e un numero
-                            </div>
-                            <div className="valid-feedback text-warning">
-                                Password media
+                                Almeno 8 caratteri di cui uno maiusciolo e un numero. Sono ammessi caratteri speciali
                             </div>
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="repass">Reinserisci password *</label>
                             <input name="repass" id="repass" type="password" className="form-control" size="32"
-                                   maxLength="40" value={repass}
+                                   maxLength="40" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" 
+                                   value={repass}
                                    onChange={handleChangeRepass} required/>
                             <div className="invalid-feedback">
                                 Le password devono coincidere
