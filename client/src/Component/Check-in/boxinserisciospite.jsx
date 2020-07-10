@@ -253,7 +253,7 @@ const BoxInserisciOspite=(props)=> {
                 <DialogActions id="action">
                     <div className="row">
                         <div className="col-1">
-                            <Button name="ok" id="ok" onClick={handleSubmit} style={{
+                            <Button name="ok" id="ok" onClick={handleClose} style={{
                                 marginLeft: "-10px",
                                 color: "#ff6300"
                             }}>Indietro</Button>
