@@ -53,6 +53,15 @@ const RecuperaPassword=()=>{
     };
 
     const handleSubmit=(event)=>{
+        if(state.password===""){
+            return;
+        }
+        if(repass!==state.password){
+            setTipoRisposta("4");
+            handleOpenClickConferma();
+            svuotaCampi();
+            return;
+        }
         event.preventDefault();
         axios.post('https://localhost:9000/accesso/nuoveCredenziali', state)
             .then((response)=>{

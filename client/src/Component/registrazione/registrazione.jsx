@@ -148,11 +148,10 @@ const Registrazione=()=>{
 
 
     const handleSubmit=(event) =>{
-        if(state.tipo==="" || state.nome===""||state.cognome===""||state.cellulare===""||state.citta===""||state.indirizzo===""||state.cap===""||state.data_di_nascita===""||state.sesso===""||state.email===""||state.password===""){
-            return;
-        }
+       
         if(repass!==state.password){
-            alert("Il campo reinserisci password e password devono coincidere");
+            alert("Il campo Password e Reinserisci password devono coincidere"); //da fare con il box
+            svuotaCampi();
             return;
         }
         event.preventDefault();
@@ -367,7 +366,7 @@ const Registrazione=()=>{
                             <label htmlFor="pass">Password *</label>
                             <input name="password" id="pass" type="password" className="form-control"
                                    title="Almeno 8 caratteri, una lettera maiuscola e un numero"
-                                   pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                                   pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" 
                                    size="32" maxLength="40" value={state.password} onChange={handleChangePassword}
                                    required/>
                             <div className="invalid-feedback">
@@ -389,12 +388,12 @@ const Registrazione=()=>{
 
                     <div className="row">
                         <div className="col-1">
-                            <Button name="ok" id="ok"  onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
+                            <Button name="ok" id="ok"  href="/" style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
                         </div>
                         <div className="col-9">
                         </div>
                         <div className="col-1">
-                            <Button name="ok" id="ok" type="submit"  onClick={handleSubmit}  style={{marginLeft:"-10px",color:"#ff6300"}}>Invia</Button>
+                            <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Invia</Button>
                         </div>
                     </div>
 

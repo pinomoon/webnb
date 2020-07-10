@@ -44,6 +44,9 @@ const BoxConfermaRecupero=(props)=> {
                         {responseType=="3"&&
                         <p>Errore generico, riprova</p>
                         }
+                        {responseType==="4"&&
+                        <p>Il campo Nuova password e Reinserisci Nuova Password devono coincidere!</p>
+                        }
 
                     </DialogContentText>
 
@@ -57,6 +60,9 @@ const BoxConfermaRecupero=(props)=> {
                     }
                     {responseType == "3"&&
                     < Button onClick={handleClose} color="primary">Chiudi</Button>
+                    }
+                     {responseType == "4"&&
+                    < Button onClick={handleClose}color="primary">Chiudi</Button>
                     }
                 </DialogActions>
             </Dialog>
