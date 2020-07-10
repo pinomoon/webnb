@@ -10,11 +10,16 @@ import BoxConfermaModifica from "../modifica_account/boxconfermamodifica";
 import AggiungiCamera from "../GestisciCamera/AggiungiCamera";
 import BoxEliminaStruttura from "./boxeliminastruttura";
 import EliminaCamera from "../GestisciCamera/eliminacamera";
+import BuildIcon from '@material-ui/icons/Build';
+import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import AddIcon from '@material-ui/icons/Add';
 
 
-const id_utente=getSessionCookie().id;
+
 
 const GestisciStrutture=()=>{
+    const id_utente=getSessionCookie().id;
     const [strutture, setStrutture]=useState([]);
     const [selectedStruttura,setSelectedStruttura]=useState();
     const [openModifica, setOpenModifica]=useState(false);
@@ -76,7 +81,7 @@ const GestisciStrutture=()=>{
             <div className="container">
                 <div className="row">
                     <div className="col">
-                        <h4 style={{textAlign:"center"}}>Le mie strutture</h4>
+                        <h2 style={{textAlign:"center",fontFamily:"Helvetica Neue"}}>Le mie strutture</h2>
                     </div>
                 </div>
                 <div className="row">
@@ -85,23 +90,27 @@ const GestisciStrutture=()=>{
                     </div>
                     <div className="col-sm-12 col-md-12 col-lg-10">
                         <div className="row">
+
                             {strutture.map(value => {
 
                                 var href="/modificaStruttura?id_struttura="+value.id_struttura;
                                 var href2="/eliminaCamera?id_struttura="+value.id_struttura;
                                 return(
-                                <div key={value.id_struttura} className="col-sm-6 col-md-4 col-lg-3">
+                                <div key={value.id_struttura} className="col-sm-6 col-md-4 col-lg-4">
                                     <section className="cards clearfix">
                                         <div className="card" style={{width: "auto", height: "20%"}}>
                                             <img className="card_image" src={villa} alt=" Villa "/>
                                             <div className="card_copy">
                                                 <h6 style={{textAlign:"center"}}>{value.nome_struttura}</h6>
-                                                <p>{value.descrizione} </p>
+                                                <ul className="list-group list-group-flush" style={{height:"10%"}}>
+                                                    <li className="list-group-item" style={{fontSize:"12px",margin:0}}>{value.descrizione}
+                                                    </li>
+                                                </ul>
                                                 <div style={{margin: "auto"}}>
-                                                    <Button href={href}  style={{color: "#ff6300"}}>Modifica Struttura</Button>
-                                                    <Button onClick={()=>handleElimina(value)}style={{color: "#ff6300"}}>Elimina Struttura</Button>
-                                                    <Button onClick={()=>handleAggiungiCamera(value)}style={{color: "#ff6300"}}>Aggiungi Camera</Button>
-                                                    <Button href={href2}style={{color: "#ff6300"}}>Elimina Camera</Button>
+                                                    <Button href={href}  style={{color: "#ff6300"}}><BuildIcon/> Modifica Struttura</Button>
+                                                    <Button onClick={()=>handleElimina(value)}style={{color: "#ff6300"}}><DeleteOutlineIcon/> Elimina Struttura</Button>
+                                                    <Button onClick={()=>handleAggiungiCamera(value)}style={{color: "#ff6300"}}><AddIcon/> Aggiungi Camera</Button>
+                                                    <Button href={href2}style={{color: "#ff6300"}}><DeleteIcon/> Elimina Camera</Button>
 
                                                 </div>
                                             </div>
