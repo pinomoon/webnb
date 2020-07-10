@@ -6,6 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import Slide from "@material-ui/core/Slide/Slide";
 import DialogActions from "@material-ui/core/DialogActions";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 
 
@@ -56,18 +57,31 @@ const EliminaCamera=(props)=>{
 
     return(
         <div>
-            <h5>Elenco camere</h5>
-            <br/>
+            <h5 style={{textAlign:"center"}}>Elenco camere</h5>
             {camere.map(camera=>{
                 console.log(camera.id_camera);
                 return(
-                    <div >
-                        <p>Nome Camera:{camera.nome_camera}</p>
-                        <p>Numero Posti Letto: {camera.numero_posti_letto}</p>
-                        <p>Costo Camera: {camera.costo_camera}</p>
-                        <p>Colazione Inclusa: {camera.colazione_inclusa}</p>
-                        <Button onClick={()=>handleElimina(camera)}>Elimina</Button>
-                        <br/>
+                    <div className="row" >
+                        <div className="col-2">
+                        </div>
+                        <div className="col-4">
+
+                        <div className="card text-center" style={{width: "50%"}}>
+                            <div className="card-body">
+                                <h5 className="card-title">{camera.nome_camera}</h5>
+                                <div className="card-text">
+                                    <ul className="list-group list-group-flush" style={{height:"10%"}}>
+                                    <li className="list-group-item">Numero Posti Letto: {camera.numero_posti_letto}</li>
+                                    <li className= "list-group-item">Costo Camera: {camera.costo_camera}</li>
+                                    <li className= "list-group-item">Colazione Inclusa: {camera.colazione_inclusa}</li>
+                                    </ul>
+
+                                </div>
+                                <Button onClick={()=>handleElimina(camera)} style={{color:"#ff6300"}}> <DeleteOutlineIcon/> Elimina</Button>
+                            </div>
+                        </div>
+
+s                    </div>
                     </div>
 
 
