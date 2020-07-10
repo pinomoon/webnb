@@ -49,6 +49,9 @@ const Login =()=>{
         setPassword("");
     };
     const handleSubmit=(event)=>{
+        if(state.password==="" || state.email===""){
+            return;
+        }
         event.preventDefault();
         axios.post('https://localhost:9000/accesso', state)
             .then((response)=>{
@@ -111,14 +114,14 @@ const Login =()=>{
                 <img src={cliente} style={{margin:"auto",marginTop:"30px",width:"30%",height:"auto%",display:"block"}}/>
 
                 <div className="container mt-10">
-            <div name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
+            <form name="form" id="form" className="container was-validated col-sm-8 mt-3">
 
 
                 <div className="form-group">
 
                     <label htmlFor="email">E-mail *</label>
                     <input name="email" id="email" type="email" className="form-control" size="32" maxLength="40" value={state.email}
-                           onChange={handleChangeEmail} required/>
+                          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" onChange={handleChangeEmail} required/>
                     <div className="invalid-feedback">
                         Inserire indirizzo e-mail
                     </div>
@@ -126,14 +129,12 @@ const Login =()=>{
                     <label htmlFor="pass">Password *</label>
                     <input name="password" id="pass" type="password" className="form-control"
                            title="Almeno 8 caratteri, una lettera maiuscola e un numero" value={state.password}
-                          // pattern="^(?=.[a-z])(?=.[A-Z])(?=.*[0-9]).{8,}$"
+                         
                         size="32" maxLength="40" required onChange={handleChangePassword}/>
                     <div className="invalid-feedback">
-                        Almeno 8 caratteri di cui uno maiuscolo e un numero
+                        Inserire password
                     </div>
-                    <div className="valid-feedback text-warning">
-                        Password media
-                    </div>
+                   
                     <Button id="recupero"  href="https://localhost:3000/login/passwordDimenticata" style={{fontSize:"11px",marginLeft:"-10px",color:"#ff6300"}}><h7>Password dimenticata?</h7></Button>
                     <div className="row">
                         <div className="col-1">
@@ -151,7 +152,7 @@ const Login =()=>{
 
 
 
-            </div>
+            </form>
 
                 <BoxAccesso
                     open={openConferma}
