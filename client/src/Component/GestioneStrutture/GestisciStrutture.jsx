@@ -12,9 +12,10 @@ import BoxEliminaStruttura from "./boxeliminastruttura";
 import EliminaCamera from "../GestisciCamera/eliminacamera";
 
 
-const id_utente=getSessionCookie().id;
+
 
 const GestisciStrutture=()=>{
+    const id_utente=getSessionCookie().id;
     const [strutture, setStrutture]=useState([]);
     const [selectedStruttura,setSelectedStruttura]=useState();
     const [openModifica, setOpenModifica]=useState(false);

@@ -384,19 +384,23 @@ async function modificaDatiOspiti(req,res,next){
 router.post("/checkIN",checkIN);
 
 async function checkIN(req,res,next){
-    const db=await makeDb(config);
+    const db= await makeDb(config);
     let results={};
     try {
-        results= await withTransaction(db,async ()=>{
-            (await db).query("SELECT * FROM dati_ospiti WHERE id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{throw err;})
+        await withTransaction(db, async () => {
+            results = await db.query("SELECT * FROM dati_ospiti WHERE id_prenotazione=?" , [req.body.id_prenotazione]).catch(err => {
+                throw err;
+            })
+            var risultato=['1',results];
+            console.log(req.body.id_prenotazione)
+            console.log(results)
+            res.send(risultato); //
         })
-        var risultato=['1',results];
-        res.send(risultato);
     }catch (error) {
-        res.send("2");
+        res.send('2');
         throw error;
-
     }
+
 }
 
 

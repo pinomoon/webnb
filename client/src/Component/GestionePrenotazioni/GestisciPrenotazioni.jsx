@@ -74,13 +74,14 @@ import checkin from "../Check-in/checkin";
                         </div>
                     </ListGroup.Item>
                     {prenotazioni.map((values)=>{
+                        var href="/checkin?id_prenotazione="+values.id_prenotazione;
                         return(
                             <ListGroup.Item>
                                 <div className="row">
                                     <div className="col-4"><h5>Id: {values.id_prenotazione}</h5></div>
                                     <div className="col-5"> <h5> Stato: {values.stato_prenotazione}</h5></div>
                                     <div className="col-3">
-                                        { values.stato_prenotazione=="In attesa di conferma" &&
+                                        { values.stato_prenotazione=="in attesa di conferma" &&
                                             <div>
                                         <Button color="inherit" onClick={()=>handleAccetta(values)} style={{color:"#ff6300"}}>Accetta</Button>
                                             <br/>
@@ -89,7 +90,7 @@ import checkin from "../Check-in/checkin";
                                         }
                                         { values.stato_prenotazione=="confermata" &&
                                         <div>
-                                            <Button color="inherit" href="/checkin"  style={{color:"#ff6300"}}>check-in</Button>
+                                            <Button color="inherit" href={href}  style={{color:"#ff6300"}}>check-in</Button>
                                         </div>
                                         }
                                         { values.stato_prenotazione=="soggiorno in corso" &&

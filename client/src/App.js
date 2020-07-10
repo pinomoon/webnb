@@ -9,7 +9,7 @@ import PaginaLogin from "./Component/login/login"
 import PaginaRegistrazione from "./Component/registrazione/PaginaRegistrazione"
 import PaginaModificaAccount from "./Component/modifica_account/PaginaModificaAccount"
 import PaginaProfilo from "./Component/profilo/PaginaProfilo";
-import PaginaCheckin from "./Component/Check-in/checkin";
+import Checkin from "./Component/Check-in/checkin";
 import PaginaCheckinSuccess from "./Component/Check-in/CheckinSuccess"
 import CheckinFail from "./Component/Check-in/CheckinFail";
 import GestisciStrutture from "./Component/GestioneStrutture/GestisciStrutture";
@@ -71,7 +71,7 @@ const App= ()=> {
                         <Route path="/login" component={PaginaLogin} exact/>
                         <Route path="/cliente" component={HomepageCliente} exact/>
                         <Route path="/modificaaccount" component={PaginaModificaAccount} exact/>
-                        <Route path="/checkin" component={PaginaCheckin} exact/>
+                        <Route path="/checkin" component={Checkin} />
                         <Route path="/checkin/success" component={PaginaCheckinSuccess} exact/>
                         <Route path="/checkin/error" component={CheckinFail} exact/>
                         <Route path="/lemiestrutture" component={GestisciStrutture} exact/>
