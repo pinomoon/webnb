@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import {getSessionCookie} from "../../sessions";
 import axios from "axios";
 import BoxAnnullaPren from "./boxannullapren";
+import BoxRecensisci from "./boxrecensisci";
 
 
 
@@ -12,6 +13,7 @@ const ElencoPrenotazioni=()=>{
     const[prenotazioni,setPrenotazioni]=useState([]);
     const[selectedPrenotazione,setSelectedPrenotazione]=useState();
     const[openAnnullaPren, setOpenAnnullaPren]=useState(false);
+    const[openRecensisci, setOpenRecensisci]=useState(false);
 
     React.useLayoutEffect(()=>{
         axios.post("https://localhost:9000/leMiePrenotazioni",{id_utente})
@@ -55,6 +57,16 @@ const ElencoPrenotazioni=()=>{
       setSelectedPrenotazione();
       window.location.reload();
     };
+    const handleRecensisci=(value)=>{
+        console.log(value.id_prenotazione);
+        setSelectedPrenotazione(value.id_prenotazione);
+        setOpenRecensisci(true);
+    }
+    const handleCloseRecensisci=()=>{
+        setOpenRecensisci(false);
+        setSelectedPrenotazione();
+        window.location.reload();
+    }
 
         return(
 
@@ -112,7 +124,7 @@ const ElencoPrenotazioni=()=>{
                                                 <Button color="inherit" onClick={()=>handleAnnullaPren(value)} style={{color: "#ff6300"}}>Annulla Prenotazione</Button>
                                                 }
                                                 {value.stato_prenotazione == "soggiorno concluso" &&
-                                                <Button color="inherit" style={{color: "#ff6300"}}>Recensisci</Button>
+                                                <Button color="inherit" onClick={()=>handleRecensisci(value)}style={{color: "#ff6300"}}>Recensisci</Button>
                                                 }
                                             </div>
                                         </div>
@@ -130,6 +142,11 @@ const ElencoPrenotazioni=()=>{
                 <BoxAnnullaPren
                     open={openAnnullaPren}
                     onClose={handleCloseBoxAnnullaPren}
+                    prenotazione={selectedPrenotazione}
+                />
+                <BoxRecensisci
+                    open={openRecensisci}
+                    onClose={handleCloseRecensisci}
                     prenotazione={selectedPrenotazione}
                 />
             </div>

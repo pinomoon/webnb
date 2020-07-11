@@ -178,6 +178,8 @@ async function recensisci(req, res, next) {
                 .catch(err=>{
                     throw err;
                 });
+            console.log(req.body.id_prenotazione);
+            console.log(JSON.stringify(results));
             var idstruttura= results[0].id_struttura;
             var idutente= results[0].id_utente;
             results = await db.query("INSERT INTO recensione (id_utente,id_struttura,recensione) VALUES ?"
