@@ -47,6 +47,9 @@ const BoxConfermaModifica=(props)=> {
                         {responseType=="4"&&
                         <p>Errore generico, non è possibile effettuare le modidiche, riprova</p>
                         }
+                        {responseType=="5"&&
+                        <p>Il campo Nuova Password e Reinserisci Nuova Password devono coincidere!</p>
+                        }
                     </DialogContentText>
 
                 </DialogContent>
@@ -61,6 +64,9 @@ const BoxConfermaModifica=(props)=> {
                     < Button onClick={handleClose} color="primary">Chiudi</Button>
                     }
                     {responseType == "4"&&
+                    < Button onClick={handleClose} color="primary">Chiudi</Button>
+                    }
+                    {responseType == "5"&&
                     < Button onClick={handleClose} color="primary">Chiudi</Button>
                     }
                 </DialogActions>

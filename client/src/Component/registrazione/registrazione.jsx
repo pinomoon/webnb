@@ -295,7 +295,7 @@ const Registrazione=()=>{
                             <div class="col-5">
                                 <label htmlFor="name">CAP</label>
                                 <input id="cap" name="cap" type="text" className="form-control" maxLength="40"
-                                       value={state.cap} onChange={handleChangeCap} pattern="^[0-9]{5,5}$" required/>
+                                       value={state.cap} onChange={handleChangeCap} pattern="^[0-9]{5,5}$" />
                                 <div className="invalid-feedback">
                                     Inserire CAP
                                 </div>

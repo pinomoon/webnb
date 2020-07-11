@@ -60,6 +60,17 @@ const ModificaAccount=()=>{
 
     };
     const handleSubmit= async(event)=>{
+       
+        if(document.forms[0].checkValidity()===false){
+            return;
+        }
+        if(repassword!==state.password){
+            setTipoRisposta("5");
+            handleClickOpenConferma();
+            setPassword("");
+            setRepassword("");
+            return;
+        }
         alert("sono stati inseriti dei campi:"+" "+JSON.stringify(state));
         event.preventDefault();
         let res = await axios.post('https://localhost:9000/modificaAccount/salvamodifiche', state)
@@ -183,19 +194,52 @@ const ModificaAccount=()=>{
     const handleChangePassword=(event)=>{
         const target=event.target;
         const valore=  target.value;
+        if(valore!==""){
+            document.forms[0].children[10].children[1].setAttribute('required','true');
+            document.forms[0].children[10].children[3].setAttribute('required','true');
+            document.forms[0].children[10].children[6].setAttribute('required','true');
+        }
         setPassword(valore);
         state.password=valore;
+        if(state.password==="" && state.repassword==="" && check_repass===""){
+            document.forms[0].children[10].children[1].setAttribute('required','false');
+            document.forms[0].children[10].children[3].setAttribute('required','false');
+            document.forms[0].children[10].children[6].setAttribute('required','false');
+        }
     };
     const handleChangeRepassword=(event)=>{
+       
         const target=event.target;
         const valore=  target.value;
+        if(valore!==""){
+            document.forms[0].children[10].children[1].setAttribute('required','true');
+            document.forms[0].children[10].children[3].setAttribute('required','true');
+            document.forms[0].children[10].children[6].setAttribute('required','true');
+
+        }
+        
         setRepassword(valore);
         state.repassword=valore;
+        if(state.repassword==="" && state.password==="" && check_repass===""){
+            document.forms[0].children[10].children[1].setAttribute('required','false');
+            document.forms[0].children[10].children[3].setAttribute('required','false');
+            document.forms[0].children[10].children[6].setAttribute('required','false');
+        }
     };
     const handleChangeCheckRepass=(event)=>{
         const target=event.target;
         const valore=  target.value;
+        if(valore!==""){
+            document.forms[0].children[10].children[1].setAttribute('required','true');
+            document.forms[0].children[10].children[3].setAttribute('required','true');
+            document.forms[0].children[10].children[6].setAttribute('required','true');
+        }
         setCheckRepass(valore);
+        if(check_repass==="" && state.password==="" && state.repassword===""){
+            document.forms[0].children[10].children[1].setAttribute('required','false');
+            document.forms[0].children[10].children[3].setAttribute('required','false');
+            document.forms[0].children[10].children[6].setAttribute('required','flase');
+        }
 
     };
 
@@ -286,7 +330,7 @@ const ModificaAccount=()=>{
                             <div className="col-9">
                                 <label htmlFor="name">Numero Cellulare</label>
                                 <input id="cellulare" name="cellulare" type="text" className="form-control" maxLength="40"
-                                       value={state.cellulare} onChange={handleChangeCellulare} required/>
+                                       value={state.cellulare} onChange={handleChangeCellulare} pattern="(^[+]{1,1}[0-9]{12,12}$)|(^[0-9]{10,10}$)|(^[0-9]{9,9}$)" required />
                                 <div className="invalid-feedback">
                                     Inserire cellulare
                                 </div>
@@ -296,7 +340,7 @@ const ModificaAccount=()=>{
                             <div className="col-5">
                                 <label htmlFor="name">CAP</label>
                                 <input id="cap" name="cap" type="text" className="form-control" maxLength="40"
-                                       value={state.cap} onChange={handleChangeCap} required/>
+                                       value={state.cap} onChange={handleChangeCap} pattern="^[0-9]{5,5}$" />
                                 <div className="invalid-feedback">
                                     Inserire CAP
                                 </div>
@@ -320,7 +364,7 @@ const ModificaAccount=()=>{
                             <div className="col-6">
                                 <label htmlFor="credit-card">Numero</label>
                                 <input name="numero_carta" id="numero_carta" type="credit-card" className="form-control"
-                                       size="32" maxLength="40"
+                                       size="32" maxLength="40" pattern="[0-9]{13,16}"
                                        value={state.numero_carta} onChange={handleChangeNumeroCarta}/>
                             </div>
                         </div>
@@ -329,7 +373,7 @@ const ModificaAccount=()=>{
                             <div className="col-3">
                                 <label htmlFor="credit-card">Scadenza</label>
                                 <input name="scadenza" id="scadenza" type="text" className="form-control"
-                                       size="32" maxLength="40"
+                                       size="32" maxLength="40"  pattern="(^[0][1-9]\/[0][1-9]$)|(^[1-2][0-9]\/[0][1-9]$)|(^[0][1-9]\/[1][0-2]$)|(^[1-2][0-9]\/[1][0-2]$)|(^[3][0-1]\/[0][1-9]$)|(^[3][0-1]\/[1][0-2]$)"
                                        value={state.scadenza} onChange={handleChangeScadenza}/>
                             </div>
 
@@ -337,36 +381,34 @@ const ModificaAccount=()=>{
                             <div className="col-3">
                                 <label htmlFor="credit-card">CVC</label>
                                 <input name="cvc" id="cvc" type="text" className="form-control"
-                                       size="32" maxLength="40"
+                                       size="32" maxLength="40" pattern="^[0-9]{3,3}$"
                                        value={state.cvc} onChange={handleChangeCvc}/>
                             </div>
                         </div>
                         <br/>
 
-
+                    </div>
                         <h5>Modifica Password</h5>
-
-                        <div className="form-group">
-                            <label htmlFor="repass">Vecchia Password </label>
-                            <input name="repass" id="repass" type="password" className="form-control" size="32"
+                    
+                        <div id="io" className="form-group">
+                            <label htmlFor="password">Vecchia Password </label>
+                            <input class="password" id="password" type="password" className="form-control" size="32"
                                    maxLength="40" value={state.password}
                                    onChange={handleChangePassword} />
 
                             <label htmlFor="repassword">Nuova Password </label>
-                            <input name="repassword" id="repassword" type="password" className="form-control"
+                            <input  class="repassword" id="repassword" type="password" className="form-control"
                                    title="Almeno 8 caratteri, una lettera maiuscola e un numero"
-                                //pattern="^(?=.[a-z])(?=.[A-Z])(?=.*[0-9]).{8,}$"
+                                   pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
                                    size="32" maxLength="40" value={state.repassword} onChange={handleChangeRepassword}
                                    />
                             <div className="invalid-feedback">
-                                Almeno 8 caratteri di cui uno maiusciolo e un numero
+                                Almeno 8 caratteri di cui uno maiuscolo e un numero
                             </div>
-                            <div className="valid-feedback text-warning">
-                                Password media
-                            </div>
+                            
 
                             <label htmlFor="check_repass">Reinserisci Nuova Password </label>
-                            <input name="check_repass" id="check_repass" type="password" className="form-control" size="32"
+                            <input class="check_repass" id="check_repass" type="password" className="form-control" size="32"
                                    maxLength="40" value={check_repass}
                                    onChange={handleChangeCheckRepass} />
                             <div className="invalid-feedback">
@@ -374,7 +416,7 @@ const ModificaAccount=()=>{
                             </div>
                         </div>
 
-                    </div>
+                   
 
                     <br></br>
 
