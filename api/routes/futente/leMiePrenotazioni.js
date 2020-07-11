@@ -16,10 +16,9 @@ async function elenco(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async() => {
-            results = await db.query("SELECT *\
-            FROM utente,prenotazione \
-            WHERE prenotazione.id_utente=utente.id_utente \
-            AND utente.id_utente=? AND prenotazione.conferma=1\
+            results = await db.query("SELECT id_prenotazione, data_inizio, data_fine, stato_prenotazione, nome_struttura, metodo_di_pagamento \
+            FROM prenotazione p,camera c,struttura s \
+            WHERE p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND p.id_utente=?\
              ORDER BY stato_prenotazione ASC ,data_prenotazione DESC ",[req.body.id_utente])
                 .catch(err=>{
                     throw err;
@@ -45,9 +44,9 @@ async function annulla(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async() => {
-            results = await db.query("SELECT stato_prenotazione,data_inizio,disdetta_gratuita,modalita_di_pagamento \
-            FROM prenotazione \
-            WHERE prenotazione.id_prenotazione=?",[req.body.id_prenotazione ])
+            results = await db.query("SELECT stato_prenotazione,data_inizio,disdetta_gratuita,metodo_di_pagamento \
+            FROM prenotazione p, camera c, struttura s  \
+            WHERE p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND p.id_prenotazione=?",[req.body.id_prenotazione ])
                 .catch(err=>{
                     throw err;
                 });
@@ -63,8 +62,8 @@ async function annulla(req, res, next) {
                     throw err;
                 });
             let datenow=new Date();
-        if(results[0].stato_prenotazione=='confermata'){
-            if((results[0].modalita_di_pagamento=='struttura') && (data_inizio.getTime()-datenow.getTime()<(results[0].disdetta_gratuita*86400000))){
+        if(results.stato_prenotazione=='confermata'){
+            if((results.modalita_di_pagamento=='struttura') && (data_inizio.getTime()-datenow.getTime()<(results[0].disdetta_gratuita*86400000))){
                 
                 await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione='annullata', prenotazione.stato_pagamento=true \
                 WHERE prenotazione.id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{
@@ -98,9 +97,9 @@ async function annulla(req, res, next) {
                         console.log('Email sent: ' + info.response);
                     }
                 });
-                res.rend('1'); //Prenotazione annullata e pagamento effettuato
+                res.send('1'); //Prenotazione annullata e pagamento effettuato
             }
-            else if((results[0].modalita_di_pagamento=='carta') && (data_inizio.getTime()-datenow.getTime()>=(results[0].disdetta_gratuita*86400000))){
+            else if((results.modalita_di_pagamento=='carta') && (data_inizio.getTime()-datenow.getTime()>=(results[0].disdetta_gratuita*86400000))){
                 /* effettua rimborso */
                 await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione=annullata, prenotazione.stato_rimborso=true \
                 WHERE prenotazione.id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{
@@ -134,7 +133,7 @@ async function annulla(req, res, next) {
                         console.log('Email sent: ' + info.response);
                     }
                 });
-                res.rend('2'); //prenotazione annullata e rimborso effettuato
+                res.send('2'); //prenotazione annullata e rimborso effettuato
             }
             else{
                 await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione=annullata \
@@ -144,10 +143,10 @@ async function annulla(req, res, next) {
                 ]).catch(err=>{
                     throw err;
                 })
-                res.rend('3'); //prenotazione annullata//
+                res.send('3'); //prenotazione annullata//
             }
         }
-        else if(results[0].stato_prenotazione=='in attesa di conferma'){
+        else if(results.stato_prenotazione=='in attesa di conferma'){
             result= await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione=annullata \
                 WHERE prenotazione.id_prenotazione=?"
                 ,[
@@ -155,13 +154,13 @@ async function annulla(req, res, next) {
                 ]).catch(err=>{
                     throw err;
                 })
-                res.rend('3'); //prenotazione annullata//
+                res.send('3'); //prenotazione annullata
             }
         
         })
     }catch(err){
         console.log(err);
-        res.send('3'); 
+        res.send('4');//errore
         next(createError(500));
     }
 }
