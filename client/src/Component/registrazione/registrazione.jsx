@@ -148,7 +148,9 @@ const Registrazione=()=>{
 
 
     const handleSubmit=(event) =>{
-       
+        if(document.forms[0].checkValidity()===false){
+            return;
+        }
         if(repass!==state.password){
             alert("Il campo Password e Reinserisci password devono coincidere"); //da fare con il box
             svuotaCampi();
@@ -201,7 +203,7 @@ const Registrazione=()=>{
 
             <div  className="container mt-10" >
 
-                <form  name="form" id="form"  className="container was-validated col-sm-8 mt-3">
+                <form  name="cita" id="form"  className="container was-validated col-sm-8 mt-3">
                     <h5>Per cominciare, sei un ...</h5>
 
                     <div className="row" style={{marginLeft:"auto",display:"block"}}>
