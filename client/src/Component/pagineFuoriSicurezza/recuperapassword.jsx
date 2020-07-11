@@ -53,13 +53,12 @@ const RecuperaPassword=()=>{
     };
 
     const handleSubmit=(event)=>{
-        if(state.password===""){
+        if(document.forms[0].checkValidity()===false){
             return;
         }
         if(repass!==state.password){
             setTipoRisposta("4");
             handleOpenClickConferma();
-            svuotaCampi();
             return;
         }
         event.preventDefault();
@@ -105,7 +104,7 @@ const RecuperaPassword=()=>{
                     <label htmlFor="pass">Nuova Password</label>
                     <input name="password" id="password" type="password" className="form-control"
                            title="Almeno 8 caratteri, una lettera maiuscola e un numero"
-                        //pattern="^(?=.[a-z])(?=.[A-Z])(?=.*[0-9]).{8,}$"
+                           pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
                            size="32" maxLength="40" value={state.password} onChange={handleChangePassword}
                            required/>
                     <div className="invalid-feedback">

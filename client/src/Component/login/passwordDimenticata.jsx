@@ -26,7 +26,7 @@ const PasswordDimenticata=()=>{
         state.email=valore;
     };
     const handleSubmit=(event)=>{
-        if(state.email===""){
+        if(document.forms[0].checkValidity()===false){
             return;
         }
         event.preventDefault();
