@@ -19,22 +19,24 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const BoxAnnullaPren=(props)=> {
     const {open, onClose, prenotazione}=props;
-    const [id_prenotazione, setIdPrenotazione]=useState(prenotazione);
+    //const [id_prenotazione, setIdPrenotazione]=useState(prenotazione);
     const [tipoRisposta, setTipoRisposta]=useState("");
+    const state={id_prenotazione:prenotazione};
 
 
     const handleClose=()=>{
         onClose();
     };
-    React.useLayoutEffect(()=>{
-        axios.post("https://localhost:9000/leMiePrenotazioni/annullaPrenotazione",{id_prenotazione})
+    const handleLoad=()=>{
+        alert(JSON.stringify(state));
+        axios.post("https://localhost:9000/leMiePrenotazioni/annullaPrenotazione",state)
             .then((response)=>{
                 setTipoRisposta(response.data);
             })
             .catch((error)=>{
                 alert(error);
             })
-    },[]);
+    };
 
     return(
 
@@ -45,6 +47,7 @@ const BoxAnnullaPren=(props)=> {
                 keepMounted
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
+                onEnter={handleLoad}
             >
                 <DialogTitle id="alert-dialog-slide-title">{"Annulla Prenotazione"}</DialogTitle>
                 <DialogContent>
