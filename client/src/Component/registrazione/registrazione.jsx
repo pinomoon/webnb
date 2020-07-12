@@ -379,7 +379,7 @@ const Registrazione=()=>{
                         <div className="form-group">
                             <label htmlFor="repass">Reinserisci password *</label>
                             <input name="repass" id="repass" type="password" className="form-control" size="32"
-                                   maxLength="40" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" 
+                                   maxLength="40" pattern={state.password}
                                    value={repass}
                                    onChange={handleChangeRepass} required/>
                             <div className="invalid-feedback">
