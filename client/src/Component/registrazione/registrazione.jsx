@@ -151,11 +151,7 @@ const Registrazione=()=>{
         if(document.forms[0].checkValidity()===false){
             return;
         }
-        if(repass!==state.password){
-            alert("Il campo Password e Reinserisci password devono coincidere"); //da fare con il box
-            svuotaCampi();
-            return;
-        }
+        
         event.preventDefault();
         alert(JSON.stringify(state));
         axios.post('https://localhost:9000/registrazione', state)
@@ -379,7 +375,7 @@ const Registrazione=()=>{
                         <div className="form-group">
                             <label htmlFor="repass">Reinserisci password *</label>
                             <input name="repass" id="repass" type="password" className="form-control" size="32"
-                                   maxLength="40" pattern={state.password}
+                                   maxLength="40" pattern={state.password} title="Il campo Password e Reinserisci password devono coincidere!"
                                    value={repass}
                                    onChange={handleChangeRepass} required/>
                             <div className="invalid-feedback">

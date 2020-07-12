@@ -339,6 +339,9 @@ const InserisciStruttura=()=>{
     const handleSubmit=(event) =>{
         handleChangeModalitaPagamento();
         handleChangeServizi();
+        if(document.forms[0].checkValidity()===false){
+            return;
+        }
         console.log(modalita_di_pagamento);
         alert(JSON.stringify(state));
         console.log(immagine1);
@@ -432,7 +435,7 @@ const InserisciStruttura=()=>{
                         </div>
                         <label htmlFor="cap">Cap*</label>
                         <input id="cap" name="cap" type="text" className="form-control" maxLength="40"
-                               value={state.cap} onChange={handleChangeCap} required/>
+                               value={state.cap} onChange={handleChangeCap} pattern="^[0-9]{5,5}$" required/>
                         <div className="invalid-feedback">
                             Inserire CAP
                         </div>
@@ -481,7 +484,7 @@ const InserisciStruttura=()=>{
                                     <div className="col-1">
                                     </div>
                                     <div className="col-1">
-                                        <input className="form-check-input " type="checkbox" id="struttura" name="struttura" value="struttura" onChange={handleChangeModalitaStruttura}/>
+                                        <input className="form-check-input " type="checkbox" id="struttura" name="struttura" value="struttura" onChange={handleChangeModalitaStruttura} />
                                     </div>
                                     <div className="col-8">
                                         <label className="form-check-label " htmlFor="struttura"> Pagamento in Struttura</label>

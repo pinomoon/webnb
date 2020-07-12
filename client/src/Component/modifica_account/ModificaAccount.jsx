@@ -64,13 +64,7 @@ const ModificaAccount=()=>{
         if(document.forms[0].checkValidity()===false){
             return;
         }
-        if(repassword!==state.password){
-            setTipoRisposta("5");
-            handleClickOpenConferma();
-            setPassword("");
-            setRepassword("");
-            return;
-        }
+        
         alert("sono stati inseriti dei campi:"+" "+JSON.stringify(state));
         event.preventDefault();
         let res = await axios.post('https://localhost:9000/modificaAccount/salvamodifiche', state)
@@ -194,6 +188,7 @@ const ModificaAccount=()=>{
     const handleChangePassword=(event)=>{
         const target=event.target;
         const valore=  target.value;
+        
         if(valore!==""){
             document.forms[0].children[10].children[1].setAttribute('required','true');
             document.forms[0].children[10].children[3].setAttribute('required','true');
@@ -201,44 +196,42 @@ const ModificaAccount=()=>{
         }
         setPassword(valore);
         state.password=valore;
-        if(state.password==="" && state.repassword==="" && check_repass===""){
-            document.forms[0].children[10].children[1].setAttribute('required','false');
-            document.forms[0].children[10].children[3].setAttribute('required','false');
-            document.forms[0].children[10].children[6].setAttribute('required','false');
+        if(state.password=='' && state.repassword=='' && check_repass==''){
+            document.forms[0].children[10].children[1].removeAttribute('required');
+            document.forms[0].children[10].children[3].removeAttribute('required');
+            document.forms[0].children[10].children[6].removeAttribute('required');
         }
     };
+
     const handleChangeRepassword=(event)=>{
-       
         const target=event.target;
         const valore=  target.value;
         if(valore!==""){
             document.forms[0].children[10].children[1].setAttribute('required','true');
             document.forms[0].children[10].children[3].setAttribute('required','true');
             document.forms[0].children[10].children[6].setAttribute('required','true');
-
         }
-        
         setRepassword(valore);
         state.repassword=valore;
-        if(state.repassword==="" && state.password==="" && check_repass===""){
-            document.forms[0].children[10].children[1].setAttribute('required','false');
-            document.forms[0].children[10].children[3].setAttribute('required','false');
-            document.forms[0].children[10].children[6].setAttribute('required','false');
+        if(state.password=='' && state.repassword=='' && check_repass==''){
+            document.forms[0].children[10].children[1].removeAttribute('required');
+            document.forms[0].children[10].children[3].removeAttribute('required');
+            document.forms[0].children[10].children[6].removeAttribute('required');
         }
     };
     const handleChangeCheckRepass=(event)=>{
         const target=event.target;
-        const valore=  target.value;
+        const valore= target.value;
         if(valore!==""){
             document.forms[0].children[10].children[1].setAttribute('required','true');
             document.forms[0].children[10].children[3].setAttribute('required','true');
             document.forms[0].children[10].children[6].setAttribute('required','true');
         }
         setCheckRepass(valore);
-        if(check_repass==="" && state.password==="" && state.repassword===""){
-            document.forms[0].children[10].children[1].setAttribute('required','false');
-            document.forms[0].children[10].children[3].setAttribute('required','false');
-            document.forms[0].children[10].children[6].setAttribute('required','flase');
+        if(state.password=='' && state.repassword=='' && check_repass==''){
+            document.forms[0].children[10].children[1].removeAttribute('required');
+            document.forms[0].children[10].children[3].removeAttribute('required');
+            document.forms[0].children[10].children[6].removeAttribute('required');
         }
 
     };
@@ -409,7 +402,7 @@ const ModificaAccount=()=>{
 
                             <label htmlFor="check_repass">Reinserisci Nuova Password </label>
                             <input class="check_repass" id="check_repass" type="password" className="form-control" size="32"
-                                   maxLength="40" value={check_repass}
+                                   maxLength="40" value={check_repass} pattern={state.repassword} title="Il campo Nuova Password e Reinserisci Nuova Password devono coincidere"
                                    onChange={handleChangeCheckRepass} />
                             <div className="invalid-feedback">
                                 Le password devono coincidere

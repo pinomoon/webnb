@@ -66,7 +66,7 @@ const BoxConfermaModifica=(props)=> {
                     {responseType == "4"&&
                     < Button onClick={handleClose} color="primary">Chiudi</Button>
                     }
-                    {responseType == "5"&&
+                    {responseType == "5;"&&
                     < Button onClick={handleClose} color="primary">Chiudi</Button>
                     }
                 </DialogActions>
