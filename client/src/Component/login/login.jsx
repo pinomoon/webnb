@@ -49,7 +49,7 @@ const Login =()=>{
         setPassword("");
     };
     const handleSubmit=(event)=>{
-        if(state.password==="" || state.email===""){
+        if(document.forms[0].checkValidity()===false){
             return;
         }
         event.preventDefault();
@@ -128,7 +128,7 @@ const Login =()=>{
 
                     <label htmlFor="pass">Password *</label>
                     <input name="password" id="pass" type="password" className="form-control"
-                           title="Almeno 8 caratteri, una lettera maiuscola e un numero" value={state.password}
+                        value={state.password}
                          
                         size="32" maxLength="40" required onChange={handleChangePassword}/>
                     <div className="invalid-feedback">

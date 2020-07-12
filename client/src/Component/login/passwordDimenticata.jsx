@@ -26,6 +26,9 @@ const PasswordDimenticata=()=>{
         state.email=valore;
     };
     const handleSubmit=(event)=>{
+        if(document.forms[0].checkValidity()===false){
+            return;
+        }
         event.preventDefault();
         axios.post("https://localhost:9000/accesso/recuperaCredenziali", state)
             .then((response)=>{
@@ -62,18 +65,18 @@ const PasswordDimenticata=()=>{
 
             <img src={ops} style={{margin:"auto",marginTop:"30px",height:"20%",width:"20%",display:"block"}}/>
         <div className="container mt-10">
-            <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
+            <form name="form" id="form" className="container was-validated col-sm-8 mt-3">
                 <h5 >Inserisci E-Mail per Recupero Credenziali</h5>
 
                     <label htmlFor="email">E-mail</label>
                     <input name="email" id="email" type="email" className="form-control" size="32" maxLength="40" value={state.email}
-                           onChange={handleChangeEmail} required/>
+                          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" onChange={handleChangeEmail} required/>
                     <div className="invalid-feedback">
                         Inserire indirizzo e-mail
                     </div>
                 <div className="row">
                     <div className="col-1">
-                        <Button name="ok" id="ok"  onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
+                        <Button name="ok" id="ok"  href="/login" style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
                     </div>
                     <div className="col-9">
                     </div>
