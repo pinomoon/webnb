@@ -186,11 +186,11 @@ async function rifiutaPrenotazioneAutomatica(){
             let now = Date.now();
 
 
-            await db.query("UPDATE prenotazione SET stato_prenotazione='rifiutata' , data_rifiuto=? WHERE stato_prenotazione='In attesa di conferma' AND (?-data_prenotazione)<=86400000", [now,now]).catch(err => {
+            await db.query("UPDATE prenotazione SET stato_prenotazione='rifiutata' , data_rifiuto=? WHERE stato_prenotazione='In attesa di conferma' AND (?-data_prenotazione)>=86400000", [now,now]).catch(err => {
                 throw err;
             })
             results= await db.query("SELECT id_prenotazione,email,nome, nome_struttura FROM  utente AS u,prenotazione AS p,camera AS c,struttura AS s \
-            WHERE u.id_utente=p.id_utente  AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND data_rifiuto=?",[now]).catch(err=>{
+            WHERE u.id_utente=p.id_utente  AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND stato_prenotazione='rifiutata' AND data_rifiuto=?",[now]).catch(err=>{
                 throw err;
             })
             if (results.length>0) {
@@ -217,7 +217,7 @@ async function rifiutaPrenotazioneAutomatica(){
                 console.log(now);
             }else{
                 console.log("nessuna prenotazione da rifiutare !")
-                console.log("now");
+                console.log(now);
             }
         });
     }catch(error){
@@ -341,6 +341,8 @@ async function eliminaOspiti(req,res,next){
          }).catch(err=>{
              throw err;
          })
+         console.log(req.body.id_dati_ospiti
+         +"questo è id_ospite ");
          res.send('1'); // Ospite eliminato
      });
      }catch(err){
@@ -350,6 +352,28 @@ async function eliminaOspiti(req,res,next){
 
 /******modifica dati ospiti**********/
 
+/********richiedi dati ospiti**********/
+router.post("/richiediOspite",richiediOspite);
+async function richiediOspite(req,res,next){
+    let results={}
+    const db= await makeDb(config);
+    try{
+        await withTransaction(db,async ()=>{
+            results= await db.query("SELECT * FROM dati_ospiti WHERE id_dati_ospiti=?",[
+                req.body.id_dati_ospiti]
+            ).catch(err=>{
+                throw (err);
+            })
+            var risultato=["1",results];
+            console.log(results);
+            res.send(risultato);
+        })
+
+    }catch(err){
+        res.send("2");
+    }
+}
+/*********modifica  salvataggio dei dati *****/
 router.post("/modificaDatiOspiti",modificaDatiOspiti);
 
 async function modificaDatiOspiti(req,res,next){
@@ -357,10 +381,9 @@ async function modificaDatiOspiti(req,res,next){
 
     try{
         await  withTransaction(db,async ()=>{
-            await db.query("UPDATE dati_ospiti SET id_dati_ospiti=? ,id_prenotazione=?, \
-                id_utente=?, nome_ospitet=?, cognome_ospite=?, data_nascita=?,sesso=?,residenza=?,n_documento=? foto_documento=?",[
-                req.body.id_prenotazione,
-                req.body.id_utente,
+            await db.query("UPDATE dati_ospiti SET id_dati_ospiti=? , \
+             nome_ospite=?, cognome_ospite=?, data_nascita=?,sesso=?,residenza=?,n_documento=? foto_documento=?",[
+
                 req.body.nome_ospite,
                 req.body.cognome_ospite,
                 req.body.data_nascita,
@@ -372,10 +395,12 @@ async function modificaDatiOspiti(req,res,next){
                 throw err;
             })
             res.send("1");
+            console.log(req.body.id_dati_ospiti);
         })
 
     }catch(err){
         res.send("2");
+        console.log(req.body.id_dati_ospiti);
     }
 }
 

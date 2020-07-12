@@ -17,10 +17,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const BoxInserisciOspite=(props)=> {
-    const {open, onclose, prenotazione}=props;
-    const [id_utente, setIdUtente]=useState(getSessionCookie().id);
-    const [id_prenotazione, setIdPrenotazione]=useState(prenotazione);
+const BoxModficaOspite=(props)=> {
+    const {open, onclose, id_ospite}=props;
+
     const [nome_ospite, setNomeOspite]=useState("");
     const [cognome_ospite, setCognomeOspite]=useState("");
     const [data_nascita, setDataNascita]=useState("");
@@ -28,43 +27,45 @@ const BoxInserisciOspite=(props)=> {
     const [residenza, setResidenza]=useState("");
     const [n_documento, setNDoc]=useState("");
     const [foto_documento, setFotoDoc]=useState("");
-    const state={id_prenotazione, id_utente, nome_ospite, cognome_ospite, data_nascita, sesso, residenza, n_documento, foto_documento};
+    const state={ nome_ospite, cognome_ospite, data_nascita, sesso, residenza, n_documento, foto_documento};
 
 
 
-    const svuotaCampi=()=>{
-        setNomeOspite("");
-        setCognomeOspite("");
-        setDataNascita("");
-        setSesso("");
-        setResidenza("");
-        setNDoc("");
-        setFotoDoc("");
-    };
+
     const handleClose=()=>{
         onclose();
-        svuotaCampi();
     };
-    const handleSubmit=()=>{
-        axios.post("https://localhost:9000/gestisciPrenotazioni/inserisciOspiti",state)
-            .then((response)=>{
-                if(response.data=="1"){
-                    alert("Ospite inserito Correttamente");
-                    handleClose();
-                }
-                else{
-                    alert("Errore nel completamento dell'operazione");
-                    handleClose();
-                }
-            })
-            .catch((error)=>{
-                alert(error);
-            })
-    }
+  React.useLayoutEffect(()=>{
+      async function fetchData(){
+          axios.post("https://localhost:9000/gestisciPrenotazioni/richiediOspite",{id_dati_ospiti:id_ospite})
+              .then((response)=>{
+                  console.log(response.data[1])
+                  if(response.data[0]=="1"){
+                      setNomeOspite(response.data[1].nome_ospite);
+                      setCognomeOspite(response.data[1].cognome_ospite);
+                      setDataNascita(response.data[1].data_nascita);
+                      setSesso(response.data[1].sesso);
+                      setResidenza(response.data[1].residenza);
+                      setNDoc(response.data[1].n_documento);
+                      setFotoDoc(response.data[1].foto_documento);
+                  }
+                  else{
+                      alert("Errore nel completamento dell'operazione");
+
+                  }
+              })
+              .catch((error)=>{
+                  alert(error);
+              })
+      }
+      fetchData();
+  },[])
+
+
 
     const handleChangeNomeOspite=(event)=>{
         const target=event.target;
-        const valore=  target.value;
+        const valore= target.value;
         setNomeOspite(valore);
         state.nome_ospite=valore;
     };
@@ -105,6 +106,25 @@ const BoxInserisciOspite=(props)=> {
         state.foto_documento=valore;
     };
 
+    const handleSubmit= async (event)=>{
+        event.preventDefault();
+        await axios.post("https://localhost:9000/gestisciPrenotazioni/modificaDatiOspiti",{id_dati_ospiti: id_ospite, state})
+            .then((response)=>{
+                if(response.data=="1"){
+                    alert("Ospite Modificato con successo !");
+
+                    handleClose();
+                }
+                else{
+                    alert("Errore nel completamento dell'operazione");
+                    handleClose();
+                }
+            })
+            .catch((error)=>{
+                alert(error);
+            })
+    }
+
 
     return(
 
@@ -116,7 +136,7 @@ const BoxInserisciOspite=(props)=> {
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle id="alert-dialog-slide-title">{"Elimina struttura dai preferiti"}</DialogTitle>
+                <DialogTitle id="alert-dialog-slide-title">{"Modifica Dati Ospite"}</DialogTitle>
                 <DialogContent>
                     <div className="container">
                         <div className="row">
@@ -253,7 +273,7 @@ const BoxInserisciOspite=(props)=> {
                 <DialogActions id="action">
                     <div className="row">
                         <div className="col-1">
-                            <Button name="ok" id="ok" onClick={handleSubmit} style={{
+                            <Button name="ok" id="ok" type="button"  onClick={handleClose} style={{
                                 marginLeft: "-10px",
                                 color: "#ff6300"
                             }}>Indietro</Button>
@@ -276,4 +296,4 @@ const BoxInserisciOspite=(props)=> {
     );
 
 };
-export default BoxInserisciOspite;
+export default BoxModficaOspite;

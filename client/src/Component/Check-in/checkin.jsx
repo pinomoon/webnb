@@ -11,6 +11,8 @@ import ListGroup from "react-bootstrap/ListGroup";
 import BoxAccettaPren from "../GestionePrenotazioni/BoxAccettaPren";
 import BoxRifiutaPren from "../GestionePrenotazioni/BoxRifiutaPren";
 import BoxInserisciOspite from "./boxinserisciospite";
+import BoxEliminaOspite from "./BoxEliminaOspite";
+import BoxModificaOspite from "./BoxModificaOspite";
 
 const Checkin=()=>{
     function getUrlVars() {
@@ -23,6 +25,10 @@ const Checkin=()=>{
     var id_prenotazione = getUrlVars()["id_prenotazione"];
     const [dati_ospiti, setDatiOspiti]=useState([]);
     const [openInserisci, setOpenInserisci]=useState(false);
+    const [openModifica, setOpenModifica]=useState(false);
+    const [openElimina,setOpenElimina]=useState(false);
+    const [ospite,setOspite]=useState("");
+
 
 
     React.useLayoutEffect(()=>{
@@ -31,6 +37,7 @@ const Checkin=()=>{
                 if(response.data[0]=="1"){
                     alert(JSON.stringify(response.data));
                     setDatiOspiti(response.data[1]);
+
                 }
                 else{
                     alert("Errore");
@@ -49,11 +56,22 @@ const Checkin=()=>{
         window.location.reload();
     };
     const handleModifica=(value)=>{
+        setOpenModifica(true );
+        setOspite(value.id_dati_ospiti);
 
     };
     const handleElimina=(value)=>{
-
+        setOpenElimina(true);
+        setOspite(value.id_dati_ospiti);
     };
+    const handleCloseModifica=()=>{
+        setOpenModifica(false);
+        window.location.reload();
+    }
+    const handleCloseElimina=()=>{
+        setOpenModifica(false);
+        window.location.reload();
+    }
 
         return(
             <div className="container">
@@ -74,6 +92,7 @@ const Checkin=()=>{
                                     </div>
                                 </ListGroup.Item>
                                 {dati_ospiti.map((value)=>{
+
                                     return(
                                         <ListGroup.Item>
                                             <div className="row">
@@ -101,10 +120,19 @@ const Checkin=()=>{
                 </div>
                 <BoxInserisciOspite
                     open={openInserisci}
-                    onClose={handleCloseInserisci}
+                    onclose={handleCloseInserisci}
                     prenotazione={id_prenotazione}
                 />
-
+                <BoxEliminaOspite
+                    open={openElimina}
+                    onclose={handleCloseElimina}
+                    id_ospite={ospite}
+                    />
+                    <BoxModificaOspite
+                        open={openModifica}
+                        onclose={handleCloseModifica}
+                        id_ospite={ospite}
+                    />
             </div>
 
 
