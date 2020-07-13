@@ -40,6 +40,7 @@ const Prenotazione =()=>{
     const state2={id_utente, id_camera,data_inizio,data_fine};
 
     React.useLayoutEffect(()=>{
+        alert(id_utente);
         axios.post("https://localhost:9000/prenotazione/datiPrenotazione",state2)
             .then((response)=>{
                 if(response.data[0]=="1"){
