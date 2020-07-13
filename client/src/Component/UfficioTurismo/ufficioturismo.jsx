@@ -29,7 +29,7 @@ const UfficioTurismo=()=>{
     };
     const handleSubmit=(event)=>{
         event.preventDefault();
-        axios.post("https://localhost:9000/documentiUfficioTurismo",state)
+        axios.post("https://localhost:9000/documentiUfficioTurismo/",state)
             .then((response)=>{
                 setTipoRisposta(response.data);
                 handleOpenRispUfficio();

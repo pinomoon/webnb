@@ -43,6 +43,9 @@ const BoxRispUfficio=(props)=> {
                         {responseType=="2"&&
                         <p>Errore nell'invio del rendiconto all'ufficio turismo, riprova più tardi</p>
                         }
+                        {responseType=="3"&&
+                        <p>Nessun dato presente nel periodo selezionato </p>
+                        }
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions id="action">
@@ -54,6 +57,11 @@ const BoxRispUfficio=(props)=> {
                     <Button name="ok" id="ok" onClick={handleClose}
                             style={{marginLeft: "-10px", color: "#ff6300"}}>Chiudi</Button>
                     }
+                    {responseType=="3"&&
+                    <Button name="ok" id="ok" onClick={handleClose}
+                            style={{marginLeft: "-10px", color: "#ff6300"}}>Chiudi</Button>
+                    }
+
                 </DialogActions>
             </Dialog>
         </div>

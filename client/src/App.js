@@ -37,6 +37,7 @@ import ElencoPreferiti from "./Component/FunzionalitaCliente/ElencoPreferiti";
 import ModificaStruttura from "./Component/GestioneStrutture/modificastruttura";
 import EliminaCamera from "./Component/GestisciCamera/eliminacamera";
 import Prenotazione from "./Component/Ricerca Struttura/Prenotazione";
+import UfficioTurismo from "./Component/UfficioTurismo/ufficioturismo";
 
 
 
@@ -91,6 +92,7 @@ const App= ()=> {
                         <Route path="/imieipreferiti" component={ElencoPreferiti} exact />
                         <Route path="/modificaStruttura" component={ModificaStruttura} />
                         <Route path="/eliminaCamera" component={EliminaCamera} />
+                        <Route path="/ufficioturismo" component={UfficioTurismo}  exact/>
 
                         <Route path="*" component={CadutaConnessione}/>
 
