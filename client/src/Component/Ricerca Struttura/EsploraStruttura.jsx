@@ -55,12 +55,13 @@ const EsploraStruttura=()=>{
                 setStruttura(response.data[1]);
                 setCamere(response.data[2]);
                 setRecensioni(response.data[3]);
-                
-                if(response.data[4]!=={}){
-                setPreferiti(true);
+                console.log(response.data[4]);
+                if(response.data[4].length==0){
+
+                setPreferiti(false);
                 }
                 else{
-                    setPreferiti(false);
+                    setPreferiti(true);
                 }
             })
             .catch((error)=>{
