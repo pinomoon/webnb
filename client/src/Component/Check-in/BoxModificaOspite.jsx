@@ -27,7 +27,7 @@ const BoxModficaOspite=(props)=> {
     const [residenza, setResidenza]=useState("");
     const [n_documento, setNDoc]=useState("");
     const [foto_documento, setFotoDoc]=useState("");
-    const state={ nome_ospite, cognome_ospite, data_nascita, sesso, residenza, n_documento, foto_documento};
+    const state={ id_dati_ospiti: id_ospite,nome_ospite, cognome_ospite, data_nascita, sesso, residenza, n_documento, foto_documento};
 
 
 
@@ -35,19 +35,19 @@ const BoxModficaOspite=(props)=> {
     const handleClose=()=>{
         onclose();
     };
-  React.useLayoutEffect(()=>{
-      async function fetchData(){
-          axios.post("https://localhost:9000/gestisciPrenotazioni/richiediOspite",{id_dati_ospiti:id_ospite})
+  const loadData= async()=>{
+      alert(id_ospite);
+        await  axios.post("https://localhost:9000/gestisciPrenotazioni/richiediOspite",{id_dati_ospiti:id_ospite})
               .then((response)=>{
                   console.log(response.data[1])
                   if(response.data[0]=="1"){
-                      setNomeOspite(response.data[1].nome_ospite);
-                      setCognomeOspite(response.data[1].cognome_ospite);
-                      setDataNascita(response.data[1].data_nascita);
-                      setSesso(response.data[1].sesso);
-                      setResidenza(response.data[1].residenza);
-                      setNDoc(response.data[1].n_documento);
-                      setFotoDoc(response.data[1].foto_documento);
+                      setNomeOspite(response.data[1][0].nome_ospite);
+                      setCognomeOspite(response.data[1][0].cognome_ospite);
+                      setDataNascita(response.data[1][0].data_nascita);
+                      setSesso(response.data[1][0].sesso);
+                      setResidenza(response.data[1][0].residenza);
+                      setNDoc(response.data[1][0].n_documento);
+                      //setFotoDoc(response.data[1][0].foto_documento);
                   }
                   else{
                       alert("Errore nel completamento dell'operazione");
@@ -58,8 +58,8 @@ const BoxModficaOspite=(props)=> {
                   alert(error);
               })
       }
-      fetchData();
-  },[])
+
+
 
 
 
@@ -108,8 +108,9 @@ const BoxModficaOspite=(props)=> {
 
     const handleSubmit= async (event)=>{
         event.preventDefault();
-        await axios.post("https://localhost:9000/gestisciPrenotazioni/modificaDatiOspiti",{id_dati_ospiti: id_ospite, state})
+        await axios.post("https://localhost:9000/gestisciPrenotazioni/modificaDatiOspiti", state)
             .then((response)=>{
+                alert(response.data);
                 if(response.data=="1"){
                     alert("Ospite Modificato con successo !");
 
@@ -135,6 +136,7 @@ const BoxModficaOspite=(props)=> {
                 keepMounted
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
+                onEnter={loadData}
             >
                 <DialogTitle id="alert-dialog-slide-title">{"Modifica Dati Ospite"}</DialogTitle>
                 <DialogContent>
@@ -183,14 +185,12 @@ const BoxModficaOspite=(props)=> {
                                                 </div>
                                             </div>
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                <input type="radio" className="custom-control-input" id="male"
-                                                       name="sesso" value="M"
+                                                <input type="radio" className="custom-control-input" id="male" name="sesso" value="M"
                                                        onChange={handleChangeSesso} required/>
                                                 <label className="custom-control-label" htmlFor="male">Uomo</label>
                                             </div>
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                <input type="radio" className="custom-control-input" id="female"
-                                                       name="sesso" value="F"
+                                                <input type="radio" className="custom-control-input" id="female" name="sesso" value="F"
                                                        onChange={handleChangeSesso} required/>
                                                 <label className="custom-control-label" htmlFor="female">Donna</label>
                                                 <br></br>
@@ -271,23 +271,8 @@ const BoxModficaOspite=(props)=> {
 
                 </DialogContent>
                 <DialogActions id="action">
-                    <div className="row">
-                        <div className="col-1">
-                            <Button name="ok" id="ok" type="button"  onClick={handleClose} style={{
-                                marginLeft: "-10px",
-                                color: "#ff6300"
-                            }}>Indietro</Button>
-                        </div>
-                        <div className="col-9">
-                        </div>
-                        <div className="col-1">
-                            <Button name="ok" id="ok" type="submit" onClick={handleSubmit}
-                                    style={{
-                                        marginLeft: "-10px",
-                                        color: "#ff6300"
-                                    }}>Invia</Button>
-                        </div>
-                    </div>
+                            <Button onClick={handleClose} color="primary">Chiudi</Button>
+                            <Button  onClick={handleSubmit}color="primary">Invia</Button>
                 </DialogActions>
             </Dialog>
         </div>

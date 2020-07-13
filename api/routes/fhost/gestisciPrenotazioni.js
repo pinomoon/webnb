@@ -235,9 +235,9 @@ async function checkinQuestura(req,res,next){
     let results={};
     try {
         await withTransaction(db,async ()=>{
-            results= await db.query("SELECT nome,cognome,nome_struttura,nome_camera dati_ospiti.*\
+            results= await db.query("SELECT nome,cognome,nome_struttura,nome_camera, dat.*\
                                             FROM utente AS u, dati_ospiti AS dat,prenotazione AS p, camera AS c,struttura AS s \
-                                             WHERE id_prenotazione=? AND u.id_utente=dat.id_utente AND dat.id_prenotazione=p.id_prenotazione AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura",
+                                             WHERE  u.id_utente=dat.id_utente AND dat.id_prenotazione=p.id_prenotazione AND p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND dat.id_prenotazione=?",
                 [req.body.id_prenotazione])
                 .catch(err=>{
                     throw err;
@@ -253,10 +253,10 @@ async function checkinQuestura(req,res,next){
 
             let mailOptions = {
                 from: 'webnb-service@libero.it',
-                to:'lucalb10@gmail.com',
+                to:'peppeluna@virgilio.it',
                 subject: 'DATI QUESTURA',
                 text: 'Si inoltrano con la presente i dati della prenotazione:\n '+results[0].id_prenotazione+
-                    "Relativi alla sturttura : "+results[0].nome_struttura+"\ndell'host: "+results[0].nome+" "+results[0].cognome,
+                    "Relativi alla struttura : "+results[0].nome_struttura+"\ndell'host: "+results[0].nome+" "+results[0].cognome,
                 attachments:[
                     {   filename: filename,
                         path: './'+filename
@@ -272,8 +272,6 @@ async function checkinQuestura(req,res,next){
                     console.log('File deleted!: '+filename);
                     console.log('Email sent: ' + info.response);
                 }
-            }).catch(err=>{
-                throw  err;
             })
 
             await db.query("UPDATE prenotazione SET stato_prenotazione='soggiorno in corso' WHERE id_prenotazione=?",[
@@ -364,6 +362,7 @@ async function richiediOspite(req,res,next){
             ).catch(err=>{
                 throw (err);
             })
+            console.log(req.body.id_dati_ospiti);
             var risultato=["1",results];
             console.log(results);
             res.send(risultato);
@@ -381,8 +380,9 @@ async function modificaDatiOspiti(req,res,next){
 
     try{
         await  withTransaction(db,async ()=>{
-            await db.query("UPDATE dati_ospiti SET id_dati_ospiti=? , \
-             nome_ospite=?, cognome_ospite=?, data_nascita=?,sesso=?,residenza=?,n_documento=? foto_documento=?",[
+            await db.query("UPDATE dati_ospiti SET nome_ospite=?, cognome_ospite=?, data_nascita=?,sesso=?,residenza=?,n_documento=?, foto_documento=?\
+              WHERE id_dati_ospiti=?",[
+
 
                 req.body.nome_ospite,
                 req.body.cognome_ospite,
@@ -390,17 +390,33 @@ async function modificaDatiOspiti(req,res,next){
                 req.body.sesso,
                 req.body.residenza,
                 req.body.n_documento,
-                req.body.foto_documento
+                req.body.foto_documento,
+                req.body.id_dati_ospiti
             ]).catch(err=>{
                 throw err;
             })
             res.send("1");
-            console.log(req.body.id_dati_ospiti);
+            console.log(req.body.nome_ospite+"\n"+
+                req.body.cognome_ospite+"\n"+
+                req.body.data_nascita+"\n"+
+                req.body.sesso+"\n"+
+                req.body.residenza+"\n"+
+                req.body.n_documento+"\n"+
+                req.body.foto_documento+"\n"+
+                req.body.id_dati_ospiti);
         })
 
     }catch(err){
+        console.log(req.body.nome_ospite+"\n"+
+            req.body.cognome_ospite+"\n"+
+            req.body.data_nascita+"\n"+
+            req.body.sesso+"\n"+
+            req.body.residenza+"\n"+
+            req.body.n_documento+"\n"+
+            req.body.foto_documento+"\n"+
+            req.body.id_dati_ospiti);
         res.send("2");
-        console.log(req.body.id_dati_ospiti);
+
     }
 }
 
