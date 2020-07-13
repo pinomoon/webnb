@@ -275,18 +275,25 @@ const InserisciStruttura=()=>{
     };
     const handleChangeModalitaPagamento=()=>{
         if(modalita_carta!==''){
+            document.forms[0].children[5].children[10].children[2].children[2].removeAttribute('required');
+            document.forms[0].children[5].children[10].children[3].children[2].removeAttribute('required');
+            
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_carta+",";
         }
         else{
             state.modalita_di_pagamento=state.modalita_di_pagamento+",";
         }
         if(modalita_struttura!==''){
+            document.forms[0].children[5].children[10].children[1].children[2].removeAttribute('required');
+            document.forms[0].children[5].children[10].children[3].children[2].removeAttribute('required');
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_struttura+",";
         }
         else{
             state.modalita_di_pagamento=state.modalita_di_pagamento+",";
         }
         if(modalita_acconto!==''){
+            document.forms[0].children[5].children[10].children[1].children[2].removeAttribute('required');
+            document.forms[0].children[5].children[10].children[2].children[2].removeAttribute('required');
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_acconto;
         }
         else{
@@ -297,6 +304,7 @@ const InserisciStruttura=()=>{
         const target=event.target;
         const valore=  target.value;
         setModalitaCarta(valore);
+        
     };
     const handleChangeModalitaStruttura=(event)=>{
         const target=event.target;
@@ -472,7 +480,7 @@ const InserisciStruttura=()=>{
                                     <div className="col-1">
                                     </div>
                                     <div className="col-1">
-                                        <input className="form-check-input" type="checkbox" id="carta" name="carta" value="carta" onChange={handleChangeModalitaCarta}/>
+                                        <input className="form-check-input" type="checkbox" id="carta" name="carta" value="carta" onChange={handleChangeModalitaCarta} required/>
                                     </div>
                                     <div className="col-8">
                                         <label className="form-check-label " htmlFor="carta" > Carta di Credito</label>
@@ -484,7 +492,7 @@ const InserisciStruttura=()=>{
                                     <div className="col-1">
                                     </div>
                                     <div className="col-1">
-                                        <input className="form-check-input " type="checkbox" id="struttura" name="struttura" value="struttura" onChange={handleChangeModalitaStruttura} />
+                                        <input className="form-check-input " type="checkbox" id="struttura" name="struttura" value="struttura" onChange={handleChangeModalitaStruttura} required/>
                                     </div>
                                     <div className="col-8">
                                         <label className="form-check-label " htmlFor="struttura"> Pagamento in Struttura</label>
@@ -496,7 +504,7 @@ const InserisciStruttura=()=>{
                                     <div className="col-1">
                                     </div>
                                     <div className="col-1">
-                                        <input className="form-check-input " type="checkbox" id="anticipo_carta" name="anticipo_carta" value="anticipo_carta" onChange={handleChangeModalitaAcconto}/>
+                                        <input className="form-check-input " type="checkbox" id="anticipo_carta" name="anticipo_carta" value="anticipo_carta" onChange={handleChangeModalitaAcconto} required/>
                                     </div>
                                     <div className="col-8">
                                         <label className="form-check-label " htmlFor="anticipo_carta"> Acconto con Carta di Credito</label>
