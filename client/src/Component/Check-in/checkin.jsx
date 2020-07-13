@@ -13,6 +13,7 @@ import BoxRifiutaPren from "../GestionePrenotazioni/BoxRifiutaPren";
 import BoxInserisciOspite from "./boxinserisciospite";
 import BoxEliminaOspite from "./BoxEliminaOspite";
 import BoxModificaOspite from "./BoxModificaOspite";
+import BoxQuestura from "./boxquestura";
 
 const Checkin=()=>{
     function getUrlVars() {
@@ -22,12 +23,15 @@ const Checkin=()=>{
         });
         return vars;
     }
-    var id_prenotazione = getUrlVars()["id_prenotazione"];
+    const id_prenotazione = getUrlVars()["id_prenotazione"];
     const [dati_ospiti, setDatiOspiti]=useState([]);
     const [openInserisci, setOpenInserisci]=useState(false);
     const [openModifica, setOpenModifica]=useState(false);
     const [openElimina,setOpenElimina]=useState(false);
     const [ospite,setOspite]=useState("");
+    const [rispostaQuestura, setRispostaQuestura]=useState("");
+    const [openQuestura, setOpenQuestura]=useState(false);
+
 
 
 
@@ -56,13 +60,15 @@ const Checkin=()=>{
         window.location.reload();
     };
     const handleModifica=(value)=>{
-        setOpenModifica(true );
         setOspite(value.id_dati_ospiti);
+        alert(value.id_dati_ospiti);
+        setOpenModifica(true );
+
 
     };
     const handleElimina=(value)=>{
-        setOpenElimina(true);
         setOspite(value.id_dati_ospiti);
+        setOpenElimina(true);
     };
     const handleCloseModifica=()=>{
         setOpenModifica(false);
@@ -72,6 +78,27 @@ const Checkin=()=>{
         setOpenModifica(false);
         window.location.reload();
     }
+    const handleOpenQuestura=()=>{
+        setOpenQuestura(true);
+    }
+    const handleCloseQuestura=()=>{
+        setOpenQuestura(false);
+        setRispostaQuestura("");
+    }
+
+    const handleInviaQuestura=()=>{
+        var conf=window.confirm("Sei sicuro di voler inviare i dati degli ospiti alla questura?");
+        if(conf==true) {
+            axios.post("https://localhost:9000/gestisciPrenotazioni/checkinQuestura", {id_prenotazione})
+                .then((response) => {
+                    setRispostaQuestura(response.data);
+                    handleOpenQuestura();
+                })
+                .catch((error) => {
+                    alert(error);
+                })
+        }
+    };
 
         return(
             <div className="container">
@@ -109,7 +136,7 @@ const Checkin=()=>{
 
                             </ListGroup>
                             <Button color="inherit" style={{color:"#ff6300"}} onClick={handleInserisci}>Inserisci Ospite</Button>
-                            <Button color="inherit" style={{color:"#ff6300"}}>Invia dati alla Questura</Button>
+                            <Button color="inherit" style={{color:"#ff6300"}} onClick={handleInviaQuestura}>Invia dati alla Questura</Button>
                         </div>
                     </div>
 
@@ -132,6 +159,11 @@ const Checkin=()=>{
                         open={openModifica}
                         onclose={handleCloseModifica}
                         id_ospite={ospite}
+                    />
+                    <BoxQuestura
+                        open={openQuestura}
+                        onClose={handleCloseQuestura}
+                        responseType={rispostaQuestura}
                     />
             </div>
 

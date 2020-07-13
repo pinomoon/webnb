@@ -45,7 +45,7 @@ app.use('/inserisciStruttura',inserisciStrutturaRouter);
 app.use('/gestisciPrenotazioni',gestisciPrenotazioniRouter);
 app.use('/modificaAccount',modificaAccountRouter);
 app.use('/guadagni',guadagniRouter);
-app.use('documentiUfficioTurismo',documentiUfficioTurismoRouter);
+app.use('/documentiUfficioTurismo',documentiUfficioTurismoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
