@@ -79,7 +79,33 @@ import checkin from "../Check-in/checkin";
                             <ListGroup.Item>
                                 <div className="row">
                                     <div className="col-4"><h5>Id: {values.id_prenotazione}</h5></div>
-                                    <div className="col-5"> <h5> Stato: {values.stato_prenotazione}</h5></div>
+                                    <div className="col-5">
+                                    {values.stato_prenotazione =="in attesa di conferma" &&
+                                     <h5 style={{color:"blue"}}> In attesa di conferma</h5>
+
+                                    }
+                                    {values.stato_prenotazione =="confermata" &&
+                                        <h5 style={{color:"green"}}> Confermata</h5>
+
+                                    }
+                                        {values.stato_prenotazione =="rifiutata" &&
+                                    <h5 style={{color:"red"}}> Rifiutata</h5>
+
+                                    }
+                                        {values.stato_prenotazione =="soggiorno in corso" &&
+                                        <h5 style={{color:"yellow"}}> Soggiorno in corso</h5>
+
+                                        }
+                                        {values.stato_prenotazione =="annullata" &&
+                                        <h5 style={{color:"red"}}> Annullata</h5>
+
+                                        }
+
+                                        {values.stato_prenotazione =="soggiorno concluso" &&
+                                        <h5 style={{color:"yellow"}}> Soggiorno Concluso</h5>
+
+                                        }
+                                    </div>
                                     <div className="col-3">
                                         { values.stato_prenotazione=="in attesa di conferma" &&
                                             <div>

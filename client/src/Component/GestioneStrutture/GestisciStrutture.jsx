@@ -76,6 +76,7 @@ const GestisciStrutture=()=>{
 
 
 
+
         return(
 
             <div className="container">
@@ -98,12 +99,14 @@ const GestisciStrutture=()=>{
                                 return(
                                 <div key={value.id_struttura} className="col-sm-6 col-md-4 col-lg-4">
                                     <section className="cards clearfix">
-                                        <div className="card" style={{width: "auto", height: "20%"}}>
+                                        <div className="card" style={{width: "100%", height: "20%"}}>
                                             <img className="card_image" src={villa} alt=" Villa "/>
                                             <div className="card_copy">
                                                 <h6 style={{textAlign:"center"}}>{value.nome_struttura}</h6>
                                                 <ul className="list-group list-group-flush" style={{height:"10%"}}>
-                                                    <li className="list-group-item" style={{fontSize:"12px",margin:0}}>{value.descrizione}
+                                                    <li className="list-group-item" style={{fontSize:"12px",margin:0,whiteSpace:"nowrap",
+                                                        overflow: "hidden",
+                                                        textOverflow: "ellipsis"}}>{value.descrizione}
                                                     </li>
                                                 </ul>
                                                 <div style={{margin: "auto"}}>

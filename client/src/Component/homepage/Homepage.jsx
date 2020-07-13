@@ -152,7 +152,7 @@ const Homepage =()=>{
                              <div className="row">
                                  <div className="col-md-1 col-lg-1">
                                  </div>
-                                 <div className="col-sm-12 col-md-9 col-lg-9">
+                                 <div className="col-sm-12 col-md-10 col-lg-10">
                                      <div style={{
                                          width: "80%",
                                          height: "auto",

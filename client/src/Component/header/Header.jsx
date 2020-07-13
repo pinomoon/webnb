@@ -39,7 +39,7 @@ const Header =()=>{
                   <Nav className="mr-auto">
                       <Nav.Link href="/" style={{color:"#ff6300"}}>Home</Nav.Link>
                       <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>About</Nav.Link>
-                      <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>Lorem</Nav.Link>
+                      <Nav.Link href="/FAQ"style={{color:"#ff6300"}}>FAQ</Nav.Link>
                       <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>Ipsum</Nav.Link>
 
                   </Nav>

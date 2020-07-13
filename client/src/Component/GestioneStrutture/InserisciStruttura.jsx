@@ -649,14 +649,21 @@ const InserisciStruttura=()=>{
                         </Form.Group>
                         <br></br>
                         <div className="row">
-                        <div className="col-10">
-                        </div>
-                            <div className="col-2">
-                        <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-15px",color:"#ff6300"}}>Invia</Button>
+                            <div className="col-sm-3 col-md-2 col-lg-1">
+                                <Button href="/" style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
                             </div>
+                            <div className="col-sm-6 col-md-8 col-lg-9">
+                            </div>
+                            <div className="col-sm-3 col-md-2 col-lg-1">
+                                <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Invia</Button>
+                            </div>
+                            <div className="row">
+                                <br/>
 
-                        
+                            </div>
                         </div>
+                        <br></br>
+
                     </form>
                     <BoxConfermaInserimento
                     open={open}

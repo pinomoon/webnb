@@ -75,16 +75,16 @@ const PasswordDimenticata=()=>{
                         Inserire indirizzo e-mail
                     </div>
                 <div className="row">
-                    <div className="col-1">
-                        <Button name="ok" id="ok"  href="/login" style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
+                    <div className="col-sm-3 col-md-2 col-lg-1">
+                        <Button href="/login" style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
                     </div>
-                    <div className="col-9">
+                    <div className="col-sm-6 col-md-8 col-lg-9">
                     </div>
-                    <div className="col-1">
+                    <div className="col-sm-3 col-md-2 col-lg-1">
                         <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Invia</Button>
                     </div>
+
                 </div>
-                <br></br>
                 <br></br>
             </form>
         </div>

@@ -279,7 +279,7 @@ const RicercaStruttura=(props)=> {
             <div className="container">
                 <div className="row">
 
-                    <div className="col-sm-5 col-md-4 col-lg-3">
+                    <div className="col-sm-5 col-md-5 col-lg-3">
                     <div style={{backgroundColor:"#e07e06",width:"100%",height:"auto",marginTop:"30px"}}>
 
                         <Button color="inherit" type="submit" onClick={handleSubmit} style={{backgroundColor:"#32508f",color:"white",margin:"auto",display:"block",width:"100%"}}>Cerca</Button>
@@ -556,7 +556,7 @@ const RicercaStruttura=(props)=> {
                                             <div className="col-md-4">
                                                 <img id="image" src={imageUrl} alt="nnnnnnnnn" className="card-img" style={{height:"100%"}}/>
                                             </div>
-                                            <div className="col-md-8">
+                                            <div className="col-sm-12 col-md-8 col-lg-8">
                                                 <div className="card-body">
                                                     <h5 className="card-title">{struttura.nome_struttura}</h5>
                                                     {struttura.tipo==="bnb" &&
