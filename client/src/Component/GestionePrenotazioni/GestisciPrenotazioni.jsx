@@ -85,7 +85,7 @@ import checkin from "../Check-in/checkin";
 
                                     }
                                     {values.stato_prenotazione =="confermata" &&
-                                        <h5 style={{color:"green"}}> Confermata</h5>
+                                        <h5 style={{color:"#00ff55"}}> Confermata</h5>
 
                                     }
                                         {values.stato_prenotazione =="rifiutata" &&

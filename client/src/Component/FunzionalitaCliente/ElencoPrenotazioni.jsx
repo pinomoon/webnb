@@ -101,22 +101,22 @@ const ElencoPrenotazioni=()=>{
                                             <div className="col-2">{value.data_fine}</div>
                                             <div className="col-3">
                                                 {value.stato_prenotazione=="in attesa di conferma" &&
-                                                    <a >{value.stato_prenotazione}</a>
+                                                    <a >In attesa di conferma</a>
                                                 }
                                                 {value.stato_prenotazione=="confermata" &&
-                                                    <a style={{color: "#00ff55"}}>{value.stato_prenotazione}</a>
+                                                    <a style={{color: "#00ff55"}}>Confermata</a>
                                                 }
                                                 {value.stato_prenotazione=="soggiorno in corso"&&
-                                                    <a style={{color: "#00ff55"}}>{value.stato_prenotazione}</a>
+                                                    <a style={{color: "yellow"}}>Soggorno in corso</a>
                                                 }
                                                 {value.stato_prenotazione=="annullata"&&
-                                                    <a style={{color: "#ff0000"}}>{value.stato_prenotazione}</a>
+                                                    <a style={{color: "#ff0000"}}>Annullata</a>
                                                 }
                                                 {value.stato_prenotazione=="soggiorno concluso"&&
-                                                <a >{value.stato_prenotazione}</a>
+                                                <a >Soggiorno concluso</a>
                                                 }
                                                 {value.stato_prenotazione=="rifiutata"&&
-                                                <a style={{color: "#ff0000"}}>{value.stato_prenotazione}</a>
+                                                <a style={{color: "#ff0000"}}>Rifiutata</a>
                                                 }
                                             </div>
                                             <div className="col-2">

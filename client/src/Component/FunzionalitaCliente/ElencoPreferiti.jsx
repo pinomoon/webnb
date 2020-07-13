@@ -4,6 +4,11 @@ import Button from "@material-ui/core/Button";
 import {getSessionCookie} from "../../sessions";
 import axios from 'axios';
 import BoxEliminaPref from "./boxeliminapref";
+import HotelIcon from '@material-ui/icons/Hotel';
+
+import {Home} from "@material-ui/icons";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+
 
 
 
@@ -41,7 +46,7 @@ const ElencoPreferiti=()=> {
         return(
 
             <div className="container">
-                <h5>I Miei Preferiti</h5>
+                <h5 style={{textAlign:"center"}}>I Miei Preferiti</h5>
                 <div className="row">
                     <div className="col-1">
 
@@ -51,20 +56,37 @@ const ElencoPreferiti=()=> {
                             {preferiti.map((value) =>{
 
                                 return(
-                                    <div className="col-sm-6 col-md-4 col-lg-5">
+                                    <div className="col-sm-6 col-md-4 col-lg-4">
                                         <section className="cards clearfix">
-                                            <div className="card" style={{width:"auto"}}>
+                                            <div className="card" style={{width:"100%",height:"100%"}}>
                                                 <img className="card_image" src={villa}  alt=" Villa "/>
                                                 <div className="card_copy">
                                                     <h4>{value.nome_struttura}</h4>
-                                                    <p>Tipo: {value.tipo}</p>
-                                                    <p>Descrizione: {value.descrizione}</p>
-                                                    <p>Indirizzo: {value.indirizzo_struttura}, {value.citta}, {value.regione}</p>
-                                                    <div style={{margin:"auto"}}>
-                                                        <Button onClick={()=>handleEliminaPref(value)} style={{color:"#ff6300"}}>Elimina</Button>
+                                                    {value.tipo==="bnb" &&
+                                                    <div>
+                                                        <p><HotelIcon/> Bed and Breakfast</p>
+                                                    </div>
+
+                                                    }
+                                                    {value.tipo==="casa_vacanze" &&
+                                                    <div>
+                                                        <p><Home/> Casa Vacanze</p>
+                                                    </div>
+
+                                                    }
+                                                    <p style={{margin:0,whiteSpace:"nowrap",
+                                                        overflow: "hidden",
+                                                        textOverflow: "ellipsis"}}>{value.descrizione}
+                                                    </p>
+                                                    <p style={{margin:0,whiteSpace:"nowrap",
+                                                        overflow: "hidden",
+                                                        textOverflow: "ellipsis"}}>Indirizzo: {value.indirizzo_struttura}, {value.citta}, {value.regione}</p>
+                                                    <div>
+                                                        <Button onClick={()=>handleEliminaPref(value)} style={{color:"#ff6300"}}><DeleteOutlineIcon/>Elimina</Button>
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </section>
                                     </div>
                                 );
@@ -83,6 +105,20 @@ const ElencoPreferiti=()=> {
 
                     </div>
                 </div>
+                <div className="row">
+                    <div className="col-sm-3 col-md-2 col-lg-1">
+                        <Button href="/" style={{color:"#ff6300"}}>Indietro</Button>
+                    </div>
+                    <div className="col-sm-6 col-md-8 col-lg-9">
+                    </div>
+                    <div className="col-sm-3 col-md-2 col-lg-1">
+                    </div>
+                    <div className="row">
+                        <br/>
+
+                    </div>
+                </div>
+                <br></br>
                 <BoxEliminaPref
                     open={openEliminaPref}
                     onClose={handleCloseEliminaPref}

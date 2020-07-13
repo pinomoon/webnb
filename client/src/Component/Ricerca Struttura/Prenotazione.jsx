@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import BoxConfermaModifica from "../modifica_account/boxconfermamodifica";
 import {getSessionCookie, getUserCookie} from "../../sessions";
 import {Component} from "react";
+import bk from "./bk.jpg"
 import axios from 'axios';
 
 
@@ -175,7 +176,7 @@ const Prenotazione =()=>{
                 <div className="col-sm-12 col-md-9 col-lg-6">
                     <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
 
-                        <img src={ma} style={{margin:"auto",marginTop:"30px",height:"30%",width:"40%",display:"block"}}/>
+                        <img src={bk} style={{margin:"auto",marginTop:"30px",height:"30%",width:"40%",display:"block"}}/>
                         <div className="container mt-10" >
                             <form name="form" id="form"  className="container was-validated col-sm-8 mt-3" method="POST">
 
@@ -256,7 +257,8 @@ const Prenotazione =()=>{
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-7">
+                                        <div className="col-12">
+                                            <br/>
                                     <label htmlFor="email">E-mail *</label>
                                     <input name="email" id="email" type="email" className="form-control" size="32"
                                            maxLength="40"
@@ -267,7 +269,8 @@ const Prenotazione =()=>{
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-9">
+                                        <div className="col-12">
+                                            <br/>
                                             <label htmlFor="cellulare">Numero Cellulare</label>
                                             <input id="cellulare" name="cellulare" type="text" className="form-control" maxLength="40"
                                                    value={state.cellulare} onChange={handleChangeCellulare} required/>
@@ -282,30 +285,30 @@ const Prenotazione =()=>{
 
                                 <div className="form-group">
                                     <div className="row">
-                                        <div className="col-6">
+                                        <div className="col-12">
                                             <label htmlFor="credit-card">Titolare </label>
                                             <input name="titolare_carta" id="titolare_carta" type="name" className="form-control"
                                                    size="32" maxLength="40"
                                                    value={state.titolare_carta} onChange={handleChangeTitolareCarta}/>
                                         </div>
-                                        <div className="col-6">
+                                        <div className="col-12">
                                             <label htmlFor="credit-card">Numero</label>
                                             <input name="numero_carta" id="numero_carta" type="credit-card" className="form-control"
                                                    size="32" maxLength="40"
                                                    value={state.numero_carta} onChange={handleChangeNumeroCarta}/>
                                         </div>
                                     </div>
-                                    <br/>
                                     <div className="row">
-                                        <div className="col-3">
+                                        <div className="col-8">
                                             <label htmlFor="credit-card">Scadenza</label>
-                                            <input name="scadenza" id="scadenza" type="text" className="form-control"
-                                                   size="32" maxLength="40"
+
+                                            <input name="scadenza" id="scadenza" type="date" className="form-control"
+                                                   size="32" maxLength="40" placeholder="scad"
                                                    value={state.scadenza} onChange={handleChangeScadenza}/>
                                         </div>
 
 
-                                        <div className="col-3">
+                                        <div className="col-4">
                                             <label htmlFor="credit-card">CVC</label>
                                             <input name="cvc" id="cvc" type="text" className="form-control"
                                                    size="32" maxLength="40"
@@ -319,15 +322,20 @@ const Prenotazione =()=>{
                                 <br></br>
 
                                 <div className="row">
-                                    <div className="col-1">
-                                        <Button name="ok" id="ok"  onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
+                                    <div className="col-sm-3 col-md-2 col-lg-1">
+                                        <Button href="/" style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
                                     </div>
-                                    <div className="col-9">
+                                    <div className="col-sm-6 col-md-8 col-lg-9">
                                     </div>
-                                    <div className="col-1">
+                                    <div className="col-sm-3 col-md-2 col-lg-1">
                                         <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Prenota</Button>
                                     </div>
+                                    <div className="row">
+                                        <br/>
+
+                                    </div>
                                 </div>
+                                <br></br>
                             </form>
                         </div>
                     </div>
