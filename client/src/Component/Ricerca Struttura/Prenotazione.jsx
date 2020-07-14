@@ -46,8 +46,9 @@ const Prenotazione =()=>{
     const [tassa_soggiorno, setTassaSoggiorno]=useState();
     const [importi, setImporti]=useState([]);
     const [importo_calcolato, setImportoCalcolato]=useState(false);
+    const [id_struttura, setIdStruttura]=useState("");
 
-    const state={id_utente,modalita_pagamento, n18, viaggio_lavoro,  nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,cellulare,email,titolare_carta,numero_carta,scadenza,cvc};
+    const state={id_utente,id_struttura,data_fine, data_inizio, modalita_pagamento,importi, n18, viaggio_lavoro,  nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,cellulare,email,titolare_carta,numero_carta,scadenza,cvc};
     const state2={id_utente, id_camera,data_inizio,data_fine};
     const state3={costo_camera, data_inizio, data_fine, viaggio_lavoro,tassa_soggiorno,n18};
     //costo_camera, data fine e inizio, lavoro,tassa soggiorno, n18
@@ -73,6 +74,7 @@ const Prenotazione =()=>{
                     setPagamentoAccettato(response.data[2][0].modalita_di_pagamento);
                     setCostoCamera(response.data[2][0].costo_camera);
                     setTassaSoggiorno(response.data[2][0].tassa_soggiorno);
+                    setIdStruttura(response.data[2][0].id_struttura);
                     console.log(response.data[2][0].modalita_di_pagamento);
                 }
                 else alert("Errore");
@@ -196,7 +198,21 @@ const Prenotazione =()=>{
         setN18(valore);
         state.n18=valore;
     };
-    const handleSubmit=()=>{
+    const handleSubmit=(event)=>{
+        event.preventDefault();
+        axios.post("https://localhost:9000/prenotazione",state)
+            .then((response)=>{
+                if(response.data=="1"){
+                    alert("Prenotazione ok");
+                }
+                else{
+                    alert("Errore");
+                }
+            })
+            .catch((error)=>{
+                alert(error);
+            })
+
     };
 
     const handleCalcolaImporti=(event)=>{
