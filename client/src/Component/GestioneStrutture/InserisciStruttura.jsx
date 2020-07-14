@@ -275,8 +275,8 @@ const InserisciStruttura=()=>{
     };
     const handleChangeModalitaPagamento=()=>{
         if(modalita_carta!==''){
-            document.forms[0].children[5].children[10].children[2].children[2].removeAttribute('required');
-            document.forms[0].children[5].children[10].children[3].children[2].removeAttribute('required');
+            document.forms[0].children[4].children[9].children[1].children[1].children[0].removeAttribute('required');
+            document.forms[0].children[4].children[9].children[2].children[1].children[0].removeAttribute('required');
             
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_carta+",";
         }
@@ -284,38 +284,62 @@ const InserisciStruttura=()=>{
             state.modalita_di_pagamento=state.modalita_di_pagamento+",";
         }
         if(modalita_struttura!==''){
-            document.forms[0].children[5].children[10].children[1].children[2].removeAttribute('required');
-            document.forms[0].children[5].children[10].children[3].children[2].removeAttribute('required');
+            document.forms[0].children[4].children[9].children[0].children[1].children[0].removeAttribute('required');
+            document.forms[0].children[4].children[9].children[2].children[1].children[0].removeAttribute('required');
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_struttura+",";
         }
         else{
             state.modalita_di_pagamento=state.modalita_di_pagamento+",";
         }
         if(modalita_acconto!==''){
-            document.forms[0].children[5].children[10].children[1].children[2].removeAttribute('required');
-            document.forms[0].children[5].children[10].children[2].children[2].removeAttribute('required');
+            document.forms[0].children[4].children[9].children[0].children[1].children[0].removeAttribute('required');
+            document.forms[0].children[4].children[9].children[1].children[1].children[0].removeAttribute('required');
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_acconto;
         }
         else{
             state.modalita_di_pagamento=state.modalita_di_pagamento+"";
         }
+        if(modalita_carta==''&&modalita_struttura==''&&modalita_acconto==''){
+            document.forms[0].children[4].children[9].children[0].children[1].children[0].setAttribute('required','true');
+            document.forms[0].children[4].children[9].children[1].children[1].children[0].setAttribute('required','true');
+            document.forms[0].children[4].children[9].children[2].children[1].children[0].setAttribute('required','true');
+
+        }
     };
     const handleChangeModalitaCarta=(event)=>{
         const target=event.target;
         const valore=  target.value;
-        setModalitaCarta(valore);
+        const flag=target.checked;
+        if(flag===true) {
+            setModalitaCarta(valore);
+        }
+        else{
+            setModalitaCarta("");
+        }
         
     };
     const handleChangeModalitaStruttura=(event)=>{
         const target=event.target;
         const valore=  target.value;
-        setModalitaStruttura(valore);
+        const flag=target.checked;
+        if(flag===true) {
+            setModalitaStruttura(valore);
+        }
+        else{
+            setModalitaStruttura("");
+        }
 
     };
     const handleChangeModalitaAcconto=(event)=>{
         const target=event.target;
         const valore=  target.value;
-        setModalitaAcconto(valore);
+        const flag= target.checked;
+        if(flag===true) {
+            setModalitaAcconto(valore);
+        }
+        else{
+            setModalitaAcconto("");
+        }
 
     };
     const svuotaCampi=()=>{
@@ -347,6 +371,7 @@ const InserisciStruttura=()=>{
     const handleSubmit=(event) =>{
         handleChangeModalitaPagamento();
         handleChangeServizi();
+        console.log(modalita_carta);
         if(document.forms[0].checkValidity()===false){
             return;
         }
@@ -480,7 +505,7 @@ const InserisciStruttura=()=>{
                                     <div className="col-1">
                                     </div>
                                     <div className="col-1">
-                                        <input className="form-check-input" type="checkbox" id="carta" name="carta" value="carta" onChange={handleChangeModalitaCarta} required/>
+                                        <input className="form-check-input" type="checkbox" id="carta" name="carta" value="carta" onChange={handleChangeModalitaCarta}/>
                                     </div>
                                     <div className="col-8">
                                         <label className="form-check-label " htmlFor="carta" > Carta di Credito</label>
@@ -492,7 +517,7 @@ const InserisciStruttura=()=>{
                                     <div className="col-1">
                                     </div>
                                     <div className="col-1">
-                                        <input className="form-check-input " type="checkbox" id="struttura" name="struttura" value="struttura" onChange={handleChangeModalitaStruttura} required/>
+                                        <input className="form-check-input " type="checkbox" id="struttura" name="struttura" value="struttura" onChange={handleChangeModalitaStruttura}/>
                                     </div>
                                     <div className="col-8">
                                         <label className="form-check-label " htmlFor="struttura"> Pagamento in Struttura</label>
@@ -504,7 +529,7 @@ const InserisciStruttura=()=>{
                                     <div className="col-1">
                                     </div>
                                     <div className="col-1">
-                                        <input className="form-check-input " type="checkbox" id="anticipo_carta" name="anticipo_carta" value="anticipo_carta" onChange={handleChangeModalitaAcconto} required/>
+                                        <input className="form-check-input " type="checkbox" id="anticipo_carta" name="anticipo_carta" value="anticipo_carta" onChange={handleChangeModalitaAcconto}/>
                                     </div>
                                     <div className="col-8">
                                         <label className="form-check-label " htmlFor="anticipo_carta"> Acconto con Carta di Credito</label>

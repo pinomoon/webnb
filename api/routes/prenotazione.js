@@ -248,7 +248,7 @@ async function dati(req, res, next) {
                 .catch(err=>{
                     throw err;
                 });
-             let results1=await db.query("SELECT nome_struttura,indirizzo_struttura,cap,stato,regione,citta,tipo,disdetta_gratuita,tassa_soggiorno,modalita_di_pagamento,nome_camera,numero_posti_letto,colazione_inclusa,costo_camera\
+             let results1=await db.query("SELECT struttura.id_struttura, nome_struttura,indirizzo_struttura,cap,stato,regione,citta,tipo,disdetta_gratuita,tassa_soggiorno,modalita_di_pagamento,nome_camera,numero_posti_letto,colazione_inclusa,costo_camera\
             FROM camera, struttura\
             WHERE camera.id_struttura=struttura.id_struttura AND camera.id_camera=?",
                 [
@@ -257,7 +257,8 @@ async function dati(req, res, next) {
                     throw  err;
             })
 
-                var risultato=['1',results[0],results1[0]];
+                var risultato=['1',results[0],results1];
+                console.log(results1);
                 res.send(risultato);
     })
     }catch(err){
@@ -267,12 +268,24 @@ async function dati(req, res, next) {
     }
 }
 router.post('/calcoloImporti',importi);
-async function importi(){
-    let results={};
-    results[0].totprezzo=req.body.costo_camera*(req.body.data_fine-req.body.data_inizio);
-    results[0].totsoggiorno=0;
-    if(req.body.lavoro===0) {
-        results[0].totsoggiorno= req.body.tassa_soggiorno * (req.body.data_fine - req.body.data_inizio) * req.body.n18;
+async function importi(req,res,next){
+    let totprezzo;
+    let totsoggiorno;
+    let df=new Date(req.body.data_fine)
+    let di=new Date(req.body.data_inizio)
+    let diff=(df.getTime()-di.getTime())/86400000;
+    try {
+        totprezzo = req.body.costo_camera * diff;
+        totsoggiorno = 0;
+        if (req.body.viaggio_lavoro === "0") {
+            totsoggiorno = req.body.tassa_soggiorno * diff * req.body.n18;
+        }
+        res.send(["1", totprezzo, totsoggiorno]);
+
+    }catch(err){
+        console.log(err);
+        res.send('2');
+        next(createError(500));
     }
 
 
@@ -285,13 +298,15 @@ async function prenota(req, res, next) {
     let results = {};
     try {
         let date= new Date();
-        year=date.getFullYear();
+        let year=date.getFullYear();
         await withTransaction(db, async() => {
            
             results=await db.query("SELECT SUM(data_fine-data_inizio) AS giorni_soggiorno \
             FROM prenotazione,camera \
-            WHERE (data_inizio>=year-01-01 AND data_fine<=year-12-31) AND prenotazione.id_camera=camera.id_camera AND prenotazione.id_utente=? AND camera.id_struttura=? ",
+            WHERE (data_inizio>=?-01-01 AND data_fine<=?-12-31) AND prenotazione.id_camera=camera.id_camera AND prenotazione.id_utente=? AND camera.id_struttura=? ",
                 [
+                    year,
+                    year,
                     req.body.id_utente,
                     req.body.id_struttura
                 ])
@@ -313,22 +328,25 @@ async function prenota(req, res, next) {
                 
                 
             await db.query("UPDATE prenotazione SET data_prenotazione=?, \
-                metodo_di_pagamento=?,importo=?, tasse_soggiorno=?,stato_pagamento=?, stato_rimborso=?,conferma=?)"
+                metodo_di_pagamento=?, importo=?, tasse_soggiorno=?,stato_pagamento=?, stato_rimborso=?,conferma=?\
+                WHERE id_prenotazione=? )"
                 ,[
                     [
                         [
                             now,
-                            req.body.metodo_di_pagamento,
-                            req.body.importo,
-                            req.body.tasse_soggiorno,
+                            req.body.modalita_pagamento,
+                            req.body.importi[0],
+                            req.body.importi[1],
                             0,
                             0,
                             1
+                            /*INSERIRE ID PRENOTAZIONE!!!!!!!!!!!*/
                         ]
                     ]
                 ]).catch(err=>{
                     throw err;
                 });
+            /*
             let filename='riepilogoPrenotazione'+req.body.id_utente+'.pdf';
                 let testo="RIEPILOGO PRENOTAZIONE \n\n\n\
                 DATI STRUTTURA:\n\
@@ -401,7 +419,7 @@ async function prenota(req, res, next) {
 
                 }
 
-            });
+            });*/
             res.send('1'); //Prenotazione effettuata con successo! Email inviate
     })
     }catch(err){
