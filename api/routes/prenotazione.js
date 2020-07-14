@@ -410,4 +410,20 @@ async function prenota(req, res, next) {
         next(createError(500));
     }
 }
+ let deletefakepren=setInterval(deleteFakePren,300000);
+
+async function deleteFakePren(){
+    const db=makeDb(config);
+    let now= Date.now();
+    try {
+        await withTransaction(db, async () => {
+        await db.query("DELETE FROM prenotazione WHERE (?-data_prenotazione)>600000 AND conferma=false ",[now]).catch(err=>{
+            throw err;
+        })
+        })
+    }catch(err){
+        throw err;
+    }
+}
+
 module.exports=router
