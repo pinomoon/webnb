@@ -257,7 +257,8 @@ async function dati(req, res, next) {
                     throw  err;
             })
 
-                var risultato=['1',results[0],results1[0]];
+                var risultato=['1',results[0],results1];
+                console.log(results1);
                 res.send(risultato);
     })
     }catch(err){
@@ -267,12 +268,21 @@ async function dati(req, res, next) {
     }
 }
 router.post('/calcoloImporti',importi);
-async function importi(){
-    let results={};
-    results[0].totprezzo=req.body.costo_camera*(req.body.data_fine-req.body.data_inizio);
-    results[0].totsoggiorno=0;
-    if(req.body.lavoro===0) {
-        results[0].totsoggiorno= req.body.tassa_soggiorno * (req.body.data_fine - req.body.data_inizio) * req.body.n18;
+async function importi(req,res,next){
+    let totprezzo;
+    let totsoggiorno;
+    try {
+        totprezzo = req.body.costo_camera * (req.body.data_fine - req.body.data_inizio);
+        totsoggiorno = 0;
+        if (req.body.viaggio_lavoro === 0) {
+            totsoggiorno = req.body.tassa_soggiorno * (req.body.data_fine - req.body.data_inizio) * req.body.n18;
+        }
+        res.send(["1", totprezzo, totsoggiorno]);
+
+    }catch(err){
+        console.log(err);
+        res.send('2');
+        next(createError(500));
     }
 
 

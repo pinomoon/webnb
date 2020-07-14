@@ -199,7 +199,7 @@ const Registrazione=()=>{
 
             <div  className="container mt-10" >
 
-                <form  name="cita" id="form"  className="container was-validated col-sm-8 mt-3">
+                <form  name="form" id="form"  className="container was-validated col-sm-8 mt-3">
                     <h5>Per cominciare, sei un ...</h5>
 
                     <div className="row" style={{marginLeft:"auto",display:"block"}}>

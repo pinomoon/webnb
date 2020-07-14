@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ma from "../modifica_account/ma.png";
 import Button from "@material-ui/core/Button";
 import BoxConfermaModifica from "../modifica_account/boxconfermamodifica";
@@ -6,6 +6,7 @@ import {getSessionCookie, getUserCookie} from "../../sessions";
 import {Component} from "react";
 import bk from "./bk.jpg"
 import axios from 'axios';
+import Divider from "@material-ui/core/Divider";
 
 
 const Prenotazione =()=>{
@@ -36,10 +37,20 @@ const Prenotazione =()=>{
     const[numero_carta,setNumeroCarta]=React.useState("");
     const[scadenza,setScadenza]=React.useState("");
     const[cvc,setCvc]=React.useState("");
+    const[modalita_pagamento, setModalitaPagamento]=useState("");
+    const[n18, setN18]=useState();
+    const[viaggio_lavoro, setViaggioLavoro]=useState("0");
+    const [struttura, setStruttura]=useState([]);
+    const [pagamento_accettato, setPagamentoAccettato]=useState("");
+    const [costo_camera, setCostoCamera]=useState();
+    const [tassa_soggiorno, setTassaSoggiorno]=useState();
+    const [importi, setImporti]=useState([]);
+    const [importo_calcolato, setImportoCalcolato]=useState(false);
 
-    const state={id_utente,  nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,cellulare,email,titolare_carta,numero_carta,scadenza,cvc};
+    const state={id_utente,modalita_pagamento, n18, viaggio_lavoro,  nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,cellulare,email,titolare_carta,numero_carta,scadenza,cvc};
     const state2={id_utente, id_camera,data_inizio,data_fine};
-
+    const state3={costo_camera, data_inizio, data_fine, viaggio_lavoro,tassa_soggiorno,n18};
+    //costo_camera, data fine e inizio, lavoro,tassa soggiorno, n18
     React.useLayoutEffect(()=>{
         alert(id_utente);
         axios.post("https://localhost:9000/prenotazione/datiPrenotazione",state2)
@@ -58,6 +69,11 @@ const Prenotazione =()=>{
                     setNumeroCarta(response.data[1].numero_carta);
                     setScadenza(response.data[1].scadenza);
                     setCvc(response.data[1].cvc);
+                    setStruttura(response.data[2]);
+                    setPagamentoAccettato(response.data[2][0].modalita_di_pagamento);
+                    setCostoCamera(response.data[2][0].costo_camera);
+                    setTassaSoggiorno(response.data[2][0].tassa_soggiorno);
+                    console.log(response.data[2][0].modalita_di_pagamento);
                 }
                 else alert("Errore");
 
@@ -162,7 +178,43 @@ const Prenotazione =()=>{
         setCvc(valore);
         state.cvc=valore;
     };
-    const handleSubmit=()=>{};
+    const handleChangeModalitaPagamento=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setModalitaPagamento(valore);
+        state.modalita_pagamento=valore;
+    };
+    const handleChangeViaggioLavoro=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setViaggioLavoro(valore);
+        state.viaggio_lavoro=valore;
+    };
+    const handleChangeN18=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        setN18(valore);
+        state.n18=valore;
+    };
+    const handleSubmit=()=>{
+    };
+
+    const handleCalcolaImporti=(event)=>{
+        event.preventDefault();
+        axios.post("https://localhost:9000/prenotazione/calcoloImporti",state3)
+            .then((response)=>{
+                if(response.data[0]=="1"){
+                    setImporti([response.data[1],response.data[2]]);
+                    setImportoCalcolato(true);
+                }
+                else{
+                    alert("Errore nel calcolo dell'importo, impossibile procedere");
+                }
+            })
+            .catch((error)=>{
+                alert(error);
+            })
+    }
 
 
 
@@ -179,109 +231,41 @@ const Prenotazione =()=>{
 
                         <img src={bk} style={{margin:"auto",marginTop:"30px",height:"30%",width:"40%",display:"block"}}/>
                         <div className="container mt-10" >
-                            <form name="form" id="form"  className="container was-validated col-sm-8 mt-3" method="POST">
+                            <h5>Dati anagrafici per la Prenotazione</h5>
+                            <p>Nome: {nome}</p>
+                            <p>Cognome: {cognome}</p>
+                            <p>Sesso: {sesso}</p>
+                            <p>Data di Nascita: {data_di_nascita}</p>
+                            <br/>
+                            <h5>Indirizzo di Residenza</h5>
+                            <p>Via: {indirizzo}</p>
+                            <p>Città: {citta}</p>
+                            <p>Cap: {cap}</p>
+                            <br/>
+                            <h5>Dati Account</h5>
+                            <p>E-Mail: {email}</p>
+                            <p>Cellulare: {cellulare}</p>
+                            <br/>
+                            <h5>Riepilogo Dati Struttura</h5>
+                            {struttura.map(value=>{
 
-                                <h5>Dati anagrafici per la Prenotazione</h5>
+                            return(
+                                <div>
+                            <p>Nome Struttura: {value.nome_struttura}</p>
+                            <p>Indirizzo Struttura: {value.indirizzo_struttura}, {value.citta} {value.cap}, {value.regione}, {value.stato}</p>
+                            <p>Tipo Struttura: {value.tipo}</p>
+                            <br/>
 
-                                <div className="form-group">
-                                    <label htmlFor="name">Nome *</label>
-                                    <input id="nome" name="nome" type="text" className="form-control" maxLength="40"
-                                           value={state.nome} onChange={handleChangeNome} required/>
-                                    <div className="invalid-feedback">
-                                        Inserire nome
-                                    </div>
-
-                                    <label htmlFor="surname">Cognome *</label>
-                                    <input id="cognome" name="cognome" type="text" className="form-control" maxLength="40"
-                                           value={state.cognome} onChange={handleChangeCognome} required/>
-                                    <div className="invalid-feedback">
-                                        Inserire cognome
-                                    </div>
+                            <h5>Riepilogo Dati Camera</h5>
+                            <p>Nome Camera: {value.nome_camera}</p>
+                            <p>Numero Posti Letto: {value.numero_posti_letto}</p>
+                            <p>Colazione Inclusa: {value.colazione_inclusa}</p>
+                            <br/>
                                 </div>
-
-                                <div className="custom-control custom-radio custom-control-inline mt-2">
-                                    <input type="radio" className="custom-control-input" id="male" name="sesso" value="M"
-                                           onChange={handleChangeSesso} required/>
-                                    <label className="custom-control-label" htmlFor="male">Uomo</label>
-                                </div>
-                                <div className="custom-control custom-radio custom-control-inline mt-2">
-                                    <input type="radio" className="custom-control-input" id="female" name="sesso" value="F"
-                                           onChange={handleChangeSesso} required/>
-                                    <label className="custom-control-label" htmlFor="female">Donna</label>
-                                    <br></br>
-                                    <div className="invalid-feedback ml-2">
-                                        Inserire il genere
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <br/>
-
-                                    <label htmlFor="birthdate">Data di Nascita *</label>
-                                    <input name="data_di_nascita" id="birthdate" type="date" className="form-control"
-                                           value={state.data_di_nascita} onChange={handleChangeDataNascita} required/>
-                                    <div className="invalid-feedback">
-                                        Selezionare la data di nascita
-                                    </div>
-                                </div>
-                                <h5>Indirizzo di Residenza</h5>
-
-                                <div className="form-group">
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <label htmlFor="name">Via/Piazza</label>
-                                            <input id="indirizzo" name="indirizzo" type="text" className="form-control"
-                                                   maxLength="40" value={state.indirizzo} onChange={handleChangeIndirizzo}
-                                                   required/>
-                                            <div className="invalid-feedback">
-                                                Inserire Via e Numero Civico
-                                            </div>
-                                        </div>
-
-                                        <div className="col-6">
-                                            <label htmlFor="name">Città</label>
-                                            <input id="citta" name="citta" type="text" className="form-control" maxLength="40"
-                                                   value={state.citta} onChange={handleChangeCitta} required/>
-                                            <div className="invalid-feedback">
-                                                Inserire Città
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-5">
-                                            <label htmlFor="name">CAP</label>
-                                            <input id="cap" name="cap" type="text" className="form-control" maxLength="40"
-                                                   value={state.cap} onChange={handleChangeCap} required/>
-                                            <div className="invalid-feedback">
-                                                Inserire CAP
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <br/>
-                                    <label htmlFor="email">E-mail *</label>
-                                    <input name="email" id="email" type="email" className="form-control" size="32"
-                                           maxLength="40"
-                                           value={state.email} onChange={handleChangeEmail} required/>
-                                    <div className="invalid-feedback">
-                                        Inserire indirizzo e-mail
-                                    </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <br/>
-                                            <label htmlFor="cellulare">Numero Cellulare</label>
-                                            <input id="cellulare" name="cellulare" type="text" className="form-control" maxLength="40"
-                                                   value={state.cellulare} onChange={handleChangeCellulare} required/>
-                                            <div className="invalid-feedback">
-                                                Inserire cellulare
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                );
+                               } )
+                            }
+                            <form  name="form" id="form"  className="container was-validated col-sm-8 mt-3">
                                 <h5>Dati di Pagamento</h5>
 
                                 <div className="form-group">
@@ -290,21 +274,20 @@ const Prenotazione =()=>{
                                             <label htmlFor="credit-card">Titolare </label>
                                             <input name="titolare_carta" id="titolare_carta" type="name" className="form-control"
                                                    size="32" maxLength="40"
-                                                   value={state.titolare_carta} onChange={handleChangeTitolareCarta}/>
+                                                   value={state.titolare_carta} onChange={handleChangeTitolareCarta} required/>
                                         </div>
                                         <div className="col-12">
-                                            <label htmlFor="credit-card">Numero</label>
+                                            <label htmlFor="credit-card">Numero Carta</label>
                                             <input name="numero_carta" id="numero_carta" type="credit-card" className="form-control"
                                                    size="32" maxLength="40"
-                                                   value={state.numero_carta} onChange={handleChangeNumeroCarta}/>
+                                                   value={state.numero_carta} onChange={handleChangeNumeroCarta} required/>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-8">
-                                            <label htmlFor="credit-card">Scadenza</label>
-
-                                            <input name="scadenza" id="scadenza" type="date" className="form-control"
-                                                   size="32" maxLength="40" placeholder="scad"
+                                            <label htmlFor="scadenza">Scadenza</label>
+                                            <input name="scadenza" id="scadenza" type="text" className="form-control"
+                                                   size="32" maxLength="40" placeholder="MM/AA" pattern="(^[0][1-9]\/[0][1-9]$)|(^[1-2][0-9]\/[0][1-9]$)|(^[0][1-9]\/[1][0-2]$)|(^[1-2][0-9]\/[1][0-2]$)|(^[3][0-1]\/[0][1-9]$)|(^[3][0-1]\/[1][0-2]$)"
                                                    value={state.scadenza} onChange={handleChangeScadenza}/>
                                         </div>
 
@@ -313,7 +296,7 @@ const Prenotazione =()=>{
                                             <label htmlFor="credit-card">CVC</label>
                                             <input name="cvc" id="cvc" type="text" className="form-control"
                                                    size="32" maxLength="40"
-                                                   value={state.cvc} onChange={handleChangeCvc}/>
+                                                   value={state.cvc} onChange={handleChangeCvc} required/>
                                         </div>
                                     </div>
                                     <br/>
@@ -321,6 +304,153 @@ const Prenotazione =()=>{
                                 </div>
 
                                 <br></br>
+                                <div className="form-group">
+                                    <h5>Tipo Viaggio e Numero Adulti</h5>
+                                    <div className="row">
+                                        <br/>
+                                        <div className="col-1">
+                                        </div>
+                                        <div className="col-1">
+                                            <input className="form-check-input" type="checkbox" id="lavoro" name="lavoro" value="1" onChange={handleChangeViaggioLavoro}/>
+                                        </div>
+                                        <div className="col-8">
+                                            <label className="form-check-label " htmlFor="lavoro" >Viaggi per Lavoro?</label>
+                                        </div>
+                                        <br/>
+                                        <label htmlFor="n18">Numero Adulti*</label>
+                                        <input id="n18" name="n18" type='number' min="0" max={numero_posti_letto} className="form-control" maxLength="40"
+                                               value={state.n18} onChange={handleChangeN18} required/>
+                                        <br/>
+                                        <br/>
+                                        <h5>Scegli la Modalità di Pagamento</h5>
+                                        {pagamento_accettato == "carta,struttura,anticipo_carta" &&
+                                                <div>
+                                                    <div className="custom-control custom-radio custom-control-inline mt-2">
+                                                        <input type="radio" className="custom-control-input" id="carta"
+                                                               name="modalita_di_pagamento"
+                                                               value="carta" onChange={handleChangeModalitaPagamento}
+                                                               required/>
+                                                        <label className="custom-control-label" htmlFor="carta">Carta di
+                                                            Credito</label>
+                                                    </div>
+                                                    <div
+                                                        className="custom-control custom-radio custom-control-inline mt-2">
+                                                        <input type="radio" className="custom-control-input"
+                                                               id="struttura" name="modalita_di_pagamento"
+                                                               value="struttura"
+                                                               onChange={handleChangeModalitaPagamento} required/>
+                                                        <label className="custom-control-label" htmlFor="struttura">Pagamento
+                                                            in Struttura</label>
+
+                                                    </div>
+                                                    <div
+                                                        className="custom-control custom-radio custom-control-inline mt-2">
+                                                        <input type="radio" className="custom-control-input"
+                                                               id="anticipo_carta" name="modalita_di_pagamento"
+                                                               value="anticipo_carta"
+                                                               onChange={handleChangeModalitaPagamento} required/>
+                                                        <label className="custom-control-label"
+                                                               htmlFor="anticipo_carta">Acconto con Carta di
+                                                            Credito</label>
+
+                                                    </div>
+                                                </div>
+                                        }
+                                        {pagamento_accettato=="carta,struttura,"&&
+                                            <div>
+                                            <div className="custom-control custom-radio custom-control-inline mt-2">
+                                            <input type="radio" className="custom-control-input" id="carta" name="modalita_di_pagamento"
+                                            value="carta" onChange={handleChangeModalitaPagamento} required/>
+                                            <label className="custom-control-label" htmlFor="carta">Carta di Credito</label>
+                                            </div>
+                                            <div className="custom-control custom-radio custom-control-inline mt-2">
+                                            <input type="radio" className="custom-control-input" id="struttura" name="modalita_di_pagamento"
+                                            value="struttura" onChange={handleChangeModalitaPagamento}  required/>
+                                            <label className="custom-control-label" htmlFor="struttura">Pagamento in Struttura</label>
+
+                                            </div>
+                                            </div>
+                                        }
+                                        {pagamento_accettato=="carta,,anticipo_carta"&&
+                                            <div>
+                                            <div className="custom-control custom-radio custom-control-inline mt-2">
+                                            <input type="radio" className="custom-control-input" id="carta" name="modalita_di_pagamento"
+                                            value="carta" onChange={handleChangeModalitaPagamento} required/>
+                                            <label className="custom-control-label" htmlFor="carta">Carta di Credito</label>
+                                            </div>
+                                            <div className="custom-control custom-radio custom-control-inline mt-2">
+                                            <input type="radio" className="custom-control-input" id="anticipo_carta" name="modalita_di_pagamento"
+                                            value="anticipo_carta" onChange={handleChangeModalitaPagamento}  required/>
+                                            <label className="custom-control-label" htmlFor="anticipo_carta">Acconto con Carta di Credito</label>
+
+                                            </div>
+                                            </div>
+                                        }
+                                        {pagamento_accettato==",struttura,anticipo_carta"&&
+                                            <div>
+                                            <div className="custom-control custom-radio custom-control-inline mt-2">
+                                            <input type="radio" className="custom-control-input" id="struttura" name="modalita_di_pagamento"
+                                            value="struttura" onChange={handleChangeModalitaPagamento}  required/>
+                                            <label className="custom-control-label" htmlFor="struttura">Pagamento in Struttura</label>
+
+                                            </div>
+                                            <div className="custom-control custom-radio custom-control-inline mt-2">
+                                            <input type="radio" className="custom-control-input" id="anticipo_carta" name="modalita_di_pagamento"
+                                            value="anticipo_carta" onChange={handleChangeModalitaPagamento}  required/>
+                                            <label className="custom-control-label" htmlFor="anticipo_carta">Acconto con Carta di Credito</label>
+
+                                            </div>
+                                            </div>
+                                        }
+                                        {pagamento_accettato=="carta,,"&&
+                                            <div>
+                                            <div className="custom-control custom-radio custom-control-inline mt-2">
+                                            <input type="radio" className="custom-control-input" id="carta" name="modalita_di_pagamento"
+                                            value="carta" onChange={handleChangeModalitaPagamento} required/>
+                                            <label className="custom-control-label" htmlFor="carta">Carta di Credito</label>
+                                            </div>
+
+                                            </div>
+                                        }
+                                        {pagamento_accettato==",struttura,"&&
+                                            <div>
+                                            <div className="custom-control custom-radio custom-control-inline mt-2">
+                                            <input type="radio" className="custom-control-input" id="struttura" name="modalita_di_pagamento"
+                                            value="struttura" onChange={handleChangeModalitaPagamento}  required/>
+                                            <label className="custom-control-label" htmlFor="struttura">Pagamento in Struttura</label>
+                                            </div>
+                                            </div>
+                                        }
+                                        {pagamento_accettato==",,anticipo_carta"&&
+                                            <div>
+                                            <div className="custom-control custom-radio custom-control-inline mt-2">
+                                            <input type="radio" className="custom-control-input" id="anticipo_carta" name="modalita_di_pagamento"
+                                            value="anticipo_carta" onChange={handleChangeModalitaPagamento}  required/>
+                                            <label className="custom-control-label" htmlFor="anticipo_carta">Acconto con Carta di Credito</label>
+                                            </div>
+                                            </div>
+                                        }
+                                        <br/>
+                                        <Divider/>
+                                        {importo_calcolato==true &&
+                                        <div>
+                                            <h5>Importi Totali della Prenotazione </h5>
+                                            <br/>
+                                            <p>Data Check-In: {data_inizio}</p>
+                                            <p>Data Check-Out: {data_fine}</p>
+                                            <p>Numero Ospiti Adulti: {n18}</p>
+                                            <p>Numero Bambini: {numero_posti_letto-n18}</p>
+                                            <br/>
+                                            <p>Prezzo Camera a Notte: {costo_camera}</p>
+                                            <p>Totale Tasse di Soggiorno: {importi[1]}</p>
+                                            <p>Totale Costo Camera: {importi[0]}</p>
+                                            <h5>Totale Prenotazione: {importi[0]+importi[1]}</h5>
+                                        </div>
+                                        }
+
+                                    </div>
+
+                                </div>
 
                                 <div className="row">
                                     <div className="col-sm-3 col-md-2 col-lg-1">
@@ -328,9 +458,20 @@ const Prenotazione =()=>{
                                     </div>
                                     <div className="col-sm-6 col-md-8 col-lg-9">
                                     </div>
-                                    <div className="col-sm-3 col-md-2 col-lg-1">
-                                        <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Prenota</Button>
-                                    </div>
+                                    {importo_calcolato==false?(
+                                        <div className="col-sm-3 col-md-2 col-lg-1">
+                                            <Button name="ok" id="ok"  onClick={handleCalcolaImporti}
+                                                    style={{marginLeft: "-10px", color: "#ff6300"}}>Calcola Importo Totale</Button>
+                                        </div>
+                                        ):(
+
+
+                                        <div className="col-sm-3 col-md-2 col-lg-1">
+                                            <Button name="ok" id="ok" type="submit" onClick={handleSubmit}
+                                                    style={{marginLeft: "-10px", color: "#ff6300"}}>Prenota</Button>
+                                        </div>
+                                    )
+                                    }
                                     <div className="row">
                                         <br/>
 
