@@ -82,7 +82,7 @@ const ElencoPreferiti=()=> {
                                                         overflow: "hidden",
                                                         textOverflow: "ellipsis"}}>Indirizzo: {value.indirizzo_struttura}, {value.citta}, {value.regione}</p>
                                                     <div>
-                                                        <Button onClick={()=>handleEliminaPref(value)} style={{color:"#ff6300"}}><DeleteOutlineIcon/>Elimina</Button>
+                                                        <Button onClick={()=>handleEliminaPref(value)} style={{color:"#ff6300",margin:"auto",display:"block"}}><DeleteOutlineIcon/>Elimina</Button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -105,19 +105,7 @@ const ElencoPreferiti=()=> {
 
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-sm-3 col-md-2 col-lg-1">
-                        <Button href="/" style={{color:"#ff6300"}}>Indietro</Button>
-                    </div>
-                    <div className="col-sm-6 col-md-8 col-lg-9">
-                    </div>
-                    <div className="col-sm-3 col-md-2 col-lg-1">
-                    </div>
-                    <div className="row">
-                        <br/>
 
-                    </div>
-                </div>
                 <br></br>
                 <BoxEliminaPref
                     open={openEliminaPref}

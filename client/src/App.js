@@ -38,6 +38,7 @@ import ModificaStruttura from "./Component/GestioneStrutture/modificastruttura";
 import EliminaCamera from "./Component/GestisciCamera/eliminacamera";
 import Prenotazione from "./Component/Ricerca Struttura/Prenotazione";
 import UfficioTurismo from "./Component/UfficioTurismo/ufficioturismo";
+import FAQ from "./Component/FAQ";
 
 
 
@@ -93,6 +94,8 @@ const App= ()=> {
                         <Route path="/modificaStruttura" component={ModificaStruttura} />
                         <Route path="/eliminaCamera" component={EliminaCamera} />
                         <Route path="/ufficioturismo" component={UfficioTurismo}  exact/>
+                        <Route path="/FAQ" component={FAQ}  exact/>
+
 
                         <Route path="*" component={CadutaConnessione}/>
 

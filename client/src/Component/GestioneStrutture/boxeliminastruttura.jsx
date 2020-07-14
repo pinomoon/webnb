@@ -52,14 +52,14 @@ const BoxEliminaStruttura=(props)=>{
                 <DialogTitle id="alert-dialog-slide-title">{"Elimina Struttura"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                       <p>SEI SICURO DI VOLER ELIMINARE QUESTA STRUTTURA?</p>
+                       <p style={{color:"#ff6300"}}>Sei sicuro di voler eliminare questa struttura?</p>
 
                     </DialogContentText>
 
                 </DialogContent>
                 <DialogActions id="action">
-                    < Button onClick={handleElimina}color="primary">Elimina Struttura</Button>
-                    < Button onClick={handleClose} color="primary">Chiudi</Button>
+                    < Button onClick={handleElimina} style={{color:"#ff6300"}}>Elimina Struttura</Button>
+                    < Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
 
                 </DialogActions>
             </Dialog>
