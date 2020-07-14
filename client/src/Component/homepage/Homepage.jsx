@@ -29,6 +29,7 @@ import BoxData from "./BoxData";
 import BoxAccesso from "../login/boxconferma";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import HotelIcon from '@material-ui/icons/Hotel';
+import DeleteOutlineIcon from "@material-ui/core/SvgIcon/SvgIcon";
 
 const Homepage =()=>{
     const [luogo,setLuogo]=React.useState("");
@@ -268,37 +269,39 @@ const Homepage =()=>{
                             { strutturep[0]!=[] && (strutturep.map((strutturep)=>{
                                 return(
                                     <div key={strutturep.id_struttura}>
-                                    <div className="card mb-3" style={{width:"100%",height:"auto"}}>
-                                        <div className="row no-gutters">
-                                            <div className="col-md-4">
-                                                <img id="image" src={""}  className="card-img" style={{height:"100%"}}/>
-                                            </div>
-                                            <div className="col-md-8">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">{strutturep.nome_struttura}</h5>
-                                                    {strutturep.tipo==="bnb" &&
-                                                    <div>
-                                                    <p><HotelIcon/> Bed and Breakfast</p>
+
+                                        <div className="col-sm-6 col-md-3 col-lg-3">
+                                            <section className="cards clearfix">
+                                                <div className="card" style={{width:"100%",height:"100%"}}>
+                                                    <img className="card_image" src={villa}  alt=" Villa "/>
+                                                    <div className="card_copy">
+                                                        <h5 className="card-title">{strutturep.nome_struttura}</h5>
+
+                                                        {strutturep.tipo==="bnb" &&
+                                                        <div>
+                                                            <p><HotelIcon/> Bed and Breakfast</p>
+                                                        </div>
+
+                                                        }
+                                                        {strutturep.tipo==="casa_vacanze" &&
+                                                        <div>
+                                                            <p><Home/> Casa Vacanze</p>
+                                                        </div>
+
+                                                        }
+                                                        <p style={{margin:0,whiteSpace:"nowrap",
+                                                            overflow: "hidden",
+                                                            textOverflow: "ellipsis"}}>{strutturep.descrizione}
+                                                        </p>
+                                                        <p style={{margin:0,whiteSpace:"nowrap",
+                                                            overflow: "hidden",
+                                                            textOverflow: "ellipsis"}}>Indirizzo: {strutturep.indirizzo_struttura}, {strutturep.citta}, {strutturep.regione}</p>
+
                                                     </div>
-
-                                                    }
-                                                    {strutturep.tipo==="casa_vacanze" &&
-                                                    <div>
-                                                         <p><Home/> Casa Vacanze</p>
-                                                    </div>
-
-                                                    }
-
-
-                                                    <p className="card-text"> Indirizzo: {strutturep.indirizzo_struttura},{strutturep.citta},{strutturep.regione} .</p>
-                                                    
-
-
-
                                                 </div>
-                                            </div>
+
+                                            </section>
                                         </div>
-                                    </div>
                                 </div>
                                 );
                                                    }))}

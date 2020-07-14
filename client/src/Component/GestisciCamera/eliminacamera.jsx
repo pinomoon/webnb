@@ -64,9 +64,10 @@ const EliminaCamera=(props)=>{
                     <div className="row" >
                         <div className="col-2">
                         </div>
-                        <div className="col-4">
-
-                        <div className="card text-center" style={{width: "50%"}}>
+                        <div className="col-sm-8 col-md-8 col-lg-8">
+                            <div className="row">
+                        <div className="col-sm-12 col-md-6 col-lg-4">
+                        <div className="card text-center" style={{width: "97%"}}>
                             <div className="card-body">
                                 <h5 className="card-title">{camera.nome_camera}</h5>
                                 <div className="card-text">
@@ -80,8 +81,10 @@ const EliminaCamera=(props)=>{
                                 <Button onClick={()=>handleElimina(camera)} style={{color:"#ff6300"}}> <DeleteOutlineIcon/> Elimina</Button>
                             </div>
                         </div>
+                        </div>
+                            </div>
 
-s                    </div>
+                  </div>
                     </div>
 
 

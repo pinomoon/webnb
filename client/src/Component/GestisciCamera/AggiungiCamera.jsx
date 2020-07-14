@@ -91,10 +91,8 @@ const AggiungiCamera  =(props) =>{
 
         <div className="container">
             <div className="row">
-                <div className="col">
 
-                </div>
-                <div className="col-sm-12 col-md-9 col-lg-6">
+                <div className="col-sm-12 col-md-12 col-lg-12">
                     <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
                         <img src={host} style={{margin:"auto",marginTop:"30px",width:"30%",height:"30%",display:"block"}}/>
 
@@ -125,7 +123,6 @@ const AggiungiCamera  =(props) =>{
                             </div>
                         <div className="form-group" style={{width:"50%",margin:"auto"}}>
                             <h5>Colazione Inclusa</h5>
-                            <br></br>
                             <div className="custom-control custom-radio custom-control-inline mt-2">
                                 <input type="radio" className="custom-control-input" id="si" name="colazione_inclusa"
                                        value="1" onChange={handleChangeColazioneInclusa} required/>
@@ -143,27 +140,40 @@ const AggiungiCamera  =(props) =>{
                         </div>
 
 
+
+
+                        <div className="row">
+                            <div className="col-lg-2">
+                            </div>
+                            <div className="col-sm-3 col-md-2 col-lg-2">
+                                <br/>
+                                <Button color="inherit"   onClick={handleClose}style={{color:"#ff6300",display:"block",margin:"auto"}}>Chiudi</Button>
+
+                            </div>
+                            <div className="col-sm-6 col-md-8 col-lg-4">
+                            </div>
+                            <div className="col-sm-3 col-md-2 col-lg-2">
+                                <br/>
+                                <Button color="inherit" type="submit" onClick={handleSubmit} style={{color:"#ff6300",display:"block",margin:"auto"}}>Conferma</Button>
+
+                            </div>
+                            <div className="row">
+                                <br/>
+
+                            </div>
+                        </div>
+                        <br></br>
                     </div>
+                    <br/>
+                    <br/>
                 </div>
                 <div className="col">
                 </div>
             </div>
+
         </div>
                 </DialogContent>
-                <DialogActions>
-                    <div className="row">
-                        <div className="col-2">
-                        </div>
-                        <div className="col-1">
-                            <Button color="inherit" onClick={handleClose}style={{color:"#ff6300",marginLeft:"auto",display:"block"}}>Chiudi</Button>
-                        </div>
-                        <div className="col-5">
-                        </div>
-                        <div className="col-1">
-                            <Button color="inherit" type="submit" onClick={handleSubmit} style={{color:"#ff6300",marginRight:"auto",display:"block"}}>Aggiungi Camera</Button>
-                        </div>
-                    </div>
-                </DialogActions>
+
             </Dialog>
         </div>
 

@@ -82,12 +82,12 @@ const ElencoPrenotazioni=()=>{
                             <ListGroup variant="flush">
                                 <ListGroup.Item>
                                     <div className="row">
-                                        <div className="col-1"><h5>Id:</h5></div>
-                                        <div className="col-2"><h5>Struttura</h5></div>
-                                        <div className="col-2"><h5>Data Inizio</h5></div>
-                                        <div className="col-2"><h5>Data Fine</h5></div>
-                                        <div className="col-3"> <h5> Stato:</h5></div>
-                                        <div className="col-2"></div>
+                                        <div className="col-sm-0 col-lg-1"><h5>Id:</h5></div>
+                                        <div className="col-sm-0 col-lg-2"><h5>Struttura</h5></div>
+                                        <div className="col-sm-0 col-lg-2"><h5>Data Inizio</h5></div>
+                                        <div className="col-sm-0 col-lg-2"><h5>Data Fine</h5></div>
+                                        <div className="col-sm-0 col-lg-3"> <h5> Stato:</h5></div>
+                                        <div className="col-sm-0 col-lg-2"></div>
                                     </div>
                                 </ListGroup.Item>
                                 {prenotazioni.map((value)=>{
@@ -95,11 +95,11 @@ const ElencoPrenotazioni=()=>{
                                     return(
                                     <ListGroup.Item>
                                         <div className="row">
-                                            <div className="col-1">{value.id_prenotazione}</div>
-                                            <div className="col-2">{value.nome_struttura}</div>
-                                            <div className="col-2">{value.data_inizio}</div>
-                                            <div className="col-2">{value.data_fine}</div>
-                                            <div className="col-3">
+                                            <div className="col-sm-2 col-lg-1">{value.id_prenotazione}</div>
+                                            <div className="col-sm-4 col-lg-2">{value.nome_struttura}</div>
+                                            <div className="col-sm-4 col-lg-2">{value.data_inizio}</div>
+                                            <div className="col-sm-4 col-lg-2">{value.data_fine}</div>
+                                            <div className="col-sm-6 col-lg-3">
                                                 {value.stato_prenotazione=="in attesa di conferma" &&
                                                     <a >In attesa di conferma</a>
                                                 }

@@ -96,6 +96,7 @@ const App= ()=> {
                         <Route path="/ufficioturismo" component={UfficioTurismo}  exact/>
                         <Route path="/FAQ" component={FAQ}  exact/>
 
+
                         <Route path="*" component={CadutaConnessione}/>
 
 

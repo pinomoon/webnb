@@ -127,13 +127,10 @@ const EsploraStruttura=()=>{
                 <div className="col-sm-12 col-md-7 col-lg-10"
                      style={{backgroundColor: "white", width: "100%", height: "auto", marginTop: "30px"}}>
                     <div className="row">
-                        <div className="col-sm-7 col-lg-7">
+                        <div className="col-sm-10 col-lg-10">
                             {struttura.map(value=>
-                                <h4 >{value.nome_struttura}</h4>
+                                <h5>{value.nome_struttura}</h5>
                             )}
-
-                        </div>
-                        <div className="col-sm-1 col-lg-1">
                         </div>
                         {getSessionCookie().tipo=="1" &&
                         <div className="col-sm-1 col-mg-1 col-lg-1" class="effetto">

@@ -4,7 +4,7 @@ import axios from 'axios';
 import Input from "@material-ui/core/Input/Input";
 import Button from "@material-ui/core/Button";
 import BoxGuadagni from "./boxguadagni";
-
+import money from "./m.PNG"
 const MieiGuadagni=()=>{
     const [openTotale, setOpenTotale]=useState(false);
     const [tipoRisposta, setTipoRisposta]=useState("");
@@ -63,13 +63,24 @@ const MieiGuadagni=()=>{
     };
 
     return(
-        <div className="container mt-10">
+
+        <div className="container">
+            <div className="row">
+                <div className="col-md-2 col-lg-3">
+
+                </div>
+                <div className="col-sm-12 col-md-8 col-lg-6">
+
+
+
+            <div style={{marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
+                <img src={money} style={{margin:"auto",marginTop:"30px",width:"30%",height:"auto%",display:"block"}}/>
 
             <div name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
 
                 <h5>Calcola qui i tuoi guadagni</h5>
 
-                <Input style={{width:"150px",backgroundColor:"white",marginTop:"9px"}}
+                <Input style={{width:"47%",backgroundColor:"white",marginTop:"9px"}}
                        type="date"
                        name="data_iniziale"
                        id="data_iniziale"
@@ -77,7 +88,9 @@ const MieiGuadagni=()=>{
                        value={state.data_iniziale}
                        onChange={handleChangeDataIniziale}
                 />
-                <Input style={{width:"150px",backgroundColor:"white",marginTop:"9px"}}
+                &nbsp;
+                &nbsp;
+                <Input style={{width:"47%",backgroundColor:"white",marginTop:"9px"}}
                        type="date"
                        name="data_finale"
                        id="data_finale"
@@ -85,8 +98,12 @@ const MieiGuadagni=()=>{
                        value={state.data_finale}
                        onChange={handleChangeDataFinale}
                 />
+                <br/>
+                <br/>
                 <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"auto",color:"#ff6300",display:"block"}}>Calcola Guadagni</Button>
+                <br/>
             </div>
+
             <BoxGuadagni
             open={openTotale}
             onClose={handleCloseTotale}
@@ -96,6 +113,10 @@ const MieiGuadagni=()=>{
             num_prenotazioni={num_prenotazioni}
             guadagni={guadagno}
             />
+        </div>
+
+        </div>
+            </div>
         </div>
     );
 };
