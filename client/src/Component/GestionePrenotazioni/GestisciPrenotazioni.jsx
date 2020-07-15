@@ -61,16 +61,20 @@ import checkin from "../Check-in/checkin";
                     <div className="col-1">
 
                     </div>
-                    <div className="col-sm-12 col-md-12 col-lg-10">
+                    <div className="col-sm-12 col-md-12 col-lg-12">
                 <div style={{margin:"auto",width:"100%"}}>
                     <h3>Lista prenotazioni</h3>
                     <br/>
                 <ListGroup variant="flush">
                     <ListGroup.Item>
                         <div className="row">
-                            <div className="col-4"><h5>Id:</h5></div>
-                            <div className="col-5"> <h5> Stato:</h5></div>
-                            <div className="col-3"></div>
+                            <div className="col-sm-0 col-lg-1"><h5>Id:</h5></div>
+                            <div className="col-sm-0 col-lg-2"><h5>Struttura</h5></div>
+                            <div className="col-sm-0 col-lg-2"><h5>Camera</h5></div>
+                            <div className="col-sm-0 col-lg-1"><h5>Data Inizio</h5></div>
+                            <div className="col-sm-0 col-lg-1"><h5>Data Fine</h5></div>
+                            <div className="col-sm-0 col-lg-3"> <h5> Stato:</h5></div>
+                            <div className="col-sm-0 col-lg-2"></div>
                         </div>
                     </ListGroup.Item>
                     {prenotazioni.map((values)=>{
@@ -78,8 +82,12 @@ import checkin from "../Check-in/checkin";
                         return(
                             <ListGroup.Item>
                                 <div className="row">
-                                    <div className="col-4"><h5>Id: {values.id_prenotazione}</h5></div>
-                                    <div className="col-5">
+                                    <div className="col-sm-2 col-lg-1">{values.id_prenotazione}</div>
+                                    <div className="col-sm-4 col-lg-2">{values.nome_struttura}</div>
+                                    <div className="col-sm-4 col-lg-2">{values.nome_camera}</div>
+                                    <div className="col-sm-4 col-lg-1">{values.data_inizio}</div>
+                                    <div className="col-sm-4 col-lg-1">{values.data_fine}</div>
+                                    <div className="col-sm-6 col-lg-3">
                                     {values.stato_prenotazione =="in attesa di conferma" &&
                                      <h5 style={{color:"blue"}}> In attesa di conferma</h5>
 
@@ -106,7 +114,7 @@ import checkin from "../Check-in/checkin";
 
                                         }
                                     </div>
-                                    <div className="col-3">
+                                    <div className="col-sm-0 col-lg-2">
                                         { values.stato_prenotazione=="in attesa di conferma" &&
                                             <div>
                                         <Button color="inherit" onClick={()=>handleAccetta(values)} style={{color:"#ff6300"}}>Accetta</Button>
