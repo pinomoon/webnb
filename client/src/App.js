@@ -16,7 +16,7 @@ import GestisciStrutture from "./Component/GestioneStrutture/GestisciStrutture";
 import InserisciStruttura from "./Component/GestioneStrutture/InserisciStruttura";
 import Boxconfermainserimento from "./Component/GestioneStrutture/boxconfermainserimento";
 import {UserContext} from "./UserContext";
-import {PrivateRoute} from "./privateRoute";
+import {PrivateRoute, PrivateRouteCliente, PrivateRouteHost} from "./privateRoute";
 import Header from "./Component/header/Header";
 import Footer from "./Component/footer/Footer";
 import {createBrowserHistory} from 'history';
@@ -39,20 +39,13 @@ import EliminaCamera from "./Component/GestisciCamera/eliminacamera";
 import Prenotazione from "./Component/Ricerca Struttura/Prenotazione";
 import UfficioTurismo from "./Component/UfficioTurismo/ufficioturismo";
 import FAQ from "./Component/FAQ";
+import Unabled from "./Component/Caduta Connessione/unabled";
 
 
 
 const App= ()=> {
     const [session,setSession]=useState(getSessionCookie());
-    const value=useMemo(()=>({session,setSession}),[session,setSession]);
-    const handleAlert=()=>{
-        console.log(session);
-    };
-    /*React.useEffect(()=>{
-        setSession(getSessionCookie());
-    },[session]);*/
-
-        return (
+    return (
 
                 <div>
                     <UserContext.Provider value={session}>
@@ -67,39 +60,32 @@ const App= ()=> {
 
                         <Route path="/aboutus" component={PaginaAboutUs} exact/>
                         <Route path="/" component={Homepage} exact/>
-                        <Route path="/profilo" component={PaginaProfilo} exact/>
-                        <Route path="/host" component={HomepageHost} exact/>
                         <Route path="/registrazione" component={PaginaRegistrazione} exact/>
                         <Route path="/login" component={PaginaLogin} exact/>
-                        <Route path="/cliente" component={HomepageCliente} exact/>
                         <Route path="/modificaaccount" component={PaginaModificaAccount} exact/>
-                        <Route path="/checkin" component={Checkin} />
-                        <Route path="/checkin/success" component={PaginaCheckinSuccess} exact/>
-                        <Route path="/checkin/error" component={CheckinFail} exact/>
-                        <Route path="/lemiestrutture" component={GestisciStrutture} exact/>
-                        <Route path="/inseriscistruttura" component={InserisciStruttura} exact/>
-                        <Route path="/inseriscistruttura/success" component={Boxconfermainserimento} exact/>
                         <Route path="/recuperaCredenziali" component={RecuperaPassword}/>
                         <Route path="/login/passwordDimenticata" component={PasswordDimenticata} exact/>
                         <Route path="/accountConferma" component={ConfermaAccount} />
-                        <Route path="/gestisciprenotazione" component={GestisciPrenotazioni} />
-                        <Route path="/ricercastruttura" component={RicercaStruttura} />
-                        <Route path="/prenotazione" component={Prenotazione} />
-                        <Route path="/esplora" component={EsploraStruttura}/>
-                        <Route path="/aggiungicamera" component={AggiungiCamera} />
-                        <Route path="/guadagni" component={MieiGuadagni} exact />
-                        <Route path="/lemieprenotazioni" component={ElencoPrenotazioni} exact />
-                        <Route path="/recensisci" component={Recensione} exact />
-                        <Route path="/imieipreferiti" component={ElencoPreferiti} exact />
-                        <Route path="/modificaStruttura" component={ModificaStruttura} />
-                        <Route path="/eliminaCamera" component={EliminaCamera} />
-                        <Route path="/ufficioturismo" component={UfficioTurismo}  exact/>
+                        <PrivateRoute path="/esplora" component={EsploraStruttura}/>
+                        <PrivateRoute path="/ricercastruttura" component={RicercaStruttura} />
                         <Route path="/FAQ" component={FAQ}  exact/>
+                        <Route path="/unabled" component={Unabled} exact/>
 
-
+                        <PrivateRouteHost path="/checkin" component={Checkin} />
+                        <PrivateRouteHost path="/lemiestrutture" component={GestisciStrutture} exact/>
+                        <PrivateRouteHost path="/inseriscistruttura" component={InserisciStruttura} exact/>
+                        <PrivateRouteHost path="/aggiungicamera" component={AggiungiCamera} />
+                        <PrivateRouteHost path="/guadagni" component={MieiGuadagni} exact />
+                        <PrivateRouteHost path="/gestisciprenotazione" component={GestisciPrenotazioni} />
+                        <PrivateRouteHost path="/modificaStruttura" component={ModificaStruttura} />
+                        <PrivateRouteHost path="/eliminaCamera" component={EliminaCamera} />
+                        <PrivateRouteHost path="/ufficioturismo" component={UfficioTurismo}  exact/>
+                        <PrivateRouteCliente path="/lemieprenotazioni" component={ElencoPrenotazioni} exact />
+                        <PrivateRouteCliente path="/recensisci" component={Recensione} exact />
+                        <PrivateRouteCliente path="/imieipreferiti" component={ElencoPreferiti} exact />
+                        <PrivateRouteCliente path="/prenotazione" component={Prenotazione} />
+                        <PrivateRouteCliente path="/profilo" component={PaginaProfilo} exact/>
                         <Route path="*" component={CadutaConnessione}/>
-
-
                         </Switch>
 
                     </main>

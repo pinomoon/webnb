@@ -7,6 +7,7 @@ import {Component} from "react";
 import bk from "./bk.jpg"
 import axios from 'axios';
 import Divider from "@material-ui/core/Divider";
+import BoxConfermaPrenotazione from "./boxconfermaprenotazione";
 
 
 const Prenotazione =()=>{
@@ -47,6 +48,8 @@ const Prenotazione =()=>{
     const [importi, setImporti]=useState([]);
     const [importo_calcolato, setImportoCalcolato]=useState(false);
     const [id_struttura, setIdStruttura]=useState("");
+    const [openConferma, setOpenConferma]=useState(false);
+    const [tipoRisposta, setTipoRisposta]=useState("");
 
     const state={id_utente,id_struttura,data_fine, data_inizio, modalita_pagamento,importi, n18, viaggio_lavoro,  nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,cellulare,email,titolare_carta,numero_carta,scadenza,cvc};
     const state2={id_utente, id_camera,data_inizio,data_fine};
@@ -198,16 +201,19 @@ const Prenotazione =()=>{
         setN18(valore);
         state.n18=valore;
     };
+    const handleOpenConferma=()=>{
+        setOpenConferma(true);
+    };
+    const handleCloseConferma=()=>{
+        setTipoRisposta("");
+        setOpenConferma(false);
+    };
     const handleSubmit=(event)=>{
         event.preventDefault();
         axios.post("https://localhost:9000/prenotazione",state)
             .then((response)=>{
-                if(response.data=="1"){
-                    alert("Prenotazione ok");
-                }
-                else{
-                    alert("Errore");
-                }
+                    setTipoRisposta(response.data);
+                    handleOpenConferma();
             })
             .catch((error)=>{
                 alert(error);
@@ -502,7 +508,11 @@ const Prenotazione =()=>{
 
                 </div>
             </div>
-
+                <BoxConfermaPrenotazione
+                    open={openConferma}
+                    onClose={handleCloseConferma}
+                    responseType={tipoRisposta}
+                />
         </div>
 
 
