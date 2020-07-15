@@ -335,13 +335,10 @@ async function prenota(req, res, next) {
                 now=Date.now();
                 
                 
-            await db.query("UPDATE prenotazione SET data_prenotazione=?, \
+            await db.query("UPDATE prenotazione SET  \
                 metodo_di_pagamento=?, importo=?, tasse_soggiorno=?,stato_pagamento=?, stato_rimborso=?,conferma=?\
-                WHERE id_prenotazione=? )"
+                WHERE id_prenotazione=? "
                 ,[
-                    [
-                        [
-                            now,
                             req.body.modalita_pagamento,
                             req.body.importi[0],
                             req.body.importi[1],
@@ -349,8 +346,6 @@ async function prenota(req, res, next) {
                             0,
                             1,
                             idp[0].id_prenotazione/*INSERIRE ID PRENOTAZIONE!!!!!!!!!!!*/
-                        ]
-                    ]
                 ]).catch(err=>{
                     throw err;
                 });
@@ -436,14 +431,17 @@ async function prenota(req, res, next) {
         next(createError(500));
     }
 }
- let deletefakepren=setInterval(deleteFakePren,300000);
+ let deletefakepren=setInterval(deleteFakePren,100000);
 
 async function deleteFakePren(){
-    const db=makeDb(config);
-    let now= Date.now();
+    const db=await makeDb(config);
+    let now= new Date(Date.now());
+    let conv= new Date(now.getTime()-600000);
     try {
         await withTransaction(db, async () => {
-        await db.query("DELETE FROM prenotazione WHERE (?-data_prenotazione)>600000 AND conferma=false ",[now]).catch(err=>{
+        await db.query("DELETE FROM prenotazione WHERE  data_prenotazione<=? AND conferma=0 ",[
+            conv
+        ]).catch(err=>{
             throw err;
         })
         })

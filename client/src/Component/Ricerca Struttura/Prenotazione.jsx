@@ -287,7 +287,7 @@ const Prenotazione =()=>{
                             <h5>Riepilogo Dati Camera</h5>
                             <p>Nome Camera: {value.nome_camera}</p>
                             <p>Numero Posti Letto: {value.numero_posti_letto}</p>
-                            <p>Colazione Inclusa: {value.colazione_inclusa===1 ? Si : No} </p>
+                                    <p>Colazione Inclusa: {value.colazione_inclusa==1 ?(<p>Si</p>) : (<p>No</p>)} </p>
                             <br/>
                                 </div>
                                 );
