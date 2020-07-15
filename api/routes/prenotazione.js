@@ -7,7 +7,7 @@ const {configmail}= require('../servermail/configmail');
 var transport=nodemailer.createTransport(configmail);
 var pdfmaker=require('pdfkit');
 var fs=require('fs');
-
+let idp;
 
 router.post('/ricercaStruttura', ricerca);
 
@@ -241,7 +241,15 @@ async function dati(req, res, next) {
         ] ).catch(err=>{
             throw err;
         });
-
+            idp=await db.query("SELECT id_prenotazione FROM prenotazione WHERE id_utente=? AND id_camera=? AND data_inizio=?\
+            AND data_fine=?"
+            ,[
+                req.body.id_utente,
+                req.body.id_camera,
+                req.body.data_inizio,
+                req.body.data_fine
+            ]).catch(err=>{throw err;});
+            console.log("AHAHAH "+idp);
             results=await db.query("SELECT nome,cognome,data_di_nascita,sesso,indirizzo,citta,cap,cellulare,utente.email,titolare_carta,numero_carta,scadenza,cvc \
             FROM utente, carta_credito \
             WHERE utente.email=carta_credito.email AND utente.id_utente=? ",[req.body.id_utente])
@@ -339,8 +347,8 @@ async function prenota(req, res, next) {
                             req.body.importi[1],
                             0,
                             0,
-                            1
-                            /*INSERIRE ID PRENOTAZIONE!!!!!!!!!!!*/
+                            1,
+                            idp[0].id_prenotazione/*INSERIRE ID PRENOTAZIONE!!!!!!!!!!!*/
                         ]
                     ]
                 ]).catch(err=>{
