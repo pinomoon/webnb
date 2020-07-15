@@ -263,14 +263,18 @@ const Homepage =()=>{
 
             
 {!ricerca && (user.id == null || (user.tipo == 1)) &&           
-<section className="cards clearfix">
-<h5 align="center" style={{color: "#ff6300"}}> I consigliati da WeB&B</h5>
-                            
+             <section className="cards clearfix">
+                 <h5 align="center" style={{color: "#ff6300"}}> I consigliati da WeB&B</h5>
+                    <div className="row">
+                        <div className="col-2">
+                        </div>
+                            <div className="col-8">
+                                <div className="row">
                             { strutturep[0]!=[] && (strutturep.map((strutturep)=>{
                                 return(
                                     <div key={strutturep.id_struttura}>
 
-                                        <div className="col-sm-6 col-md-3 col-lg-3">
+                                        <div className="col-sm-6 col-md-3 col-lg-4">
                                             <section className="cards clearfix">
                                                 <div className="card" style={{width:"100%",height:"100%"}}>
                                                     <img className="card_image" src={villa}  alt=" Villa "/>
@@ -303,8 +307,12 @@ const Homepage =()=>{
                                             </section>
                                         </div>
                                 </div>
+
                                 );
                                                    }))}
+                                </div>
+                            </div>
+                    </div>
 </section>
 }
 

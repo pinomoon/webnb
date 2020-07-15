@@ -57,15 +57,18 @@ const EliminaCamera=(props)=>{
 
     return(
         <div>
-            <h5 style={{textAlign:"center"}}>Elenco camere</h5>
-            {camere.map(camera=>{
-                console.log(camera.id_camera);
-                return(
+
+        <h5 style={{textAlign:"center"}}>Elenco camere</h5>
+
                     <div className="row" >
                         <div className="col-2">
                         </div>
                         <div className="col-sm-8 col-md-8 col-lg-8">
                             <div className="row">
+                                {camere.map(camera=>{
+                                    console.log(camera.id_camera);
+                                    return(
+
                         <div className="col-sm-12 col-md-6 col-lg-4">
                         <div className="card text-center" style={{width: "97%"}}>
                             <div className="card-body">
@@ -82,15 +85,17 @@ const EliminaCamera=(props)=>{
                             </div>
                         </div>
                         </div>
-                            </div>
 
-                  </div>
+
+                        ); })}
                     </div>
 
 
-                );
-            })}
 
+
+
+        </div>
+                    </div>
         </div>
     );
 
