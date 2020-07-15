@@ -1,6 +1,4 @@
-import React, {Component} from 'react';
-import Footer from "../footer/Footer";
-import Header from "../header/Header";
+import React from 'react';
 import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide/Slide";
 import Dialog from "@material-ui/core/Dialog/Dialog";
@@ -20,43 +18,43 @@ const BoxConfermaInserimento=(props)=> {
         onClose();
     };
 
-        return(
+    return(
 
-                <div className="sm-6">
-                    <Dialog
-                        open={open}
-                        TransitionComponent={Transition}
-                        keepMounted
-                        aria-labelledby="alert-dialog-slide-title"
-                        aria-describedby="alert-dialog-slide-description"
-                    >
-                        <DialogTitle id="alert-dialog-slide-title">{"Inserimento Struttura"}</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText id="alert-dialog-slide-description">
-                                {responseType == "1" &&
-                                <p>Struttura inserita con successo, vai alle tue strutture per verificare!</p>
-                                }
-                                {responseType == "2" &&
-                                <p>Errore nell'inserimento della struttura, riprova</p>
-                                }
+        <div className="sm-6">
+            <Dialog
+                open={open}
+                TransitionComponent={Transition}
+                keepMounted
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle id="alert-dialog-slide-title">{"Inserimento Struttura"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description">
+                        {responseType == "1" &&
+                        <p>Struttura inserita con successo, vai alle tue strutture per verificare!</p>
+                        }
+                        {responseType == "2" &&
+                        <p>Errore nell'inserimento della struttura, riprova</p>
+                        }
 
-                            </DialogContentText>
+                    </DialogContentText>
 
-                        </DialogContent>
-                        <DialogActions id="action">
-                            {responseType == "1" &&
-                            < Button href="https://localhost:3000/lemiestrutture" onClick={handleClose} color="primary">Le Mie Strutture</Button>
-                            }
-                            {responseType == "2" &&
-                            < Button onClick={handleClose} color="primary">Chiudi</Button>
-                            }
+                </DialogContent>
+                <DialogActions id="action">
+                    {responseType == "1" &&
+                    < Button href="https://localhost:3000/lemiestrutture" onClick={handleClose} color="primary">Le Mie Strutture</Button>
+                    }
+                    {responseType == "2" &&
+                    < Button onClick={handleClose} color="primary">Chiudi</Button>
+                    }
 
-                        </DialogActions>
-                    </Dialog>
-                </div>
+                </DialogActions>
+            </Dialog>
+        </div>
 
 
-        );
+    );
 
 };
 export default BoxConfermaInserimento;

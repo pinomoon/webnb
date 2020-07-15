@@ -1,26 +1,19 @@
-import React, {Component, useState} from 'react';
-import Footer from "../footer/Footer";
-import Header from "../header/Header";
+import React, {useState} from 'react';
 import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide/Slide";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import axios from 'axios';
-import {getSessionCookie} from "../../sessions";
-import user from "../registrazione/user.png";
-import BoxConferma from "../registrazione/boxconferma";
-import BoxRifiuto from "../registrazione/boxrifiuto";
 import Form from "react-bootstrap/Form";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const BoxRecensisci=(props)=> {
     const {open, onClose, prenotazione}=props;
-    //const [id_prenotazione, setIdPrenotazione]=useState(prenotazione);
     const [tipoRisposta, setTipoRisposta]=useState("");
     const [recensione, setRecensione]=useState("");
     const state={id_prenotazione:prenotazione, recensione};
@@ -29,7 +22,6 @@ const BoxRecensisci=(props)=> {
         onClose();
     };
     const handleSubmit=()=>{
-        alert(JSON.stringify(state));
         axios.post("https://localhost:9000/leMiePrenotazioni/recensisci",state)
             .then((response)=>{
                 if(response.data=="1"){
@@ -43,7 +35,7 @@ const BoxRecensisci=(props)=> {
             .catch((error)=>{
                 alert(error);
             })
-    }
+    };
     const handleChangeRecensione=(event)=>{
         const target=event.target;
         const valore=target.value;
@@ -71,11 +63,11 @@ const BoxRecensisci=(props)=> {
                 <DialogActions id="action">
                     <div>
                         <Button name="ok" id="ok" onClick={handleClose}
-                            style={{marginLeft: "-10px", color: "#ff6300"}}>Chiudi</Button>
+                                style={{marginLeft: "-10px", color: "#ff6300"}}>Chiudi</Button>
                         <Button name="ok" id="ok" onClick={handleSubmit}
                                 style={{marginLeft: "-10px", color: "#ff6300"}}>Invia</Button>
                     </div>
-                    </DialogActions>
+                </DialogActions>
             </Dialog>
         </div>
 

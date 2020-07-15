@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
@@ -14,25 +14,23 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const BoxEliminaStruttura=(props)=>{
     const{open, onClose, id_struttura}=props;
-    const [tipoRisposta, setTipoRisposta]=useState("");
+
 
     const handleClose=()=>{
         onClose();
     };
 
     const handleElimina=()=>{
-        console.log(id_struttura);
         axios.post("https://localhost:9000/gestisciStrutture/eliminaStruttura",{id_struttura})
             .then((response)=>{
-                    setTipoRisposta(response.data);
-                    if(response.data=="1"){
-                        alert("Struttura eliminata con successo");
-                        handleClose();
-                    }
-                    else{
-                        alert("Errore nell'eliminazione della struttura");
-                        handleClose();
-                    }
+                if(response.data=="1"){
+                    alert("Struttura eliminata con successo");
+                    handleClose();
+                }
+                else{
+                    alert("Errore nell'eliminazione della struttura");
+                    handleClose();
+                }
 
             })
             .catch((error)=>{
@@ -52,7 +50,7 @@ const BoxEliminaStruttura=(props)=>{
                 <DialogTitle id="alert-dialog-slide-title">{"Elimina Struttura"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                       <p style={{color:"#ff6300"}}>Sei sicuro di voler eliminare questa struttura?</p>
+                        <p style={{color:"#ff6300"}}>Sei sicuro di voler eliminare questa struttura?</p>
 
                     </DialogContentText>
 

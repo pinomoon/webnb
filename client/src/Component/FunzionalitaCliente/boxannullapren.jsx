@@ -1,6 +1,4 @@
-import React, {Component, useState} from 'react';
-import Footer from "../footer/Footer";
-import Header from "../header/Header";
+import React, {useState} from 'react';
 import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide/Slide";
 import Dialog from "@material-ui/core/Dialog/Dialog";
@@ -9,17 +7,13 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import axios from 'axios';
-import {getSessionCookie} from "../../sessions";
-import user from "../registrazione/user.png";
-import BoxConferma from "../registrazione/boxconferma";
-import BoxRifiuto from "../registrazione/boxrifiuto";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const BoxAnnullaPren=(props)=> {
     const {open, onClose, prenotazione}=props;
-    //const [id_prenotazione, setIdPrenotazione]=useState(prenotazione);
     const [tipoRisposta, setTipoRisposta]=useState("");
     const state={id_prenotazione:prenotazione};
 
@@ -28,7 +22,6 @@ const BoxAnnullaPren=(props)=> {
         onClose();
     };
     const handleLoad=()=>{
-        alert(JSON.stringify(state));
         axios.post("https://localhost:9000/leMiePrenotazioni/annullaPrenotazione",state)
             .then((response)=>{
                 setTipoRisposta(response.data);
@@ -53,33 +46,33 @@ const BoxAnnullaPren=(props)=> {
                 <DialogContent>
                     <DialogContentText>
                         {tipoRisposta=="1"&&
-                            <div>
-                                <p>Prenotazione Annullata con Successo e Addebito su Carta di Credito Effettuato</p>
-                                <p>Ti è stata inviata una mail al tuo indirizzo con i dettagli dell'annullamento</p>
-                            </div>
+                        <div>
+                            <p>Prenotazione Annullata con Successo e Addebito su Carta di Credito Effettuato</p>
+                            <p>Ti è stata inviata una mail al tuo indirizzo con i dettagli dell'annullamento</p>
+                        </div>
                         }
                         {tipoRisposta=="2"&&
-                            <div>
-                                <p>Prenotazione Annullata con Successo e Rimborso su Carta di Credito Effettuato</p>
-                                <p>Ti è stata inviata una mail al tuo indirizzo con i dettagli dell'annullamento</p>
-                            </div>
+                        <div>
+                            <p>Prenotazione Annullata con Successo e Rimborso su Carta di Credito Effettuato</p>
+                            <p>Ti è stata inviata una mail al tuo indirizzo con i dettagli dell'annullamento</p>
+                        </div>
                         }
                         {tipoRisposta=="3" &&
-                            <div>
-                                <p>Prenotazione Annullata con Successo!</p>
-                            </div>
+                        <div>
+                            <p>Prenotazione Annullata con Successo!</p>
+                        </div>
                         }
                         {tipoRisposta=="4"&&
-                            <div>
-                                <p>Errore in fase di annullamento della prenotazione</p>
-                                <p>Riprova più tardi</p>
-                            </div>
+                        <div>
+                            <p>Errore in fase di annullamento della prenotazione</p>
+                            <p>Riprova più tardi</p>
+                        </div>
                         }
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions id="action">
-                            <Button name="ok" id="ok" onClick={handleClose}
-                                    style={{marginLeft: "-10px", color: "#ff6300"}}>Chiudi</Button>
+                    <Button name="ok" id="ok" onClick={handleClose}
+                            style={{marginLeft: "-10px", color: "#ff6300"}}>Chiudi</Button>
                 </DialogActions>
             </Dialog>
         </div>

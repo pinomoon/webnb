@@ -1,5 +1,4 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -8,13 +7,10 @@ import Slide from "@material-ui/core/Slide";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 
-const useStyles= makeStyles({
-
-});
-
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
+
 const BoxData=(props)=> {
     const{open, onClose}=props;
 
@@ -35,7 +31,7 @@ const BoxData=(props)=> {
                 <DialogTitle id="alert-dialog-slide-title">{"Attenzione!"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                     <p style={{color:"#ff6300"}}>Inserire correttamente Data check-in e check-out</p>
+                        <p style={{color:"#ff6300"}}>Inserire correttamente Data check-in e check-out</p>
                     </DialogContentText>
 
                 </DialogContent>

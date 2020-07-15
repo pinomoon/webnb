@@ -4,7 +4,8 @@ import axios from 'axios';
 import Input from "@material-ui/core/Input/Input";
 import Button from "@material-ui/core/Button";
 import BoxGuadagni from "./boxguadagni";
-import money from "./m.PNG"
+import money from "./m.PNG";
+
 const MieiGuadagni=()=>{
     const [openTotale, setOpenTotale]=useState(false);
     const [tipoRisposta, setTipoRisposta]=useState("");
@@ -16,12 +17,12 @@ const MieiGuadagni=()=>{
     const state={id_utente, data_iniziale,data_finale};
 
     const handleClickOpenTotale=()=>{
-      setOpenTotale(true);
+        setOpenTotale(true);
     };
     const handleCloseTotale=()=>{
-      setOpenTotale(false);
-      setTipoRisposta("");
-      svuotaCampi();
+        setOpenTotale(false);
+        setTipoRisposta("");
+        svuotaCampi();
     };
     const handleChangeDataIniziale=(event)=>{
         const target=event.target;
@@ -42,24 +43,23 @@ const MieiGuadagni=()=>{
 
 
     const handleSubmit=async (event)=>{
-      event.preventDefault();
-      await axios.post('https://localhost:9000/guadagni', state)
-          .then((response)=>{
-              setTipoRisposta(response.data[0]);
-              if(response.data[0]=="1"){//guadagni calcolati
-
+        event.preventDefault();
+        await axios.post('https://localhost:9000/guadagni', state)
+            .then((response)=>{
+                setTipoRisposta(response.data[0]);
+                if(response.data[0]=="1"){
                     setNumPrenotazioni(response.data[1].num_pren);
                     setGuadagno(response.data[1].guadagno);
                     handleClickOpenTotale();
 
-              }
-              else{   //guadagni non calcolati
+                }
+                else{
                     handleClickOpenTotale();
-              }
-          })
-          .catch((error)=>{
+                }
+            })
+            .catch((error)=>{
                 alert(error);
-      });
+            });
     };
 
     return(
@@ -73,49 +73,49 @@ const MieiGuadagni=()=>{
 
 
 
-            <div style={{marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
-                <img src={money} style={{margin:"auto",marginTop:"30px",width:"30%",height:"auto%",display:"block"}}/>
+                    <div style={{marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
+                        <img src={money} style={{margin:"auto",marginTop:"30px",width:"30%",height:"auto%",display:"block"}}/>
 
-            <div name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
+                        <div name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
 
-                <h5>Calcola qui i tuoi guadagni</h5>
+                            <h5>Calcola qui i tuoi guadagni</h5>
 
-                <Input style={{width:"47%",backgroundColor:"white",marginTop:"9px"}}
-                       type="date"
-                       name="data_iniziale"
-                       id="data_iniziale"
-                       placeholder="date placeholder"
-                       value={state.data_iniziale}
-                       onChange={handleChangeDataIniziale}
-                />
-                &nbsp;
-                &nbsp;
-                <Input style={{width:"47%",backgroundColor:"white",marginTop:"9px"}}
-                       type="date"
-                       name="data_finale"
-                       id="data_finale"
-                       placeholder="date placeholder"
-                       value={state.data_finale}
-                       onChange={handleChangeDataFinale}
-                />
-                <br/>
-                <br/>
-                <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"auto",color:"#ff6300",display:"block"}}>Calcola Guadagni</Button>
-                <br/>
-            </div>
+                            <Input style={{width:"47%",backgroundColor:"white",marginTop:"9px"}}
+                                   type="date"
+                                   name="data_iniziale"
+                                   id="data_iniziale"
+                                   placeholder="date placeholder"
+                                   value={state.data_iniziale}
+                                   onChange={handleChangeDataIniziale}
+                            />
+                            &nbsp;
+                            &nbsp;
+                            <Input style={{width:"47%",backgroundColor:"white",marginTop:"9px"}}
+                                   type="date"
+                                   name="data_finale"
+                                   id="data_finale"
+                                   placeholder="date placeholder"
+                                   value={state.data_finale}
+                                   onChange={handleChangeDataFinale}
+                            />
+                            <br/>
+                            <br/>
+                            <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"auto",color:"#ff6300",display:"block"}}>Calcola Guadagni</Button>
+                            <br/>
+                        </div>
 
-            <BoxGuadagni
-            open={openTotale}
-            onClose={handleCloseTotale}
-            responseType={tipoRisposta}
-            data_iniziale={data_iniziale}
-            data_finale={data_finale}
-            num_prenotazioni={num_prenotazioni}
-            guadagni={guadagno}
-            />
-        </div>
+                        <BoxGuadagni
+                            open={openTotale}
+                            onClose={handleCloseTotale}
+                            responseType={tipoRisposta}
+                            data_iniziale={data_iniziale}
+                            data_finale={data_finale}
+                            num_prenotazioni={num_prenotazioni}
+                            guadagni={guadagno}
+                        />
+                    </div>
 
-        </div>
+                </div>
             </div>
         </div>
     );

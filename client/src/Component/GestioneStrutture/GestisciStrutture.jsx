@@ -1,36 +1,26 @@
-import React, {Component, useState} from 'react';
-import HeaderHost from "../header/HeaderHost";
-import Footer from "../footer/Footer";
+import React, {useState} from 'react';
 import villa from "./villa.jpg"
 import Button from "@material-ui/core/Button";
 import {getSessionCookie} from "../../sessions";
 import axios from 'axios';
-import ModificaStruttura from "./modificastruttura";
-import BoxConfermaModifica from "../modifica_account/boxconfermamodifica";
 import AggiungiCamera from "../GestisciCamera/AggiungiCamera";
 import BoxEliminaStruttura from "./boxeliminastruttura";
-import EliminaCamera from "../GestisciCamera/eliminacamera";
 import BuildIcon from '@material-ui/icons/Build';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import AddIcon from '@material-ui/icons/Add';
 
-
-
-
 const GestisciStrutture=()=>{
     const id_utente=getSessionCookie().id;
     const [strutture, setStrutture]=useState([]);
     const [selectedStruttura,setSelectedStruttura]=useState();
-    const [openModifica, setOpenModifica]=useState(false);
     const [openElimina, setOpenElimina]=useState(false);
     const [openAggiungiCamera, setOpenAggiungiCamera]=useState(false);
-    const [openEliminaCamera, setOpenEliminaCamera]=useState(false);
+
 
     React.useLayoutEffect(()=>{
         axios.post("https://localhost:9000/gestisciStrutture",{id_utente})
             .then((response)=>{
-                console.log(response.data);
                 setStrutture(response.data[1]);
             })
             .catch((error)=>{
@@ -38,65 +28,46 @@ const GestisciStrutture=()=>{
             })
     },[]);
 
-    const handleModifica=(struttura)=>{
-        setSelectedStruttura(struttura);
-        setOpenModifica(true);
-    }
 
     const handleElimina=(struttura)=>{
         setSelectedStruttura(struttura.id_struttura);
         setOpenElimina(true);
-        console.log(struttura);
-
     };
     const handleCloseElimina=()=>{
-      setSelectedStruttura();
-      setOpenElimina(false);
-      window.location.reload();
+        setSelectedStruttura();
+        setOpenElimina(false);
+        window.location.reload();
     };
 
     const handleAggiungiCamera=(struttura)=>{
-      setSelectedStruttura(struttura.id_struttura);
-      setOpenAggiungiCamera(true);
+        setSelectedStruttura(struttura.id_struttura);
+        setOpenAggiungiCamera(true);
     };
     const handleCloseAggiungiCamera=()=>{
         setSelectedStruttura();
         setOpenAggiungiCamera(false);
     };
-    const handleEliminaCamera=(struttura)=>{
-      setSelectedStruttura(struttura.id_struttura);
-      setOpenEliminaCamera(true);
-    };
-    const handleCloseEliminaCamera=()=>{
-      setSelectedStruttura();
-      setOpenEliminaCamera(false);
-    };
 
+    return(
 
-
-
-
-
-        return(
-
-            <div className="container">
-                <div className="row">
-                    <div className="col">
-                        <h2 style={{textAlign:"center",fontFamily:"Helvetica Neue"}}>Le mie strutture</h2>
-                    </div>
+        <div className="container">
+            <div className="row">
+                <div className="col">
+                    <h2 style={{textAlign:"center",fontFamily:"Helvetica Neue"}}>Le mie strutture</h2>
                 </div>
-                <div className="row">
-                    <div className="col-1">
+            </div>
+            <div className="row">
+                <div className="col-1">
 
-                    </div>
-                    <div className="col-sm-12 col-md-12 col-lg-10">
-                        <div className="row">
+                </div>
+                <div className="col-sm-12 col-md-12 col-lg-10">
+                    <div className="row">
 
-                            {strutture.map(value => {
+                        {strutture.map(value => {
 
-                                var href="/modificaStruttura?id_struttura="+value.id_struttura;
-                                var href2="/eliminaCamera?id_struttura="+value.id_struttura;
-                                return(
+                            var href="/modificaStruttura?id_struttura="+value.id_struttura;
+                            var href2="/eliminaCamera?id_struttura="+value.id_struttura;
+                            return(
                                 <div key={value.id_struttura} className="col-sm-6 col-md-4 col-lg-4">
                                     <section className="cards clearfix">
                                         <div className="card" style={{width: "100%", height: "20%"}}>
@@ -124,36 +95,36 @@ const GestisciStrutture=()=>{
                                     </section>
 
                                 </div>
-                                ) })}
+                            ) })}
 
-                            <div className="col-3"></div>
-
-                        </div>
-                    </div>
-
-                    <div className="col-1">
+                        <div className="col-3"></div>
 
                     </div>
                 </div>
-                <BoxEliminaStruttura
-                    open={openElimina}
-                    onClose={handleCloseElimina}
-                    id_struttura={selectedStruttura}
-                />
-                <AggiungiCamera
-                    open={openAggiungiCamera}
-                    onClose={handleCloseAggiungiCamera}
-                    id_struttura={selectedStruttura}
-                />
 
+                <div className="col-1">
 
-
-
-
+                </div>
             </div>
+            <BoxEliminaStruttura
+                open={openElimina}
+                onClose={handleCloseElimina}
+                id_struttura={selectedStruttura}
+            />
+            <AggiungiCamera
+                open={openAggiungiCamera}
+                onClose={handleCloseAggiungiCamera}
+                id_struttura={selectedStruttura}
+            />
 
 
-        );
+
+
+
+        </div>
+
+
+    );
 
 
 }

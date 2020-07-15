@@ -1,35 +1,15 @@
-import React, {Component} from 'react';
-import sfondo from '../images/best-hd-wallpapers-pc-background-laptop.jpg'
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
+import React from 'react';
 import "./Homepage.css"
-
-import Card from "@material-ui/core/Card/Card";
 import Button from "@material-ui/core/Button";
 import villa from "../GestioneStrutture/villa.jpg";
-import simpson from "./casa-simpson-690x362.jpg";
-import flinstones from "./casa-flin.jpg"
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import FormGroup from "@material-ui/core/FormGroup";
-import {Home, Label} from "@material-ui/icons";
+import {Home} from "@material-ui/icons";
 import Input from "@material-ui/core/Input";
-import Navbar from "react-bootstrap/Navbar";
-import logo from "../../header_trasparente.png";
-import Dropdown from "react-bootstrap/Dropdown";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Logout from "../logout/logout";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import {UserContext} from "../../UserContext";
 import axios from 'axios';
 import RicercaStruttura from "../Ricerca Struttura/RicercaStruttura";
 import {setStructureCookie} from "../../sessions";
-import {Box} from "@material-ui/core";
 import BoxData from "./BoxData";
-import BoxAccesso from "../login/boxconferma";
-import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import HotelIcon from '@material-ui/icons/Hotel';
-import DeleteOutlineIcon from "@material-ui/core/SvgIcon/SvgIcon";
 
 const Homepage =()=>{
     const [luogo,setLuogo]=React.useState("");
@@ -63,7 +43,7 @@ const Homepage =()=>{
             .catch((error)=>{
                 alert(error);
             });
-        },[]);
+    },[]);
     const handleCloseConferma = () => {
         setOpenConferma(false);
     };
@@ -87,12 +67,9 @@ const Homepage =()=>{
             handleClickOpenConferma();
             return
         }
-        alert("Dati inseriti "+luogo+" "+data_inizio+" "+data_fine+" "+npl);
         setStructureCookie({luogo,data_inizio,data_fine,npl});
         axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
             .then((response)=>{
-                alert(JSON.stringify(response.data[1]));
-
                 setStrutture(response.data[1]);
                 handleClickRicerca();
             })
@@ -135,141 +112,141 @@ const Homepage =()=>{
 
 
 
-        return(
+    return(
 
 
-         <container>
-             {!ricerca &&
-             <section className="cover" style={{height:"400px",width:"100%"}}>
-                 <div className="cover_filter"></div>
-                 <div className="cover_caption">
-                     <div className="cover_caption_copy">
-                         <h1>Benvenuti in </h1>
-                         <h2>WeB&B</h2>
-                         {(user.id == null || (user.tipo == 1)) &&
-                         <div>
-                             <h3 style={{color: "#ff6300"}}> Prenota la tua vacanza!</h3>
-                             <br></br>
-                             <div className="row">
-                                 <div className="col-md-1 col-lg-1">
-                                 </div>
-                                 <div className="col-sm-12 col-md-10 col-lg-10">
-                                     <div style={{
-                                         width: "80%",
-                                         height: "auto",
-                                         backgroundColor: "white",
-                                         margin: "auto",
-                                         border: "2px solid #ff6300"
-                                     }}>
-                                         <form className="row" name="form" id="form" method="POST" >
-                                             <div className="form-group  col-sm-12 col-md-3 col-lg-3">
-                                                 <Input type="text" name="luogo" id="luogo"
-                                                        placeholder="Dove vuoi andare?"
-                                                        value={state.luogo} onChange={handleChangeLuogo}
-                                                        style={{backgroundColor: "white", marginTop:"9px"}}/>
-                                             </div>
-                                             <div className="form-group col-sm-6 col-md-6 col-lg-3">
-                                                 <Input style={{backgroundColor: "white", marginTop: "9px"}}
-                                                        type="date"
-                                                        name="data_inizio"
-                                                        id="data_inizio"
-                                                        placeholder="date placeholder"
-                                                        value={state.data_inizio}
-                                                        onChange={handleChangeDataInizio}
-                                                 />
-                                             </div>
-                                             <div className="form-group col-sm-6 col-md-6 col-lg-3">
-                                                 <Input style={{backgroundColor: "white", marginTop: "9px"}}
-                                                        type="date"
-                                                        name="data_fine"
-                                                        id="data_fine"
-                                                        placeholder="date placeholder"
-                                                        value={state.data_fine}
-                                                        onChange={handleChangeDataFine}
-                                                 />
-                                             </div>
-                                             <div className="form-group col-md-2 col-lg-2">
-                                                 <select className="form-control" id="npl" value={state.npl}
-                                                         onChange={handleChangeNpl} style={{marginTop: "7px"}}>
-                                                     <option>N. Ospiti</option>
-                                                     <option>1</option>
-                                                     <option>2</option>
-                                                     <option>3</option>
-                                                     <option>4</option>
-                                                     <option>5</option>
-                                                     <option>6</option>
-                                                     <option>7</option>
-                                                     <option>8</option>
-                                                     <option>9</option>
-                                                     <option>10</option>
-                                                 </select>
-                                             </div>
-                                             <div className="col-md-1 col-lg-1">
-                                                 <Button type="submit" onClick={handleSubmit}  style={{
-                                                     marginTop: "-2px",
-                                                     backgroundColor: "#ff6300",
-                                                     height: "106%",
-                                                     color: "white",
-                                                     borderRadius: 0
-                                                 }}>Ricerca</Button>
-                                             </div>
-                                         </form>
-                                         <div className="col-lg-1">
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                             
-                         </div>
-                                                   
-                             }
-                             {user.tipo == 0 &&
-                             <div>
-                                 <div className="row">
-                                     <div className="col-md-2 col-lg-4">
-                                     </div>
-                                     <div className="col-sm-12 col-md-8 col-lg-4">
-                                         <Button href="/inseriscistruttura" style={{
-                                             margin:"auto",
-                                             marginTop: "-2px",
-                                             backgroundColor: "#ff6300",
-                                             height: "auto%",
-                                             width: "50%",
-                                             color: "white",
-                                             borderRadius: 0
-                                         }}>Inserisci la tua struttura!</Button>
+        <container>
+            {!ricerca &&
+            <section className="cover" style={{height:"400px",width:"100%"}}>
+                <div className="cover_filter"></div>
+                <div className="cover_caption">
+                    <div className="cover_caption_copy">
+                        <h1>Benvenuti in </h1>
+                        <h2>WeB&B</h2>
+                        {(user.id == null || (user.tipo == 1)) &&
+                        <div>
+                            <h3 style={{color: "#ff6300"}}> Prenota la tua vacanza!</h3>
+                            <br></br>
+                            <div className="row">
+                                <div className="col-md-1 col-lg-1">
+                                </div>
+                                <div className="col-sm-12 col-md-10 col-lg-10">
+                                    <div style={{
+                                        width: "80%",
+                                        height: "auto",
+                                        backgroundColor: "white",
+                                        margin: "auto",
+                                        border: "2px solid #ff6300"
+                                    }}>
+                                        <form className="row" name="form" id="form" method="POST" >
+                                            <div className="form-group  col-sm-12 col-md-3 col-lg-3">
+                                                <Input type="text" name="luogo" id="luogo"
+                                                       placeholder="Dove vuoi andare?"
+                                                       value={state.luogo} onChange={handleChangeLuogo}
+                                                       style={{backgroundColor: "white", marginTop:"9px"}}/>
+                                            </div>
+                                            <div className="form-group col-sm-6 col-md-6 col-lg-3">
+                                                <Input style={{backgroundColor: "white", marginTop: "9px"}}
+                                                       type="date"
+                                                       name="data_inizio"
+                                                       id="data_inizio"
+                                                       placeholder="date placeholder"
+                                                       value={state.data_inizio}
+                                                       onChange={handleChangeDataInizio}
+                                                />
+                                            </div>
+                                            <div className="form-group col-sm-6 col-md-6 col-lg-3">
+                                                <Input style={{backgroundColor: "white", marginTop: "9px"}}
+                                                       type="date"
+                                                       name="data_fine"
+                                                       id="data_fine"
+                                                       placeholder="date placeholder"
+                                                       value={state.data_fine}
+                                                       onChange={handleChangeDataFine}
+                                                />
+                                            </div>
+                                            <div className="form-group col-md-2 col-lg-2">
+                                                <select className="form-control" id="npl" value={state.npl}
+                                                        onChange={handleChangeNpl} style={{marginTop: "7px"}}>
+                                                    <option>N. Ospiti</option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                    <option>6</option>
+                                                    <option>7</option>
+                                                    <option>8</option>
+                                                    <option>9</option>
+                                                    <option>10</option>
+                                                </select>
+                                            </div>
+                                            <div className="col-md-1 col-lg-1">
+                                                <Button type="submit" onClick={handleSubmit}  style={{
+                                                    marginTop: "-2px",
+                                                    backgroundColor: "#ff6300",
+                                                    height: "106%",
+                                                    color: "white",
+                                                    borderRadius: 0
+                                                }}>Ricerca</Button>
+                                            </div>
+                                        </form>
+                                        <div className="col-lg-1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                     </div>
-                                     <div className="col-md-2 col-lg-4">
-                                     </div>
-                                 </div>
-                             </div>
-                             }
-                     </div>
-                     
-                 </div>
-                
-                               
-                 
-             </section>
-             }
-             {ricerca&&
-             <RicercaStruttura
-                 strutture={strutture}
-             />
-             }
-
-
-
-            
-{!ricerca && (user.id == null || (user.tipo == 1)) &&           
-             <section className="cards clearfix">
-                 <h5 align="center" style={{color: "#ff6300"}}> I consigliati da WeB&B</h5>
-                    <div className="row">
-                        <div className="col-2">
                         </div>
-                            <div className="col-8">
-                                <div className="row">
+
+                        }
+                        {user.tipo == 0 &&
+                        <div>
+                            <div className="row">
+                                <div className="col-md-2 col-lg-4">
+                                </div>
+                                <div className="col-sm-12 col-md-8 col-lg-4">
+                                    <Button href="/inseriscistruttura" style={{
+                                        margin:"auto",
+                                        marginTop: "-2px",
+                                        backgroundColor: "#ff6300",
+                                        height: "auto%",
+                                        width: "50%",
+                                        color: "white",
+                                        borderRadius: 0
+                                    }}>Inserisci la tua struttura!</Button>
+
+                                </div>
+                                <div className="col-md-2 col-lg-4">
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+
+                </div>
+
+
+
+            </section>
+            }
+            {ricerca&&
+            <RicercaStruttura
+                strutture={strutture}
+            />
+            }
+
+
+
+
+            {!ricerca && (user.id == null || (user.tipo == 1)) &&
+            <section className="cards clearfix">
+                <h5 align="center" style={{color: "#ff6300"}}> I consigliati da WeB&B</h5>
+                <div className="row">
+                    <div className="col-2">
+                    </div>
+                    <div className="col-8">
+                        <div className="row">
                             { strutturep[0]!=[] && (strutturep.map((strutturep)=>{
                                 return(
                                     <div key={strutturep.id_struttura}>
@@ -306,30 +283,30 @@ const Homepage =()=>{
 
                                             </section>
                                         </div>
-                                </div>
+                                    </div>
 
                                 );
-                                                   }))}
-                                </div>
-                            </div>
+                            }))}
+                        </div>
                     </div>
-</section>
-}
+                </div>
+            </section>
+            }
 
 
 
 
-             <BoxData
-                 open={openConferma}
-                 onClose={handleCloseConferma}
-             />;
+            <BoxData
+                open={openConferma}
+                onClose={handleCloseConferma}
+            />;
 
 
 
-         </container>
+        </container>
 
 
-        );
+    );
 
 
 }

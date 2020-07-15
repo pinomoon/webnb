@@ -1,5 +1,4 @@
 import React from 'react';
-import {makeStyles} from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -8,16 +7,12 @@ import Slide from "@material-ui/core/Slide";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 
-const useStyles= makeStyles({
-
-});
-
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
- const BoxConfermaPreferiti=(props)=> {
+
+const BoxConfermaPreferiti=(props)=> {
     const{open, onClose, responseType}=props;
-    const classes =useStyles();
 
     const handleClose=()=>{
         onClose();
@@ -36,10 +31,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
                         {responseType=="1"&&
-                            <p style={{color:"#ff6300"}}>Struttura aggiunta correttamente ai preferiti</p>
+                        <p style={{color:"#ff6300"}}>Struttura aggiunta correttamente ai preferiti</p>
                         }
                         {responseType=="2"&&
-                            <p style={{color:"#ff6300"}}>Struttura rimossa dai preferiti</p>
+                        <p style={{color:"#ff6300"}}>Struttura rimossa dai preferiti</p>
                         }
                         {responseType=="3"&&
                         <p style={{color:"#ff6300"}}>Errore, non è stato possibile inserire la struttura tra i preferiti</p>

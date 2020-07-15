@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "@material-ui/core/Button";
 import {getSessionCookie} from "../../sessions";
@@ -18,7 +18,6 @@ const ElencoPrenotazioni=()=>{
     React.useLayoutEffect(()=>{
         axios.post("https://localhost:9000/leMiePrenotazioni",{id_utente})
             .then((response)=>{
-                /*****/
                 if(response.data[0]=="1"){
                     setPrenotazioni(response.data[1]);
                 }
@@ -30,7 +29,7 @@ const ElencoPrenotazioni=()=>{
 
             alert(err)
         })
-    },[])
+    },[]);
 
     const handleAnnullaPren=(value)=>{
         if(value.stato_prenotazione=="confermata"){
@@ -53,9 +52,9 @@ const ElencoPrenotazioni=()=>{
 
     }
     const handleCloseBoxAnnullaPren=()=>{
-      setOpenAnnullaPren(false);
-      setSelectedPrenotazione();
-      window.location.reload();
+        setOpenAnnullaPren(false);
+        setSelectedPrenotazione();
+        window.location.reload();
     };
     const handleRecensisci=(value)=>{
         console.log(value.id_prenotazione);
@@ -68,31 +67,31 @@ const ElencoPrenotazioni=()=>{
         window.location.reload();
     }
 
-        return(
+    return(
 
-            <div className="container">
-                <div className="row">
-                    <div className="col-1">
+        <div className="container">
+            <div className="row">
+                <div className="col-1">
 
-                    </div>
-                    <div className="col-sm-12 col-md-12 col-lg-12">
-                        <div style={{margin:"auto",width:"100%"}}>
-                            <h3>Lista prenotazioni</h3>
-                            <br/>
-                            <ListGroup variant="flush">
-                                <ListGroup.Item>
-                                    <div className="row">
-                                        <div className="col-sm-0 col-lg-1"><h5>Id:</h5></div>
-                                        <div className="col-sm-0 col-lg-2"><h5>Struttura</h5></div>
-                                        <div className="col-sm-0 col-lg-2"><h5>Data Inizio</h5></div>
-                                        <div className="col-sm-0 col-lg-2"><h5>Data Fine</h5></div>
-                                        <div className="col-sm-0 col-lg-3"> <h5> Stato:</h5></div>
-                                        <div className="col-sm-0 col-lg-2"></div>
-                                    </div>
-                                </ListGroup.Item>
-                                {prenotazioni.map((value)=>{
+                </div>
+                <div className="col-sm-12 col-md-12 col-lg-12">
+                    <div style={{margin:"auto",width:"100%"}}>
+                        <h3>Lista prenotazioni</h3>
+                        <br/>
+                        <ListGroup variant="flush">
+                            <ListGroup.Item>
+                                <div className="row">
+                                    <div className="col-sm-0 col-lg-1"><h5>Id:</h5></div>
+                                    <div className="col-sm-0 col-lg-2"><h5>Struttura</h5></div>
+                                    <div className="col-sm-0 col-lg-2"><h5>Data Inizio</h5></div>
+                                    <div className="col-sm-0 col-lg-2"><h5>Data Fine</h5></div>
+                                    <div className="col-sm-0 col-lg-3"> <h5> Stato:</h5></div>
+                                    <div className="col-sm-0 col-lg-2"></div>
+                                </div>
+                            </ListGroup.Item>
+                            {prenotazioni.map((value)=>{
 
-                                    return(
+                                return(
                                     <ListGroup.Item>
                                         <div className="row">
                                             <div className="col-sm-2 col-lg-1">{value.id_prenotazione}</div>
@@ -101,16 +100,16 @@ const ElencoPrenotazioni=()=>{
                                             <div className="col-sm-4 col-lg-2">{value.data_fine}</div>
                                             <div className="col-sm-6 col-lg-3">
                                                 {value.stato_prenotazione=="in attesa di conferma" &&
-                                                    <a >In attesa di conferma</a>
+                                                <a >In attesa di conferma</a>
                                                 }
                                                 {value.stato_prenotazione=="confermata" &&
-                                                    <a style={{color: "#00ff55"}}>Confermata</a>
+                                                <a style={{color: "#00ff55"}}>Confermata</a>
                                                 }
                                                 {value.stato_prenotazione=="soggiorno in corso"&&
-                                                    <a style={{color: "yellow"}}>Soggorno in corso</a>
+                                                <a style={{color: "yellow"}}>Soggorno in corso</a>
                                                 }
                                                 {value.stato_prenotazione=="annullata"&&
-                                                    <a style={{color: "#ff0000"}}>Annullata</a>
+                                                <a style={{color: "#ff0000"}}>Annullata</a>
                                                 }
                                                 {value.stato_prenotazione=="soggiorno concluso"&&
                                                 <a >Soggiorno concluso</a>
@@ -129,31 +128,31 @@ const ElencoPrenotazioni=()=>{
                                             </div>
                                         </div>
                                     </ListGroup.Item>
-                                    )}) }
-                            </ListGroup>
-                        </div>
-                    </div>
-
-
-                    <div className="col">
-
+                                )}) }
+                        </ListGroup>
                     </div>
                 </div>
-                <BoxAnnullaPren
-                    open={openAnnullaPren}
-                    onClose={handleCloseBoxAnnullaPren}
-                    prenotazione={selectedPrenotazione}
-                />
-                <BoxRecensisci
-                    open={openRecensisci}
-                    onClose={handleCloseRecensisci}
-                    prenotazione={selectedPrenotazione}
-                />
+
+
+                <div className="col">
+
+                </div>
             </div>
+            <BoxAnnullaPren
+                open={openAnnullaPren}
+                onClose={handleCloseBoxAnnullaPren}
+                prenotazione={selectedPrenotazione}
+            />
+            <BoxRecensisci
+                open={openRecensisci}
+                onClose={handleCloseRecensisci}
+                prenotazione={selectedPrenotazione}
+            />
+        </div>
 
 
 
-        );
+    );
 
 }
 export default ElencoPrenotazioni;

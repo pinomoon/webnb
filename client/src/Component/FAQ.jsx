@@ -1,16 +1,15 @@
-import React, {Component, useState} from 'react';
-import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
+import React from 'react';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
-class FAQ extends Component{
-    render(){
-        return(
-            <div className="row">
-                <div className="col-2">
-                </div>
-                <div className="col-8">
+const FAQ=()=>{
+
+    return(
+        <div className="row">
+            <div className="col-2">
+            </div>
+            <div className="col-8">
                 <h3> Frequently Asked Question</h3>
-                    <br/>
+                <br/>
                 <ul className="list-group list-group-flush">
 
                     <li className="list-group-item">
@@ -28,12 +27,12 @@ class FAQ extends Component{
 
 
                 </ul>
-                </div>
             </div>
+        </div>
 
 
-        );
-    }
+    );
+
 }
 
 export default FAQ;

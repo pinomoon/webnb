@@ -1,9 +1,6 @@
 import React, {useState} from 'react';
-import ma from "../modifica_account/ma.png";
 import Button from "@material-ui/core/Button";
-import BoxConfermaModifica from "../modifica_account/boxconfermamodifica";
-import {getSessionCookie, getUserCookie} from "../../sessions";
-import {Component} from "react";
+import {getSessionCookie} from "../../sessions";
 import bk from "./bk.jpg"
 import axios from 'axios';
 import Divider from "@material-ui/core/Divider";
@@ -54,9 +51,8 @@ const Prenotazione =()=>{
     const state={id_utente,id_struttura,data_fine, data_inizio, modalita_pagamento,importi, n18, viaggio_lavoro,  nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,cellulare,email,titolare_carta,numero_carta,scadenza,cvc};
     const state2={id_utente, id_camera,data_inizio,data_fine};
     const state3={costo_camera, data_inizio, data_fine, viaggio_lavoro,tassa_soggiorno,n18};
-    //costo_camera, data fine e inizio, lavoro,tassa soggiorno, n18
+
     React.useLayoutEffect(()=>{
-        alert(id_utente);
         axios.post("https://localhost:9000/prenotazione/datiPrenotazione",state2)
             .then((response)=>{
                 if(response.data[0]=="1"){
@@ -78,7 +74,6 @@ const Prenotazione =()=>{
                     setCostoCamera(response.data[2][0].costo_camera);
                     setTassaSoggiorno(response.data[2][0].tassa_soggiorno);
                     setIdStruttura(response.data[2][0].id_struttura);
-                    console.log(response.data[2][0].modalita_di_pagamento);
                 }
                 else alert("Errore");
 
@@ -90,14 +85,6 @@ const Prenotazione =()=>{
 
 
     const svuotaCampi=()=>{
-        setNome("");
-        setCognome("");
-        setData_di_nascita("");
-        setIndirizzo("");
-        setSesso("");
-        setCitta("");
-        setCap("");
-        setCellulare("");
         setTitolareCarta("");
         setNumeroCarta("");
         setScadenza("");
@@ -105,60 +92,8 @@ const Prenotazione =()=>{
         setEmail("");
     };
 
-    const handleChangeNome=(event)=>{
-        const target=event.target;
-        const valore=  target.value;
-        setNome(valore);
-        state.nome=valore;
-    };
-    const handleChangeCognome=(event)=>{
-        const target=event.target;
-        const valore=  target.value;
-        setCognome(valore);
-        state.cognome=valore;
-    };
-    const handleChangeDataNascita=(event)=>{
-        const target=event.target;
-        const valore=  target.value;
-        setData_di_nascita(valore);
-        state.data_di_nascita=valore;
-    };
-    const handleChangeIndirizzo=(event)=>{
-        const target=event.target;
-        const valore=  target.value;
-        setIndirizzo(valore);
-        state.indirizzo=valore;
-    };
-    const handleChangeSesso=(event)=>{
-        const target=event.target;
-        const valore=  target.value;
-        setSesso(valore);
-        state.sesso=valore;
-    };
-    const handleChangeCitta=(event)=>{
-        const target=event.target;
-        const valore=  target.value;
-        setCitta(valore);
-        state.citta=valore;
-    };
-    const handleChangeCap=(event)=>{
-        const target=event.target;
-        const valore=  target.value;
-        setCap(valore);
-        state.cap=valore;
-    };
-    const handleChangeCellulare=(event)=>{
-        const target=event.target;
-        const valore=  target.value;
-        setCellulare(valore);
-        state.cellulare=valore;
-    };
-    const handleChangeEmail=(event)=>{
-        const target=event.target;
-        const valore=  target.value;
-        setEmail(valore);
-        state.email=valore;
-    };
+
+
     const handleChangeTitolareCarta=(event)=>{
         const target=event.target;
         const valore=  target.value;
@@ -215,8 +150,8 @@ const Prenotazione =()=>{
         event.preventDefault();
         axios.post("https://localhost:9000/prenotazione",state)
             .then((response)=>{
-                    setTipoRisposta(response.data);
-                    handleOpenConferma();
+                setTipoRisposta(response.data);
+                handleOpenConferma();
             })
             .catch((error)=>{
                 alert(error);
@@ -277,21 +212,21 @@ const Prenotazione =()=>{
                             <h5>Riepilogo Dati Struttura</h5>
                             {struttura.map(value=>{
 
-                            return(
-                                <div>
-                            <p>Nome Struttura: {value.nome_struttura}</p>
-                            <p>Indirizzo Struttura: {value.indirizzo_struttura}, {value.citta} {value.cap}, {value.regione}, {value.stato}</p>
-                            <p>Tipo Struttura: {value.tipo}</p>
-                            <br/>
+                                return(
+                                    <div>
+                                        <p>Nome Struttura: {value.nome_struttura}</p>
+                                        <p>Indirizzo Struttura: {value.indirizzo_struttura}, {value.citta} {value.cap}, {value.regione}, {value.stato}</p>
+                                        <p>Tipo Struttura: {value.tipo}</p>
+                                        <br/>
 
-                            <h5>Riepilogo Dati Camera</h5>
-                            <p>Nome Camera: {value.nome_camera}</p>
-                            <p>Numero Posti Letto: {value.numero_posti_letto}</p>
-                                    <p>Colazione Inclusa: {value.colazione_inclusa==1 ?(<p>Si</p>) : (<p>No</p>)} </p>
-                            <br/>
-                                </div>
+                                        <h5>Riepilogo Dati Camera</h5>
+                                        <p>Nome Camera: {value.nome_camera}</p>
+                                        <p>Numero Posti Letto: {value.numero_posti_letto}</p>
+                                        <p>Colazione Inclusa: {value.colazione_inclusa==1 ?(<p>Si</p>) : (<p>No</p>)} </p>
+                                        <br/>
+                                    </div>
                                 );
-                               } )
+                            } )
                             }
                             <form  name="form" id="form"  className="container was-validated col-sm-8 mt-3">
                                 <h5>Dati di Pagamento</h5>
@@ -352,111 +287,111 @@ const Prenotazione =()=>{
                                         <br/>
                                         <h5>Scegli la Modalità di Pagamento</h5>
                                         {pagamento_accettato == "carta,struttura,anticipo_carta" &&
-                                                <div>
-                                                    <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                        <input type="radio" className="custom-control-input" id="carta"
-                                                               name="modalita_di_pagamento"
-                                                               value="carta" onChange={handleChangeModalitaPagamento}
-                                                               required/>
-                                                        <label className="custom-control-label" htmlFor="carta">Carta di
-                                                            Credito</label>
-                                                    </div>
-                                                    <div
-                                                        className="custom-control custom-radio custom-control-inline mt-2">
-                                                        <input type="radio" className="custom-control-input"
-                                                               id="struttura" name="modalita_di_pagamento"
-                                                               value="struttura"
-                                                               onChange={handleChangeModalitaPagamento} required/>
-                                                        <label className="custom-control-label" htmlFor="struttura">Pagamento
-                                                            in Struttura</label>
+                                        <div>
+                                            <div className="custom-control custom-radio custom-control-inline mt-2">
+                                                <input type="radio" className="custom-control-input" id="carta"
+                                                       name="modalita_di_pagamento"
+                                                       value="carta" onChange={handleChangeModalitaPagamento}
+                                                       required/>
+                                                <label className="custom-control-label" htmlFor="carta">Carta di
+                                                    Credito</label>
+                                            </div>
+                                            <div
+                                                className="custom-control custom-radio custom-control-inline mt-2">
+                                                <input type="radio" className="custom-control-input"
+                                                       id="struttura" name="modalita_di_pagamento"
+                                                       value="struttura"
+                                                       onChange={handleChangeModalitaPagamento} required/>
+                                                <label className="custom-control-label" htmlFor="struttura">Pagamento
+                                                    in Struttura</label>
 
-                                                    </div>
-                                                    <div
-                                                        className="custom-control custom-radio custom-control-inline mt-2">
-                                                        <input type="radio" className="custom-control-input"
-                                                               id="anticipo_carta" name="modalita_di_pagamento"
-                                                               value="anticipo_carta"
-                                                               onChange={handleChangeModalitaPagamento} required/>
-                                                        <label className="custom-control-label"
-                                                               htmlFor="anticipo_carta">Acconto con Carta di
-                                                            Credito</label>
+                                            </div>
+                                            <div
+                                                className="custom-control custom-radio custom-control-inline mt-2">
+                                                <input type="radio" className="custom-control-input"
+                                                       id="anticipo_carta" name="modalita_di_pagamento"
+                                                       value="anticipo_carta"
+                                                       onChange={handleChangeModalitaPagamento} required/>
+                                                <label className="custom-control-label"
+                                                       htmlFor="anticipo_carta">Acconto con Carta di
+                                                    Credito</label>
 
-                                                    </div>
-                                                </div>
+                                            </div>
+                                        </div>
                                         }
                                         {pagamento_accettato=="carta,struttura,"&&
-                                            <div>
+                                        <div>
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                            <input type="radio" className="custom-control-input" id="carta" name="modalita_di_pagamento"
-                                            value="carta" onChange={handleChangeModalitaPagamento} required/>
-                                            <label className="custom-control-label" htmlFor="carta">Carta di Credito</label>
+                                                <input type="radio" className="custom-control-input" id="carta" name="modalita_di_pagamento"
+                                                       value="carta" onChange={handleChangeModalitaPagamento} required/>
+                                                <label className="custom-control-label" htmlFor="carta">Carta di Credito</label>
                                             </div>
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                            <input type="radio" className="custom-control-input" id="struttura" name="modalita_di_pagamento"
-                                            value="struttura" onChange={handleChangeModalitaPagamento}  required/>
-                                            <label className="custom-control-label" htmlFor="struttura">Pagamento in Struttura</label>
+                                                <input type="radio" className="custom-control-input" id="struttura" name="modalita_di_pagamento"
+                                                       value="struttura" onChange={handleChangeModalitaPagamento}  required/>
+                                                <label className="custom-control-label" htmlFor="struttura">Pagamento in Struttura</label>
 
                                             </div>
-                                            </div>
+                                        </div>
                                         }
                                         {pagamento_accettato=="carta,,anticipo_carta"&&
-                                            <div>
+                                        <div>
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                            <input type="radio" className="custom-control-input" id="carta" name="modalita_di_pagamento"
-                                            value="carta" onChange={handleChangeModalitaPagamento} required/>
-                                            <label className="custom-control-label" htmlFor="carta">Carta di Credito</label>
+                                                <input type="radio" className="custom-control-input" id="carta" name="modalita_di_pagamento"
+                                                       value="carta" onChange={handleChangeModalitaPagamento} required/>
+                                                <label className="custom-control-label" htmlFor="carta">Carta di Credito</label>
                                             </div>
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                            <input type="radio" className="custom-control-input" id="anticipo_carta" name="modalita_di_pagamento"
-                                            value="anticipo_carta" onChange={handleChangeModalitaPagamento}  required/>
-                                            <label className="custom-control-label" htmlFor="anticipo_carta">Acconto con Carta di Credito</label>
+                                                <input type="radio" className="custom-control-input" id="anticipo_carta" name="modalita_di_pagamento"
+                                                       value="anticipo_carta" onChange={handleChangeModalitaPagamento}  required/>
+                                                <label className="custom-control-label" htmlFor="anticipo_carta">Acconto con Carta di Credito</label>
 
                                             </div>
-                                            </div>
+                                        </div>
                                         }
                                         {pagamento_accettato==",struttura,anticipo_carta"&&
-                                            <div>
+                                        <div>
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                            <input type="radio" className="custom-control-input" id="struttura" name="modalita_di_pagamento"
-                                            value="struttura" onChange={handleChangeModalitaPagamento}  required/>
-                                            <label className="custom-control-label" htmlFor="struttura">Pagamento in Struttura</label>
+                                                <input type="radio" className="custom-control-input" id="struttura" name="modalita_di_pagamento"
+                                                       value="struttura" onChange={handleChangeModalitaPagamento}  required/>
+                                                <label className="custom-control-label" htmlFor="struttura">Pagamento in Struttura</label>
 
                                             </div>
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                            <input type="radio" className="custom-control-input" id="anticipo_carta" name="modalita_di_pagamento"
-                                            value="anticipo_carta" onChange={handleChangeModalitaPagamento}  required/>
-                                            <label className="custom-control-label" htmlFor="anticipo_carta">Acconto con Carta di Credito</label>
+                                                <input type="radio" className="custom-control-input" id="anticipo_carta" name="modalita_di_pagamento"
+                                                       value="anticipo_carta" onChange={handleChangeModalitaPagamento}  required/>
+                                                <label className="custom-control-label" htmlFor="anticipo_carta">Acconto con Carta di Credito</label>
 
                                             </div>
-                                            </div>
+                                        </div>
                                         }
                                         {pagamento_accettato=="carta,,"&&
-                                            <div>
+                                        <div>
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                            <input type="radio" className="custom-control-input" id="carta" name="modalita_di_pagamento"
-                                            value="carta" onChange={handleChangeModalitaPagamento} required/>
-                                            <label className="custom-control-label" htmlFor="carta">Carta di Credito</label>
+                                                <input type="radio" className="custom-control-input" id="carta" name="modalita_di_pagamento"
+                                                       value="carta" onChange={handleChangeModalitaPagamento} required/>
+                                                <label className="custom-control-label" htmlFor="carta">Carta di Credito</label>
                                             </div>
 
-                                            </div>
+                                        </div>
                                         }
                                         {pagamento_accettato==",struttura,"&&
-                                            <div>
+                                        <div>
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                            <input type="radio" className="custom-control-input" id="struttura" name="modalita_di_pagamento"
-                                            value="struttura" onChange={handleChangeModalitaPagamento}  required/>
-                                            <label className="custom-control-label" htmlFor="struttura">Pagamento in Struttura</label>
+                                                <input type="radio" className="custom-control-input" id="struttura" name="modalita_di_pagamento"
+                                                       value="struttura" onChange={handleChangeModalitaPagamento}  required/>
+                                                <label className="custom-control-label" htmlFor="struttura">Pagamento in Struttura</label>
                                             </div>
-                                            </div>
+                                        </div>
                                         }
                                         {pagamento_accettato==",,anticipo_carta"&&
-                                            <div>
+                                        <div>
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                            <input type="radio" className="custom-control-input" id="anticipo_carta" name="modalita_di_pagamento"
-                                            value="anticipo_carta" onChange={handleChangeModalitaPagamento}  required/>
-                                            <label className="custom-control-label" htmlFor="anticipo_carta">Acconto con Carta di Credito</label>
+                                                <input type="radio" className="custom-control-input" id="anticipo_carta" name="modalita_di_pagamento"
+                                                       value="anticipo_carta" onChange={handleChangeModalitaPagamento}  required/>
+                                                <label className="custom-control-label" htmlFor="anticipo_carta">Acconto con Carta di Credito</label>
                                             </div>
-                                            </div>
+                                        </div>
                                         }
                                         <br/>
                                         <Divider/>
@@ -491,7 +426,7 @@ const Prenotazione =()=>{
                                             <Button name="ok" id="ok"  onClick={handleCalcolaImporti}
                                                     style={{marginLeft: "-10px", color: "#ff6300"}}>Calcola Importo Totale</Button>
                                         </div>
-                                        ):(
+                                    ):(
 
 
                                         <div className="col-sm-3 col-md-2 col-lg-1">
@@ -514,11 +449,11 @@ const Prenotazione =()=>{
 
                 </div>
             </div>
-                <BoxConfermaPrenotazione
-                    open={openConferma}
-                    onClose={handleCloseConferma}
-                    responseType={tipoRisposta}
-                />
+            <BoxConfermaPrenotazione
+                open={openConferma}
+                onClose={handleCloseConferma}
+                responseType={tipoRisposta}
+            />
         </div>
 
 

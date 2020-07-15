@@ -1,13 +1,10 @@
 import React from 'react';
-import Input from "@material-ui/core/Input/Input";
-import UncontrolledCollapse from "reactstrap/es/UncontrolledCollapse";
 import Button from "@material-ui/core/Button";
 import simpson from "./casa-simpson-690x362.jpg"
 import cucina from "./cucina.jpg";
 import giardino from "./1.png"
 import ListGroup from "react-bootstrap/ListGroup";
 import icon from "./User-01.jpg";
-import Ricerca from"./Ricerca";
 import axios from "axios";
 import WifiRoundedIcon from '@material-ui/icons/WifiRounded';
 import PoolRoundedIcon from '@material-ui/icons/PoolRounded';
@@ -15,8 +12,6 @@ import PetsRoundedIcon from '@material-ui/icons/PetsRounded';
 import LocalParkingRoundedIcon from '@material-ui/icons/LocalParkingRounded';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import BoxConfermaPreferiti from  './boxConfermaPreferiti';
 import { getSessionCookie } from '../../sessions';
@@ -40,25 +35,22 @@ const EsploraStruttura=()=>{
     var npl=getUrlVars()["npl"];
 
 
-        const [id_utente,setIdUtente]=React.useState(getSessionCookie().id);
-        const [struttura,setStruttura]=React.useState([]);
-        const [camere, setCamere]=React.useState([]);
-        const [recensioni, setRecensioni]=React.useState([]);
-        const [preferiti, setPreferiti]=React.useState(false);
-        const [openConfermaPreferiti, setOpenConfermaPreferiti]=React.useState(false);
-        const [tipoPreferiti, setTipoPreferiti]=React.useState("");
-    
+    const [id_utente,setIdUtente]=React.useState(getSessionCookie().id);
+    const [struttura,setStruttura]=React.useState([]);
+    const [camere, setCamere]=React.useState([]);
+    const [recensioni, setRecensioni]=React.useState([]);
+    const [preferiti, setPreferiti]=React.useState(false);
+    const [openConfermaPreferiti, setOpenConfermaPreferiti]=React.useState(false);
+    const [tipoPreferiti, setTipoPreferiti]=React.useState("");
+
     React.useLayoutEffect(()=> {
         axios.post("https://localhost:9000/prenotazione/esploraStruttura",{id_struttura,data_inizio,data_fine,npl,id_utente})
             .then((response)=>{
-                
                 setStruttura(response.data[1]);
                 setCamere(response.data[2]);
                 setRecensioni(response.data[3]);
-                console.log(response.data[4]);
                 if(response.data[4].length==0){
-
-                setPreferiti(false);
+                    setPreferiti(false);
                 }
                 else{
                     setPreferiti(true);
@@ -68,6 +60,7 @@ const EsploraStruttura=()=>{
                 alert(error);
             });
     },[]);
+
     const handleClickOpenConfermaPreferiti=()=>{
         setOpenConfermaPreferiti(true);
     };
@@ -114,7 +107,7 @@ const EsploraStruttura=()=>{
         }
 
 
-    }
+    };
 
 
 
@@ -136,22 +129,22 @@ const EsploraStruttura=()=>{
                         <div className="col-sm-1 col-mg-1 col-lg-1" class="effetto">
 
                             {preferiti == false ? (
-                                
+
                                     <Tooltip title="Aggiungi ai preferiti" placement="top" >
 
                                         <Button onClick={handleClickPreferiti} class="button">
-                                        <FavoriteBorderIcon />
+                                            <FavoriteBorderIcon />
                                         </Button>
                                     </Tooltip>
-                                    )
+                                )
                                 : (
-                                <Tooltip title="Rimuovi dai preferiti" placement="top">
+                                    <Tooltip title="Rimuovi dai preferiti" placement="top">
 
-                                    <Button onClick={handleClickPreferiti} class="button">
-                                        <FavoriteIcon />
-                                    </Button>
-                                </Tooltip> )
-                                
+                                        <Button onClick={handleClickPreferiti} class="button">
+                                            <FavoriteIcon />
+                                        </Button>
+                                    </Tooltip> )
+
                             }
 
                             <br/>

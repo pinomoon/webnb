@@ -16,7 +16,7 @@ export const getSessionCookie=()=>{
 export const setUserCookie=(user)=>{
     Cookies.remove("user");
     Cookies.set("user",user,{expires:14});
-}
+};
 export const getUserCookie=()=>{
     const userCookie=Cookies.get("user");
     if(userCookie===undefined){
@@ -28,15 +28,15 @@ export const getUserCookie=()=>{
 };
 
 export const setStructureCookie=(structure)=>{
-  Cookies.remove("structure");
-  Cookies.set("structure",structure,{expires:1});
+    Cookies.remove("structure");
+    Cookies.set("structure",structure,{expires:1});
 };
 export const getStructureCookie=()=>{
-  const structureCookie=Cookies.get("structure");
-  if(structureCookie===undefined){
-      return{};
-  }
-  else {
-      return JSON.parse(structureCookie);
-  }
+    const structureCookie=Cookies.get("structure");
+    if(structureCookie===undefined){
+        return{};
+    }
+    else {
+        return JSON.parse(structureCookie);
+    }
 };

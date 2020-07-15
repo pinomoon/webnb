@@ -1,18 +1,13 @@
-import React, {Component, useState} from 'react';
-import Footer from "../footer/Footer";
-import Header from "../header/Header";
+import React, {useState} from 'react';
 import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide/Slide";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import axios from 'axios';
 import {getSessionCookie} from "../../sessions";
 import user from "../registrazione/user.png";
-import BoxConferma from "../registrazione/boxconferma";
-import BoxRifiuto from "../registrazione/boxrifiuto";
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });

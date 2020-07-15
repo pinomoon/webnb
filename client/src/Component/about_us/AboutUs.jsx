@@ -1,15 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
 import paperino from '../images/paperino_01.jpg'
 import topolino from '../images/topolino.jpg'
 import spongebob from '../images/sspongebob.jpg'
 import patrick from '../images/patrick.jpg'
 
-
-
-class AboutUs extends Component{
-    render(){
-        return(
-            <container>
+const AboutUs=()=>{
+    return(
+        <container>
 
             <section class="team-section text-center my-5" style={{height:"auto",width:"100%"}}>
 
@@ -110,10 +107,9 @@ class AboutUs extends Component{
 
 
             </section>
-            </container>
+        </container>
 
-        );
+    );
 
-    }
 }
-    export default AboutUs;
+export default AboutUs;

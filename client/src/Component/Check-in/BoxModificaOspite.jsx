@@ -1,18 +1,12 @@
-import React, {Component, useState} from 'react';
-import Footer from "../footer/Footer";
-import Header from "../header/Header";
+import React, {useState} from 'react';
 import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide/Slide";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import axios from 'axios';
-import {getSessionCookie} from "../../sessions";
 import user from "../registrazione/user.png";
-import BoxConferma from "../registrazione/boxconferma";
-import BoxRifiuto from "../registrazione/boxrifiuto";
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -29,35 +23,31 @@ const BoxModficaOspite=(props)=> {
     const [foto_documento, setFotoDoc]=useState("");
     const state={ id_dati_ospiti: id_ospite,nome_ospite, cognome_ospite, data_nascita, sesso, residenza, n_documento, foto_documento};
 
-
-
-
     const handleClose=()=>{
         onclose();
     };
-  const loadData= async()=>{
-      alert(id_ospite);
-        await  axios.post("https://localhost:9000/gestisciPrenotazioni/richiediOspite",{id_dati_ospiti:id_ospite})
-              .then((response)=>{
-                  console.log(response.data[1])
-                  if(response.data[0]=="1"){
-                      setNomeOspite(response.data[1][0].nome_ospite);
-                      setCognomeOspite(response.data[1][0].cognome_ospite);
-                      setDataNascita(response.data[1][0].data_nascita);
-                      setSesso(response.data[1][0].sesso);
-                      setResidenza(response.data[1][0].residenza);
-                      setNDoc(response.data[1][0].n_documento);
-                      //setFotoDoc(response.data[1][0].foto_documento);
-                  }
-                  else{
-                      alert("Errore nel completamento dell'operazione");
 
-                  }
-              })
-              .catch((error)=>{
-                  alert(error);
-              })
-      }
+    const loadData= async()=>{
+        await  axios.post("https://localhost:9000/gestisciPrenotazioni/richiediOspite",{id_dati_ospiti:id_ospite})
+            .then((response)=>{
+                if(response.data[0]=="1"){
+                    setNomeOspite(response.data[1][0].nome_ospite);
+                    setCognomeOspite(response.data[1][0].cognome_ospite);
+                    setDataNascita(response.data[1][0].data_nascita);
+                    setSesso(response.data[1][0].sesso);
+                    setResidenza(response.data[1][0].residenza);
+                    setNDoc(response.data[1][0].n_documento);
+                    //setFotoDoc(response.data[1][0].foto_documento);
+                }
+                else{
+                    alert("Errore nel completamento dell'operazione");
+
+                }
+            })
+            .catch((error)=>{
+                alert(error);
+            })
+    };
 
 
 
@@ -110,10 +100,8 @@ const BoxModficaOspite=(props)=> {
         event.preventDefault();
         await axios.post("https://localhost:9000/gestisciPrenotazioni/modificaDatiOspiti", state)
             .then((response)=>{
-                alert(response.data);
                 if(response.data=="1"){
                     alert("Ospite Modificato con successo !");
-
                     handleClose();
                 }
                 else{
@@ -271,8 +259,8 @@ const BoxModficaOspite=(props)=> {
 
                 </DialogContent>
                 <DialogActions id="action">
-                            <Button onClick={handleClose} color="primary">Chiudi</Button>
-                            <Button  onClick={handleSubmit}color="primary">Invia</Button>
+                    <Button onClick={handleClose} color="primary">Chiudi</Button>
+                    <Button  onClick={handleSubmit}color="primary">Invia</Button>
                 </DialogActions>
             </Dialog>
         </div>

@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button";
-import axios from 'axios';
 import Slide from "@material-ui/core/Slide/Slide";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -39,7 +38,7 @@ const BoxConfermaModificaStruttura=(props)=>{
                         {responseType=="2"&&
                         <p style={{color:"#ff6300"}}>Accesso andato a buon fine! Clicca qui per andare alla tua HomePage!</p>
                         }
-                     </DialogContentText>
+                    </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     {responseType=="1"&&
