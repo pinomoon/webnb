@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import ListGroup from "react-bootstrap/ListGroup";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import {getSessionCookie} from "../../sessions";
 import BoxAccettaPren from "./BoxAccettaPren";
 import BoxRifiutaPren from "./BoxRifiutaPren";
+import s from "./s.jpg"
 
 const GestisciPrenotazioni=()=> {
     const[id_utente,setIdUtente]=useState(getSessionCookie().id);
@@ -50,70 +50,72 @@ const GestisciPrenotazioni=()=> {
         window.location.reload();
     };
     return(
-        <div className="container">
-            <div className="row">
-                <div className="col-1">
+        <div>
 
+            <h5 style={{textAlign:"center"}}>Prenotazioni</h5>
+
+            <div className="row" >
+                <div className="col-2">
                 </div>
-                <div className="col-sm-12 col-md-12 col-lg-12">
-                    <div style={{margin:"auto",width:"100%"}}>
-                        <h3>Lista prenotazioni</h3>
-                        <br/>
-                        <ListGroup variant="flush">
-                            <ListGroup.Item>
-                                <div className="row">
-                                    <div className="col-sm-0 col-lg-1"><h5>Id:</h5></div>
-                                    <div className="col-sm-0 col-lg-2"><h5>Struttura</h5></div>
-                                    <div className="col-sm-0 col-lg-2"><h5>Camera</h5></div>
-                                    <div className="col-sm-0 col-lg-1"><h5>Data Inizio</h5></div>
-                                    <div className="col-sm-0 col-lg-1"><h5>Data Fine</h5></div>
-                                    <div className="col-sm-0 col-lg-3"> <h5> Stato:</h5></div>
-                                    <div className="col-sm-0 col-lg-2"></div>
-                                </div>
-                            </ListGroup.Item>
+                <div className="col-sm-8 col-md-8 col-lg-8">
+                    <div className="row">
+
+
                             {prenotazioni.map((values)=>{
                                 var href="/checkin?id_prenotazione="+values.id_prenotazione;
                                 return(
-                                    <ListGroup.Item>
-                                        <div className="row">
-                                            <div className="col-sm-2 col-lg-1">{values.id_prenotazione}</div>
-                                            <div className="col-sm-4 col-lg-2">{values.nome_struttura}</div>
-                                            <div className="col-sm-4 col-lg-2">{values.nome_camera}</div>
-                                            <div className="col-sm-4 col-lg-1">{values.data_inizio}</div>
-                                            <div className="col-sm-4 col-lg-1">{values.data_fine}</div>
-                                            <div className="col-sm-6 col-lg-3">
-                                                {values.stato_prenotazione =="in attesa di conferma" &&
-                                                <h5 style={{color:"blue"}}> In attesa di conferma</h5>
+                                    <div className="col-sm-12 col-md-6 col-lg-4">
+                                        <div className="card text-center" style={{width: "97%",height:"98%"}}>
+                                            <div className="card-body">
+                                                <h5 className="card-title">{values.id_prenotazione}</h5>
+                                                <div className="card-text">
+                                                    <ul className="list-group list-group-flush" style={{height:"10%"}}>
+                                                        <li className="list-group-item">Struttura: <b>{values.nome_struttura}</b></li>
+                                                        < li className="list-group-item">Camera: <b>{values.nome_camera}</b></li>
+                                                        <li className="list-group-item">{values.data_inizio}</li>
+                                                        <li className="list-group-item">{values.data_fine}</li>
+
+
+                                                    {values.stato_prenotazione =="in attesa di conferma" &&
+                                                <li className="list-group-item" style={{color:"blue"}}> In attesa di conferma</li>
 
                                                 }
                                                 {values.stato_prenotazione =="confermata" &&
-                                                <h5 style={{color:"#00ff55"}}> Confermata</h5>
+                                                <li className="list-group-item" style={{color:"#00ff55"}}> Confermata</li>
 
                                                 }
                                                 {values.stato_prenotazione =="rifiutata" &&
-                                                <h5 style={{color:"red"}}> Rifiutata</h5>
+                                                <li className="list-group-item" style={{color:"red"}}> Rifiutata</li>
 
                                                 }
                                                 {values.stato_prenotazione =="soggiorno in corso" &&
-                                                <h5 style={{color:"yellow"}}> Soggiorno in corso</h5>
+                                                <li className="list-group-item" style={{color:"yellow"}}> Soggiorno in corso</li>
 
                                                 }
                                                 {values.stato_prenotazione =="annullata" &&
-                                                <h5 style={{color:"red"}}> Annullata</h5>
+                                                <li className="list-group-item" style={{color:"red"}}> Annullata</li>
 
                                                 }
 
                                                 {values.stato_prenotazione =="soggiorno concluso" &&
-                                                <h5 style={{color:"yellow"}}> Soggiorno Concluso</h5>
+                                                <li className="list-group-item" style={{color:"yellow"}}> Soggiorno Concluso</li>
 
                                                 }
-                                            </div>
-                                            <div className="col-sm-0 col-lg-2">
+                                                    </ul>
+                                                </div>
+
+
+
+
+                                            <div className="col-sm-0 col-lg-12">
                                                 { values.stato_prenotazione=="in attesa di conferma" &&
-                                                <div>
+                                                <div className="row">
+                                                    <div className="col-6">
                                                     <Button color="inherit" onClick={()=>handleAccetta(values)} style={{color:"#ff6300"}}>Accetta</Button>
-                                                    <br/>
+                                                    </div>
+                                                    <div className="col-6">
                                                     <Button color="inherit" onClick={()=>handleRifiuta(values)}  style={{color:"#ff6300"}}>Rifiuta</Button>
+                                                    </div>
                                                 </div>
                                                 }
                                                 { values.stato_prenotazione=="confermata" &&
@@ -127,21 +129,18 @@ const GestisciPrenotazioni=()=> {
 
                                                 </div>
                                                 }
-
+                                            </div>
                                             </div>
                                         </div>
-                                    </ListGroup.Item>
+                                    </div>
+
                                 )
                             })}
 
-                        </ListGroup>
                     </div>
-                </div>
 
 
-                <div className="col">
 
-                </div>
             </div>
             <BoxAccettaPren
                 open={openAccetta}
@@ -154,6 +153,7 @@ const GestisciPrenotazioni=()=> {
                 prenotazione={selectedPrenotazione}
             />
 
+        </div>
         </div>
 
 
