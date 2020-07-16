@@ -75,12 +75,12 @@ const BoxRifiutaPren=(props)=> {
                 <DialogTitle id="alert-dialog-slide-title">{"Rifiuta Prenotazione"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        <p>CONFERMI DI VOLER RIFIUTARE LA PRENOTAZIONE?</p>
+                        <p>Confermi di volere rifiutare la prenotazione</p>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions id="action">
-                    <Button onClick={handleClose} color="primary">Chiudi</Button>
-                    <Button onClick={handleSubmit} color="primary">Conferma</Button>
+                    <Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
+                    <Button onClick={handleSubmit} style={{color:"#ff6300"}}>Conferma</Button>
                 </DialogActions>
             </Dialog>
             <div className={classes.root}>

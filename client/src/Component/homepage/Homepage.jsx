@@ -139,7 +139,7 @@ const Homepage =()=>{
                                         border: "2px solid #ff6300"
                                     }}>
                                         <form className="row" name="form" id="form" method="POST" >
-                                            <div className="form-group  col-sm-12 col-md-3 col-lg-3">
+                                            <div className="form-group  col-sm-12 col-md-12 col-lg-3">
                                                 <Input type="text" name="luogo" id="luogo"
                                                        placeholder="Dove vuoi andare?"
                                                        value={state.luogo} onChange={handleChangeLuogo}
@@ -165,7 +165,7 @@ const Homepage =()=>{
                                                        onChange={handleChangeDataFine}
                                                 />
                                             </div>
-                                            <div className="form-group col-md-2 col-lg-2">
+                                            <div className="form-group col-sm-2 col-md-12 col-lg-2">
                                                 <select className="form-control" id="npl" value={state.npl}
                                                         onChange={handleChangeNpl} style={{marginTop: "7px"}}>
                                                     <option>N. Ospiti</option>
@@ -181,7 +181,7 @@ const Homepage =()=>{
                                                     <option>10</option>
                                                 </select>
                                             </div>
-                                            <div className="col-md-1 col-lg-1">
+                                            <div className="col-md-12 col-lg-1">
                                                 <Button type="submit" onClick={handleSubmit}  style={{
                                                     marginTop: "-2px",
                                                     backgroundColor: "#ff6300",
@@ -243,15 +243,15 @@ const Homepage =()=>{
             <section className="cards clearfix">
                 <h5 align="center" style={{color: "#ff6300"}}> I consigliati da WeB&B</h5>
                 <div className="row">
-                    <div className="col-2">
+                    <div className="col-sm-3 col-lg-2">
                     </div>
-                    <div className="col-8">
+                    <div className="col-sm-6 col-md-8 col-lg-8">
                         <div className="row">
                             { strutturep[0]!=[] && (strutturep.map((strutturep)=>{
                                 return(
                                     <div key={strutturep.id_struttura}>
 
-                                        <div className="col-sm-6 col-md-3 col-lg-4">
+                                        <div className="col-sm-6 col-md-4 col-lg-4">
                                             <section className="cards clearfix">
                                                 <div className="card" style={{width:"100%",height:"100%"}}>
                                                     <img className="card_image" src={villa}  alt=" Villa "/>

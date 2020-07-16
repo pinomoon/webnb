@@ -43,10 +43,10 @@ const BoxConfermaInserimento=(props)=> {
                 </DialogContent>
                 <DialogActions id="action">
                     {responseType == "1" &&
-                    < Button href="https://localhost:3000/lemiestrutture" onClick={handleClose} color="primary">Le Mie Strutture</Button>
+                    < Button href="https://localhost:3000/lemiestrutture" onClick={handleClose} style={{color:"#ff6300"}}>Le Mie Strutture</Button>
                     }
                     {responseType == "2" &&
-                    < Button onClick={handleClose} color="primary">Chiudi</Button>
+                    < Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
                     }
 
                 </DialogActions>

@@ -50,19 +50,19 @@ const BoxConfermaModifica=(props)=> {
                 </DialogContent>
                 <DialogActions id="action">
                     {responseType == "1"&&
-                    < Button href="https://localhost:3000" onClick={handleClose}color="primary">Vai alla tua Homepage</Button>
+                    < Button href="https://localhost:3000" onClick={handleClose}style={{color:"#ff6300"}}>Vai alla tua Homepage</Button>
                     }
                     {responseType == "2"&&
-                    < Button  onClick={handleClose}color="primary">Chiudi</Button>
+                    < Button  onClick={handleClose}style={{color:"#ff6300"}}>Chiudi</Button>
                     }
                     {responseType == "3"&&
-                    < Button onClick={handleClose} color="primary">Chiudi</Button>
+                    < Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
                     }
                     {responseType == "4"&&
-                    < Button onClick={handleClose} color="primary">Chiudi</Button>
+                    < Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
                     }
                     {responseType == "5;"&&
-                    < Button onClick={handleClose} color="primary">Chiudi</Button>
+                    < Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
                     }
                 </DialogActions>
             </Dialog>

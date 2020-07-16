@@ -44,7 +44,7 @@ const BoxRispUfficio=(props)=> {
                 <DialogActions id="action">
                     {responseType=="1" &&
                     <Button name="ok" id="ok" href="/"
-                            style={{marginLeft: "-10px", color: "#ff6300"}}>HomePage</Button>
+                            style={{marginLeft: "-10px", color: "#ff6300"}}>Homepage</Button>
                     }
                     {responseType=="2"&&
                     <Button name="ok" id="ok" onClick={handleClose}

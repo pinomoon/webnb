@@ -97,8 +97,16 @@ const EliminaCamera=()=>{
                                             <div className="card-text">
                                                 <ul className="list-group list-group-flush" style={{height:"10%"}}>
                                                     <li className="list-group-item">Numero Posti Letto: {camera.numero_posti_letto}</li>
-                                                    <li className= "list-group-item">Costo Camera: {camera.costo_camera}</li>
-                                                    <li className= "list-group-item">Colazione Inclusa: {camera.colazione_inclusa}</li>
+                                                    <li className= "list-group-item">Costo Camera: {camera.costo_camera}€</li>
+                                                        {camera.colazione_inclusa==1 &&
+                                                        <li className= "list-group-item">
+                                                            Colazione Inclusa: Si</li> }
+                                                    {camera.colazione_inclusa==2 &&
+                                                    <li className= "list-group-item">
+                                                        Colazione Inclusa: No</li> }
+
+
+
                                                 </ul>
 
                                             </div>

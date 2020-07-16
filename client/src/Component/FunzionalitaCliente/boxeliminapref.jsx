@@ -76,12 +76,12 @@ const BoxEliminaPref=(props)=> {
                 <DialogTitle id="alert-dialog-slide-title">{"Elimina struttura dai preferiti"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        <p>SEI DAVVERO SICURO DI VOLER ELIMINARE QUESTA STRUTTURA DAI PREFERITI?</p>
+                        <p>Sei sicuro di voler eliminare questa struttura dai preferiti</p>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions id="action">
-                    <Button onClick={handleClose} color="primary">Chiudi</Button>
-                    <Button onClick={handleSubmit} color="primary">Elimina</Button>
+                    <Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
+                    <Button onClick={handleSubmit} style={{color:"#ff6300"}}>Elimina</Button>
                 </DialogActions>
             </Dialog>
             <div className={classes.root}>

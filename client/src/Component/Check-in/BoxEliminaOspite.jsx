@@ -50,12 +50,12 @@ const BoxEliminaOspite=(props)=> {
                 <DialogTitle id="alert-dialog-slide-title">{"Elimina Ospite"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        <p>CONFERMI DI VOLER ELIMINARE L'OSPITE ?</p>
+                        <p style={{color:"#ff6300"}}>Confermi di voler eliminare l'ospite?</p>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions id="action">
-                    <Button onClick={handleClose} color="primary">Chiudi</Button>
-                    <Button onClick={handleSubmit} color="primary">Conferma</Button>
+                    <Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
+                    <Button onClick={handleSubmit} style={{color:"#ff6300"}}>Conferma</Button>
                 </DialogActions>
             </Dialog>
         </div>
