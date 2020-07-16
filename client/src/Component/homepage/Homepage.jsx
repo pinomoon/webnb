@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import "./Homepage.css"
 import Button from "@material-ui/core/Button";
 import villa from "../GestioneStrutture/villa.jpg";
@@ -8,10 +8,26 @@ import {UserContext} from "../../UserContext";
 import axios from 'axios';
 import RicercaStruttura from "../Ricerca Struttura/RicercaStruttura";
 import {setStructureCookie} from "../../sessions";
-import BoxData from "./BoxData";
 import HotelIcon from '@material-ui/icons/Hotel';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
+}));
 
 const Homepage =()=>{
+    const classes=useStyles();
     const [luogo,setLuogo]=React.useState("");
     const [data_inizio, setDataInizio]=React.useState("");
     const [data_fine, setDataFine]=React.useState("");
@@ -20,7 +36,8 @@ const Homepage =()=>{
     const state={luogo,data_inizio,data_fine,npl};
     const [strutture, setStrutture]=React.useState([]);
     const href="https://localhost:3000/ricercastruttura?luogo="+luogo+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?npl="+npl;
-    const[openConferma, setOpenConferma]=React.useState(false);
+    const[openNoDate, setOpenNoDate]=React.useState(false);
+    const[openErroreDate, setOpenErroreDate]=useState(false);
 
 
     const [luogop]=React.useState("Sicilia");
@@ -44,12 +61,13 @@ const Homepage =()=>{
                 alert(error);
             });
     },[]);
-    const handleCloseConferma = () => {
-        setOpenConferma(false);
+    const handleCloseNoDate = () => {
+        setOpenNoDate(false);
     };
-    const handleClickOpenConferma = () => {
-        setOpenConferma(true);
+    const handleCloseErroreDate = () => {
+        setOpenErroreDate(false);
     };
+
 
     const handleClickRicerca=()=>{
         setRicerca(true);
@@ -59,12 +77,12 @@ const Homepage =()=>{
     const handleSubmit=(event)=>{
         event.preventDefault();
         if((state.data_inizio==="") || (state.data_fine==="")){
-            handleClickOpenConferma();
+            setOpenNoDate(true);
             return
 
         }
         if((state.data_inizio >= state.data_fine)){
-            handleClickOpenConferma();
+            setOpenErroreDate(true);
             return
         }
         setStructureCookie({luogo,data_inizio,data_fine,npl});
@@ -296,10 +314,19 @@ const Homepage =()=>{
 
 
 
-            <BoxData
-                open={openConferma}
-                onClose={handleCloseConferma}
-            />;
+            <div className={classes.root}>
+                <Snackbar open={openNoDate} autoHideDuration={6000} onClose={handleCloseNoDate} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseNoDate} severity="error">
+                        Inserisci Data Check-In e Data Check-Out!
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={openErroreDate} autoHideDuration={6000} onClose={handleCloseErroreDate} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseErroreDate} severity="error">
+                        Errore! Non Puoi Inserire una Data Check-Out Precedente alla Data Check-In
+                    </Alert>
+                </Snackbar>
+            </div>
+
 
 
 

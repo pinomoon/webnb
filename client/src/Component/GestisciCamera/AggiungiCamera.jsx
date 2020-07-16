@@ -6,17 +6,37 @@ import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import axios from 'axios';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
+
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
+}));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const AggiungiCamera  =(props) =>{
+    const classes=useStyles();
     const[nome_camera, setNomeCamera]=useState("");
     const[numero_posti_letto, setNumPostiLetto]=useState("");
     const[costo_camera, setCostoCamera]=useState("");
     const[colazione_inclusa, setColazioneInclusa]=useState("");
     const[tipoRisposta, setTipoRisposta]=useState("");
+    const [openConferma, setOpenConferma]=useState(false);
+    const [openErrore, setOpenErrore]=useState(false);
     const {open, onClose, id_struttura}=props;
     const state={id_struttura,nome_camera,numero_posti_letto,costo_camera,colazione_inclusa};
 
@@ -52,25 +72,30 @@ const AggiungiCamera  =(props) =>{
         setNumPostiLetto("");
         setTipoRisposta("");
     };
+
+    const handleCloseConferma=()=>{
+        setOpenConferma(false);
+    };
+    const handleCloseErrore=()=>{
+        setOpenErrore(false);
+    };
     const handleSubmit=()=>{
-        axios.post("https://localhost:9000/gestisciStrutture/aggiungiCamera", state)
-            .then((response)=>{
-                setTipoRisposta(response.data);
-                if(response.data=="1"){
-                    alert("Camera inserita con successo!!");
-                    handleClose();
+        if(window.confirm("Sei sicuro di voler inserire questa camera? Una volta inserita potrà solo essere eliminata, non modificata")) {
+            axios.post("https://localhost:9000/gestisciStrutture/aggiungiCamera", state)
+                .then((response) => {
+                    setTipoRisposta(response.data);
+                    if (response.data == "1") {
+                        setOpenConferma(true);
+                        handleClose();
+                    } else {
+                        setOpenErrore(true);
+                    }
 
-                }
-                else{
-                    alert("Errore nell'inserimento della camera");
-                    handleClose();
-
-                }
-
-            })
-            .catch((error)=>{
-                alert(error);
-            })
+                })
+                .catch((error) => {
+                    alert(error);
+                })
+        }
     };
 
 
@@ -173,6 +198,18 @@ const AggiungiCamera  =(props) =>{
                 </DialogContent>
 
             </Dialog>
+            <div className={classes.root}>
+                <Snackbar open={openConferma} autoHideDuration={6000} onClose={handleCloseConferma} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseConferma} severity="success">
+                       Camera Inserita Correttamente!
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={openErrore} autoHideDuration={6000} onClose={handleCloseErrore} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseErrore} severity="error">
+                        Errore durante l'inserimento della camera
+                    </Alert>
+                </Snackbar>
+            </div>
         </div>
 
 

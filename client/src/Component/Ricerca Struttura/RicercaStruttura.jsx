@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Input from "@material-ui/core/Input/Input";
 import { Button} from 'reactstrap';
 import UncontrolledCollapse from "reactstrap/es/UncontrolledCollapse";
@@ -7,10 +7,26 @@ import Tooltip from "@material-ui/core/Tooltip";
 import {getStructureCookie} from "../../sessions";
 import Home from '@material-ui/icons/Home';
 import HotelIcon from '@material-ui/icons/Hotel';
-import BoxData from "../homepage/BoxData";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
+}));
 
 
 const RicercaStruttura=(props)=> {
+    const classes=useStyles();
     function getUrlVars() {
         var vars = {};
         var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
@@ -39,7 +55,8 @@ const RicercaStruttura=(props)=> {
     const [costo_camera, setCostoCamera]=React.useState("");
     const [colazione_inclusa, setColazioneInclusa]=React.useState("");
     const [struttureRicerca, setStruttureRicerca]=React.useState([]);
-    const[openConferma, setOpenConferma]=React.useState(false);
+    const[openNoDate, setOpenNoDate]=React.useState(false);
+    const[openErroreDate, setOpenErroreDate]=useState(false);
 
     let {strutture}=props;
 
@@ -54,9 +71,14 @@ const RicercaStruttura=(props)=> {
         event.preventDefault();
         handleChangeModalitaPagamento();
         handleChangeServizi();
-        if((state.data_inizio> state.data_fine)){
-            handleClickOpenConferma();
-            return;
+        if((state.data_inizio==="") || (state.data_fine==="")){
+            setOpenNoDate(true);
+            return
+
+        }
+        if((state.data_inizio >= state.data_fine)){
+            setOpenErroreDate(true);
+            return
         }
         axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
             .then((response)=>{
@@ -68,12 +90,14 @@ const RicercaStruttura=(props)=> {
             .catch((error)=>{
                 alert(error);
             })    };
-    const handleCloseConferma = () => {
-        setOpenConferma(false);
+
+    const handleCloseNoDate = () => {
+        setOpenNoDate(false);
     };
-    const handleClickOpenConferma = () => {
-        setOpenConferma(true);
+    const handleCloseErroreDate = () => {
+        setOpenErroreDate(false);
     };
+
     const handleChangeLuogo=(event)=>{
         const target=event.target;
         const valore=  target.value;
@@ -626,10 +650,18 @@ const RicercaStruttura=(props)=> {
 
             </div>
 
-            <BoxData
-                open={openConferma}
-                onClose={handleCloseConferma}
-            />
+            <div className={classes.root}>
+                <Snackbar open={openNoDate} autoHideDuration={6000} onClose={handleCloseNoDate} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseNoDate} severity="error">
+                        Inserisci Data Check-In e Data Check-Out!
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={openErroreDate} autoHideDuration={6000} onClose={handleCloseErroreDate} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseErroreDate} severity="error">
+                        Errore! Non Puoi Inserire una Data Check-Out Precedente alla Data Check-In
+                    </Alert>
+                </Snackbar>
+            </div>
 
 
 
