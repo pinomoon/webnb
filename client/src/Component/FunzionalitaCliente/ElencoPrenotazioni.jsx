@@ -29,7 +29,7 @@ const ElencoPrenotazioni=()=>{
 
             alert(err)
         })
-    },[]);
+    },[openAnnullaPren,openRecensisci]);
 
     const handleAnnullaPren=(value)=>{
         if(value.stato_prenotazione=="confermata"){
@@ -54,17 +54,14 @@ const ElencoPrenotazioni=()=>{
     const handleCloseBoxAnnullaPren=()=>{
         setOpenAnnullaPren(false);
         setSelectedPrenotazione();
-        window.location.reload();
     };
     const handleRecensisci=(value)=>{
-        console.log(value.id_prenotazione);
         setSelectedPrenotazione(value.id_prenotazione);
         setOpenRecensisci(true);
     }
     const handleCloseRecensisci=()=>{
         setOpenRecensisci(false);
         setSelectedPrenotazione();
-        window.location.reload();
     }
 
     return(

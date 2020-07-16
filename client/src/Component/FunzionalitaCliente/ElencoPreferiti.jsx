@@ -21,7 +21,6 @@ const ElencoPreferiti=()=> {
     const handleCloseEliminaPref=()=>{
         setSelectedPref();
         setopenEliminaPref(false);
-        window.location.reload();
     };
 
     React.useLayoutEffect(()=>{
@@ -37,7 +36,7 @@ const ElencoPreferiti=()=> {
             .catch((error)=>{
                 alert(error);
             })
-    },[]);
+    },[openEliminaPref]);
 
     return(
 

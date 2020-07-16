@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
@@ -7,28 +7,54 @@ import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button";
 import axios from 'axios';
 import Slide from "@material-ui/core/Slide/Slide";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
+
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
+}));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const BoxEliminaStruttura=(props)=>{
+    const classes=useStyles();
     const{open, onClose, id_struttura}=props;
+    const [openConferma, setOpenConferma]=useState(false);
+    const [openErrore, setOpenErrore]=useState(false);
 
 
     const handleClose=()=>{
         onClose();
+    };
+    const handleCloseConferma=()=>{
+        setOpenConferma(false);
+    };
+    const handleCloseErrore=()=>{
+        setOpenErrore(false);
     };
 
     const handleElimina=()=>{
         axios.post("https://localhost:9000/gestisciStrutture/eliminaStruttura",{id_struttura})
             .then((response)=>{
                 if(response.data=="1"){
-                    alert("Struttura eliminata con successo");
+                    setOpenConferma(true);
                     handleClose();
                 }
                 else{
-                    alert("Errore nell'eliminazione della struttura");
+                    setOpenErrore(true);
                     handleClose();
                 }
 
@@ -61,6 +87,18 @@ const BoxEliminaStruttura=(props)=>{
 
                 </DialogActions>
             </Dialog>
+            <div className={classes.root}>
+                <Snackbar open={openConferma} autoHideDuration={6000} onClose={handleCloseConferma} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseConferma} severity="success">
+                        Struttura Eliminata Con Successo!
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={openErrore} autoHideDuration={6000} onClose={handleCloseErrore} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseErrore} severity="error">
+                        Errore nell'eliminazione della struttura
+                    </Alert>
+                </Snackbar>
+            </div>
         </div>
 
 

@@ -8,28 +8,54 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import axios from 'axios';
 import {getSessionCookie} from "../../sessions";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
+
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
+}));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const BoxEliminaPref=(props)=> {
+    const classes=useStyles();
     const {open, onClose, struttura}=props;
     const [id_utente, setIdUtente]=useState(getSessionCookie().id);
+    const [openConferma, setOpenConferma]=useState(false);
+    const [openErrore, setOpenErrore]=useState(false);
 
     const handleClose=()=>{
         onClose();
     };
+    const handleCloseConferma=()=>{
+        setOpenConferma(false);
+    };
+    const handleCloseErrore=()=>{
+        setOpenErrore(false);
+    };
+
     const handleSubmit=()=>{
         axios.post("https://localhost:9000/iMieiPreferiti/eliminaPreferiti",{id_utente, id_struttura:struttura})
             .then((response)=>{
                 if(response.data=="1"){
-                    alert("Struttura eliminata con successo dai preferiti!");
+                    setOpenConferma(true);
                     handleClose();
                 }
                 else{
-                    alert("Errore nel completamento dell'operazione");
-                    handleClose();
+                    setOpenErrore(true);
                 }
             })
             .catch((error)=>{
@@ -58,6 +84,18 @@ const BoxEliminaPref=(props)=> {
                     <Button onClick={handleSubmit} color="primary">Elimina</Button>
                 </DialogActions>
             </Dialog>
+            <div className={classes.root}>
+                <Snackbar open={openConferma} autoHideDuration={6000} onClose={handleCloseConferma} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseConferma} severity="success">
+                        Struttura Eliminata Con Successo Dai Preferiti!
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={openErrore} autoHideDuration={6000} onClose={handleCloseErrore} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseErrore} severity="error">
+                        Errore nel completamento dell'operazione, riprova
+                    </Alert>
+                </Snackbar>
+            </div>
         </div>
 
 

@@ -2,6 +2,23 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import Button from "@material-ui/core/Button";
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
+
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
+}));
 
 
 
@@ -13,9 +30,12 @@ const EliminaCamera=()=>{
         });
         return vars;
     }
+    const classes=makeStyles();
     const id_struttura = getUrlVars()["id_struttura"];
     const [camere, setCamere]=useState([]);
     const [selectedCamera, setSelectedCamera]=useState();
+    const [openConferma, setOpenConferma]=useState(false);
+    const [openErrore, setOpenErrore]=useState(false);
 
     React.useLayoutEffect(()=>{
         axios.post("https://localhost:9000/gestisciStrutture/mostraCamera", {id_struttura})
@@ -30,22 +50,32 @@ const EliminaCamera=()=>{
             .catch((error) => {
                 alert(error);
             })
-    },[]);
+    },[openConferma,openErrore]);
+
+    const handleCloseConferma=()=>{
+        setOpenConferma(false);
+    };
+    const handleCloseErrore=()=>{
+        setOpenErrore(false);
+    };
 
     const handleElimina=(camera)=>{
         setSelectedCamera(camera.id_camera);
-        axios.post("https://localhost:9000/gestisciStrutture/eliminaCamera",{id_camera:camera.id_camera})
-            .then((response)=>{
-                if(response.data=="1"){
-                    alert("Struttura Eliminata");
-                }
-                else alert("Errore");
-            })
-            .catch((error)=>{
-                alert(error);
-            })
-        window.location.reload();
-    }
+        if(window.confirm("Sei sicuro di voler eliminare questa camera? Una volta eliminata " +
+            "non potrai più tornare indietro")) {
+            axios.post("https://localhost:9000/gestisciStrutture/eliminaCamera", {id_camera: camera.id_camera})
+                .then((response) => {
+                    if (response.data == "1") {
+                        setOpenConferma(true);
+                    } else {
+                        setOpenErrore(true);
+                    }
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+        }
+    };
 
     return(
         <div>
@@ -80,12 +110,19 @@ const EliminaCamera=()=>{
 
                             ); })}
                     </div>
-
-
-
-
-
                 </div>
+            </div>
+            <div className={classes.root}>
+                <Snackbar open={openConferma} autoHideDuration={6000} onClose={handleCloseConferma} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseConferma} severity="success">
+                        Camera Eliminata Con Successo!
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={openErrore} autoHideDuration={6000} onClose={handleCloseErrore} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseErrore} severity="error">
+                        Errore nel completamento dell'operazione
+                    </Alert>
+                </Snackbar>
             </div>
         </div>
     );

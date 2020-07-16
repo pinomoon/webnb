@@ -26,7 +26,7 @@ const GestisciStrutture=()=>{
             .catch((error)=>{
                 alert(error);
             })
-    },[]);
+    },[openElimina]);
 
 
     const handleElimina=(struttura)=>{
@@ -36,7 +36,6 @@ const GestisciStrutture=()=>{
     const handleCloseElimina=()=>{
         setSelectedStruttura();
         setOpenElimina(false);
-        window.location.reload();
     };
 
     const handleAggiungiCamera=(struttura)=>{

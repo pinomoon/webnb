@@ -36,7 +36,7 @@ const BoxConfermaModificaStruttura=(props)=>{
                         <p style={{color:"#ff6300"}}>Struttura modificata con successo! Vai alle tue strutture per verificare</p>
                         }
                         {responseType=="2"&&
-                        <p style={{color:"#ff6300"}}>Accesso andato a buon fine! Clicca qui per andare alla tua HomePage!</p>
+                        <p style={{color:"#ff6300"}}>Errore nel completamento dell'operazione!</p>
                         }
                     </DialogContentText>
                 </DialogContent>

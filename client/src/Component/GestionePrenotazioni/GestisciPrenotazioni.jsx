@@ -11,7 +11,7 @@ const GestisciPrenotazioni=()=> {
     const[prenotazioni,setPrenotazione]=useState([]);
     const[selectedPrenotazione,setSelectedPrenotazione]=useState();
     const[openAccetta,setOpenAccetta]=useState(false);
-    const[openRifiuta,setOpenRifiuta]=useState(false)
+    const[openRifiuta,setOpenRifiuta]=useState(false);
 
     React.useLayoutEffect(()=>{
         axios.post("https://localhost:9000/gestisciPrenotazioni",{id_utente})
@@ -27,7 +27,7 @@ const GestisciPrenotazioni=()=> {
 
             alert(err)
         })
-    },[]);
+    },[openAccetta,openRifiuta]);
 
 
     const handleAccetta=(values)=>{
@@ -37,7 +37,6 @@ const GestisciPrenotazioni=()=> {
     const handleCloseAccetta=()=>{
         setSelectedPrenotazione();
         setOpenAccetta(false);
-        window.location.reload();
     };
     const handleRifiuta=(values)=>{
         setSelectedPrenotazione(values.id_prenotazione);
@@ -47,7 +46,6 @@ const GestisciPrenotazioni=()=> {
     const handleCloseRifiuta=()=>{
         setSelectedPrenotazione();
         setOpenRifiuta(false);
-        window.location.reload();
     };
     return(
         <div className="container">

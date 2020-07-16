@@ -53,7 +53,6 @@ const AggiungiCamera  =(props) =>{
         setTipoRisposta("");
     };
     const handleSubmit=()=>{
-        alert(state);
         axios.post("https://localhost:9000/gestisciStrutture/aggiungiCamera", state)
             .then((response)=>{
                 setTipoRisposta(response.data);
