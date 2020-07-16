@@ -77,6 +77,7 @@ const ElencoPreferiti=()=> {
                                                     overflow: "hidden",
                                                     textOverflow: "ellipsis"}}>Indirizzo: {value.indirizzo_struttura}, {value.citta}, {value.regione}</p>
                                                 <div>
+                                                    <br/>
                                                     <Button onClick={()=>handleEliminaPref(value)} style={{color:"#ff6300",margin:"auto",display:"block"}}><DeleteOutlineIcon/>Elimina</Button>
                                                 </div>
                                             </div>

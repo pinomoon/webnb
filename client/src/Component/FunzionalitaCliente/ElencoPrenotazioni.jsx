@@ -66,56 +66,50 @@ const ElencoPrenotazioni=()=>{
 
     return(
 
-        <div className="container">
-            <div className="row">
-                <div className="col-1">
+        <div>
 
+            <h5 style={{textAlign:"center"}}>Le mie Prenotazioni</h5>
+
+            <div className="row" >
+                <div className="col-2">
                 </div>
-                <div className="col-sm-12 col-md-12 col-lg-12">
-                    <div style={{margin:"auto",width:"100%"}}>
-                        <h3>Lista prenotazioni</h3>
-                        <br/>
-                        <ListGroup variant="flush">
-                            <ListGroup.Item>
-                                <div className="row">
-                                    <div className="col-sm-0 col-lg-1"><h5>Id:</h5></div>
-                                    <div className="col-sm-0 col-lg-2"><h5>Struttura</h5></div>
-                                    <div className="col-sm-0 col-lg-2"><h5>Data Inizio</h5></div>
-                                    <div className="col-sm-0 col-lg-2"><h5>Data Fine</h5></div>
-                                    <div className="col-sm-0 col-lg-3"> <h5> Stato:</h5></div>
-                                    <div className="col-sm-0 col-lg-2"></div>
-                                </div>
-                            </ListGroup.Item>
+                <div className="col-sm-8 col-md-8 col-lg-8">
+                    <div className="row">
                             {prenotazioni.map((value)=>{
 
                                 return(
-                                    <ListGroup.Item>
-                                        <div className="row">
-                                            <div className="col-sm-2 col-lg-1">{value.id_prenotazione}</div>
-                                            <div className="col-sm-4 col-lg-2">{value.nome_struttura}</div>
-                                            <div className="col-sm-4 col-lg-2">{value.data_inizio}</div>
-                                            <div className="col-sm-4 col-lg-2">{value.data_fine}</div>
-                                            <div className="col-sm-6 col-lg-3">
+                                    <div className="col-sm-12 col-md-6 col-lg-4">
+                                        <div className="card text-center" style={{width: "97%",height:"98%"}}>
+                                            <div className="card-body">
+                                                <h5 className="card-title">{value.id_prenotazione}</h5>
+                                                <div className="card-text">
+                                                    <ul className="list-group list-group-flush" style={{height:"10%"}}>
+                                                        <li className="list-group-item">Struttura: <b>{value.nome_struttura}</b></li>
+                                                        <li className="list-group-item">Camera: <b>{value.nome_camera}</b></li>
+                                                        <li className="list-group-item">{value.data_inizio}</li>
+                                                        <li className="list-group-item">{value.data_fine}</li>
                                                 {value.stato_prenotazione=="in attesa di conferma" &&
-                                                <a >In attesa di conferma</a>
+                                                <li className="list-group-item"style={{color: "blue"}}>In attesa di conferma</li>
                                                 }
                                                 {value.stato_prenotazione=="confermata" &&
-                                                <a style={{color: "#00ff55"}}>Confermata</a>
+                                                <li className="list-group-item" style={{color: "#00ff55"}}>Confermata</li>
                                                 }
                                                 {value.stato_prenotazione=="soggiorno in corso"&&
-                                                <a style={{color: "yellow"}}>Soggorno in corso</a>
+                                                <li className="list-group-item" style={{color: "yellow"}}>Soggiorno in corso</li>
                                                 }
                                                 {value.stato_prenotazione=="annullata"&&
-                                                <a style={{color: "#ff0000"}}>Annullata</a>
+                                                <li className="list-group-item" style={{color: "#ff0000"}}>Annullata</li>
                                                 }
                                                 {value.stato_prenotazione=="soggiorno concluso"&&
-                                                <a >Soggiorno concluso</a>
+                                                <li className="list-group-item" >Soggiorno concluso</li>
                                                 }
                                                 {value.stato_prenotazione=="rifiutata"&&
-                                                <a style={{color: "#ff0000"}}>Rifiutata</a>
+                                                <li className="list-group-item" style={{color: "#ff0000"}}>Rifiutata</li>
                                                 }
-                                            </div>
-                                            <div className="col-2">
+                                                    </ul>
+                                                </div>
+
+                                                <div className="col-sm-0 col-lg-12">
                                                 {(value.stato_prenotazione == "in attesa di conferma"||value.stato_prenotazione == "confermata") &&
                                                 <Button color="inherit" onClick={()=>handleAnnullaPren(value)} style={{color: "#ff6300"}}>Annulla Prenotazione</Button>
                                                 }
@@ -123,12 +117,12 @@ const ElencoPrenotazioni=()=>{
                                                 <Button color="inherit" onClick={()=>handleRecensisci(value)}style={{color: "#ff6300"}}>Recensisci</Button>
                                                 }
                                             </div>
+                                            </div>
                                         </div>
-                                    </ListGroup.Item>
+                                    </div>
+
                                 )}) }
-                        </ListGroup>
                     </div>
-                </div>
 
 
                 <div className="col">
@@ -145,6 +139,7 @@ const ElencoPrenotazioni=()=>{
                 onClose={handleCloseRecensisci}
                 prenotazione={selectedPrenotazione}
             />
+        </div>
         </div>
 
 

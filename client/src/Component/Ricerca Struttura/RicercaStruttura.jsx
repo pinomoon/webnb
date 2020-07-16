@@ -629,7 +629,7 @@ const RicercaStruttura=(props)=> {
             <BoxData
                 open={openConferma}
                 onClose={handleCloseConferma}
-            />;
+            />
 
 
 
