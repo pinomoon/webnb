@@ -9,24 +9,58 @@ const ModificaAccount=()=>{
     const[tipoRisposta, setTipoRisposta]=React.useState("");
     const [id_utente, setIdUtente]=useState(getSessionCookie().id);
     const[openConferma, setOpenConferma]=React.useState(false);
-    const[nome, setNome]=React.useState(getUserCookie().nome);
-    const[cognome, setCognome]=React.useState(getUserCookie().cognome);
-    const[data_di_nascita, setData_di_nascita]=React.useState(getUserCookie().data_di_nascita);
-    const[indirizzo, setIndirizzo]=React.useState(getUserCookie().indirizzo);
-    const[sesso, setSesso]=React.useState(getUserCookie().sesso);
-    const[citta,setCitta]=React.useState(getUserCookie().citta);
-    const[cap,setCap]=React.useState(getUserCookie().cap);
-    const [titolare_carta, setTitolareCarta]=React.useState(getUserCookie().titolare_carta);
-    const[numero_carta,setNumeroCarta]=React.useState(getUserCookie().numero_carta);
-    const[scadenza,setScadenza]=React.useState(getUserCookie().scadenza);
-    const[cvc,setCvc]=React.useState(getUserCookie().cvc);
-    const[email,setEmail]=React.useState(getUserCookie().email);
+    const[nome, setNome]=React.useState("");
+    const[cognome, setCognome]=React.useState("");
+    const[data_di_nascita, setData_di_nascita]=React.useState("");
+    const[indirizzo, setIndirizzo]=React.useState("");
+    const[sesso, setSesso]=React.useState("");
+    const[citta,setCitta]=React.useState("");
+    const[cap,setCap]=React.useState("");
+    const [titolare_carta, setTitolareCarta]=React.useState("");
+    const[numero_carta,setNumeroCarta]=React.useState("");
+    const[scadenza,setScadenza]=React.useState("");
+    const[cvc,setCvc]=React.useState("");
+    const[email,setEmail]=React.useState(getSessionCookie().email);
     const[password, setPassword]=React.useState("");
     const[repassword,setRepassword]=React.useState("");
-    const[check_repass, setCheckRepass]=React.useState("");
-    const[cellulare,setCellulare]=React.useState(getUserCookie().cellulare);
+    let check_repass="";
+    const[cellulare,setCellulare]=React.useState("");
 
+    React.useLayoutEffect(()=>{
+        async function fetchData(){
+            await axios.post("https://localhost:9000/modificaAccount",{id_utente})
+                .then((response)=>{
+                    if(response.data[0]=="1"){
+                        setNome(response.data[1][0].nome);
+                        setCognome(response.data[1][0].cognome);
+                        let data=response.data[1][0].data_di_nascita.substr(0,10);//Ritornava un formato diverso, cosi prendo solo quello che mi serve
+                        setData_di_nascita(data);//C'è un problema di fuso orario
+                        
+                        setIndirizzo(response.data[1][0].indirizzo);
+                        setSesso(response.data[1][0].sesso)
+                        setCitta(response.data[1][0].citta);
+                        setCap(response.data[1][0].cap);
+                        setCellulare(response.data[1][0].cellulare);
+                        setTitolareCarta(response.data[1][0].titolare_carta);
+                        setNumeroCarta(response.data[1][0].numero_carta);
+                        setScadenza(response.data[1][0].scadenza);
+                        setCvc(response.data[1][0].cvc);
+                        if(response.data[1][0].sesso==="M"){
+                            window.document.getElementById('male').setAttribute('checked','true');
+                        }
+                        else{
+                            window.document.getElementById('female').setAttribute('checked','true');
+                        }
+                    }
+                    else alert("Errore");
 
+                })
+                .catch((error)=>{
+                    alert(error);
+                })
+        }
+        fetchData();
+    },[]);
 
 
     const handleClickOpenConferma=()=>{
@@ -37,21 +71,9 @@ const ModificaAccount=()=>{
         setTipoRisposta("");
     };
     const svuotaCampi=()=>{
-        setNome(getUserCookie().nome);
-        setCognome(getUserCookie().cognome);
-        setData_di_nascita(getUserCookie().data_di_nascita);
-        setIndirizzo(getUserCookie().indirizzo);
-        setSesso(getUserCookie().sesso);
-        setCitta(getUserCookie().citta);
-        setCap(getUserCookie().cap);
-        setCellulare(getUserCookie().cellulare);
-        setTitolareCarta(getUserCookie().titolare_carta);
-        setNumeroCarta(getUserCookie().numero_carta);
-        setScadenza(getUserCookie().scadenza);
-        setCvc(getUserCookie().cvc);
         setPassword("");
         setRepassword("");
-        setCheckRepass("");
+        check_repass="";
 
     };
     const handleSubmit= async(event)=>{
@@ -64,22 +86,6 @@ const ModificaAccount=()=>{
             .then(function(response){
                 if(response.data=="1"){
                     setTipoRisposta("1");
-                    setUserCookie({
-                        id:getSessionCookie().id,
-                        email:getSessionCookie().email,
-                        tipo:getSessionCookie().tipo,
-                        nome:nome,
-                        cognome:cognome,
-                        sesso:sesso,
-                        data_di_nascita:data_di_nascita,
-                        indirizzo:indirizzo,
-                        citta:citta,
-                        cap:cap,
-                        cellulare:cellulare,
-                        titolare_carta:titolare_carta,
-                        numero_carta:numero_carta,
-                        scadenza:scadenza,
-                        cvc:cvc});
                     handleClickOpenConferma();
                 }
                 else if(response.data=="2"){
@@ -183,16 +189,16 @@ const ModificaAccount=()=>{
         const valore=  target.value;
 
         if(valore!==""){
-            document.forms[0].children[10].children[1].setAttribute('required','true');
-            document.forms[0].children[10].children[3].setAttribute('required','true');
-            document.forms[0].children[10].children[6].setAttribute('required','true');
+            window.document.getElementById('password').setAttribute('required','true');
+            window.document.getElementById('repassword').setAttribute('required','true');
+            window.document.getElementById('check_repass').setAttribute('required','true');
         }
         setPassword(valore);
         state.password=valore;
         if(state.password=='' && state.repassword=='' && check_repass==''){
-            document.forms[0].children[10].children[1].removeAttribute('required');
-            document.forms[0].children[10].children[3].removeAttribute('required');
-            document.forms[0].children[10].children[6].removeAttribute('required');
+            window.document.getElementById('password').removeAttribute('required');
+            window.document.getElementById('repassword').removeAttribute('required');
+            window.document.getElementById('check_repass').removeAttribute('required');
         }
     };
 
@@ -200,31 +206,31 @@ const ModificaAccount=()=>{
         const target=event.target;
         const valore=  target.value;
         if(valore!==""){
-            document.forms[0].children[10].children[1].setAttribute('required','true');
-            document.forms[0].children[10].children[3].setAttribute('required','true');
-            document.forms[0].children[10].children[6].setAttribute('required','true');
+            window.document.getElementById('password').setAttribute('required','true');
+            window.document.getElementById('repassword').setAttribute('required','true');
+            window.document.getElementById('check_repass').setAttribute('required','true');
         }
         setRepassword(valore);
         state.repassword=valore;
         if(state.password=='' && state.repassword=='' && check_repass==''){
-            document.forms[0].children[10].children[1].removeAttribute('required');
-            document.forms[0].children[10].children[3].removeAttribute('required');
-            document.forms[0].children[10].children[6].removeAttribute('required');
+            window.document.getElementById('password').removeAttribute('required');
+            window.document.getElementById('repassword').removeAttribute('required');
+            window.document.getElementById('check_repass').removeAttribute('required');
         }
     };
     const handleChangeCheckRepass=(event)=>{
         const target=event.target;
         const valore= target.value;
         if(valore!==""){
-            document.forms[0].children[10].children[1].setAttribute('required','true');
-            document.forms[0].children[10].children[3].setAttribute('required','true');
-            document.forms[0].children[10].children[6].setAttribute('required','true');
+            window.document.getElementById('password').setAttribute('required','true');
+            window.document.getElementById('repassword').setAttribute('required','true');
+            window.document.getElementById('check_repass').setAttribute('required','true');
         }
-        setCheckRepass(valore);
+        check_repass=valore;
         if(state.password=='' && state.repassword=='' && check_repass==''){
-            document.forms[0].children[10].children[1].removeAttribute('required');
-            document.forms[0].children[10].children[3].removeAttribute('required');
-            document.forms[0].children[10].children[6].removeAttribute('required');
+            window.document.getElementById('password').removeAttribute('required');
+            window.document.getElementById('repassword').removeAttribute('required');
+            window.document.getElementById('check_repass').removeAttribute('required');
         }
 
     };
@@ -379,14 +385,14 @@ const ModificaAccount=()=>{
                                 <div id="io" className="form-group">
                                     <label htmlFor="password">Vecchia Password </label>
                                     <input class="password" id="password" type="password" className="form-control" size="32"
-                                           maxLength="40" value={state.password}
+                                           maxLength="40" 
                                            onChange={handleChangePassword} />
 
                                     <label htmlFor="repassword">Nuova Password </label>
                                     <input  class="repassword" id="repassword" type="password" className="form-control"
                                             title="Almeno 8 caratteri, una lettera maiuscola e un numero"
                                             pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
-                                            size="32" maxLength="40" value={state.repassword} onChange={handleChangeRepassword}
+                                            size="32" maxLength="40" onChange={handleChangeRepassword}
                                     />
                                     <div className="invalid-feedback">
                                         Almeno 8 caratteri di cui uno maiuscolo e un numero
@@ -395,7 +401,7 @@ const ModificaAccount=()=>{
 
                                     <label htmlFor="check_repass">Reinserisci Nuova Password </label>
                                     <input class="check_repass" id="check_repass" type="password" className="form-control" size="32"
-                                           maxLength="40" value={check_repass} pattern={state.repassword} title="Il campo Nuova Password e Reinserisci Nuova Password devono coincidere"
+                                           maxLength="40"  title="Il campo Nuova Password e Reinserisci Nuova Password devono coincidere"
                                            onChange={handleChangeCheckRepass} />
                                     <div className="invalid-feedback">
                                         Le password devono coincidere

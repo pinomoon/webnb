@@ -267,8 +267,8 @@ const InserisciStruttura=()=>{
     };
     const handleChangeModalitaPagamento=()=>{
         if(modalita_carta!==''){
-            document.forms[0].children[4].children[9].children[1].children[1].children[0].removeAttribute('required');
-            document.forms[0].children[4].children[9].children[2].children[1].children[0].removeAttribute('required');
+            window.document.getElementById('struttura').removeAttribute('required');
+            window.document.getElementById('anticipo_carta').removeAttribute('required');
 
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_carta+",";
         }
@@ -276,25 +276,25 @@ const InserisciStruttura=()=>{
             state.modalita_di_pagamento=state.modalita_di_pagamento+",";
         }
         if(modalita_struttura!==''){
-            document.forms[0].children[4].children[9].children[0].children[1].children[0].removeAttribute('required');
-            document.forms[0].children[4].children[9].children[2].children[1].children[0].removeAttribute('required');
+            window.document.getElementById('carta').removeAttribute('required');
+            window.document.getElementById('anticipo_carta').removeAttribute('required');
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_struttura+",";
         }
         else{
             state.modalita_di_pagamento=state.modalita_di_pagamento+",";
         }
         if(modalita_acconto!==''){
-            document.forms[0].children[4].children[9].children[0].children[1].children[0].removeAttribute('required');
-            document.forms[0].children[4].children[9].children[1].children[1].children[0].removeAttribute('required');
+            window.document.getElementById('carta').removeAttribute('required');
+            window.document.getElementById('struttura').removeAttribute('required');
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_acconto;
         }
         else{
             state.modalita_di_pagamento=state.modalita_di_pagamento+"";
         }
         if(modalita_carta==''&&modalita_struttura==''&&modalita_acconto==''){
-            document.forms[0].children[4].children[9].children[0].children[1].children[0].setAttribute('required','true');
-            document.forms[0].children[4].children[9].children[1].children[1].children[0].setAttribute('required','true');
-            document.forms[0].children[4].children[9].children[2].children[1].children[0].setAttribute('required','true');
+            window.document.getElementById('carta').setAttribute('required','true');
+            window.document.getElementById('struttura').setAttribute('required','true');
+            window.document.getElementById('anticipo_carta').setAttribute('required','true');
 
         }
     };

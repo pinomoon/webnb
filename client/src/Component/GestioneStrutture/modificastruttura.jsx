@@ -36,7 +36,9 @@ const ModificaStruttura=()=>{
     const [descrizione, setDescrizione]=useState("");
     const [openConfermaModifica, setOpenConfermaModifica]=useState(false);
     const [tipoRispostaModifica, setTipoRispostaModifica]=useState("");
-
+    const [modalita_carta, setModalitaCarta]=React.useState("");
+    const [modalita_struttura, setModalitaStruttura]=React.useState("");
+    const [modalita_acconto, setModalitaAcconto]=React.useState("");
 
 
     const handleClickOpenConfermaModifica=()=>{
@@ -48,7 +50,11 @@ const ModificaStruttura=()=>{
     };
 
     const handleSubmit=async (event)=>{
-
+        handleChangeModalitaPagamento();
+        handleChangeServizi();
+        if(document.forms[0].checkValidity()===false){
+            return;
+        }
         event.preventDefault();
         await axios.post("https://localhost:9000/gestisciStrutture/salvaModifiche",state)
             .then((response)=>{
@@ -72,13 +78,44 @@ const ModificaStruttura=()=>{
                         setRegione(response.data[1][0].regione);
                         setStato(response.data[1][0].stato);
                         setTipo(response.data[1][0].tipo);
+                        if(response.data[1][0].tipo==="bnb"){
+                            window.document.getElementById('bnb').setAttribute('checked','true');
+                        }
+                        else{
+                            window.document.getElementById('casa_vacanze').setAttribute('checked','true');
+                        }
                         setDisdettaGratuita(response.data[1][0].disdetta_gratuita);
                         setTassaSoggiorno(response.data[1][0].tassa_soggiorno);
                         setServizi(response.data[1][0].servizi);
+                            if(response.data[1][0].servizi.match(/wifi.*/)){
+                                window.document.getElementById('wifi').setAttribute('checked','true');
+                            }    
+                            if(response.data[1][0].servizi.match(/.*parcheggio.*/)){
+                                window.document.getElementById('parcheggio').setAttribute('checked','true');
+                            }
+                            if(response.data[1][0].servizi.match(/.*piscina.*/)){
+                                window.document.getElementById('piscina').setAttribute('checked','true');
+                            }
+                            if(response.data[1][0].servizi.match(/.*animali/)){
+                                window.document.getElementById('animali').setAttribute('checked','true');
+                            }
+                           
+                                
+                        
                         setOraCheckin(response.data[1][0].ora_checkin);
                         setOraCheckout(response.data[1][0].ora_checkout);
                         setDescrizione(response.data[1][0].descrizione);
                         setModalitaPagamento(response.data[1][0].modalita_di_pagamento);
+                        if(response.data[1][0].modalita_di_pagamento.match(/carta.*/)){
+                            window.document.getElementById('carta').setAttribute('checked','true');
+                        }    
+                        if(response.data[1][0].modalita_di_pagamento.match(/.*struttura.*/)){
+                            window.document.getElementById('struttura').setAttribute('checked','true');
+                        }
+                        if(response.data[1][0].modalita_di_pagamento.match(/.*anticipo_carta/)){
+                            window.document.getElementById('anticipo_carta').setAttribute('checked','true');
+                        }
+                        
                     }
                     else alert("Errore");
 
@@ -141,11 +178,38 @@ const ModificaStruttura=()=>{
         setTipo(valore);
         state.tipo=valore;
     };
-    const handleChangeModalitaPagamento=(event)=>{
-        const target=event.target;
-        const valore=  target.value;
-        setModalitaPagamento(valore);
-        state.modalita_di_pagamento=valore;
+    const handleChangeModalitaPagamento=()=>{
+        if(modalita_carta!==''){
+            document.forms[0].children[4].children[9].children[1].children[1].children[0].removeAttribute('required');
+            document.forms[0].children[4].children[9].children[2].children[1].children[0].removeAttribute('required');
+
+            state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_carta+",";
+        }
+        else{
+            state.modalita_di_pagamento=state.modalita_di_pagamento+",";
+        }
+        if(modalita_struttura!==''){
+            document.forms[0].children[4].children[9].children[0].children[1].children[0].removeAttribute('required');
+            document.forms[0].children[4].children[9].children[2].children[1].children[0].removeAttribute('required');
+            state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_struttura+",";
+        }
+        else{
+            state.modalita_di_pagamento=state.modalita_di_pagamento+",";
+        }
+        if(modalita_acconto!==''){
+            document.forms[0].children[4].children[9].children[0].children[1].children[0].removeAttribute('required');
+            document.forms[0].children[4].children[9].children[1].children[1].children[0].removeAttribute('required');
+            state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_acconto;
+        }
+        else{
+            state.modalita_di_pagamento=state.modalita_di_pagamento+"";
+        }
+        if(modalita_carta==''&&modalita_struttura==''&&modalita_acconto==''){
+            document.forms[0].children[4].children[9].children[0].children[1].children[0].setAttribute('required','true');
+            document.forms[0].children[4].children[9].children[1].children[1].children[0].setAttribute('required','true');
+            document.forms[0].children[4].children[9].children[2].children[1].children[0].setAttribute('required','true');
+
+        }
     };
     const handleChangeDisdettaGratuita=(event)=>{
         const target=event.target;
@@ -178,11 +242,115 @@ const ModificaStruttura=()=>{
         setDescrizione(valore);
         state.descrizione=valore;
     };
-    const handleChangeServizi=(event)=>{
+    const handleChangeServizi=()=>{
+        if(wifi!==''){
+            state.servizi=state.servizi+""+wifi+",";
+        }
+        else{
+            state.servizi=state.servizi+",";
+        }
+        if(parcheggio!==''){
+            state.servizi=state.servizi+""+parcheggio+",";
+        }
+        else{
+            state.servizi=state.servizi+",";
+        }
+        if(piscina!==''){
+            state.servizi=state.servizi+""+piscina+",";
+        }
+        else{
+            state.servizi=state.servizi+",";
+        }
+        if(animali!==''){
+            state.servizi=state.servizi+""+animali;
+        }
+        else{
+            state.servizi=state.servizi+"";
+        }
+    };
+    const handleChangeWifi=(event)=>{
         const target=event.target;
         const valore=  target.value;
-        setServizi(valore);
-        state.servizi=valore;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setWifi(valore);
+        }
+        else{
+            setWifi("");
+        }
+    };
+    const handleChangeParcheggio=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setParcheggio(valore);
+        }
+        else{
+            setParcheggio("");
+        }
+    };
+    const handleChangePiscina=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setPiscina(valore);
+        }
+        else{
+            setPiscina("");
+        }
+    };
+    const handleChangeAnimali=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setAnimali(valore);
+        }
+        else{
+            setAnimali("");
+        }
+    };
+    const handleChangeModalitaCarta=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const flag=target.checked;
+        if(flag===true) {
+            setModalitaCarta(valore);
+        }
+        else{
+            setModalitaCarta("");
+        }
+
+    };
+    const handleChangeModalitaStruttura=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const flag=target.checked;
+        if(flag===true) {
+            setModalitaStruttura(valore);
+        }
+        else{
+            setModalitaStruttura("");
+        }
+
+    };
+    const handleChangeModalitaAcconto=(event)=>{
+        const target=event.target;
+        const valore=  target.value;
+        const flag= target.checked;
+        if(flag===true) {
+            setModalitaAcconto(valore);
+        }
+        else{
+            setModalitaAcconto("");
+        }
+
     };
 
     return(
@@ -273,7 +441,7 @@ const ModificaStruttura=()=>{
                                     </div>
                                     <label htmlFor="cap">Cap*</label>
                                     <input id="cap" name="cap" type="text" className="form-control"
-                                           maxLength="40"
+                                           maxLength="40" pattern="^[0-9]{5,5}$"
                                            value={cap} onChange={handleChangeCap} required/>
                                     <div className="invalid-feedback">
                                         Inserire CAP
@@ -312,27 +480,101 @@ const ModificaStruttura=()=>{
                                     </div>
                                     <label htmlFor="modalita_di_pagamento">Modalità di Pagamento*</label>
 
-                                    <div className="form-group col" style={{margin: "auto"}}>
-                                        <div className="row">
-                                            <label htmlFor="modalita_di_pagamento">Modalita di Pagamento*</label>
-                                            <input id="modalita_di_pagamento" name="modalita_di_pagamento" type="text"
-                                                   className="form-control" maxLength="40"
-                                                   value={modalita_di_pagamento} onChange={handleChangeModalitaPagamento}
-                                                   required/>
-                                            <div className="invalid-feedback">
-                                                Inserire modalità di pagamento
+                                    <div className="form-group col" style={{margin:"auto"}}>
+                                        <div className="row" >
+                                            <div className="col-1">
+                                            </div>
+                                            <div className="col-1">
+                                                <input className="form-check-input" type="checkbox" id="carta" name="carta" value="carta" onChange={handleChangeModalitaCarta}/>
+                                            </div>
+                                            <div className="col-8">
+                                                <label className="form-check-label " htmlFor="carta" > Carta di Credito</label>
                                             </div>
                                         </div>
 
 
-                                    </div>
-                                    <div className="form-group col" style={{margin: "auto"}}>
-                                        <label htmlFor="servizi">Servizi*</label>
-                                        <input id="servizi" name="servizi" type='text'                                                            className="form-control" maxLength="40"
-                                               value={servizi}
-                                               onChange={handleChangeServizi} required/>
+                                        <div className="row">
+                                            <div className="col-1">
+                                            </div>
+                                            <div className="col-1">
+                                                <input className="form-check-input " type="checkbox" id="struttura" name="struttura" value="struttura" onChange={handleChangeModalitaStruttura}/>
+                                            </div>
+                                            <div className="col-8">
+                                                <label className="form-check-label " htmlFor="struttura"> Pagamento in Struttura</label>
+                                            </div>
+                                        </div>
+
+
+                                        <div className="row">
+                                            <div className="col-1">
+                                            </div>
+                                            <div className="col-1">
+                                                <input className="form-check-input " type="checkbox" id="anticipo_carta" name="anticipo_carta" value="anticipo_carta" onChange={handleChangeModalitaAcconto}/>
+                                            </div>
+                                            <div className="col-8">
+                                                <label className="form-check-label " htmlFor="anticipo_carta"> Acconto con Carta di Credito</label>
+                                            </div>
+                                        </div>
+                                        <br/>
+
 
                                     </div>
+                                    <div className="form-group col" style={{margin:"auto"}}>
+                                        <label htmlFor="servizi">Servizi*</label>
+
+
+
+
+                                        <div className="row" >
+                                            <div className="col-1">
+                                            </div>
+                                            <div className="col-1">
+
+                                                <input className="form-check-input" type="checkbox" id="wifi" name="wifi" value="wifi" defaultValue="" onChange={handleChangeWifi}/>
+                                            </div>
+                                            <div className="col-8">
+                                                <label className="form-check-label " htmlFor="wifi" > Wi-fi</label>
+                                            </div>
+                                        </div>
+
+
+                                        <div className="row">
+                                            <div className="col-1">
+                                            </div>
+                                            <div className="col-1">
+                                                <input className="form-check-input " type="checkbox" id="parcheggio" name="parcheggio" defaultValue="" value="parcheggio" onChange={handleChangeParcheggio}/>
+                                            </div>
+                                            <div className="col-8">
+                                                <label className="form-check-label " htmlFor="parcheggio"> Parcheggio</label>
+                                            </div>
+                                        </div>
+
+
+                                        <div className="row">
+                                            <div className="col-1">
+                                            </div>
+                                            <div className="col-1">
+                                                <input className="form-check-input " type="checkbox" id="piscina" name="piscina" value="piscina" onChange={handleChangePiscina}/>
+                                            </div>
+                                            <div className="col-8">
+                                                <label className="form-check-label " htmlFor="piscina"> Piscina</label>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-1">
+                                            </div>
+                                            <div className="col-1">
+                                                <input className="form-check-input " type="checkbox" id="animali" name="animali" value="animali" onChange={handleChangeAnimali}/>
+                                            </div>
+                                            <div className="col-8">
+                                                <label className="form-check-label " htmlFor="animali"> Animali domestici ammessi</label>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
 
 
                                     <label htmlFor="tassa_soggiorno">Tassa di Soggiorno*</label>

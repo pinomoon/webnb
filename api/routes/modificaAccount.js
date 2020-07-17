@@ -23,7 +23,7 @@ async function modifica(req, res, next) {
           .catch(err => {
               throw err;
           });
-          var risultato=['1',results[0]]; //Dati ottenuti correttamente
+          var risultato=['1',results]; //Dati ottenuti correttamente
           res.send(risultato);
     })
   }catch(err) {
