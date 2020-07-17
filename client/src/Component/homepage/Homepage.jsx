@@ -124,6 +124,24 @@ const Homepage =()=>{
         state.npl=valore;
 
     };
+    //controlli per l'inserimento delle date
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    var min= new Date();
+    if(dd<10){
+        dd='0'+dd
+    }
+    if(mm<10){
+        mm='0'+mm
+    }
+
+    today = yyyy+'-'+mm+'-'+dd;
+
+
+
+
 
 
     const user=React.useContext(UserContext);
@@ -158,14 +176,18 @@ const Homepage =()=>{
                                     }}>
                                         <form className="row" name="form" id="form" method="POST" >
                                             <div className="form-group  col-sm-12 col-md-12 col-lg-3">
-                                                <Input type="text" name="luogo" id="luogo"
+                                                <Input style={{backgroundColor: "white", marginTop: "12px"}}
+
+                                                       type="text" name="luogo" id="luogo"
                                                        placeholder="Dove vuoi andare?"
                                                        value={state.luogo} onChange={handleChangeLuogo}
                                                        style={{backgroundColor: "white", marginTop:"9px"}}/>
                                             </div>
                                             <div className="form-group col-sm-6 col-md-6 col-lg-3">
-                                                <Input style={{backgroundColor: "white", marginTop: "9px"}}
+                                                <input style={{backgroundColor: "white", marginTop: "13px",border:"none",borderBottom:"1px solid black",boxShadow:"none",outline:"none"}}
                                                        type="date"
+                                                       min={today}
+                                                       max={state.data_fine}
                                                        name="data_inizio"
                                                        id="data_inizio"
                                                        placeholder="date placeholder"
@@ -174,9 +196,10 @@ const Homepage =()=>{
                                                 />
                                             </div>
                                             <div className="form-group col-sm-6 col-md-6 col-lg-3">
-                                                <Input style={{backgroundColor: "white", marginTop: "9px"}}
+                                                <input style={{backgroundColor: "white", marginTop: "13px",border:"none",borderBottom:"1px solid black",boxShadow:"none",outline:"none"}}
                                                        type="date"
                                                        name="data_fine"
+                                                       min={state.data_inizio}
                                                        id="data_fine"
                                                        placeholder="date placeholder"
                                                        value={state.data_fine}

@@ -278,6 +278,21 @@ const RicercaStruttura=(props)=> {
         setColazioneInclusa(valore);
         state.colazione_inclusa=valore;
     };
+    //controlli per l'inserimento delle date
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    var min= new Date();
+    if(dd<10){
+        dd='0'+dd
+    }
+    if(mm<10){
+        mm='0'+mm
+    }
+
+    today = yyyy+'-'+mm+'-'+dd;
+
 
 
     return(
@@ -302,11 +317,13 @@ const RicercaStruttura=(props)=> {
                             <br/>
                             <h6>Check-in:</h6>
 
-                            <Input style={{width:"100%",backgroundColor:"white",margin:"auto"}}
+                            <input style={{width:"100%",backgroundColor:"white",margin:"auto",border:"none",outline:"none"}}
                                    type="date"
                                    name="data_inizio"
                                    id="data_inizio"
                                    placeholder="date placeholder"
+                                   min={today}
+                                   max={state.data_fine}
                                    value={state.data_inizio}
                                    onChange={handleChangeDataInizio}
                             />
@@ -317,11 +334,12 @@ const RicercaStruttura=(props)=> {
                             <br/>
                             <h6>Check-out:</h6>
 
-                            <Input style={{width:"100%",backgroundColor:"white",margin:"auto"}}
+                            <input style={{width:"100%",backgroundColor:"white",margin:"auto",border:"none",outline:"none"}}
                                    type="date"
                                    name="data_fine"
                                    id="data_fine"
                                    placeholder="date placeholder"
+                                   min={state.data_inizio}
                                    value={state.data_fine}
                                    onChange={handleChangeDataFine}
                             />
