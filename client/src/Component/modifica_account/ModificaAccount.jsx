@@ -401,7 +401,7 @@ const ModificaAccount=()=>{
 
                                     <label htmlFor="check_repass">Reinserisci Nuova Password </label>
                                     <input class="check_repass" id="check_repass" type="password" className="form-control" size="32"
-                                           maxLength="40"  title="Il campo Nuova Password e Reinserisci Nuova Password devono coincidere"
+                                           maxLength="40" pattern={state.repassword} title="Il campo Nuova Password e Reinserisci Nuova Password devono coincidere"
                                            onChange={handleChangeCheckRepass} />
                                     <div className="invalid-feedback">
                                         Le password devono coincidere

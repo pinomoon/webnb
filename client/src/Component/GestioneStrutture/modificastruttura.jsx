@@ -50,6 +50,11 @@ const ModificaStruttura=()=>{
     };
 
     const handleSubmit=async (event)=>{
+        if(window.document.getElementById('carta').checked===true || window.document.getElementById('struttura').checked===true || window.document.getElementById('anticipo_carta').checked===true){
+            window.document.getElementById('carta').removeAttribute('required');
+            window.document.getElementById('struttura').removeAttribute('required');
+            window.document.getElementById('anticipo_carta').removeAttribute('required');
+        }
         handleChangeModalitaPagamento();
         handleChangeServizi();
         if(document.forms[0].checkValidity()===false){
@@ -180,8 +185,7 @@ const ModificaStruttura=()=>{
     };
     const handleChangeModalitaPagamento=()=>{
         if(modalita_carta!==''){
-            document.forms[0].children[4].children[9].children[1].children[1].children[0].removeAttribute('required');
-            document.forms[0].children[4].children[9].children[2].children[1].children[0].removeAttribute('required');
+
 
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_carta+",";
         }
@@ -189,25 +193,21 @@ const ModificaStruttura=()=>{
             state.modalita_di_pagamento=state.modalita_di_pagamento+",";
         }
         if(modalita_struttura!==''){
-            document.forms[0].children[4].children[9].children[0].children[1].children[0].removeAttribute('required');
-            document.forms[0].children[4].children[9].children[2].children[1].children[0].removeAttribute('required');
+           
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_struttura+",";
         }
         else{
             state.modalita_di_pagamento=state.modalita_di_pagamento+",";
         }
         if(modalita_acconto!==''){
-            document.forms[0].children[4].children[9].children[0].children[1].children[0].removeAttribute('required');
-            document.forms[0].children[4].children[9].children[1].children[1].children[0].removeAttribute('required');
+           
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_acconto;
         }
         else{
             state.modalita_di_pagamento=state.modalita_di_pagamento+"";
         }
         if(modalita_carta==''&&modalita_struttura==''&&modalita_acconto==''){
-            document.forms[0].children[4].children[9].children[0].children[1].children[0].setAttribute('required','true');
-            document.forms[0].children[4].children[9].children[1].children[1].children[0].setAttribute('required','true');
-            document.forms[0].children[4].children[9].children[2].children[1].children[0].setAttribute('required','true');
+           
 
         }
     };
@@ -485,7 +485,7 @@ const ModificaStruttura=()=>{
                                             <div className="col-1">
                                             </div>
                                             <div className="col-1">
-                                                <input className="form-check-input" type="checkbox" id="carta" name="carta" value="carta" onChange={handleChangeModalitaCarta}/>
+                                                <input className="form-check-input" type="checkbox" id="carta" name="carta" value="carta" onChange={handleChangeModalitaCarta} required/>
                                             </div>
                                             <div className="col-8">
                                                 <label className="form-check-label " htmlFor="carta" > Carta di Credito</label>
@@ -497,7 +497,7 @@ const ModificaStruttura=()=>{
                                             <div className="col-1">
                                             </div>
                                             <div className="col-1">
-                                                <input className="form-check-input " type="checkbox" id="struttura" name="struttura" value="struttura" onChange={handleChangeModalitaStruttura}/>
+                                                <input className="form-check-input " type="checkbox" id="struttura" name="struttura" value="struttura" onChange={handleChangeModalitaStruttura} required/>
                                             </div>
                                             <div className="col-8">
                                                 <label className="form-check-label " htmlFor="struttura"> Pagamento in Struttura</label>
@@ -509,7 +509,7 @@ const ModificaStruttura=()=>{
                                             <div className="col-1">
                                             </div>
                                             <div className="col-1">
-                                                <input className="form-check-input " type="checkbox" id="anticipo_carta" name="anticipo_carta" value="anticipo_carta" onChange={handleChangeModalitaAcconto}/>
+                                                <input className="form-check-input " type="checkbox" id="anticipo_carta" name="anticipo_carta" value="anticipo_carta" onChange={handleChangeModalitaAcconto} required/>
                                             </div>
                                             <div className="col-8">
                                                 <label className="form-check-label " htmlFor="anticipo_carta"> Acconto con Carta di Credito</label>
