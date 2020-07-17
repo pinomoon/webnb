@@ -7,7 +7,8 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import axios from 'axios';
 import {getSessionCookie} from "../../sessions";
-import user from "../registrazione/user.png";
+import f from "./f.jpg"
+import host from "../GestisciCamera/2.jpg";
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -111,29 +112,14 @@ const BoxInserisciOspite=(props)=> {
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle id="alert-dialog-slide-title">{"Elimina struttura dai preferiti"}</DialogTitle>
+                <DialogTitle id="alert-dialog-slide-title">{"Inserimento ospite"}</DialogTitle>
                 <DialogContent>
                     <div className="container">
                         <div className="row">
-                            <div className="col">
 
-                            </div>
-                            <div className="col-sm-12 col-md-9 col-lg-8">
-                                <div style={{
-                                    margin: "auto",
-                                    marginTop: "50px",
-                                    border: "2px solid #ff6300",
-                                    borderRadius: "25px",
-                                    width: "100%",
-                                    height: "auto"
-                                }}>
-                                    <img src={user} style={{
-                                        margin: "auto",
-                                        marginTop: "30px",
-                                        width: "30%",
-                                        height: "30%",
-                                        display: "block"
-                                    }}/>
+                            <div className="col-sm-12 col-md-12 col-lg-12">
+                                <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
+                                    <img src={f} style={{margin:"auto",marginTop:"30px",width:"30%",height:"30%",display:"block"}}/>
 
                                     <div className="container mt-10">
 
@@ -203,7 +189,7 @@ const BoxInserisciOspite=(props)=> {
                                             <h5>Documento di Identità</h5>
                                             <div className="form-group">
                                                 <div className="row">
-                                                    <div className="col-6">
+                                                    <div className="col-12">
                                                         <label htmlFor="n_documento">Numero Documento</label>
                                                         <input id="n_documento" name="n_documento" type="text"
                                                                className="form-control"
@@ -218,9 +204,11 @@ const BoxInserisciOspite=(props)=> {
                                             </div>
                                             <div className="form-group">
                                                 <div className="row">
-                                                    <div className="col-6">
+                                                    <div className="col-12">
+                                                        <br/>
                                                         <label htmlFor="foto_documento">Foto Documento</label>
-                                                        <input id="foto_documento" name="foto_documento" type="file"
+                                                        <input style={{border:"0"}} id="foto_documento" name="foto_documento" type="file"
+
                                                                accept="image/*"
                                                                className="form-control"
                                                                maxLength="40" value={state.foto_documento}
@@ -232,10 +220,34 @@ const BoxInserisciOspite=(props)=> {
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div className="row">
+                                                <div className="col-lg-1">
+                                                </div>
+                                                <div className="col-sm-3 col-md-2 col-lg-2">
+                                                    <br/>
+                                                    <Button color="inherit"   onClick={handleClose}style={{color:"#ff6300",display:"block",margin:"auto"}}>Chiudi</Button>
+
+                                                </div>
+                                                <div className="col-sm-6 col-md-8 col-lg-4">
+                                                </div>
+                                                <div className="col-sm-3 col-md-2 col-lg-2">
+                                                    <br/>
+                                                    <Button color="inherit" type="submit" onClick={handleSubmit} style={{color:"#ff6300",display:"block",margin:"auto"}}>Conferma</Button>
+
+                                                </div>
+                                                <div className="row">
+                                                    <br/>
+
+                                                </div>
+                                            </div>
+                                            <br></br>
 
                                         </form>
                                     </div>
                                 </div>
+                                <br/>
+                                <br/>
+
                             </div>
                             <div className="col">
 
@@ -245,25 +257,7 @@ const BoxInserisciOspite=(props)=> {
 
 
                 </DialogContent>
-                <DialogActions id="action">
-                    <div className="row">
-                        <div className="col-1">
-                            <Button name="ok" id="ok" onClick={handleClose} style={{
-                                marginLeft: "-10px",
-                                color: "#ff6300"
-                            }}>Indietro</Button>
-                        </div>
-                        <div className="col-9">
-                        </div>
-                        <div className="col-1">
-                            <Button name="ok" id="ok" type="submit" onClick={handleSubmit}
-                                    style={{
-                                        marginLeft: "-10px",
-                                        color: "#ff6300"
-                                    }}>Invia</Button>
-                        </div>
-                    </div>
-                </DialogActions>
+
             </Dialog>
         </div>
 

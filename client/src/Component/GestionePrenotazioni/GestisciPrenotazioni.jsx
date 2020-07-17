@@ -50,7 +50,7 @@ const GestisciPrenotazioni=()=> {
     return(
         <div>
 
-            <h5 style={{textAlign:"center"}}>Prenotazioni</h5>
+            <h2 style={{textAlign:"center",fontFamily:"Helvetica Neue"}}>Prenotazioni</h2>
 
             <div className="row" >
                 <div className="col-2">
@@ -65,8 +65,9 @@ const GestisciPrenotazioni=()=> {
                                     <div className="col-sm-12 col-md-6 col-lg-4">
                                         <div className="card text-center" style={{width: "97%",height:"98%"}}>
                                             <div className="card-body">
-                                                <h5 className="card-title">{values.id_prenotazione}</h5>
-                                                <div className="card-text">
+                                                <h5 className="card-title"><h5 style={{fontWeight:"normal"}}>ID: {values.id_prenotazione}: </h5>{values.nome} {values.cognome}</h5>
+                                                <hr style={{borderTop:" 2px solid #ff6300"}}/>
+                                                <div className="card-text" style={{height:"70%"}}>
                                                     <ul className="list-group list-group-flush" style={{height:"10%"}}>
                                                         <li className="list-group-item">Struttura: <b>{values.nome_struttura}</b></li>
                                                         < li className="list-group-item">Camera: <b>{values.nome_camera}</b></li>
@@ -87,7 +88,7 @@ const GestisciPrenotazioni=()=> {
 
                                                 }
                                                 {values.stato_prenotazione =="soggiorno in corso" &&
-                                                <li className="list-group-item" style={{color:"yellow"}}> Soggiorno in corso</li>
+                                                <li className="list-group-item" style={{color:"#e6e600"}}> Soggiorno in corso</li>
 
                                                 }
                                                 {values.stato_prenotazione =="annullata" &&
@@ -96,7 +97,7 @@ const GestisciPrenotazioni=()=> {
                                                 }
 
                                                 {values.stato_prenotazione =="soggiorno concluso" &&
-                                                <li className="list-group-item" style={{color:"yellow"}}> Soggiorno Concluso</li>
+                                                <li className="list-group-item" > Soggiorno Concluso</li>
 
                                                 }
                                                     </ul>

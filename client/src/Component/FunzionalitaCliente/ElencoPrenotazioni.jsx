@@ -68,7 +68,7 @@ const ElencoPrenotazioni=()=>{
 
         <div>
 
-            <h5 style={{textAlign:"center"}}>Le mie Prenotazioni</h5>
+            <h2 style={{textAlign:"center",fontFamily:"Helvetica Neue"}}>Le mie prenotazioni</h2>
 
             <div className="row" >
                 <div className="col-2">
@@ -81,11 +81,11 @@ const ElencoPrenotazioni=()=>{
                                     <div className="col-sm-12 col-md-6 col-lg-4">
                                         <div className="card text-center" style={{width: "97%",height:"98%"}}>
                                             <div className="card-body">
-                                                <h5 className="card-title">{value.id_prenotazione}</h5>
-                                                <div className="card-text">
+                                                <h5 className="card-title"style={{fontWeight:"normal"}}>ID: {value.id_prenotazione}</h5>
+                                                <hr style={{borderTop:" 2px solid #ff6300"}}/>
+                                                <div className="card-text" style={{height:"70%"}}>
                                                     <ul className="list-group list-group-flush" style={{height:"10%"}}>
                                                         <li className="list-group-item">Struttura: <b>{value.nome_struttura}</b></li>
-                                                        <li className="list-group-item">Camera: <b>{value.nome_camera}</b></li>
                                                         <li className="list-group-item">{value.data_inizio}</li>
                                                         <li className="list-group-item">{value.data_fine}</li>
                                                 {value.stato_prenotazione=="in attesa di conferma" &&

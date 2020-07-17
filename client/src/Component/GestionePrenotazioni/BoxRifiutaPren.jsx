@@ -75,7 +75,7 @@ const BoxRifiutaPren=(props)=> {
                 <DialogTitle id="alert-dialog-slide-title">{"Rifiuta Prenotazione"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        <p>Confermi di volere rifiutare la prenotazione</p>
+                        <p style={{color:"#ff6300"}}>Confermi di volere rifiutare la prenotazione</p>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions id="action">

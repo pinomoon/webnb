@@ -41,7 +41,7 @@ const ElencoPreferiti=()=> {
     return(
 
         <div className="container">
-            <h5 style={{textAlign:"center"}}>I Miei Preferiti</h5>
+            <h2 style={{textAlign:"center",fontFamily:"Helvetica Neue"}}>I miei preferiti</h2>
             <div className="row">
                 <div className="col-1">
 

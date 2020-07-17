@@ -7,6 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import axios from 'axios';
 import user from "../registrazione/user.png";
+import f from "./f.jpg";
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -130,25 +131,10 @@ const BoxModficaOspite=(props)=> {
                 <DialogContent>
                     <div className="container">
                         <div className="row">
-                            <div className="col">
 
-                            </div>
-                            <div className="col-sm-12 col-md-9 col-lg-8">
-                                <div style={{
-                                    margin: "auto",
-                                    marginTop: "50px",
-                                    border: "2px solid #ff6300",
-                                    borderRadius: "25px",
-                                    width: "100%",
-                                    height: "auto"
-                                }}>
-                                    <img src={user} style={{
-                                        margin: "auto",
-                                        marginTop: "30px",
-                                        width: "30%",
-                                        height: "30%",
-                                        display: "block"
-                                    }}/>
+                            <div className="col-sm-12 col-md-12 col-lg-12">
+                                <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
+                                    <img src={f} style={{margin:"auto",marginTop:"30px",width:"30%",height:"30%",display:"block"}}/>
 
                                     <div className="container mt-10">
 
@@ -173,12 +159,14 @@ const BoxModficaOspite=(props)=> {
                                                 </div>
                                             </div>
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                <input type="radio" className="custom-control-input" id="male" name="sesso" value="M"
+                                                <input type="radio" className="custom-control-input" id="male"
+                                                       name="sesso" value="M"
                                                        onChange={handleChangeSesso} required/>
                                                 <label className="custom-control-label" htmlFor="male">Uomo</label>
                                             </div>
                                             <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                <input type="radio" className="custom-control-input" id="female" name="sesso" value="F"
+                                                <input type="radio" className="custom-control-input" id="female"
+                                                       name="sesso" value="F"
                                                        onChange={handleChangeSesso} required/>
                                                 <label className="custom-control-label" htmlFor="female">Donna</label>
                                                 <br></br>
@@ -216,7 +204,7 @@ const BoxModficaOspite=(props)=> {
                                             <h5>Documento di Identità</h5>
                                             <div className="form-group">
                                                 <div className="row">
-                                                    <div className="col-6">
+                                                    <div className="col-12">
                                                         <label htmlFor="n_documento">Numero Documento</label>
                                                         <input id="n_documento" name="n_documento" type="text"
                                                                className="form-control"
@@ -231,9 +219,11 @@ const BoxModficaOspite=(props)=> {
                                             </div>
                                             <div className="form-group">
                                                 <div className="row">
-                                                    <div className="col-6">
+                                                    <div className="col-12">
+                                                        <br/>
                                                         <label htmlFor="foto_documento">Foto Documento</label>
-                                                        <input id="foto_documento" name="foto_documento" type="file"
+                                                        <input style={{border:"0"}} id="foto_documento" name="foto_documento" type="file"
+
                                                                accept="image/*"
                                                                className="form-control"
                                                                maxLength="40" value={state.foto_documento}
@@ -245,10 +235,34 @@ const BoxModficaOspite=(props)=> {
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div className="row">
+                                                <div className="col-lg-1">
+                                                </div>
+                                                <div className="col-sm-3 col-md-2 col-lg-2">
+                                                    <br/>
+                                                    <Button color="inherit"   onClick={handleClose}style={{color:"#ff6300",display:"block",margin:"auto"}}>Chiudi</Button>
+
+                                                </div>
+                                                <div className="col-sm-6 col-md-8 col-lg-4">
+                                                </div>
+                                                <div className="col-sm-3 col-md-2 col-lg-2">
+                                                    <br/>
+                                                    <Button color="inherit" type="submit" onClick={handleSubmit} style={{color:"#ff6300",display:"block",margin:"auto"}}>Conferma</Button>
+
+                                                </div>
+                                                <div className="row">
+                                                    <br/>
+
+                                                </div>
+                                            </div>
+                                            <br></br>
 
                                         </form>
                                     </div>
                                 </div>
+                                <br/>
+                                <br/>
+
                             </div>
                             <div className="col">
 
@@ -258,10 +272,7 @@ const BoxModficaOspite=(props)=> {
 
 
                 </DialogContent>
-                <DialogActions id="action">
-                    <Button onClick={handleClose} color="primary">Chiudi</Button>
-                    <Button  onClick={handleSubmit}color="primary">Invia</Button>
-                </DialogActions>
+
             </Dialog>
         </div>
 

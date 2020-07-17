@@ -26,12 +26,13 @@ import ModificaStruttura from "./Component/GestioneStrutture/modificastruttura";
 import EliminaCamera from "./Component/GestisciCamera/eliminacamera";
 import Prenotazione from "./Component/Ricerca Struttura/Prenotazione";
 import UfficioTurismo from "./Component/UfficioTurismo/ufficioturismo";
-import FAQ from "./Component/FAQ";
+import FAQ from "./Component/FAQ/FAQ";
 import Unabled from "./Component/Caduta Connessione/unabled";
 import AboutUs from "./Component/about_us/AboutUs";
 import ModificaAccount from "./Component/modifica_account/ModificaAccount";
 import Profilo from "./Component/profilo/Profilo";
 import Registrazione from "./Component/registrazione/registrazione";
+import FAQhost from "./Component/FAQ/FAQhost";
 
 
 
@@ -53,6 +54,7 @@ const App= ()=> {
                             <Route path="/login/passwordDimenticata" component={PasswordDimenticata} exact/>
                             <Route path="/accountConferma" component={ConfermaAccount} />
                             <Route path="/FAQ" component={FAQ}  exact/>
+                            <Route path="/FAQhost" component={FAQhost}  exact/>
                             <Route path="/unabled" component={Unabled} exact/>
                             <PrivateRoute path="/esplora" component={EsploraStruttura}/>
                             <PrivateRoute path="/ricercastruttura" component={RicercaStruttura} />

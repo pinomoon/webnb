@@ -75,7 +75,7 @@ const BoxAccettaPren=(props)=> {
                 <DialogTitle id="alert-dialog-slide-title">{"Accetta prenotzione"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        <p>Confermi di volere accettare la prenotazione</p>
+                        <p style={{color:"#ff6300"}}>Confermi di volere accettare la prenotazione</p>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions id="action">

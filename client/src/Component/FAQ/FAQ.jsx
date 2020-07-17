@@ -22,6 +22,15 @@ const FAQ=()=>{
                         <p>   Sì, è necessario essere registrati.</p>
                     </li>
 
+                    <li className="list-group-item">
+                        <h6> <HelpOutlineIcon style={{color:"#ff6300"}}/> In quanto tempo verrà accettata la mia prenotazione?</h6>
+                        <p> Una volta completata, la sua prenotazione verrà esaminata ed entro 48 ore le invieremo una mail contenente il riepilogo e il responso.</p>
+                    </li>
+                    <li className="list-group-item">
+                        <h6> <HelpOutlineIcon style={{color:"#ff6300"}}/> E' possibile annullare la mia prenotazione?</h6>
+                        <p> L'annullamento della prenotazione segue le politiche scelte da ogni singola struttura. E' certamente possibile annullare una prenotazione, ma qualora ciò non avvenisse entro i tempi previsti dall'host sarà necessario pagare una parte della somma.</p>
+                    </li>
+
 
 
 

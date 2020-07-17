@@ -28,8 +28,12 @@ const Header =()=>{
                     <Nav className="mr-auto">
                         <Nav.Link href="/" style={{color:"#ff6300"}}>Home</Nav.Link>
                         <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>About</Nav.Link>
-                        <Nav.Link href="/FAQ"style={{color:"#ff6300"}}>FAQ</Nav.Link>
-                        <Nav.Link href="/aboutus"style={{color:"#ff6300"}}>Ipsum</Nav.Link>
+                        {(user.id==null || user.tipo == "1" )&&
+                        <Nav.Link href="/FAQ" style={{color: "#ff6300"}}>FAQ</Nav.Link>
+                        }
+                        {user.tipo == "0" &&
+                        <Nav.Link href="/FAQhost" style={{color: "#ff6300"}}>FAQ</Nav.Link>
+                        }
 
                     </Nav>
                     {user.id==null &&

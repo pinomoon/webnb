@@ -97,13 +97,13 @@ const Checkin=()=>{
                 </div>
                 <div className="col-sm-12 col-md-12 col-lg-10">
                     <div style={{margin:"auto",width:"100%"}}>
-                        <h3>Lista Ospiti per la Prenotazione N: {id_prenotazione}</h3>
+                        <h3>Lista Ospiti per la Prenotazione ID: {id_prenotazione}</h3>
                         <br/>
                         <ListGroup variant="flush">
                             <ListGroup.Item>
                                 <div className="row">
-                                    <div className="col-4"><h5>Nome</h5></div>
-                                    <div className="col-4"> <h5> Cognome</h5></div>
+                                    <div className="col-4"><h6>Nome</h6></div>
+                                    <div className="col-4"> <h6> Cognome</h6></div>
                                     <div className="col-4"></div>
                                 </div>
                             </ListGroup.Item>
@@ -112,8 +112,8 @@ const Checkin=()=>{
                                 return(
                                     <ListGroup.Item>
                                         <div className="row">
-                                            <div className="col-4"><h5>{value.nome_ospite}</h5></div>
-                                            <div className="col-4"> <h5>{value.cognome_ospite}</h5></div>
+                                            <div className="col-4"><b>{value.nome_ospite}</b></div>
+                                            <div className="col-4"> <b>{value.cognome_ospite}</b></div>
                                             <div className="col-4">
                                                 <Button color="inherit" style={{color:"#ff6300"}} onClick={()=>handleModifica(value)}>Modifica</Button>
                                                 <Button color="inherit" style={{color:"#ff6300"}} onClick={()=>handleElimina(value)}>Elimina</Button>
@@ -124,6 +124,8 @@ const Checkin=()=>{
                             })}
 
                         </ListGroup>
+                        <br/>
+                        <br/>
                         <Button color="inherit" style={{color:"#ff6300"}} onClick={handleInserisci}>Inserisci Ospite</Button>
                         <Button color="inherit" style={{color:"#ff6300"}} onClick={handleInviaQuestura}>Invia dati alla Questura</Button>
                     </div>
