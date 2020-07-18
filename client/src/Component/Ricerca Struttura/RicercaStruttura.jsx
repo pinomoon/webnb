@@ -308,7 +308,7 @@ const RicercaStruttura=(props)=> {
                         <div className="form-group col" style={{margin:"auto"}}>
                             <br/>
                             <h6>Destinazione:</h6>
-                            <Input type="text" name="luogo" id="luogo" value={state.luogo} onChange={handleChangeLuogo} placeholder="Dove vuoi andare?" style={{backgroundColor:"white",width:"100%"}}/>
+                           <Input type="text" name="luogo" id="luogo" value={state.luogo} onChange={handleChangeLuogo}  placeholder="Dove vuoi andare?" style={{backgroundColor:"white",width:"100%"}}/>
 
 
                         </div>

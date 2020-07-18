@@ -12,6 +12,10 @@ import HotelIcon from '@material-ui/icons/Hotel';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from "@material-ui/core/Grid";
+import BeachAccessIcon from '@material-ui/icons/BeachAccess';
+import TextField from "@material-ui/core/TextField";
+
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -176,15 +180,21 @@ const Homepage =()=>{
                                     }}>
                                         <form className="row" name="form" id="form" method="POST" >
                                             <div className="form-group  col-sm-12 col-md-12 col-lg-3">
-                                                <Input style={{backgroundColor: "white", marginTop: "12px"}}
 
-                                                       type="text" name="luogo" id="luogo"
-                                                       placeholder="Dove vuoi andare?"
-                                                       value={state.luogo} onChange={handleChangeLuogo}
-                                                       style={{backgroundColor: "white", marginTop:"9px"}}/>
+                                                        <BeachAccessIcon />
+                                                        <input style={{backgroundColor: "trasparent", marginTop: "12px",border:"none",borderBottom:"1px solid black",outline:"none"}}
+
+                                                               type="text" name="luogo" id="luogo"
+                                                               placeholder="Dove vuoi andare?"
+                                                               value={state.luogo} onChange={handleChangeLuogo}
+                                                               />
+
                                             </div>
+
+
                                             <div className="form-group col-sm-6 col-md-6 col-lg-3">
                                                 <input style={{backgroundColor: "white", marginTop: "13px",border:"none",borderBottom:"1px solid black",boxShadow:"none",outline:"none"}}
+                                                       className="ciao"
                                                        type="date"
                                                        min={today}
                                                        max={state.data_fine}
@@ -208,7 +218,7 @@ const Homepage =()=>{
                                             </div>
                                             <div className="form-group col-sm-2 col-md-12 col-lg-2">
                                                 <select className="form-control" id="npl" value={state.npl}
-                                                        onChange={handleChangeNpl} style={{marginTop: "7px"}}>
+                                                        onChange={handleChangeNpl} style={{marginTop: "7px",border:"none",outline:"none"}}>
                                                     <option>N. Ospiti</option>
                                                     <option>1</option>
                                                     <option>2</option>
