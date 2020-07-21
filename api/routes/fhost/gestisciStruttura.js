@@ -26,7 +26,7 @@ async function elencoStrutture(req,res,next) {
                 throw err;
             });
             var risultato=['1',results];
-            console.log("il risultato è:"+ risultato);
+            console.log("il risultato è:"+ JSON.stringify(results));
             res.send(risultato); //elenco strutture caricato correttamente
         })
 

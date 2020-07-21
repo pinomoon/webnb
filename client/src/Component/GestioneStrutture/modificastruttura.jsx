@@ -24,7 +24,7 @@ const ModificaStruttura=()=>{
     const [stato, setStato]=useState("");
     const [tipo, setTipo]=useState("");
     const [disdetta_gratuita, setDisdettaGratuita]=useState("");
-    const [modalita_di_pagamento, setModalitaPagamento]=useState("");
+    let modalita_di_pagamento="";
     const [tassa_soggiorno,setTassaSoggiorno]=useState("");
     const [wifi, setWifi]=React.useState("");
     const [parcheggio, setParcheggio]=React.useState("");
@@ -32,7 +32,7 @@ const ModificaStruttura=()=>{
     const [animali, setAnimali]=React.useState("");
     const [ora_checkin,setOraCheckin]=useState("");
     const [ora_checkout, setOraCheckout]=useState("");
-    const [servizi, setServizi]=useState("");
+    let servizi="";
     const [descrizione, setDescrizione]=useState("");
     const [openConfermaModifica, setOpenConfermaModifica]=useState(false);
     const [tipoRispostaModifica, setTipoRispostaModifica]=useState("");
@@ -61,6 +61,7 @@ const ModificaStruttura=()=>{
             return;
         }
         event.preventDefault();
+        
         await axios.post("https://localhost:9000/gestisciStrutture/salvaModifiche",state)
             .then((response)=>{
                 setTipoRispostaModifica(response.data);
@@ -91,18 +92,21 @@ const ModificaStruttura=()=>{
                         }
                         setDisdettaGratuita(response.data[1][0].disdetta_gratuita);
                         setTassaSoggiorno(response.data[1][0].tassa_soggiorno);
-                        setServizi(response.data[1][0].servizi);
                             if(response.data[1][0].servizi.match(/wifi.*/)){
                                 window.document.getElementById('wifi').setAttribute('checked','true');
+                                setWifi('wifi');
                             }    
                             if(response.data[1][0].servizi.match(/.*parcheggio.*/)){
                                 window.document.getElementById('parcheggio').setAttribute('checked','true');
+                                setParcheggio('parcheggio');
                             }
                             if(response.data[1][0].servizi.match(/.*piscina.*/)){
                                 window.document.getElementById('piscina').setAttribute('checked','true');
+                                setPiscina('piscina');
                             }
                             if(response.data[1][0].servizi.match(/.*animali/)){
                                 window.document.getElementById('animali').setAttribute('checked','true');
+                                setAnimali('animali');
                             }
                            
                                 
@@ -110,15 +114,17 @@ const ModificaStruttura=()=>{
                         setOraCheckin(response.data[1][0].ora_checkin);
                         setOraCheckout(response.data[1][0].ora_checkout);
                         setDescrizione(response.data[1][0].descrizione);
-                        setModalitaPagamento(response.data[1][0].modalita_di_pagamento);
-                        if(response.data[1][0].modalita_di_pagamento.match(/carta.*/)){
+                        if(response.data[1][0].modalita_di_pagamento.match(/^carta.*/)){
                             window.document.getElementById('carta').setAttribute('checked','true');
+                            setModalitaCarta('carta');
                         }    
                         if(response.data[1][0].modalita_di_pagamento.match(/.*struttura.*/)){
                             window.document.getElementById('struttura').setAttribute('checked','true');
+                            setModalitaStruttura('struttura');
                         }
                         if(response.data[1][0].modalita_di_pagamento.match(/.*anticipo_carta/)){
                             window.document.getElementById('anticipo_carta').setAttribute('checked','true');
+                            setModalitaAcconto('anticipo_carta');
                         }
                         
                     }
@@ -184,33 +190,30 @@ const ModificaStruttura=()=>{
         state.tipo=valore;
     };
     const handleChangeModalitaPagamento=()=>{
-        if(modalita_carta!==''){
-
-
+        
+        if(window.document.getElementById('carta').checked===true){
+            
             state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_carta+",";
         }
         else{
+            
             state.modalita_di_pagamento=state.modalita_di_pagamento+",";
         }
-        if(modalita_struttura!==''){
-           
-            state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_struttura+",";
+        if(window.document.getElementById('struttura').checked===true){
+            
+           state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_struttura+",";
         }
         else{
             state.modalita_di_pagamento=state.modalita_di_pagamento+",";
         }
-        if(modalita_acconto!==''){
-           
-            state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_acconto;
+        if(window.document.getElementById('anticipo_carta').checked===true){
+            
+           state.modalita_di_pagamento=state.modalita_di_pagamento+""+modalita_acconto;
         }
         else{
             state.modalita_di_pagamento=state.modalita_di_pagamento+"";
         }
-        if(modalita_carta==''&&modalita_struttura==''&&modalita_acconto==''){
-           
-
-        }
-    };
+    }
     const handleChangeDisdettaGratuita=(event)=>{
         const target=event.target;
         const valore=  target.value;
@@ -243,25 +246,26 @@ const ModificaStruttura=()=>{
         state.descrizione=valore;
     };
     const handleChangeServizi=()=>{
-        if(wifi!==''){
+
+        if(window.document.getElementById('wifi').checked===true){
             state.servizi=state.servizi+""+wifi+",";
         }
         else{
             state.servizi=state.servizi+",";
         }
-        if(parcheggio!==''){
+        if(window.document.getElementById('parcheggio').checked===true){
             state.servizi=state.servizi+""+parcheggio+",";
         }
         else{
             state.servizi=state.servizi+",";
         }
-        if(piscina!==''){
+        if(window.document.getElementById('piscina').checked===true){
             state.servizi=state.servizi+""+piscina+",";
         }
         else{
             state.servizi=state.servizi+",";
         }
-        if(animali!==''){
+        if(window.document.getElementById('animali').checked===true){
             state.servizi=state.servizi+""+animali;
         }
         else{
