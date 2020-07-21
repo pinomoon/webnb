@@ -41,11 +41,11 @@ const RicercaStruttura=(props)=> {
     const [data_inizio, setDataInizio]=React.useState(getStructureCookie().data_inizio);
     const [data_fine, setDataFine]=React.useState(getStructureCookie().data_fine);
     const [npl, setNpl]=React.useState(getStructureCookie().npl);//numero posti letto
-    const [tipo, setTipo]=React.useState("");
+    let tipo="";
     const [bnb, setBnb]=React.useState("");
     const [casaVacanze, setcasaVacanze]=React.useState("");
 
-    const [disdetta_gratuita, setDisdettaGratuita]=React.useState("");
+    let disdetta_gratuita="";
     let modalita_di_pagamento="";
     const [modalita_carta, setModalitaCarta]=React.useState("");
     const [modalita_struttura, setModalitaStruttura]=React.useState("");
@@ -56,7 +56,7 @@ const RicercaStruttura=(props)=> {
     const [piscina, setPiscina]=React.useState("");
     const [animali, setAnimali]=React.useState("");
     const [costo_camera, setCostoCamera]=React.useState("");
-    const [colazione_inclusa, setColazioneInclusa]=React.useState("");
+    let colazione_inclusa="";
     const [struttureRicerca, setStruttureRicerca]=React.useState([]);
     const[openNoDate, setOpenNoDate]=React.useState(false);
     const[openErroreDate, setOpenErroreDate]=useState(false);
@@ -72,6 +72,8 @@ const RicercaStruttura=(props)=> {
 
     const handleSubmit=(event)=>{
         event.preventDefault();
+        handleChangeColazioneInclusa();
+        handleChangeDisdettaGratuita();
         handleChangeTipo();
         handleChangeModalitaPagamento();
         handleChangeServizi();
@@ -84,6 +86,7 @@ const RicercaStruttura=(props)=> {
             setOpenErroreDate(true);
             return
         }
+        alert(JSON.stringify(state));
         axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
             .then((response)=>{
                 if(strutture!=[]){
@@ -125,24 +128,19 @@ const RicercaStruttura=(props)=> {
     const handleChangeTipo=(event)=>{
 
 
-        if(bnb!==''){
-            state.tipo=state.tipo+""+bnb+",";
+        if(window.document.getElementById('bnb').checked===true && window.document.getElementById('casa_vacanze').checked===true){
+            state.tipo="%";
+        }
+        else if(window.document.getElementById('bnb').checked===true){
+            state.tipo=bnb;
+        }
+
+        else if(window.document.getElementById('casa_vacanze').checked===true){
+            state.tipo=casaVacanze;
         }
         else{
-            state.tipo=state.tipo+"%,";
+            state.tipo="%";
         }
-
-        if(casaVacanze!==''){
-            state.tipo=state.tipo+""+casaVacanze+",";
-        }
-        else{
-            state.tipo=state.tipo+"%,";
-        }
-
-        if(bnb !=+ '' && casaVacanze!==''){
-            state.tipo="%,"
-        }
-
     };
     const handleChangeBnb=(event)=>{
         const target=event.target;
@@ -171,10 +169,20 @@ const RicercaStruttura=(props)=> {
 
     };
     const handleChangeDisdettaGratuita=(event)=>{
-        const target=event.target;
-        const valore=  target.value;
-        setDisdettaGratuita(valore);
-        state.disdetta_gratuita=valore;
+        if(window.document.getElementById('dSi').checked===true && window.document.getElementById('dNo').checked===true){
+            state.disdetta_gratuita="";
+        }
+        else if(window.document.getElementById('dSi').checked===true){
+            state.disdetta_gratuita="1";
+        }
+
+        else if(window.document.getElementById('dNo').checked===true){
+            state.disdetta_gratuita="0";
+        }
+        else{
+            state.disdetta_gratuita="";
+        }
+       
     };
     const handleChangeModalitaPagamento=()=>{
         if(modalita_carta!==''){
@@ -320,10 +328,19 @@ const RicercaStruttura=(props)=> {
         state.costo_camera=valore;
     };
     const handleChangeColazioneInclusa=(event)=>{
-        const target=event.target;
-        const valore=  target.value;
-        setColazioneInclusa(valore);
-        state.colazione_inclusa=valore;
+        if(window.document.getElementById('cSi').checked===true && window.document.getElementById('cNo').checked===true){
+            state.colazione_inclusa="%";
+        }
+        else if(window.document.getElementById('cSi').checked===true){
+            state.colazione_inclusa="1";
+        }
+
+        else if(window.document.getElementById('cNo').checked===true){
+            state.colazione_inclusa="0";
+        }
+        else{
+            state.colazione_inclusa="%";
+        }
     };
     //controlli per l'inserimento delle date
     var today = new Date();
@@ -442,19 +459,17 @@ const RicercaStruttura=(props)=> {
                                     <h6>Disdetta Gratuita</h6>
 
                                     <div className="row">
-                                        <div className="col-3">
-                                            <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                <input type="radio" className="custom-control-input" id="no_disdetta" name="disdetta_gratuita"
-                                                       defaultValue="unchecked" value="0" onChange={handleChangeDisdettaGratuita} />
-                                                <label className="custom-control-label" htmlFor="no_disdetta">No</label>
-                                            </div>
+                                    <div className="col-1">
                                         </div>
                                         <div className="col-3">
-                                            <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                <input type="radio" className="custom-control-input" id="si_disdetta" name="disdetta_gratuita"
-                                                       value="1" onChange={handleChangeDisdettaGratuita} />
-                                                <label className="custom-control-label" htmlFor="si_disdetta">Si</label>
-                                            </div>
+
+                                            <input className="form-check-input" type="checkbox" id="dSi" name="disdetta" value="si" defaultValue=""/>
+                                            <label className="form-check-label " htmlFor="dSi" >SI</label>
+
+                                        </div>
+                                        <div className="col-7">
+                                            <input className="form-check-input" type="checkbox" id="dNo" name="disdetta" value="no" defaultValue=""/>
+                                            <label className="form-check-label " htmlFor="dNo" >NO</label>
                                         </div>
                                     </div>
                                 </div>
@@ -580,19 +595,17 @@ const RicercaStruttura=(props)=> {
                                 <div className="form-group col" style={{margin:"auto" }}>
                                     <h6>Colazione Inclusa</h6>
                                     <div className="row">
-                                        <div className="col-3">
-                                            <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                <input type="radio" className="custom-control-input" id="no" name="colazione_inclusa"
-                                                       value="0" onChange={handleChangeColazioneInclusa} />
-                                                <label className="custom-control-label" htmlFor="no">No</label>
-                                            </div>
+                                    <div className="col-1">
                                         </div>
-                                        <div className="col-9">
-                                            <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                <input type="radio" className="custom-control-input" id="si" name="colazione_inclusa"
-                                                       value="1" onChange={handleChangeColazioneInclusa} />
-                                                <label className="custom-control-label" htmlFor="si">Si</label>
-                                            </div>
+                                        <div className="col-3">
+
+                                            <input className="form-check-input" type="checkbox" id="cSi" name="colazione" value="si" defaultValue=""/>
+                                            <label className="form-check-label " htmlFor="dSi" >SI</label>
+
+                                        </div>
+                                        <div className="col-7">
+                                            <input className="form-check-input" type="checkbox" id="cNo" name="colazione" value="no" defaultValue=""/>
+                                            <label className="form-check-label " htmlFor="dNo" >NO</label>
                                         </div>
                                     </div>
                                     <div className="row">
