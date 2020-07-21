@@ -4,11 +4,9 @@ import Slide from "@material-ui/core/Slide/Slide";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import axios from 'axios';
 import {getSessionCookie} from "../../sessions";
 import f from "./f.jpg"
-import host from "../GestisciCamera/2.jpg";
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });

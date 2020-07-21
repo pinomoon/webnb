@@ -4,7 +4,7 @@ import axios from "axios";
 import {getSessionCookie} from "../../sessions";
 import BoxAccettaPren from "./BoxAccettaPren";
 import BoxRifiutaPren from "./BoxRifiutaPren";
-import s from "./s.jpg"
+import Checkout from "../Check-out/Checkout";
 
 const GestisciPrenotazioni=()=> {
     const[id_utente,setIdUtente]=useState(getSessionCookie().id);
@@ -12,6 +12,7 @@ const GestisciPrenotazioni=()=> {
     const[selectedPrenotazione,setSelectedPrenotazione]=useState();
     const[openAccetta,setOpenAccetta]=useState(false);
     const[openRifiuta,setOpenRifiuta]=useState(false);
+    const[openCheckout,setOpenCheckout]=useState(false);
 
     React.useLayoutEffect(()=>{
         axios.post("https://localhost:9000/gestisciPrenotazioni",{id_utente})
@@ -27,7 +28,7 @@ const GestisciPrenotazioni=()=> {
 
             alert(err)
         })
-    },[openAccetta,openRifiuta]);
+    },[openAccetta,openRifiuta,openCheckout]);
 
 
     const handleAccetta=(values)=>{
@@ -47,6 +48,15 @@ const GestisciPrenotazioni=()=> {
         setSelectedPrenotazione();
         setOpenRifiuta(false);
     };
+    const handleCheckout=(values)=>{
+        setSelectedPrenotazione(values.id_prenotazione);
+        setOpenCheckout(true);
+
+    }
+    const handleCloseCheckout=(values)=>{
+        setOpenCheckout(false);
+
+    }
     return(
         <div>
 
@@ -67,41 +77,68 @@ const GestisciPrenotazioni=()=> {
                                             <div className="card-body">
                                                 <h5 className="card-title"><h5 style={{fontWeight:"normal"}}>ID: {values.id_prenotazione}: </h5>{values.nome} {values.cognome}</h5>
                                                 <hr style={{borderTop:" 2px solid #ff6300"}}/>
-                                                <div className="card-text" style={{height:"70%"}}>
-                                                    <ul className="list-group list-group-flush" style={{height:"10%"}}>
-                                                        <li className="list-group-item">Struttura: <b>{values.nome_struttura}</b></li>
-                                                        < li className="list-group-item">Camera: <b>{values.nome_camera}</b></li>
+                                                <div className="card-text" style={{height:"50%"}}>
+                                                    <ul className="list-group list-group-flush" style={{height:"10%",width:"100%"}}>
+                                                        <li className="list-group-item" > <b>{values.nome_struttura}</b></li>
+                                                        <li className="list-group-item"><b>{values.nome_camera}</b></li>
                                                         <li className="list-group-item">{values.data_inizio}</li>
                                                         <li className="list-group-item">{values.data_fine}</li>
 
+                                                    </ul>
+
+
+                                                </div>
+                                                <div className="card-text">
+                                                    <hr style={{borderTop:" 2px solid #32508f"}}/>
+
+
 
                                                     {values.stato_prenotazione =="in attesa di conferma" &&
-                                                <li className="list-group-item" style={{color:"blue"}}> In attesa di conferma</li>
 
-                                                }
+                                                    <p style={{color:"blue"}}> In attesa di conferma</p>
+
+
+
+                                                    }
                                                 {values.stato_prenotazione =="confermata" &&
-                                                <li className="list-group-item" style={{color:"#00ff55"}}> Confermata</li>
+                                                    <div>
+                                                    <p style={{color:"#00ff55"}}> Confermata</p>
+
+                                                    </div>
 
                                                 }
                                                 {values.stato_prenotazione =="rifiutata" &&
-                                                <li className="list-group-item" style={{color:"red"}}> Rifiutata</li>
+                                                    <div>
+                                                    <p style={{color:"red"}}> Rifiutata</p>
+
+                                                    </div>
 
                                                 }
                                                 {values.stato_prenotazione =="soggiorno in corso" &&
-                                                <li className="list-group-item" style={{color:"#e6e600"}}> Soggiorno in corso</li>
+                                                    <div>
+                                                <p style={{color:"#e6e600"}}> Soggiorno in corso</p>
+
+                                                    </div>
 
                                                 }
                                                 {values.stato_prenotazione =="annullata" &&
-                                                <li className="list-group-item" style={{color:"red"}}> Annullata</li>
+                                                    <div>
+                                                    <p style={{color:"red"}}> Annullata</p>
+
+                                                    </div>
 
                                                 }
 
                                                 {values.stato_prenotazione =="soggiorno concluso" &&
-                                                <li className="list-group-item" > Soggiorno Concluso</li>
+                                                    <div>
+                                                    <p style={{color:"#6B5B95"}}>Soggiorno Concluso</p>
+
+
+                                                    </div>
 
                                                 }
-                                                    </ul>
-                                                </div>
+                                                    <br/>
+
 
 
 
@@ -124,10 +161,11 @@ const GestisciPrenotazioni=()=> {
                                                 }
                                                 { values.stato_prenotazione=="soggiorno in corso" &&
                                                 <div>
-                                                    <Button color="inherit" style={{color:"#ff6300"}}>check-out</Button>
+                                                    <Button color="inherit" onClick={()=>handleCheckout(values)} style={{color:"#ff6300"}}>check-out</Button>
 
                                                 </div>
                                                 }
+                                            </div>
                                             </div>
                                             </div>
                                         </div>
@@ -151,6 +189,12 @@ const GestisciPrenotazioni=()=> {
                 onClose={handleCloseRifiuta}
                 prenotazione={selectedPrenotazione}
             />
+            <Checkout
+                open={openCheckout}
+                onClose={handleCloseCheckout}
+                prenotazione = {selectedPrenotazione}
+                />
+
 
         </div>
         </div>
