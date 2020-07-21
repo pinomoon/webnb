@@ -25,7 +25,7 @@ async function ricerca(req, res, next) {
             if(req.body.npl==='' || req.body.npl===undefined){
                 req.body.npl='%';
             }
-            if(req.body.tipo==='' || req.body.tipo===undefined){
+            if(req.body.tipo==='' || req.body.tipo===undefined ){
                 req.body.tipo='%';
             }
             if(req.body.disdetta_gratuita===undefined || req.body.disdetta_gratuita===''){

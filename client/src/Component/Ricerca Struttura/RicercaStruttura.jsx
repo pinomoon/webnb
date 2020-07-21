@@ -42,6 +42,9 @@ const RicercaStruttura=(props)=> {
     const [data_fine, setDataFine]=React.useState(getStructureCookie().data_fine);
     const [npl, setNpl]=React.useState(getStructureCookie().npl);//numero posti letto
     const [tipo, setTipo]=React.useState("");
+    const [bnb, setBnb]=React.useState("");
+    const [casaVacanze, setcasaVacanze]=React.useState("");
+
     const [disdetta_gratuita, setDisdettaGratuita]=React.useState("");
     let modalita_di_pagamento="";
     const [modalita_carta, setModalitaCarta]=React.useState("");
@@ -69,6 +72,7 @@ const RicercaStruttura=(props)=> {
 
     const handleSubmit=(event)=>{
         event.preventDefault();
+        handleChangeTipo();
         handleChangeModalitaPagamento();
         handleChangeServizi();
         if((state.data_inizio==="") || (state.data_fine==="")){
@@ -119,9 +123,52 @@ const RicercaStruttura=(props)=> {
         state.data_fine=valore;
     };
     const handleChangeTipo=(event)=>{
-        const target= event.target;
-        const valore= target.value;
-        let stato= target.checked;
+
+
+        if(bnb!==''){
+            state.tipo=state.tipo+""+bnb+",";
+        }
+        else{
+            state.tipo=state.tipo+"%,";
+        }
+
+        if(casaVacanze!==''){
+            state.tipo=state.tipo+""+casaVacanze+",";
+        }
+        else{
+            state.tipo=state.tipo+"%,";
+        }
+
+        if(bnb !=+ '' && casaVacanze!==''){
+            state.tipo="%,"
+        }
+
+    };
+    const handleChangeBnb=(event)=>{
+        const target=event.target;
+        const valore=target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setBnb(valore);
+        }
+        else{
+            setBnb("");
+        }
+
+    };
+    const handleChangeCasaVacanze=(event)=>{
+        const target=event.target;
+        const valore=target.value;
+        const stato=target.checked;
+
+        if(stato===true) {
+            setcasaVacanze(valore);
+        }
+        else{
+            setcasaVacanze("");
+        }
+
     };
     const handleChangeDisdettaGratuita=(event)=>{
         const target=event.target;
@@ -374,23 +421,21 @@ const RicercaStruttura=(props)=> {
 
                                 <div className="form-group col" style={{margin:"auto" }}>
                                     <h6>Tipo Struttura</h6>
-
-                                    <div className="row">
-                                        <div className="col-3">
-                                            <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                <input type="radio" className="custom-control-input" id="bnb" name="tipo"
-                                                       value="bnb" onClick={handleChangeTipo} />
-                                                <label className="custom-control-label" htmlFor="bnb">B&B</label>
-                                            </div>
+                                    <div className="row" >
+                                        <div className="col-1">
                                         </div>
-                                        <div className="col-9">
-                                            <div className="custom-control custom-radio custom-control-inline mt-2">
-                                                <input type="radio" className="custom-control-input" id="casa_vacanze" name="tipo"
-                                                       value="casa_vacanze" onClick={handleChangeTipo} />
-                                                <label className="custom-control-label" htmlFor="casa_vacanze">Casa Vacanze</label>
-                                            </div>
+                                        <div className="col-3">
+
+                                            <input className="form-check-input" type="checkbox" id="bnb" name="tipo" value="bnb" defaultValue="" onChange={handleChangeBnb}/>
+                                            <label className="form-check-label " htmlFor="bnb" > B&B</label>
+
+                                        </div>
+                                        <div className="col-7">
+                                            <input className="form-check-input" type="checkbox" id="casa_vacanze" name="tipo" value="casa_vacanze" defaultValue="" onChange={handleChangeCasaVacanze}/>
+                                            <label className="form-check-label " htmlFor="casa_vacanze" > Casa Vacanze</label>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div className="form-group col" style={{margin:"auto" }}>
                                     <br/>

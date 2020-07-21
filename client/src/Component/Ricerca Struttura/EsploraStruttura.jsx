@@ -413,19 +413,23 @@ const EsploraStruttura=()=>{
                             <h3 className="text-center">Recensioni</h3>
                         </div>
                     </div>
-                    <div className="row">
-                        <ListGroup variant="flush">
-                            {recensioni.map(value =>
+
+                        {recensioni.map(value =>
+                            <div className="row">
+                                <ListGroup variant="flush">
+
                                 <ListGroup.Item>
                                     <div className="row">
-                                        <div className="col-5"><h5>{value.nome}_{value.id_utente} : </h5></div>
-                                        <div className="col-7"><p>{value.recensione}</p></div>
+                                        <div className="col-lg-4"><h6>{value.nome}_{value.id_utente} : </h6></div>
+                                        <div className="col-lg-8">{value.recensione}</div>
 
                                     </div>
                                 </ListGroup.Item>
-                            )}
                         </ListGroup>
-                    </div>
+                            </div>
+
+
+                        )}
                 </div>
             </div>
             <BoxConfermaPreferiti
