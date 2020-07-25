@@ -98,6 +98,9 @@ const BoxModficaOspite=(props)=> {
     };
 
     const handleSubmit= async (event)=>{
+        if(document.forms[0].checkValidity()===false){
+            return;
+        }
         event.preventDefault();
         await axios.post("https://localhost:9000/gestisciPrenotazioni/modificaDatiOspiti", state)
             .then((response)=>{

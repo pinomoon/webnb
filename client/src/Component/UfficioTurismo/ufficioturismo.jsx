@@ -29,6 +29,9 @@ const UfficioTurismo=()=>{
         setTipoRisposta("");
     };
     const handleSubmit=(event)=>{
+        if(document.forms[0].checkValidity()===false){
+            return;
+        }
         event.preventDefault();
         axios.post("https://localhost:9000/documentiUfficioTurismo/",state)
             .then((response)=>{
@@ -53,7 +56,7 @@ const UfficioTurismo=()=>{
 
                     <div style={{marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
                         <img src={t} style={{margin:"auto",marginTop:"30px",width:"30%",height:"auto%",display:"block"}}/>
-                        <div name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
+                        <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
                             <h2>Rendiconto Ufficio Turismo</h2>
 
                             <h6>Inserisci qui la data del periodo di fine trimestre per rendicontare le prenotazioni e le tasse all'ufficio turismo</h6>
@@ -69,7 +72,7 @@ const UfficioTurismo=()=>{
                             />
                             <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"auto",color:"#ff6300",display:"block"}}>Calcola</Button>
                             <br/>
-                        </div>
+                        </form>
                         <BoxRispUfficio
                             open={openRispUfficio}
                             onClose={handleCloseRispUfficio}
