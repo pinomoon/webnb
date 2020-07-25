@@ -43,6 +43,9 @@ const MieiGuadagni=()=>{
 
 
     const handleSubmit=async (event)=>{
+        if(document.forms[0].checkValidity()===false){
+            return;
+        }
         event.preventDefault();
         await axios.post('https://localhost:9000/guadagni', state)
             .then((response)=>{
@@ -76,7 +79,7 @@ const MieiGuadagni=()=>{
                     <div style={{marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
                         <img src={money} style={{margin:"auto",marginTop:"30px",width:"30%",height:"auto%",display:"block"}}/>
 
-                        <div name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
+                        <form name="form" id="form" className="container was-validated col-sm-8 mt-3" method="POST">
 
                             <h5>Calcola qui i tuoi guadagni</h5>
 
@@ -87,6 +90,7 @@ const MieiGuadagni=()=>{
                                    placeholder="date placeholder"
                                    value={state.data_iniziale}
                                    onChange={handleChangeDataIniziale}
+                                   required
                             />
                             &nbsp;
                             &nbsp;
@@ -97,12 +101,13 @@ const MieiGuadagni=()=>{
                                    placeholder="date placeholder"
                                    value={state.data_finale}
                                    onChange={handleChangeDataFinale}
+                                   required
                             />
                             <br/>
                             <br/>
                             <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"auto",color:"#ff6300",display:"block"}}>Calcola Guadagni</Button>
                             <br/>
-                        </div>
+                        </form>
 
                         <BoxGuadagni
                             open={openTotale}
