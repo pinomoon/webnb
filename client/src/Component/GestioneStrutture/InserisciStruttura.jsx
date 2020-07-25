@@ -30,6 +30,7 @@ const InserisciStruttura=()=>{
     const [immagine1, setImmagine1]=useState("");
     const [immagine2, setImmagine2]=useState("");
     const [immagine3, setImmagine3]=useState("");
+    const [nome_camera, setNomeCamera]=useState("");
     const [numero_posti_letto, setNumPostiLetto]=useState("");
     const [costo_camera, setCostoCamera]=useState("");
     const [colazione_inclusa, setColazioneInclusa]=useState("");
@@ -42,7 +43,7 @@ const InserisciStruttura=()=>{
 
     const state={id_utente,nome_struttura,indirizzo_struttura,cap,punti_di_interesse,citta,regione,
         stato,tipo,disdetta_gratuita,modalita_di_pagamento, tassa_soggiorno, servizi,
-        ora_checkin,ora_checkout,immagine1,immagine2,immagine3,numero_posti_letto,costo_camera,colazione_inclusa, descrizione
+        ora_checkin,ora_checkout,immagine1,immagine2,immagine3,nome_camera,numero_posti_letto,costo_camera,colazione_inclusa, descrizione
     };
 
     const handleClickOpenConfermaInserimento=()=>{
@@ -241,6 +242,12 @@ const InserisciStruttura=()=>{
         setImmagine3(valore);
         state.immagine3=valore;
     };
+    const handleChangeNomeCamera=(event)=>{
+        const target=event.target;
+        const valore=target.value;
+        setNomeCamera(valore);
+        state.nome_camera=valore;
+    }
     const handleChangeNumPostiLetto=(event)=>{
         const target=event.target;
         const valore=  target.value;
@@ -631,6 +638,12 @@ const InserisciStruttura=()=>{
                                 </div>
                                 <div className="form-group">
                                     <h5>Inserimento Prima Camera</h5>
+                                    <label htmlFor="nome_camera">Nome Camera*</label>
+                                    <input id="nome_camera" name="nome_camera" type="text"  className="form-control" maxLength="40"
+                                         onChange={handleChangeNomeCamera} required/>
+                                    <div className="invalid-feedback">
+                                        Inserire Il Nome della Camera
+                                    </div>
                                     <label htmlFor="numero_posti_letto">Numero di Posti Letto*</label>
                                     <input id="numero_posti_letto" name="numero_posti_letto" type="number" min="0" className="form-control" maxLength="40"
                                            value={state.numero_posti_letto} onChange={handleChangeNumPostiLetto} required/>

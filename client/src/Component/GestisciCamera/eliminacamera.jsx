@@ -101,7 +101,7 @@ const EliminaCamera=()=>{
                                                         {camera.colazione_inclusa==1 &&
                                                         <li className= "list-group-item">
                                                             Colazione Inclusa: Si</li> }
-                                                    {camera.colazione_inclusa==2 &&
+                                                    {camera.colazione_inclusa==0 &&
                                                     <li className= "list-group-item">
                                                         Colazione Inclusa: No</li> }
 

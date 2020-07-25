@@ -80,6 +80,9 @@ const AggiungiCamera  =(props) =>{
         setOpenErrore(false);
     };
     const handleSubmit=()=>{
+        if(document.forms[0].checkValidity()===false){
+            return;
+        }
         if(window.confirm("Sei sicuro di voler inserire questa camera? Una volta inserita potrà solo essere eliminata, non modificata")) {
             axios.post("https://localhost:9000/gestisciStrutture/aggiungiCamera", state)
                 .then((response) => {
@@ -118,8 +121,9 @@ const AggiungiCamera  =(props) =>{
                             <div className="col-sm-12 col-md-12 col-lg-12">
                                 <div style={{margin:"auto",marginTop:"50px", border:"2px solid #ff6300",borderRadius:"25px",width:"100%",height:"auto"}}>
                                     <img src={host} style={{margin:"auto",marginTop:"30px",width:"30%",height:"30%",display:"block"}}/>
-
+                                    <form  name="form" id="form"  className="container was-validated">
                                     <div className="form-group" style={{width:"50%",margin:"auto"}}>
+                                   
                                         <h5> Nome camera</h5>
                                         <input type="text" className="form-control" id="nome_camera" name="nome_camera"  maxLength="40"
                                                value={state.nome_camera} onChange={handleChangeNomeCamera} required/>
@@ -186,9 +190,11 @@ const AggiungiCamera  =(props) =>{
                                         </div>
                                     </div>
                                     <br></br>
+                                    </form>
                                 </div>
                                 <br/>
                                 <br/>
+                                
                             </div>
                             <div className="col">
                             </div>

@@ -73,7 +73,7 @@ async function inserisciStruttura(req,res,next) {
                     [
                         [
                             ids,
-                            req.body.nome_struttura,
+                            req.body.nome_camera,
                             req.body.numero_posti_letto,
                             req.body.costo_camera,
                             req.body.colazione_inclusa
