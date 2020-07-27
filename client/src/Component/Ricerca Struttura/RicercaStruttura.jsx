@@ -442,8 +442,8 @@ const RicercaStruttura=(props)=> {
                                         <div className="col-1">
                                         </div>
                                         <div className="col-3">
-
                                             <input className="form-check-input" type="checkbox" id="bnb" name="tipo" value="bnb" defaultValue="" onChange={handleChangeBnb}/>
+
                                             <label className="form-check-label " htmlFor="bnb" > B&B</label>
 
                                         </div>
@@ -464,12 +464,12 @@ const RicercaStruttura=(props)=> {
                                         <div className="col-3">
 
                                             <input className="form-check-input" type="checkbox" id="dSi" name="disdetta" value="si" defaultValue=""/>
-                                            <label className="form-check-label " htmlFor="dSi" >SI</label>
+                                            <label className="form-check-label " htmlFor="dSi" >Si</label>
 
                                         </div>
                                         <div className="col-7">
                                             <input className="form-check-input" type="checkbox" id="dNo" name="disdetta" value="no" defaultValue=""/>
-                                            <label className="form-check-label " htmlFor="dNo" >NO</label>
+                                            <label className="form-check-label " htmlFor="dNo" >No</label>
                                         </div>
                                     </div>
                                 </div>
@@ -600,16 +600,18 @@ const RicercaStruttura=(props)=> {
                                         <div className="col-3">
 
                                             <input className="form-check-input" type="checkbox" id="cSi" name="colazione" value="si" defaultValue=""/>
-                                            <label className="form-check-label " htmlFor="dSi" >SI</label>
+                                            <label className="form-check-label " htmlFor="dSi" >Si</label>
 
                                         </div>
                                         <div className="col-7">
                                             <input className="form-check-input" type="checkbox" id="cNo" name="colazione" value="no" defaultValue=""/>
-                                            <label className="form-check-label " htmlFor="dNo" >NO</label>
+                                            <label className="form-check-label " htmlFor="dNo" >No</label>
                                         </div>
                                     </div>
+                                    <br/>
+
                                     <div className="row">
-                                        <br/>
+
                                         <Button color="inherit" type="submit" onClick={handleSubmit} style={{backgroundColor:"#32508f",color:"white",margin:"auto",display:"block",width:"100%"}}>Cerca</Button>
                                     </div>
                                 </div>

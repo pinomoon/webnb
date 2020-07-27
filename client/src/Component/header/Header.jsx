@@ -46,13 +46,12 @@ const Header =()=>{
                     <div>
                         <Dropdown as={ButtonGroup} style={{marginRight: "70px", color:"#ff6300"}}
                                   variant="primary">
-                            <Button href="/profilo" style={{marginLeft:"-17px",color:"#ff6300"}}>Profilo</Button>
+                            <Button href="/imieipreferiti" style={{marginLeft:"-17px",color:"#ff6300"}}>I miei preferiti</Button>
 
                             <Dropdown.Toggle id="dropdown-split-basic" style={{backgroundColor:"#ff6300",color:"white",borderRadius:"3px",border:"2px solid #ff6300 "}}/>
                             <Dropdown.Menu>
                                 <Dropdown.Item href="/modificaaccount" style={{margin:"auto",display:"block"}}><AccountCircleRoundedIcon/> Modifica Account</Dropdown.Item>
                                 <Dropdown.Item href="/lemieprenotazioni"style={{margin:"auto",display:"block"}}><MenuBookRoundedIcon/> Le mie prenotazioni</Dropdown.Item>
-                                <Dropdown.Item href="/imieipreferiti" style={{margin:"auto",display:"block"}}><StarBorderRoundedIcon/> I miei preferiti</Dropdown.Item>
                                 <Logout/>
                             </Dropdown.Menu>
                         </Dropdown>
