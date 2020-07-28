@@ -40,32 +40,28 @@ const Checkin=()=>{
             .catch((error)=>{
                 alert(error);
             })
-    },[]);
+    },[openInserisci, openModifica, openElimina]);
 
     const handleInserisci=()=>{
         setOpenInserisci(true);
     };
     const handleCloseInserisci=()=>{
         setOpenInserisci(false);
-        window.location.reload();
     };
     const handleModifica=(value)=>{
         setOspite(value.id_dati_ospiti);
         setOpenModifica(true );
-
-
     };
+    const handleCloseModifica=()=>{
+        setOpenModifica(false);
+    };
+
     const handleElimina=(value)=>{
         setOspite(value.id_dati_ospiti);
         setOpenElimina(true);
     };
-    const handleCloseModifica=()=>{
-        setOpenModifica(false);
-        window.location.reload();
-    };
     const handleCloseElimina=()=>{
-        setOpenModifica(false);
-        window.location.reload();
+        setOpenElimina(false);
     };
     const handleOpenQuestura=()=>{
         setOpenQuestura(true);

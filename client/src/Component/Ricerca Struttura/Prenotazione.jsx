@@ -424,7 +424,7 @@ const Prenotazione =()=>{
                                     </div>
                                     {importo_calcolato==false?(
                                         <div className="col-sm-3 col-md-2 col-lg-1">
-                                            <Button name="ok" id="ok"  onClick={handleCalcolaImporti}
+                                            <Button name="ok" id="ok" type="submit" onClick={handleCalcolaImporti}
                                                     style={{marginLeft: "-10px", color: "#ff6300"}}>Calcola Importo Totale</Button>
                                         </div>
                                     ):(

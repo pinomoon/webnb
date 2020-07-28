@@ -8,13 +8,32 @@ import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import axios from 'axios';
 import user from "../registrazione/user.png";
 import f from "./f.jpg";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
+}));
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const BoxModficaOspite=(props)=> {
+    const classes=useStyles();
     const {open, onclose, id_ospite}=props;
-
+    const [openConferma, setOpenConferma]=useState(false);
+    const [openErrore, setOpenErrore]=useState(false);
     const [nome_ospite, setNomeOspite]=useState("");
     const [cognome_ospite, setCognomeOspite]=useState("");
     const [data_nascita, setDataNascita]=useState("");
@@ -26,6 +45,12 @@ const BoxModficaOspite=(props)=> {
 
     const handleClose=()=>{
         onclose();
+    };
+    const handleCloseConferma=()=>{
+        setOpenConferma(false);
+    };
+    const handleCloseErrore=()=>{
+        setOpenErrore(false);
     };
 
     const loadData= async()=>{
@@ -105,11 +130,11 @@ const BoxModficaOspite=(props)=> {
         await axios.post("https://localhost:9000/gestisciPrenotazioni/modificaDatiOspiti", state)
             .then((response)=>{
                 if(response.data=="1"){
-                    alert("Ospite Modificato con successo !");
+                    setOpenConferma(true);
                     handleClose();
                 }
                 else{
-                    alert("Errore nel completamento dell'operazione");
+                    setOpenErrore(true);
                     handleClose();
                 }
             })
@@ -277,6 +302,18 @@ const BoxModficaOspite=(props)=> {
                 </DialogContent>
 
             </Dialog>
+            <div className={classes.root}>
+                <Snackbar open={openConferma} autoHideDuration={6000} onClose={handleCloseConferma} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseConferma} severity="success">
+                        Ospite mofificato Correttamente!
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={openErrore} autoHideDuration={6000} onClose={handleCloseErrore} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseErrore} severity="error">
+                        Errore nel completamento dell'operazione
+                    </Alert>
+                </Snackbar>
+            </div>
         </div>
 
 

@@ -7,11 +7,29 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import axios from 'axios';
 import {getSessionCookie} from "../../sessions";
 import f from "./f.jpg"
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
+}));
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const BoxInserisciOspite=(props)=> {
+    const classes=useStyles();
     const {open, onclose, prenotazione}=props;
     const [id_utente, setIdUtente]=useState(getSessionCookie().id);
     const [id_prenotazione, setIdPrenotazione]=useState(prenotazione);
@@ -23,6 +41,8 @@ const BoxInserisciOspite=(props)=> {
     const [n_documento, setNDoc]=useState("");
     const [foto_documento, setFotoDoc]=useState("");
     const state={id_prenotazione, id_utente, nome_ospite, cognome_ospite, data_nascita, sesso, residenza, n_documento, foto_documento};
+    const [openConferma, setOpenConferma]=useState(false);
+    const [openErrore, setOpenErrore]=useState(false);
 
 
 
@@ -39,25 +59,26 @@ const BoxInserisciOspite=(props)=> {
         onclose();
         svuotaCampi();
     };
-    const handleSubmit=()=>{
+    const handleSubmit=(event)=>{
+        event.preventDefault();
         if(document.forms[0].checkValidity()===false){
             return;
         }
         axios.post("https://localhost:9000/gestisciPrenotazioni/inserisciOspiti",state)
             .then((response)=>{
                 if(response.data=="1"){
-                    alert("Ospite inserito Correttamente");
+                    setOpenConferma(true);
                     handleClose();
                 }
                 else{
-                    alert("Errore nel completamento dell'operazione");
+                    setOpenErrore(true);
                     handleClose();
                 }
             })
             .catch((error)=>{
                 alert(error);
             })
-    }
+    };
 
     const handleChangeNomeOspite=(event)=>{
         const target=event.target;
@@ -100,6 +121,13 @@ const BoxInserisciOspite=(props)=> {
         const valore=  target.value;
         setFotoDoc(valore);
         state.foto_documento=valore;
+    };
+
+    const handleCloseConferma=()=>{
+        setOpenConferma(false);
+    };
+    const handleCloseErrore=()=>{
+        setOpenErrore(false);
     };
 
 
@@ -260,6 +288,18 @@ const BoxInserisciOspite=(props)=> {
                 </DialogContent>
 
             </Dialog>
+            <div className={classes.root}>
+                <Snackbar open={openConferma} autoHideDuration={6000} onClose={handleCloseConferma} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseConferma} severity="success">
+                        Ospite inserito Correttamente!
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={openErrore} autoHideDuration={6000} onClose={handleCloseErrore} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={handleCloseErrore} severity="error">
+                        Errore nel completamento dell'operazione
+                    </Alert>
+                </Snackbar>
+            </div>
         </div>
 
 

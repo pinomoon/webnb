@@ -26,7 +26,7 @@ const GestisciStrutture=()=>{
             .catch((error)=>{
                 alert(error);
             })
-    },[openElimina]);
+    },[openAggiungiCamera, openElimina]);
 
 
     const handleElimina=(struttura)=>{

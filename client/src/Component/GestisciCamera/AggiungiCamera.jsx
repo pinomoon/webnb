@@ -79,7 +79,8 @@ const AggiungiCamera  =(props) =>{
     const handleCloseErrore=()=>{
         setOpenErrore(false);
     };
-    const handleSubmit=()=>{
+    const handleSubmit=(event)=>{
+        event.preventDefault();
         if(document.forms[0].checkValidity()===false){
             return;
         }

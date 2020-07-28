@@ -2,7 +2,7 @@ import * as Cookies from 'js-cookie';
 
 export const setSessionCookie =(session)=>{
     Cookies.remove("session");
-    Cookies.set("session", session,{expires:14});
+    Cookies.set("session", session,{expires:1});
 };
 export const getSessionCookie=()=>{
     const sessionCookie=Cookies.get("session");
@@ -15,7 +15,7 @@ export const getSessionCookie=()=>{
 };
 export const setUserCookie=(user)=>{
     Cookies.remove("user");
-    Cookies.set("user",user,{expires:14});
+    Cookies.set("user",user,{expires:1});
 };
 export const getUserCookie=()=>{
     const userCookie=Cookies.get("user");
