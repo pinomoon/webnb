@@ -86,8 +86,8 @@ const ElencoPrenotazioni=()=>{
                                                 <div className="card-text" style={{height:"50%"}}>
                                                     <ul className="list-group list-group-flush" style={{height:"10%",width:"100%"}}>
                                                         <li className="list-group-item"><b>{value.nome_struttura}</b></li>
-                                                        <li className="list-group-item">{value.data_inizio}</li>
-                                                        <li className="list-group-item">{value.data_fine}</li>
+                                                        <li className="list-group-item">{value.data_inizio.substr(0,10)}</li>
+                                                        <li className="list-group-item">{value.data_fine.substr(0,10)}</li>
                                                     </ul>
                                                 </div>
                                                 <div>

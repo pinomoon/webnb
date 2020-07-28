@@ -18,7 +18,8 @@ async function elenco(req, res, next) {
         await withTransaction(db, async() => {
             results = await db.query("SELECT id_prenotazione, data_inizio, data_fine, stato_prenotazione, nome_struttura, metodo_di_pagamento \
             FROM prenotazione p,camera c,struttura s \
-            WHERE p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND p.id_utente=?\
+            WHERE p.id_camera=c.id_camera AND c.id_struttura=s.id_struttura AND p.id_utente=? AND\
+            conferma=true\
              ORDER BY stato_prenotazione ASC ,data_prenotazione DESC ",[req.body.id_utente])
                 .catch(err=>{
                     throw err;

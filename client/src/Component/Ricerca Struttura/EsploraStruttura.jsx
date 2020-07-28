@@ -365,7 +365,7 @@ const EsploraStruttura=()=>{
                                 </thead>
                                 <tbody>
                                 {camere.map((value)=>{
-                                    let stringa="/prenotazione?id_camera="+value.id_camera+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?numero_posti_letto="+npl;
+                                    let stringa="/prenotazione?id_camera="+value.id_camera+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?numero_posti_letto="+value.numero_posti_letto;
 
 
                                     return(

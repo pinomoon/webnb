@@ -58,7 +58,7 @@ const Prenotazione =()=>{
                 if(response.data[0]=="1"){
                     setNome(response.data[1].nome);
                     setCognome(response.data[1].cognome);
-                    setData_di_nascita(response.data[1].data_di_nascita);
+                    setData_di_nascita(response.data[1].data_di_nascita.substr(0,10));
                     setSesso(response.data[1].sesso);
                     setIndirizzo(response.data[1].indirizzo);
                     setCitta(response.data[1].citta);
@@ -281,7 +281,7 @@ const Prenotazione =()=>{
                                         </div>
                                         <br/>
                                         <label htmlFor="n18">Numero Adulti*</label>
-                                        <input id="n18" name="n18" type='number' min="0" max={numero_posti_letto} className="form-control" maxLength="40"
+                                        <input id="n18" name="n18" type='number' min="1" max={numero_posti_letto} className="form-control" maxLength="40"
                                                value={state.n18} onChange={handleChangeN18} required/>
                                         <br/>
                                         <br/>
@@ -402,9 +402,10 @@ const Prenotazione =()=>{
                                             <p>Data Check-In: {data_inizio}</p>
                                             <p>Data Check-Out: {data_fine}</p>
                                             <p>Numero Ospiti Adulti: {n18}</p>
-                                            <p>Numero Bambini: {numero_posti_letto-n18}</p>
+        
                                             <br/>
                                             <p>Prezzo Camera a Notte: {costo_camera}</p>
+                                            <p>Prezzo Tassa di soggiorno per persona: {tassa_soggiorno}</p>
                                             <p>Totale Tasse di Soggiorno: {importi[1]}</p>
                                             <p>Totale Costo Camera: {importi[0]}</p>
                                             <h5>Totale Prenotazione: {importi[0]+importi[1]}</h5>
@@ -441,7 +442,7 @@ const Prenotazione =()=>{
                                     </div>
                                 </div>
                                 <br></br>
-                            </form>
+                                </form>
                         </div>
                     </div>
                 </div>

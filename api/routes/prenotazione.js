@@ -177,19 +177,22 @@ async function esplora(req, res, next) {
                     .catch(err=>{
                         throw err;
                     });
+                   
                 results2 = await db.query("SELECT c.id_camera, nome_camera,numero_posti_letto, costo_camera, colazione_inclusa \
                     FROM camera AS c, struttura AS s\
-                    WHERE c.id_struttura=s.id_struttura AND c.id_struttura=? EXCEPT (SELECT camera.id_camera, nome_camera,numero_posti_letto, costo_camera, colazione_inclusa\
+                    WHERE c.id_struttura=s.id_struttura AND c.id_struttura=? AND c.numero_posti_letto>=? EXCEPT (SELECT camera.id_camera, nome_camera,numero_posti_letto, costo_camera, colazione_inclusa\
                     FROM camera,prenotazione WHERE prenotazione.id_camera=camera.id_camera \
-                    AND (prenotazione.data_fine>? AND prenotazione.data_inizio<?) AND camera.numero_posti_letto<?) \
+                    AND (prenotazione.data_fine>? AND prenotazione.data_inizio<?)) \
                     ",[
                           req.body.id_struttura,
+                          req.body.npl,
                           req.body.data_fine,
-                          req.body.data_inizio,
-                    req.body.npl
+                          req.body.data_inizio
+                          
                 ]).catch(err=>{
                     throw  err;
                 });
+                
                 results3= await db.query("SELECT id_recensione, recensione,recensione.id_utente,nome\
                 FROM  recensione,utente\
                 WHERE recensione.id_struttura=? AND recensione.id_utente=utente.id_utente"
