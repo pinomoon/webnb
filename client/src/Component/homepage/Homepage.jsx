@@ -216,9 +216,9 @@ const Homepage =()=>{
                                                        onChange={handleChangeDataFine}
                                                 />
                                             </div>
-                                            <div className="form-group col-sm-2 col-md-12 col-lg-2">
+                                            <div className="form-group col-sm-6 col-md-12 col-lg-2">
                                                 <select className="form-control" id="npl" value={state.npl}
-                                                        onChange={handleChangeNpl} style={{marginTop: "7px",border:"none",outline:"none"}}>
+                                                        onChange={handleChangeNpl} style={{marginTop: "7px",border:"none",outline:"none",width:"80%",marginLeft:"auto",marginRight:"auto"}}>
                                                     <option>N. Ospiti</option>
                                                     <option>1</option>
                                                     <option>2</option>

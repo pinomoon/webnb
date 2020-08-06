@@ -640,7 +640,7 @@ const RicercaStruttura=(props)=> {
                                         <div className="col-md-4">
                                             <img id="image" src={imageUrl} alt="nnnnnnnnn" className="card-img" style={{height:"100%"}}/>
                                         </div>
-                                        <div className="col-sm-12 col-md-8 col-lg-8">
+                                        <div className="col-sm-12 col-md-12 col-lg-8">
                                             <div className="card-body">
                                                 <h5 className="card-title">{struttura.nome_struttura}</h5>
                                                 {struttura.tipo==="bnb" &&
@@ -684,7 +684,7 @@ const RicercaStruttura=(props)=> {
                                     <div className="col-md-4">
                                         <img id="image" src={imageUrl}  className="card-img" style={{height:"100%"}}/>
                                     </div>
-                                    <div className="col-md-8">
+                                    <div className="col-sm-12 col-md-12 col-lg-8">
                                         <div className="card-body">
                                             <h5 className="card-title">{struttura.nome_struttura}</h5>
                                             {struttura.tipo==="bnb" &&
@@ -706,7 +706,7 @@ const RicercaStruttura=(props)=> {
 
 
                                             <Tooltip title="Esplora Struttura" placement="bottom-start">
-                                                <Button color="inherit" href={href} style={{width:"40%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
+                                                <Button color="inherit" href={href} style={{width:"100%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
                                             </Tooltip>
                                         </div>
                                     </div>

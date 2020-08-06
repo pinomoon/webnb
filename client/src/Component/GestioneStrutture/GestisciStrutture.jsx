@@ -67,7 +67,7 @@ const GestisciStrutture=()=>{
                             var href="/modificaStruttura?id_struttura="+value.id_struttura;
                             var href2="/eliminaCamera?id_struttura="+value.id_struttura;
                             return(
-                                <div key={value.id_struttura} className="col-sm-6 col-md-4 col-lg-4">
+                                <div key={value.id_struttura} className="col-sm-6 col-md-6 col-lg-4">
                                     <section className="cards clearfix">
                                         <div className="card" style={{width: "100%", height: "20%"}}>
                                             <img className="card_image" src={villa} alt=" Villa "/>

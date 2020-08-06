@@ -2,7 +2,7 @@ import React from 'react';
 import salvo from '../images/salvo.jpeg'
 import luca from '../images/luca.jpeg'
 import gianluca from '../images/io.jpg'
-import giuseppe from '../images/giuseppe.jpg'
+import giuseppe from '../images/giuseppe.jpeg'
 
 const AboutUs=()=>{
     return(
