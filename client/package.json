@@ -12,11 +12,18 @@
     "@testing-library/user-event": "^7.2.1",
     "availity-reactstrap-validation": "^2.6.1",
     "axios": "^0.19.2",
+    "copy-webpack-plugin": "^6.1.0",
+    "firebase": "^7.19.1",
+    "firebase-tools": "^8.10.0",
+    "html-webpack-plugin": "latest",
     "js-cookie": "^2.2.1",
+    "mini-css-extract-plugin": "latest",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1"
+    "react-scripts": "^3.4.1",
+    "webkit": "0.0.0",
+    "webpack": "latest"
   },
   "scripts": {
     "start": "set HTTPS=true&&react-scripts start",

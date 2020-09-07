@@ -42,8 +42,15 @@ const EsploraStruttura=()=>{
     const [preferiti, setPreferiti]=React.useState(false);
     const [openConfermaPreferiti, setOpenConfermaPreferiti]=React.useState(false);
     const [tipoPreferiti, setTipoPreferiti]=React.useState("");
+    const [immagine, setImmagine]=React.useState();
 
     React.useLayoutEffect(()=> {
+        axios.post('https://localhost:9000/getImg',{id_struttura})
+            .then(response=>{
+                console.log(response.data);
+                setImmagine(response.data.immagine);
+            })
+
         axios.post("https://localhost:9000/prenotazione/esploraStruttura",{id_struttura,data_inizio,data_fine,npl,id_utente})
             .then((response)=>{
                 setStruttura(response.data[1]);
@@ -154,7 +161,7 @@ const EsploraStruttura=()=>{
 
                     <div className="row">
                         <div className="col">
-                            <img src={simpson} style={{width: "100%"}}/>
+                            <img src={''} style={{width: "100%"}}/>
                             <br/>
                         </div>
                     </div>

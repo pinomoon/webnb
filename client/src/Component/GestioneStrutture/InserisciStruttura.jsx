@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import * as firebase from "firebase";
 import Form from "react-bootstrap/Form";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
@@ -27,7 +28,7 @@ const InserisciStruttura=()=>{
     const [animali, setAnimali]=React.useState("");
     const [ora_checkin,setOraCheckin]=useState("");
     const [ora_checkout, setOraCheckout]=useState("");
-    const [immagine1, setImmagine1]=useState("");
+    const [immagine1, setImmagine1]=useState(null);
     const [immagine2, setImmagine2]=useState("");
     const [immagine3, setImmagine3]=useState("");
     const [nome_camera, setNomeCamera]=useState("");
@@ -40,6 +41,8 @@ const InserisciStruttura=()=>{
     const [modalita_struttura, setModalitaStruttura]=React.useState("");
     const [modalita_acconto, setModalitaAcconto]=React.useState("");
     const [nomeimg, setNomeImg]=useState();
+    //var storageRef=firebase.storage().ref();
+
 
     const state={id_utente,nome_struttura,indirizzo_struttura,cap,punti_di_interesse,citta,regione,
         stato,tipo,disdetta_gratuita,modalita_di_pagamento, tassa_soggiorno, servizi,
@@ -202,31 +205,9 @@ const InserisciStruttura=()=>{
     };
     const handleChangeImg1=(event)=>{
         const target=event.target;
-        const valore=  target.value;
-        /* Bitmap bm=BitmapFactory.decodeFile(valore);
-         ByteArrayOutputStream baos= new ByteArrayOutputStream();
-         bm.compress(Bitmap.CompressFormat.JPEG,100,baos);
-         byte[] b=baos.toByteArray();
-
-         */
+        const valore=target.files[0];
         setImmagine1(valore);
-        /* var img_stringa= new Uint8Array(valore);
-         var bin= String.fromCharCode.apply(null,img_stringa);
-         var b64= btoa(bin);
-         console.log(bin);
-         */
-
-        /*var reader = new FileReader();
-        var b64 = reader.readAsBinaryString(valore);
-        var stringa= btoa(reader.result);
-        console.log(b64);
-        console.log(stringa);
-        setImmagine1(b64);
-        state.immagine1=b64;
-        */
         state.immagine1=valore;
-
-
 
 
     };
@@ -374,6 +355,63 @@ const InserisciStruttura=()=>{
             return;
         }
         event.preventDefault();
+        const data=new FormData();
+        data.append('file',state.immagine1);
+        data.append('nome_struttura',state.nome_struttura);
+        data.append('id_utente',state.id_utente);
+        /*axios.post('https://localhost:9000/inserisciStruttura/caricaImg',data)
+            .then(response=>{
+                if(response.data=='2'){
+                    setTipoRisposta("2");
+                    handleClickOpenConfermaInserimento();
+                    svuotaCampi();
+                    return;
+                }
+            })
+
+         */
+        /*
+        var uploadTask=storageRef.child('images/'+immagine1.name).put(immagine1).then(function(snapshot){
+            console.log('File caricato');
+        });
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+            function(snapshot) {
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case firebase.storage.TaskState.PAUSED: // or 'paused'
+                        console.log('Upload is paused');
+                        break;
+                    case firebase.storage.TaskState.RUNNING: // or 'running'
+                        console.log('Upload is running');
+                        break;
+                }
+            }, function(error) {
+
+                // A full list of error codes is available at
+                // https://firebase.google.com/docs/storage/web/handle-errors
+                switch (error.code) {
+                    case 'storage/unauthorized':
+                        // User doesn't have permission to access the object
+                        break;
+
+                    case 'storage/canceled':
+                        // User canceled the upload
+                        break;
+
+                    case 'storage/unknown':
+                        // Unknown error occurred, inspect error.serverResponse
+                        break;
+                }
+            }, function() {
+                // Upload completed successfully, now we can get the download URL
+                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                    console.log('File available at', downloadURL);
+                });
+            });
+
+         */
         axios.post('https://localhost:9000/inserisciStruttura', state)
             .then((response)=>{
                 alert(response.data);
@@ -624,8 +662,8 @@ const InserisciStruttura=()=>{
                                 <div className="form-group">
                                     <h5>Immagini della Struttura</h5>
 
-                                    <input id="immagine1" name="immagine1" type="file"  maxLength="40"
-                                           value={state.immagine1} onChange={handleChangeImg1}
+                                    <input id="file" name="file" type="file"
+                                           onChange={handleChangeImg1}
                                            color="inherit"  style={{color:"#ff6300"}}></input>
 
                                     <input id="immagine2" name="immagine2" type="file"  maxLength="40"

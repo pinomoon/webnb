@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors= require("cors");
+var multer=require('multer');
+const {static}=require('express');
+
 
 var indexRouter= require('./routes/index');
 var registrazioneRouter = require('./routes/registrazione');
@@ -20,6 +23,7 @@ var guadagniRouter= require('./routes/fhost/guadagni');
 var documentiUfficioTurismoRouter =require('./routes/fhost/documentiUfficioTurismo');
 
 var app = express();
+app.use('/immaginiStrutture',static('./public'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -177,7 +177,7 @@ async function esplora(req, res, next) {
                     .catch(err=>{
                         throw err;
                     });
-                   
+
                 results2 = await db.query("SELECT c.id_camera, nome_camera,numero_posti_letto, costo_camera, colazione_inclusa \
                     FROM camera AS c, struttura AS s\
                     WHERE c.id_struttura=s.id_struttura AND c.id_struttura=? AND c.numero_posti_letto>=? EXCEPT (SELECT camera.id_camera, nome_camera,numero_posti_letto, costo_camera, colazione_inclusa\
