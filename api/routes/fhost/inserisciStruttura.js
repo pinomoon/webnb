@@ -82,13 +82,14 @@ async function inserisciStruttura(req,res,next) {
                     throw err;
                 });
             let ids=results[0].id_struttura;
+            console.log(req.body.nomeImg1)
             await db.query("INSERT INTO gallery_struttura(id_struttura,immagine_1,immagine_2,immagine_3) VALUES ?",[
                 [
                     [
                         ids,
-                        img,
-                        req.body.immagine2,
-                        req.body.immagine3
+                        req.body.nomeImg1,
+                        req.body.nomeImg2,
+                        req.body.nomeImg3
                     ]
                 ]
             ]).catch(err=>{

@@ -70,7 +70,7 @@ const GestisciStrutture=()=>{
                                 <div key={value.id_struttura} className="col-sm-6 col-md-6 col-lg-4">
                                     <section className="cards clearfix">
                                         <div className="card" style={{width: "100%", height: "20%"}}>
-                                            <img className="card_image" src={villa} alt=" Villa "/>
+                                            <img className="card_image" src={value.immagine_1} alt=" Villa "/>
                                             <div className="card_copy">
                                                 <h6 style={{textAlign:"center"}}>{value.nome_struttura}</h6>
                                                 <ul className="list-group list-group-flush" style={{height:"10%"}}>

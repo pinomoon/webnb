@@ -40,13 +40,15 @@ const InserisciStruttura=()=>{
     const [modalita_carta, setModalitaCarta]=React.useState("");
     const [modalita_struttura, setModalitaStruttura]=React.useState("");
     const [modalita_acconto, setModalitaAcconto]=React.useState("");
-    const [nomeimg, setNomeImg]=useState();
+    const [nomeImg1, setNomeImg1]=useState('');
+    const [nomeImg2, setNomeImg2]=useState('');
+    const [nomeImg3, setNomeImg3]=useState('');
     //var storageRef=firebase.storage().ref();
 
 
     const state={id_utente,nome_struttura,indirizzo_struttura,cap,punti_di_interesse,citta,regione,
         stato,tipo,disdetta_gratuita,modalita_di_pagamento, tassa_soggiorno, servizi,
-        ora_checkin,ora_checkout,immagine1,immagine2,immagine3,nome_camera,numero_posti_letto,costo_camera,colazione_inclusa, descrizione
+        ora_checkin,ora_checkout,nomeImg1,nomeImg2,nomeImg3,nome_camera,numero_posti_letto,costo_camera,colazione_inclusa, descrizione
     };
 
     const handleClickOpenConfermaInserimento=()=>{
@@ -207,21 +209,21 @@ const InserisciStruttura=()=>{
         const target=event.target;
         const valore=target.files[0];
         setImmagine1(valore);
-        state.immagine1=valore;
+
 
 
     };
     const handleChangeImg2=(event)=>{
         const target=event.target;
-        const valore= target.value;
+        const valore= target.files[0];
         setImmagine2(valore);
-        state.immagine2=valore;
+
     };
     const handleChangeImg3=(event)=>{
         const target=event.target;
-        const valore=  target.value;
+        const valore=  target.files[0];
         setImmagine3(valore);
-        state.immagine3=valore;
+
     };
     const handleChangeNomeCamera=(event)=>{
         const target=event.target;
@@ -336,17 +338,19 @@ const InserisciStruttura=()=>{
 
         setOraCheckin("");
         setOraCheckout("");
-        setImmagine1("");
-        setImmagine2("");
-        setImmagine3("");
+        setImmagine1(null);
+        setImmagine2(null);
+        setImmagine3(null);
         setNumPostiLetto("");
         setCostoCamera("");
         setColazioneInclusa("");
 
 
     };
-    const uploadImage=()=> {
-        const uploadTask=storage.ref(`images/${immagine1.name}`).put(immagine1);
+     const uploadImage=async ()=> {
+        const file=[immagine1,immagine2,immagine3]
+        file.forEach((file)=>{
+        const uploadTask=storage.ref(`images/${file.name}`).put(file);
         uploadTask.on(
             'state_changed',
             snapshot=>{},
@@ -356,28 +360,52 @@ const InserisciStruttura=()=>{
             ()=>{
                 storage
                     .ref('images')
-                    .child(immagine1.name)
+                    .child(file.name)
                     .getDownloadURL()
                     .then(url=>{
                         console.log(url);
+                        console.log(file.name);
+                        console.log(immagine1.name);
+                        console.log(immagine2.name);
+                        console.log(immagine3.name);
+                        if(file.name===immagine1.name){
+                            console.log('sono 1')
+                            setNomeImg1(url);
+                            state.nomeImg1=url
+                        }
+                        else if(file.name===immagine2.name){
+                            console.log('sono 2')
+                            setNomeImg2(url);
+                            state.nomeImg2=url
+                        }
+                        else{
+                            console.log('sono 3')
+                            setNomeImg3(url)
+                            state.nomeImg3=url
+                        }
+                        console.log(JSON.stringify(state))
                     })
             }
-        )
+
+        )}
+    )
     }
 
 
 
-    const handleSubmit=(event) =>{
+    const handleSubmit=async (event) => {
+
         handleChangeModalitaPagamento();
         handleChangeServizi();
-        if(document.forms[0].checkValidity()===false){
+        if (document.forms[0].checkValidity() === false) {
             return;
         }
         event.preventDefault();
-        const data=new FormData();
-        data.append('file',state.immagine1);
-        data.append('nome_struttura',state.nome_struttura);
-        data.append('id_utente',state.id_utente);
+
+        const data = new FormData();
+        data.append('file', state.immagine1);
+        data.append('nome_struttura', state.nome_struttura);
+        data.append('id_utente', state.id_utente);
         /*axios.post('https://localhost:9000/inserisciStruttura/caricaImg',data)
             .then(response=>{
                 if(response.data=='2'){
@@ -431,23 +459,25 @@ const InserisciStruttura=()=>{
             });
 
          */
+
+
+        console.log('ok');
+        console.log(JSON.stringify(state))
         axios.post('https://localhost:9000/inserisciStruttura', state)
-            .then((response)=>{
+            .then((response) => {
                 alert(response.data);
-                if(response.data=="1"){
+                if (response.data == "1") {
                     setTipoRisposta("1");
                     handleClickOpenConfermaInserimento();
-                }
-                else{
+                } else {
                     setTipoRisposta("2");
                     handleClickOpenConfermaInserimento();
                     svuotaCampi();
                 }
             })
-            .catch(function(error){
+            .catch(function (error) {
                 alert(error);
             });
-
 
 
     };
@@ -477,7 +507,6 @@ const InserisciStruttura=()=>{
                                        value={state.nome_struttura} onChange={handleChangeNomeStruttura} required/>
                                 <div className="invalid-feedback">
                                     Inserire nome della struttura
-                                    <img src={state.immagine2}/>
                                 </div>
                                 <div className="form-group">
                                     <div className="row">
@@ -681,16 +710,18 @@ const InserisciStruttura=()=>{
                                 <div className="form-group">
                                     <h5>Immagini della Struttura</h5>
 
-                                    <input id="file" name="file" type="file"
+                                    <input id="immagine1" name="immagine1" type="file"
                                            onChange={handleChangeImg1}
                                            color="inherit"  style={{color:"#ff6300"}}></input>
 
-                                    <input id="immagine2" name="immagine2" type="file"  maxLength="40"
-                                           value={state.immagine2} onChange={handleChangeImg2}
+                                    <input id="immagine2" name="immagine2" type="file"
+                                           onChange={handleChangeImg2}
                                            color="inherit"  style={{color:"#ff6300"}}></input>
-                                    <input id="immagine3" name="immagine3" type="file" maxLength="40"
-                                           value={state.immagine3} onChange={handleChangeImg3}
+                                    <input id="immagine3" name="immagine3" type="file"
+                                           onChange={handleChangeImg3}
                                            color="inherit"  style={{color:"#ff6300"}}></input>
+                                    <button id='upload' name='upload' type='button' onClick={uploadImage}
+                                    style={{color:'#ff6300'}}>Carica immmagini</button>
 
                                 </div>
                                 <div className="form-group">

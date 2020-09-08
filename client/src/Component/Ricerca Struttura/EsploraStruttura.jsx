@@ -161,7 +161,7 @@ const EsploraStruttura=()=>{
 
                     <div className="row">
                         <div className="col">
-                            <img src={''} style={{width: "100%"}}/>
+                            <img src={'https://firebasestorage.googleapis.com/v0/b/webnbapp.appspot.com/o/images%2FWhatsApp%20Image%202020-08-08%20at%2000.35.47.jpeg?alt=media&token=c662736c-1c3c-4b13-a877-840fcc8a29c8'} style={{width: "100%"}}/>
                             <br/>
                         </div>
                     </div>
