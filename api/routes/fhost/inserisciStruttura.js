@@ -1,40 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var multer= require('multer');
 var createError= require('http-errors');
 const { config } = require("../../db/config");
 const { makeDb, withTransaction } = require("../../db/dbmiddleware");
-
-var img;
-
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public/immaginiStrutture')
-    },
-    filename: function (req, file, cb) {
-        img=Date.now()+'_'+file.originalname;
-        cb(null, img )
-    }
-
-});
-
-var upload=multer({storage:storage}).single('file');
-
-router.post('/caricaImg',function(req, res) {
-
-    upload(req, res, function (err) {
-        if (err instanceof multer.MulterError) {
-            res.send("2");
-            return res.status(500).json(err)
-        } else if (err) {
-            res.send("2");
-            return res.status(500).json(err)
-        }
-        return res.status(200).send(req.file)
-
-    })
-
-});
 
 /***inserimento struttura*****/
 

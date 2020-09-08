@@ -43,7 +43,6 @@ const InserisciStruttura=()=>{
     const [nomeImg1, setNomeImg1]=useState('');
     const [nomeImg2, setNomeImg2]=useState('');
     const [nomeImg3, setNomeImg3]=useState('');
-    //var storageRef=firebase.storage().ref();
 
 
     const state={id_utente,nome_struttura,indirizzo_struttura,cap,punti_di_interesse,citta,regione,
@@ -401,67 +400,6 @@ const InserisciStruttura=()=>{
         }
         event.preventDefault();
 
-        const data = new FormData();
-        data.append('file', state.immagine1);
-        data.append('nome_struttura', state.nome_struttura);
-        data.append('id_utente', state.id_utente);
-        /*axios.post('https://localhost:9000/inserisciStruttura/caricaImg',data)
-            .then(response=>{
-                if(response.data=='2'){
-                    setTipoRisposta("2");
-                    handleClickOpenConfermaInserimento();
-                    svuotaCampi();
-                    return;
-                }
-            })
-
-         */
-        /*
-        var uploadTask=storageRef.child('images/'+immagine1.name).put(immagine1).then(function(snapshot){
-            console.log('File caricato');
-        });
-        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-            function(snapshot) {
-                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done');
-                switch (snapshot.state) {
-                    case firebase.storage.TaskState.PAUSED: // or 'paused'
-                        console.log('Upload is paused');
-                        break;
-                    case firebase.storage.TaskState.RUNNING: // or 'running'
-                        console.log('Upload is running');
-                        break;
-                }
-            }, function(error) {
-
-                // A full list of error codes is available at
-                // https://firebase.google.com/docs/storage/web/handle-errors
-                switch (error.code) {
-                    case 'storage/unauthorized':
-                        // User doesn't have permission to access the object
-                        break;
-
-                    case 'storage/canceled':
-                        // User canceled the upload
-                        break;
-
-                    case 'storage/unknown':
-                        // Unknown error occurred, inspect error.serverResponse
-                        break;
-                }
-            }, function() {
-                // Upload completed successfully, now we can get the download URL
-                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                    console.log('File available at', downloadURL);
-                });
-            });
-
-         */
-
-
-        console.log('ok');
-        console.log(JSON.stringify(state))
         axios.post('https://localhost:9000/inserisciStruttura', state)
             .then((response) => {
                 alert(response.data);
