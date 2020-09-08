@@ -400,7 +400,7 @@ const InserisciStruttura=()=>{
         }
         event.preventDefault();
 
-        axios.post('https://localhost:9000/inserisciStruttura', state)
+        axios.post('/inserisciStruttura', state)
             .then((response) => {
                 alert(response.data);
                 if (response.data == "1") {

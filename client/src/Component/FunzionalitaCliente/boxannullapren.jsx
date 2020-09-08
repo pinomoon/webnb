@@ -22,7 +22,7 @@ const BoxAnnullaPren=(props)=> {
         onClose();
     };
     const handleLoad=()=>{
-        axios.post("https://localhost:9000/leMiePrenotazioni/annullaPrenotazione",state)
+        axios.post("/leMiePrenotazioni/annullaPrenotazione",state)
             .then((response)=>{
                 setTipoRisposta(response.data);
             })

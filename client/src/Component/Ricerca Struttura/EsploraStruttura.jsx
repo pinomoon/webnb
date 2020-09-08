@@ -45,7 +45,7 @@ const EsploraStruttura=()=>{
 
 
     React.useLayoutEffect(()=> {
-        axios.post("https://localhost:9000/prenotazione/esploraStruttura",{id_struttura,data_inizio,data_fine,npl,id_utente})
+        axios.post("/prenotazione/esploraStruttura",{id_struttura,data_inizio,data_fine,npl,id_utente})
             .then((response)=>{
                 setStruttura(response.data[1]);
                 setCamere(response.data[2]);
@@ -72,7 +72,7 @@ const EsploraStruttura=()=>{
     const handleClickPreferiti=(event)=>{
         event.preventDefault();
         if(preferiti==false){
-            axios.post("https://localhost:9000/iMieiPreferiti/aggiungiPreferiti",{id_utente,id_struttura})
+            axios.post("/iMieiPreferiti/aggiungiPreferiti",{id_utente,id_struttura})
                 .then((response)=>{
                     if(response.data=="1"){
                         setTipoPreferiti("1");
@@ -90,7 +90,7 @@ const EsploraStruttura=()=>{
                 })
         }
         else{
-            axios.post("https://localhost:9000/iMieiPreferiti/eliminaPreferiti",{id_utente,id_struttura})
+            axios.post("/iMieiPreferiti/eliminaPreferiti",{id_utente,id_struttura})
                 .then((response)=>{
                     if(response.data=="1"){
                         setTipoPreferiti("2");

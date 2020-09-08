@@ -54,7 +54,7 @@ const Logout =()=>{
                 </DialogContent>
                 <DialogActions id="action">
                     <Button  onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
-                    <Button href="https://localhost:3000" onClick={handleLogout} style={{color:"#ff6300"}}>Logout</Button>
+                    <Button href="/" onClick={handleLogout} style={{color:"#ff6300"}}>Logout</Button>
                 </DialogActions>
             </Dialog>
 

@@ -47,7 +47,7 @@ const MieiGuadagni=()=>{
             return;
         }
         event.preventDefault();
-        await axios.post('https://localhost:9000/guadagni', state)
+        await axios.post('/guadagni', state)
             .then((response)=>{
                 setTipoRisposta(response.data[0]);
                 if(response.data[0]=="1"){

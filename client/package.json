@@ -23,7 +23,7 @@
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1",
     "webkit": "0.0.0",
-    "webpack": "latest"
+    "webpack": "4.42.0"
   },
   "scripts": {
     "start": "set HTTPS=true&&react-scripts start",
@@ -49,5 +49,6 @@
   "devDependencies": {
     "react-router-dom": "^5.2.0",
     "reactstrap": "^8.5.1"
-  }
+  },
+  "proxy": "https://192.168.1.120:9000"
 }

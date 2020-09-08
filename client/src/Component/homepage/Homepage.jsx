@@ -39,7 +39,7 @@ const Homepage =()=>{
     const [ricerca, setRicerca]=React.useState(false);
     const state={luogo,data_inizio,data_fine,npl};
     const [strutture, setStrutture]=React.useState([]);
-    const href="https://localhost:3000/ricercastruttura?luogo="+luogo+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?npl="+npl;
+    const href="/ricercastruttura?luogo="+luogo+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?npl="+npl;
     const[openNoDate, setOpenNoDate]=React.useState(false);
     const[openErroreDate, setOpenErroreDate]=useState(false);
 
@@ -57,7 +57,7 @@ const Homepage =()=>{
     const statep={luogop,data_iniziop,data_finep,nplp,disdetta_gratuitap,modalita_di_pagamentop,servizip,costo_camerap,colazione_inclusap};
 
     React.useLayoutEffect(()=>{
-        axios.post("https://localhost:9000/prenotazione/ricercaStrutturap", statep)
+        axios.post("/prenotazione/ricercaStrutturap", statep)
             .then((response)=>{
                 setStrutturep(response.data[1]);
             })
@@ -90,7 +90,7 @@ const Homepage =()=>{
             return
         }
         setStructureCookie({luogo,data_inizio,data_fine,npl});
-        axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
+        axios.post("/prenotazione/ricercaStruttura", state)
             .then((response)=>{
                 setStrutture(response.data[1]);
                 handleClickRicerca();

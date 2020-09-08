@@ -50,7 +50,7 @@ const BoxRecensisci=(props)=> {
     };
 
     const handleSubmit=()=>{
-        axios.post("https://localhost:9000/leMiePrenotazioni/recensisci",state)
+        axios.post("/leMiePrenotazioni/recensisci",state)
             .then((response)=>{
                 if(response.data=="1"){
                     setOpenConferma(true);

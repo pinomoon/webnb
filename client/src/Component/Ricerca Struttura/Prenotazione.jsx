@@ -53,7 +53,7 @@ const Prenotazione =()=>{
     const state3={costo_camera, data_inizio, data_fine, viaggio_lavoro,tassa_soggiorno,n18};
 
     React.useLayoutEffect(()=>{
-        axios.post("https://localhost:9000/prenotazione/datiPrenotazione",state2)
+        axios.post("/prenotazione/datiPrenotazione",state2)
             .then((response)=>{
                 if(response.data[0]=="1"){
                     setNome(response.data[1].nome);
@@ -148,7 +148,7 @@ const Prenotazione =()=>{
             return;
         }
         event.preventDefault();
-        axios.post("https://localhost:9000/prenotazione",state)
+        axios.post("/prenotazione",state)
             .then((response)=>{
                 setTipoRisposta(response.data);
                 handleOpenConferma();
@@ -164,7 +164,7 @@ const Prenotazione =()=>{
             return;
         }
         event.preventDefault();
-        axios.post("https://localhost:9000/prenotazione/calcoloImporti",state3)
+        axios.post("/prenotazione/calcoloImporti",state3)
             .then((response)=>{
                 if(response.data[0]=="1"){
                     setImporti([response.data[1],response.data[2]]);

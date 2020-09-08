@@ -45,7 +45,7 @@ const BoxEliminaOspite=(props)=> {
     };
 
     const handleSubmit=()=>{
-        axios.post("https://localhost:9000/gestisciPrenotazioni/eliminaOspiti",{id_dati_ospiti:id_ospite})
+        axios.post("/gestisciPrenotazioni/eliminaOspiti",{id_dati_ospiti:id_ospite})
             .then((response)=>{
                 if(response.data=="1"){
                     setOpenConferma(true);

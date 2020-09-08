@@ -28,7 +28,7 @@ const Checkin=()=>{
 
 
     React.useLayoutEffect(()=>{
-        axios.post("https://localhost:9000/gestisciPrenotazioni/checkIN",{id_prenotazione})
+        axios.post("/gestisciPrenotazioni/checkIN",{id_prenotazione})
             .then((response)=>{
                 if(response.data[0]=="1"){
                     setDatiOspiti(response.data[1]);
@@ -74,7 +74,7 @@ const Checkin=()=>{
     const handleInviaQuestura=()=>{
         var conf=window.confirm("Sei sicuro di voler inviare i dati degli ospiti alla questura?");
         if(conf==true) {
-            axios.post("https://localhost:9000/gestisciPrenotazioni/checkinQuestura", {id_prenotazione})
+            axios.post("/gestisciPrenotazioni/checkinQuestura", {id_prenotazione})
                 .then((response) => {
                     setRispostaQuestura(response.data);
                     handleOpenQuestura();

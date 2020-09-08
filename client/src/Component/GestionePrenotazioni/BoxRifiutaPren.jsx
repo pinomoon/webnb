@@ -46,7 +46,7 @@ const BoxRifiutaPren=(props)=> {
         setOpenErrore(false);
     };
     const handleSubmit=()=>{
-        axios.post("https://localhost:9000/gestisciPrenotazioni/rifiutaPrenotazione",{id_prenotazione:prenotazione})
+        axios.post("/gestisciPrenotazioni/rifiutaPrenotazione",{id_prenotazione:prenotazione})
             .then((response)=>{
                 if(response.data=="1"){
                     setOpenConferma(true);

@@ -33,7 +33,7 @@ const ConfermaAccount=()=>{
         setOpenConferma(false);
     };
     const richiesta=()=> {
-        axios.post('https://localhost:9000/accountConferma', {token})
+        axios.post('/accountConferma', {token})
             .then((response) => {
                 setTipoRisposta(response.data);
             })
@@ -73,16 +73,16 @@ const ConfermaAccount=()=>{
                 </DialogContent>
                 <DialogActions id="action">
                     {tipoRisposta == "1" &&
-                    < Button href="https://localhost:3000/" onClick={handleClose} color="primary">HomePage</Button>
+                    < Button href="/" onClick={handleClose} color="primary">HomePage</Button>
                     }
                     {tipoRisposta == "2" &&
-                    < Button href="https://localhost:3000/" onClick={handleClose} color="primary">HomePage</Button>
+                    < Button href="/" onClick={handleClose} color="primary">HomePage</Button>
                     }
                     {tipoRisposta == "3" &&
-                    < Button href="https://localhost:3000/login"onClick={handleClose} color="primary">Login</Button>
+                    < Button href="/login"onClick={handleClose} color="primary">Login</Button>
                     }
                     {tipoRisposta == "4" &&
-                    < Button href="https://localhost:3000/" onClick={handleClose} color="primary">HomePage</Button>
+                    < Button href="/" onClick={handleClose} color="primary">HomePage</Button>
                     }
                 </DialogActions>
             </Dialog>
