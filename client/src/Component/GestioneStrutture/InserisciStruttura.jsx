@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import * as firebase from "firebase";
+import {storage} from '../../firebase'
 import Form from "react-bootstrap/Form";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
@@ -345,6 +345,25 @@ const InserisciStruttura=()=>{
 
 
     };
+    const uploadImage=()=> {
+        const uploadTask=storage.ref(`images/${immagine1.name}`).put(immagine1);
+        uploadTask.on(
+            'state_changed',
+            snapshot=>{},
+            error=>{
+                console.log(error);
+            },
+            ()=>{
+                storage
+                    .ref('images')
+                    .child(immagine1.name)
+                    .getDownloadURL()
+                    .then(url=>{
+                        console.log(url);
+                    })
+            }
+        )
+    }
 
 
 
