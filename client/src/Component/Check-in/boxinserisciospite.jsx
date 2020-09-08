@@ -64,7 +64,7 @@ const BoxInserisciOspite=(props)=> {
         if(document.forms[0].checkValidity()===false){
             return;
         }
-        axios.post("https://localhost:9000/gestisciPrenotazioni/inserisciOspiti",state)
+        axios.post("/gestisciPrenotazioni/inserisciOspiti",state)
             .then((response)=>{
                 if(response.data=="1"){
                     setOpenConferma(true);

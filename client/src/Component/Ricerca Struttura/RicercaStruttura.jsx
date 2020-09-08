@@ -87,7 +87,7 @@ const RicercaStruttura=(props)=> {
             return
         }
         alert(JSON.stringify(state));
-        axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
+        axios.post("/prenotazione/ricercaStruttura", state)
             .then((response)=>{
                 if(strutture!=[]){
                     strutture[0]=null;
