@@ -42,15 +42,9 @@ const EsploraStruttura=()=>{
     const [preferiti, setPreferiti]=React.useState(false);
     const [openConfermaPreferiti, setOpenConfermaPreferiti]=React.useState(false);
     const [tipoPreferiti, setTipoPreferiti]=React.useState("");
-    const [immagine, setImmagine]=React.useState();
+
 
     React.useLayoutEffect(()=> {
-        axios.post('https://localhost:9000/getImg',{id_struttura})
-            .then(response=>{
-                console.log(response.data);
-                setImmagine(response.data.immagine);
-            })
-
         axios.post("https://localhost:9000/prenotazione/esploraStruttura",{id_struttura,data_inizio,data_fine,npl,id_utente})
             .then((response)=>{
                 setStruttura(response.data[1]);
@@ -158,24 +152,27 @@ const EsploraStruttura=()=>{
                         </div>
                         }
                     </div>
-
-                    <div className="row">
-                        <div className="col">
-                            <img src={'https://firebasestorage.googleapis.com/v0/b/webnbapp.appspot.com/o/images%2FWhatsApp%20Image%202020-08-08%20at%2000.35.47.jpeg?alt=media&token=c662736c-1c3c-4b13-a877-840fcc8a29c8'} style={{width: "100%"}}/>
-                            <br/>
+                    {struttura.map(value=>
+                        <div>
+                        <div className="row">
+                            <div className="col">
+                                <img src={value.immagine_1} style={{width: "100%"}}/>
+                                <br/>
+                            </div>
                         </div>
-                    </div>
-                    <div className="row">
+                        <div className="row">
                         <br/>
-                    </div>
-                    <div className="row">
+                        </div>
+                        <div className="row">
                         <div className="col-6">
-                            <img src={cucina} style={{width: "100%", height: "90%"}}/>
+                        <img src={value.immagine_2} style={{width: "100%", height: "90%"}}/>
                         </div>
                         <div className="col-6">
-                            <img src={giardino} style={{width: "100%", height: "90%"}}/>
+                        <img src={value.immagine_3} style={{width: "100%", height: "90%"}}/>
+                        </div>
                         </div>
                     </div>
+                    )}
                     <div className="row">
                         <div className="col-6">
                             <div style={{

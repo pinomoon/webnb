@@ -210,8 +210,6 @@ const InserisciStruttura=()=>{
         const valore=target.files[0];
         setImmagine1(valore);
 
-
-
     };
     const handleChangeImg2=(event)=>{
         const target=event.target;
@@ -389,6 +387,7 @@ const InserisciStruttura=()=>{
 
         )}
     )
+         alert('Immagini caricate!');
     }
 
 

@@ -54,7 +54,7 @@ const ElencoPreferiti=()=> {
                                 <div className="col-sm-6 col-md-4 col-lg-4">
                                     <section className="cards clearfix">
                                         <div className="card" style={{width:"100%",height:"100%"}}>
-                                            <img className="card_image" src={villa}  alt=" Villa "/>
+                                            <img className="card_image" src={value.immagine_1}  alt=" Villa "/>
                                             <div className="card_copy">
                                                 <h4>{value.nome_struttura}</h4>
                                                 {value.tipo==="bnb" &&

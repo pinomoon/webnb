@@ -45,8 +45,8 @@ const Homepage =()=>{
 
 
     const [luogop]=React.useState("Sicilia");
-    const [data_iniziop]=React.useState("2020-07-10");
-    const [data_finep]=React.useState("2020-07-13");
+    const [data_iniziop]=React.useState("2020-09-10");
+    const [data_finep]=React.useState("2020-09-13");
     const [nplp]=React.useState("4");
     const [disdetta_gratuitap]=React.useState("10000");
     const [modalita_di_pagamentop]=React.useState("carta,struttura,anticipo_carta");
@@ -305,7 +305,7 @@ const Homepage =()=>{
                                         <div className="col-sm-6 col-md-4 col-lg-4">
                                             <section className="cards clearfix">
                                                 <div className="card" style={{width:"100%",height:"100%"}}>
-                                                    <img className="card_image" src={villa}  alt=" Villa "/>
+                                                    <img className="card_image" src={strutturep.immagine_1}  alt=" Villa "/>
                                                     <div className="card_copy">
                                                         <h5 className="card-title">{strutturep.nome_struttura}</h5>
 
