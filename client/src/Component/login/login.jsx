@@ -126,7 +126,7 @@ const Login =()=>{
                                         Inserire password
                                     </div>
 
-                                    <Button id="recupero"  href="https://localhost:3000/login/passwordDimenticata" style={{fontSize:"11px",marginLeft:"-10px",color:"#ff6300"}}><h7>Password dimenticata?</h7></Button>
+                                    <Button id="recupero"  href="/login/passwordDimenticata" style={{fontSize:"11px",marginLeft:"-10px",color:"#ff6300"}}><h7>Password dimenticata?</h7></Button>
                                     <div className="row">
                                         <div className="col-1">
                                             <Button href="/" style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>

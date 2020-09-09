@@ -45,7 +45,7 @@ const BoxConfermaRecPass=(props)=> {
                 </DialogContent>
                 <DialogActions id="action">
                     {responseType == "1"&&
-                    < Button href="https://localhost:3000/" onClick={handleClose}color="primary">HomePage</Button>
+                    < Button href="/" onClick={handleClose}color="primary">HomePage</Button>
                     }
                     {responseType == "2"&&
                     < Button onClick={handleClose}style={{color:"#ff6300"}}>Chiudi</Button>

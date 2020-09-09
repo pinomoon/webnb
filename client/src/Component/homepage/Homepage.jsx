@@ -39,7 +39,7 @@ const Homepage =()=>{
     const [ricerca, setRicerca]=React.useState(false);
     const state={luogo,data_inizio,data_fine,npl};
     const [strutture, setStrutture]=React.useState([]);
-    const href="https://localhost:3000/ricercastruttura?luogo="+luogo+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?npl="+npl;
+    const href="/ricercastruttura?luogo="+luogo+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?npl="+npl;
     const[openNoDate, setOpenNoDate]=React.useState(false);
     const[openErroreDate, setOpenErroreDate]=useState(false);
 

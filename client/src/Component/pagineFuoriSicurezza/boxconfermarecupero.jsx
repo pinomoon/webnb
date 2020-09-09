@@ -48,7 +48,7 @@ const BoxConfermaRecupero=(props)=> {
                 </DialogContent>
                 <DialogActions id="action">
                     {responseType == "1"&&
-                    < Button href="https://localhost:3000/login" onClick={handleClose}style={{color:"#ff6300"}}>Vai al Login</Button>
+                    < Button href="/login" onClick={handleClose}style={{color:"#ff6300"}}>Vai al Login</Button>
                     }
                     {responseType == "2"&&
                     < Button onClick={handleClose}style={{color:"#ff6300"}}>Chiudi</Button>
