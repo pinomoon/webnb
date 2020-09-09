@@ -76,7 +76,7 @@ const BoxEliminaPref=(props)=> {
                 <DialogTitle id="alert-dialog-slide-title">{"Elimina struttura dai preferiti"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        <p>Sei sicuro di voler eliminare questa struttura dai preferiti</p>
+                        <p>Sei sicuro di voler eliminare questa struttura dai preferiti?</p>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions id="action">
