@@ -85,7 +85,7 @@ const AggiungiCamera  =(props) =>{
             return;
         }
         if(window.confirm("Sei sicuro di voler inserire questa camera? Una volta inserita potrà solo essere eliminata, non modificata")) {
-            axios.post("/gestisciStrutture/aggiungiCamera", state)
+            axios.post("https://localhost:9000/gestisciStrutture/aggiungiCamera", state)
                 .then((response) => {
                     setTipoRisposta(response.data);
                     if (response.data == "1") {

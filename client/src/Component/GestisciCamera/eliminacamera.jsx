@@ -38,7 +38,7 @@ const EliminaCamera=()=>{
     const [openErrore, setOpenErrore]=useState(false);
 
     React.useLayoutEffect(()=>{
-        axios.post("/gestisciStrutture/mostraCamera", {id_struttura})
+        axios.post("https://localhost:9000/gestisciStrutture/mostraCamera", {id_struttura})
             .then((response) => {
                 if (response.data[0] == "1") {
                     setCamere(response.data[1]);
@@ -63,7 +63,7 @@ const EliminaCamera=()=>{
         setSelectedCamera(camera.id_camera);
         if(window.confirm("Sei sicuro di voler eliminare questa camera? Una volta eliminata " +
             "non potrai più tornare indietro")) {
-            axios.post("/gestisciStrutture/eliminaCamera", {id_camera: camera.id_camera})
+            axios.post("https://localhost:9000/gestisciStrutture/eliminaCamera", {id_camera: camera.id_camera})
                 .then((response) => {
                     if (response.data == "1") {
                         setOpenConferma(true);

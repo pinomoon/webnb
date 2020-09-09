@@ -24,7 +24,7 @@ const ElencoPreferiti=()=> {
     };
 
     React.useLayoutEffect(()=>{
-        axios.post("/iMieiPreferiti", {id_utente})
+        axios.post("https://localhost:9000/iMieiPreferiti", {id_utente})
             .then((response)=>{
                 if(response.data[0]=="1") {
                     setPreferiti(response.data[1]);

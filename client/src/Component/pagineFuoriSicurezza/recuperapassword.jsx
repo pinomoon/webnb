@@ -55,7 +55,7 @@ const RecuperaPassword=()=>{
             return;
         }
         event.preventDefault();
-        axios.post('/accesso/nuoveCredenziali', state)
+        axios.post('https://localhost:9000/accesso/nuoveCredenziali', state)
             .then((response)=>{
                 if(response.data=="1"){
                     setTipoRisposta("1");

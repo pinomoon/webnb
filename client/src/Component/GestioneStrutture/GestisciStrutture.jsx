@@ -19,7 +19,7 @@ const GestisciStrutture=()=>{
 
 
     React.useLayoutEffect(()=>{
-        axios.post("/gestisciStrutture",{id_utente})
+        axios.post("https://localhost:9000/gestisciStrutture",{id_utente})
             .then((response)=>{
                 setStrutture(response.data[1]);
             })

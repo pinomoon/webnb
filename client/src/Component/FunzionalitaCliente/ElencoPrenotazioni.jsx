@@ -16,7 +16,7 @@ const ElencoPrenotazioni=()=>{
     const[openRecensisci, setOpenRecensisci]=useState(false);
 
     React.useLayoutEffect(()=>{
-        axios.post("/leMiePrenotazioni",{id_utente})
+        axios.post("https://localhost:9000/leMiePrenotazioni",{id_utente})
             .then((response)=>{
                 if(response.data[0]=="1"){
                     setPrenotazioni(response.data[1]);

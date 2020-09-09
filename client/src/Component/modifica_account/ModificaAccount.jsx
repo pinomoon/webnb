@@ -28,7 +28,7 @@ const ModificaAccount=()=>{
 
     React.useLayoutEffect(()=>{
         async function fetchData(){
-            await axios.post("/modificaAccount",{id_utente})
+            await axios.post("https://localhost:9000/modificaAccount",{id_utente})
                 .then((response)=>{
                     if(response.data[0]=="1"){
                         setNome(response.data[1][0].nome);
@@ -82,7 +82,7 @@ const ModificaAccount=()=>{
             return;
         }
         event.preventDefault();
-        let res = await axios.post('/modificaAccount/salvamodifiche', state)
+        let res = await axios.post('https://localhost:9000/modificaAccount/salvamodifiche', state)
             .then(function(response){
                 if(response.data=="1"){
                     setTipoRisposta("1");

@@ -57,7 +57,7 @@ const Homepage =()=>{
     const statep={luogop,data_iniziop,data_finep,nplp,disdetta_gratuitap,modalita_di_pagamentop,servizip,costo_camerap,colazione_inclusap};
 
     React.useLayoutEffect(()=>{
-        axios.post("/prenotazione/ricercaStrutturap", statep)
+        axios.post("https://localhost:9000/prenotazione/ricercaStrutturap", statep)
             .then((response)=>{
                 setStrutturep(response.data[1]);
             })
@@ -90,7 +90,7 @@ const Homepage =()=>{
             return
         }
         setStructureCookie({luogo,data_inizio,data_fine,npl});
-        axios.post("/prenotazione/ricercaStruttura", state)
+        axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
             .then((response)=>{
                 setStrutture(response.data[1]);
                 handleClickRicerca();

@@ -48,7 +48,7 @@ const BoxEliminaPref=(props)=> {
     };
 
     const handleSubmit=()=>{
-        axios.post("/iMieiPreferiti/eliminaPreferiti",{id_utente, id_struttura:struttura})
+        axios.post("https://localhost:9000/iMieiPreferiti/eliminaPreferiti",{id_utente, id_struttura:struttura})
             .then((response)=>{
                 if(response.data=="1"){
                     setOpenConferma(true);

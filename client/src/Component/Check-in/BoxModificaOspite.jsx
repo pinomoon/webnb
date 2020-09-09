@@ -54,7 +54,7 @@ const BoxModficaOspite=(props)=> {
     };
 
     const loadData= async()=>{
-        await  axios.post("/gestisciPrenotazioni/richiediOspite",{id_dati_ospiti:id_ospite})
+        await  axios.post("https://localhost:9000/gestisciPrenotazioni/richiediOspite",{id_dati_ospiti:id_ospite})
             .then((response)=>{
                 if(response.data[0]=="1"){
                     setNomeOspite(response.data[1][0].nome_ospite);
@@ -127,7 +127,7 @@ const BoxModficaOspite=(props)=> {
             return;
         }
         event.preventDefault();
-        await axios.post("/gestisciPrenotazioni/modificaDatiOspiti", state)
+        await axios.post("https://localhost:9000/gestisciPrenotazioni/modificaDatiOspiti", state)
             .then((response)=>{
                 if(response.data=="1"){
                     setOpenConferma(true);

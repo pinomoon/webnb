@@ -151,7 +151,7 @@ const Registrazione=()=>{
         }
 
         event.preventDefault();
-        axios.post('/registrazione', state)
+        axios.post('https://localhost:9000/registrazione', state)
             .then((response)=>{
                 if(response.data=="1"){     //email già presente
                     setBoxType(response.data);

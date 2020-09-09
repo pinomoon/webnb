@@ -46,7 +46,7 @@ const Checkout=(props)=> {
         setOpenErrore(false);
     };
     const handleSubmit=()=>{
-        axios.post("/gestisciPrenotazioni/checkoutManuale",{id_prenotazione:prenotazione})
+        axios.post("https://localhost:9000/gestisciPrenotazioni/checkoutManuale",{id_prenotazione:prenotazione})
             .then((response)=>{
                 if(response.data=="1"){
                     setOpenCheckout(true);

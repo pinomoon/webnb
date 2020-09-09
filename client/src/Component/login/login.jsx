@@ -44,7 +44,7 @@ const Login =()=>{
             return;
         }
         event.preventDefault();
-        axios.post('/accesso', state)
+        axios.post('https://localhost:9000/accesso', state)
             .then((response)=>{
                 if(response.data[0]=="1"){
                     setTipoRisposta("1");

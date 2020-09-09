@@ -33,7 +33,7 @@ const ConfermaAccount=()=>{
         setOpenConferma(false);
     };
     const richiesta=()=> {
-        axios.post('/accountConferma', {token})
+        axios.post('https://localhost:9000/accountConferma', {token})
             .then((response) => {
                 setTipoRisposta(response.data);
             })

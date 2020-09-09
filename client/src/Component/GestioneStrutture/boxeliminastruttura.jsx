@@ -47,7 +47,7 @@ const BoxEliminaStruttura=(props)=>{
     };
 
     const handleElimina=()=>{
-        axios.post("/gestisciStrutture/eliminaStruttura",{id_struttura})
+        axios.post("https://localhost:9000/gestisciStrutture/eliminaStruttura",{id_struttura})
             .then((response)=>{
                 if(response.data=="1"){
                     setOpenConferma(true);

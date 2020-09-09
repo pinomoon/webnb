@@ -30,7 +30,7 @@ const PasswordDimenticata=()=>{
             return;
         }
         event.preventDefault();
-        axios.post("/accesso/recuperaCredenziali", state)
+        axios.post("https://localhost:9000/accesso/recuperaCredenziali", state)
             .then((response)=>{
                 if (response.data=="1"){
                     setTipoRisposta("1");

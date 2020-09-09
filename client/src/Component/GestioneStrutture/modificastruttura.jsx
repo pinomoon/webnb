@@ -62,7 +62,7 @@ const ModificaStruttura=()=>{
         }
         event.preventDefault();
         
-        await axios.post("/gestisciStrutture/salvaModifiche",state)
+        await axios.post("https://localhost:9000/gestisciStrutture/salvaModifiche",state)
             .then((response)=>{
                 setTipoRispostaModifica(response.data);
                 handleClickOpenConfermaModifica()
@@ -73,7 +73,7 @@ const ModificaStruttura=()=>{
     };
     React.useLayoutEffect(()=>{
         async function fetchData(){
-            await axios.post("/gestisciStrutture/modificaStruttura",{id_struttura})
+            await axios.post("https://localhost:9000/gestisciStrutture/modificaStruttura",{id_struttura})
                 .then((response)=>{
                     if(response.data[0]=="1"){
                         setNomeStruttura(response.data[1][0].nome_struttura);

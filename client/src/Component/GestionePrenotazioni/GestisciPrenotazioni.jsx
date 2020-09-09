@@ -15,7 +15,7 @@ const GestisciPrenotazioni=()=> {
     const[openCheckout,setOpenCheckout]=useState(false);
 
     React.useLayoutEffect(()=>{
-        axios.post("/gestisciPrenotazioni",{id_utente})
+        axios.post("https://localhost:9000/gestisciPrenotazioni",{id_utente})
             .then((response)=>{
                 if(response.data[0]=="1"){
                     setPrenotazione(response.data[1]);
