@@ -47,18 +47,12 @@ const BoxConfermaRecupero=(props)=> {
 
                 </DialogContent>
                 <DialogActions id="action">
-                    {responseType == "1"&&
-                    < Button href="/login" onClick={handleClose}style={{color:"#ff6300"}}>Vai al Login</Button>
-                    }
-                    {responseType == "2"&&
-                    < Button onClick={handleClose}style={{color:"#ff6300"}}>Chiudi</Button>
-                    }
-                    {responseType == "3"&&
-                    < Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
-                    }
-                    {responseType == "4"&&
-                    < Button onClick={handleClose}style={{color:"#ff6300"}}>Chiudi</Button>
-                    }
+                    {(responseType == "1")? (
+                        <Button href="/login" onClick={handleClose}style={{color:"#ff6300"}}>Vai al Login</Button>
+                    ):(
+                        <Button onClick={handleClose}style={{color:"#ff6300"}}>Chiudi</Button>
+                    )}
+
                 </DialogActions>
             </Dialog>
         </div>

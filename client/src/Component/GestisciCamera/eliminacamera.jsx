@@ -110,6 +110,7 @@ const EliminaCamera=()=>{
                                                 </ul>
 
                                             </div>
+                                            <Button href={'/lemiestrutture'} style={{color:"#ff6300"}}>Indietro</Button>
                                             <Button onClick={()=>handleElimina(camera)} style={{color:"#ff6300"}}> <DeleteOutlineIcon/> Elimina</Button>
                                         </div>
                                     </div>

@@ -40,7 +40,7 @@ export default function BoxConferma(props) {
 
                 </DialogContent>
                 <DialogActions id="action">
-                    <Button  href="/" onClick={handleClose}style={{color:"#ff6300"}}>Torna alla Home</Button>
+                    <Button  href="/" onClick={handleClose} style={{color:"#ff6300"}}>Torna alla Home</Button>
                 </DialogActions>
             </Dialog>
         </div>

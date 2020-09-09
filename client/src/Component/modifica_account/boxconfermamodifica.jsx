@@ -49,21 +49,12 @@ const BoxConfermaModifica=(props)=> {
 
                 </DialogContent>
                 <DialogActions id="action">
-                    {responseType == "1"&&
+                    {(responseType == "1")? (
                     < Button href="/" onClick={handleClose}style={{color:"#ff6300"}}>Vai alla tua Homepage</Button>
-                    }
-                    {responseType == "2"&&
+                    ):(
                     < Button  onClick={handleClose}style={{color:"#ff6300"}}>Chiudi</Button>
-                    }
-                    {responseType == "3"&&
-                    < Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
-                    }
-                    {responseType == "4"&&
-                    < Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
-                    }
-                    {responseType == "5;"&&
-                    < Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
-                    }
+                    )}
+
                 </DialogActions>
             </Dialog>
         </div>

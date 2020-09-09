@@ -414,7 +414,7 @@ const ModificaAccount=()=>{
 
                                 <div className="row">
                                     <div className="col-1">
-                                        <Button name="ok" id="ok"  href={"/"} style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
+                                        <Button name="close" id="close"  href={"/"} style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
                                     </div>
                                     <div className="col-9">
                                     </div>

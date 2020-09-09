@@ -44,7 +44,7 @@ const BoxQuestura=(props)=> {
                             style={{marginLeft: "-10px", color: "#ff6300"}}>Gestisci Prenotazioni</Button>
                     }
                     {responseType=="2"&&
-                    <Button name="ok" id="ok" onClick={handleClose}
+                    <Button name="close" id="close" onClick={handleClose}
                             style={{marginLeft: "-10px", color: "#ff6300"}}>Chiudi</Button>
                     }
                 </DialogActions>

@@ -625,8 +625,19 @@ const ModificaStruttura=()=>{
                                     <Form.Control as="textarea" rows="3" value={descrizione}
                                                   onChange={handleChangeDescrizione}/>
                                 </Form.Group>
-                                <div className="col-1">
-                                    <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Modifica</Button>
+                                <br></br>
+                                <div className="row">
+                                    <div className="col-sm-3 col-md-2 col-lg-1">
+                                        <Button href="/lemiestrutture" style={{marginLeft:"-10px",color:"#ff6300"}}>Indietro</Button>
+                                    </div>
+                                    <div className="col-sm-6 col-md-8 col-lg-9">
+                                    </div>
+                                    <div className="col-sm-3 col-md-2 col-lg-1">
+                                        <Button name="ok" id="ok" type="submit" onClick={handleSubmit} style={{marginLeft:"-10px",color:"#ff6300"}}>Modifica</Button>
+                                    </div>
+                                    <div className="row">
+                                        <br/>
+                                    </div>
                                 </div>
                             </form>
                         </div>

@@ -46,7 +46,7 @@ const BoxConfermaPreferiti=(props)=> {
 
                 </DialogContent>
                 <DialogActions id="action">
-                    < Button onClick={handleClose}style={{color:"#ff6300"}}>Chiudi</Button>
+                    <Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
                 </DialogActions>
             </Dialog>
         </div>

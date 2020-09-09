@@ -718,7 +718,6 @@ const InserisciStruttura=()=>{
                                     </div>
                                     <div className="row">
                                         <br/>
-
                                     </div>
                                 </div>
                                 <br></br>

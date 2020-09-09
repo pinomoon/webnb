@@ -45,10 +45,10 @@ const BoxConfermaRecPass=(props)=> {
                 </DialogContent>
                 <DialogActions id="action">
                     {responseType == "1"&&
-                    < Button href="/" onClick={handleClose}color="primary">HomePage</Button>
+                    < Button href="/" onClick={handleClose} style={{color:"#ff6300"}}>HomePage</Button>
                     }
                     {responseType == "2"&&
-                    < Button onClick={handleClose}style={{color:"#ff6300"}}>Chiudi</Button>
+                    < Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>
                     }
                     {responseType == "3"&&
                     < Button onClick={handleClose} style={{color:"#ff6300"}}>Chiudi</Button>

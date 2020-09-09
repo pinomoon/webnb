@@ -90,7 +90,7 @@ const BoxRecensisci=(props)=> {
                 </DialogContent>
                 <DialogActions id="action">
                     <div>
-                        <Button name="ok" id="ok" onClick={handleClose}
+                        <Button name="close" id="close" onClick={handleClose}
                                 style={{marginLeft: "-10px", color: "#ff6300"}}>Chiudi</Button>
                         <Button name="ok" id="ok" onClick={handleSubmit}
                                 style={{marginLeft: "-10px", color: "#ff6300"}}>Invia</Button>

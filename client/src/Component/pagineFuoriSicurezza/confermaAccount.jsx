@@ -72,18 +72,12 @@ const ConfermaAccount=()=>{
 
                 </DialogContent>
                 <DialogActions id="action">
-                    {tipoRisposta == "1" &&
-                    < Button href="/" onClick={handleClose} color="primary">HomePage</Button>
-                    }
-                    {tipoRisposta == "2" &&
-                    < Button href="/" onClick={handleClose} color="primary">HomePage</Button>
-                    }
-                    {tipoRisposta == "3" &&
-                    < Button href="/login"onClick={handleClose} color="primary">Login</Button>
-                    }
-                    {tipoRisposta == "4" &&
-                    < Button href="/" onClick={handleClose} color="primary">HomePage</Button>
-                    }
+
+                    {(tipoRisposta == "3")? (
+                        <Button href="/login" onClick={handleClose} color="primary">Login</Button>
+                    ):(
+                        <Button href="/" onClick={handleClose} color="primary">HomePage</Button>
+                    )}
                 </DialogActions>
             </Dialog>
         </div>

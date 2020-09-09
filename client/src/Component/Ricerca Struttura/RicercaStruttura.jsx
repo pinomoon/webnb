@@ -652,7 +652,7 @@ const RicercaStruttura=(props)=> {
                                                 <p className="card-text"> Indirizzo: {struttura.indirizzo_struttura},{struttura.citta},{struttura.regione} .</p>
                                                 <h5> Prezzo: {struttura.prezzo[0].prezzo_struttura} €</h5>
                                                 <Tooltip title="Esplora Struttura" placement="bottom-start">
-                                                    <Button color="inherit" href={href} style={{width:"40%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
+                                                    <Button color="inherit" href={href} style={{width:"100%",marginLeft:"auto",backgroundColor:"#32508f",color:"white",display:"block"}}>Esplora</Button>
                                                 </Tooltip>
                                             </div>
                                         </div>
@@ -662,7 +662,8 @@ const RicercaStruttura=(props)=> {
 
 
                         );
-                    }))}{struttureRicerca[0]==null&& strutture[0]!=null&&(strutture.map((struttura)=>{
+                    }))}
+                    {struttureRicerca[0]==null&& strutture[0]!=null&&(strutture.map((struttura)=>{
 
                     var href="/esplora?struttura="+struttura.id_struttura+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?npl="+npl;
 
