@@ -172,7 +172,7 @@ const Homepage =()=>{
                                 </div>
                                 <div className="col-sm-12 col-md-10 col-lg-10">
                                     <div style={{
-                                        width: "80%",
+                                        width: "90%",
                                         height: "auto",
                                         backgroundColor: "white",
                                         margin: "auto",
@@ -300,9 +300,7 @@ const Homepage =()=>{
                         <div className="row">
                             { strutturep[0]!=[] && (strutturep.map((strutturep)=>{
                                 return(
-                                    <div key={strutturep.id_struttura}>
-
-                                        <div className="col-sm-6 col-md-4 col-lg-4">
+                                        <div key={strutturep.id_struttura} className="col-sm-6 col-md-4 col-lg-4">
                                             <section className="cards clearfix">
                                                 <div className="card" style={{width:"100%",height:"100%"}}>
                                                     <img className="card_image" src={strutturep.immagine_1}  alt=" Villa "/>
@@ -334,7 +332,6 @@ const Homepage =()=>{
 
                                             </section>
                                         </div>
-                                    </div>
 
                                 );
                             }))}

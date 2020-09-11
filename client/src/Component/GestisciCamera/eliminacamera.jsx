@@ -89,7 +89,6 @@ const EliminaCamera=()=>{
                     <div className="row">
                         {camere.map(camera=>{
                             return(
-
                                 <div className="col-sm-12 col-md-6 col-lg-4">
                                     <div className="card text-center" style={{width: "97%"}}>
                                         <div className="card-body">

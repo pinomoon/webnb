@@ -621,7 +621,7 @@ const RicercaStruttura=(props)=> {
                         </div>
                     </div>
                 </div>
-                <div className="col-sm-5 col-md-4 col-lg-9" style={{marginTop:"30px"}}>
+                <div className="col-sm-5 col-md-9 col-lg-9" style={{marginTop:"30px"}}>
                     {struttureRicerca!=[] &&(struttureRicerca.map((struttura)=>{
 
                         var href="/esplora?struttura="+struttura.id_struttura+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?npl="+npl;
