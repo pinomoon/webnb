@@ -435,10 +435,12 @@ async function prenota(req, res, next) {
 
 async function deleteFakePren(){
     const db=await makeDb(config);
+    let now= new Date(Date.now());
+    let conv= new Date(now.getTime()-180000) //3 minuti per completare la prenotazione
     try {
         await withTransaction(db, async () => {
-        await db.query("DELETE FROM prenotazione WHERE conferma=0 ",[
-
+        await db.query("DELETE FROM prenotazione WHERE data_prenotazione<=? AND conferma=0 ",[
+            conv
         ]).catch(err=>{
             throw err;
         })
