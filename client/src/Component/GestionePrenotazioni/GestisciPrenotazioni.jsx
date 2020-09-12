@@ -175,6 +175,9 @@ const GestisciPrenotazioni=()=> {
                             })}
 
                     </div>
+                    {prenotazioni[0] == null &&
+                    <h5 align="center"> Non è presente nessuna prenotazione!</h5>
+                    }
 
 
 

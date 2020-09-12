@@ -302,13 +302,13 @@ const Registrazione=()=>{
 
                                 <div className="form-group">
                                     <div className="row">
-                                        <div className="col-6">
+                                        <div className="col-12">
                                             <label htmlFor="credit-card">Titolare</label>
                                             <input name="titolare_carta" id="titolare_carta" type="name" className="form-control"
                                                    size="32" maxLength="40"
                                                    value={state.titolare_carta} onChange={handleChangeTitolareCarta}/>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-12">
                                             <label htmlFor="credit-card">Numero</label>
                                             <input name="numero_carta" id="numero_carta" type="credit-card" className="form-control"
                                                    size="32" maxLength="40" pattern="[0-9]{13,16}"
@@ -317,15 +317,15 @@ const Registrazione=()=>{
                                     </div>
                                     <br/>
                                     <div className="row">
-                                        <div className="col-4">
+                                        <div className="col-6">
                                             <label htmlFor="credit-card">Scadenza</label>
                                             <input name="scadenza" id="scadenza" type="text" className="form-control"
-                                                   size="32" maxLength="40" placeholder="MM/AA" pattern="(^[0][1-9]\/[0][1-9]$)|(^[1-2][0-9]\/[0][1-9]$)|(^[0][1-9]\/[1][0-2]$)|(^[1-2][0-9]\/[1][0-2]$)|(^[3][0-1]\/[0][1-9]$)|(^[3][0-1]\/[1][0-2]$)"
+                                                   size="32" maxLength="40" placeholder="AA/MM" pattern="(^[0][1-9]\/[0][1-9]$)|(^[1-2][0-9]\/[0][1-9]$)|(^[0][1-9]\/[1][0-2]$)|(^[1-2][0-9]\/[1][0-2]$)|(^[3][0-1]\/[0][1-9]$)|(^[3][0-1]\/[1][0-2]$)"
                                                    value={state.scadenza} onChange={handleChangeScadenza}/>
                                         </div>
 
 
-                                        <div className="col-4">
+                                        <div className="col-6">
                                             <label htmlFor="credit-card">CVC</label>
                                             <input name="cvc" id="cvc" type="text" className="form-control"
                                                    size="32" maxLength="40" placeholder="123" pattern="^[0-9]{3,3}$"

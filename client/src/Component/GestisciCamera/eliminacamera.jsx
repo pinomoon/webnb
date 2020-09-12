@@ -118,6 +118,9 @@ const EliminaCamera=()=>{
 
                             ); })}
                     </div>
+                    {camere[0] == null &&
+                    <h5 align="center"> Non è presente nessuna camera!</h5>
+                    }
                     <Button href={'/lemiestrutture'} style={{color:"#ff6300"}}>Indietro</Button>
                 </div>
             </div>

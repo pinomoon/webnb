@@ -170,7 +170,7 @@ const Homepage =()=>{
                             <div className="row">
                                 <div className="col-md-1 col-lg-1">
                                 </div>
-                                <div className="col-sm-12 col-md-10 col-lg-10">
+                                <div className="col-sm-12 col-md-12 col-lg-12">
                                     <div style={{
                                         width: "90%",
                                         height: "auto",
@@ -337,9 +337,15 @@ const Homepage =()=>{
                             }))}
 
                         </div>
-                        {strutturep[0]==null &&
-                        <h5 align="center">Non abbiamo nessuna struttura da consigliarti al momento!</h5>
 
+                        {strutturep[0]==null &&
+                        <div className="row">
+                            <div className="col-sm-3 col-md-8 col-lg-2">
+                            </div>
+                            <div className="col-sm-6 col-md-8 col-lg-8">
+                        <h5 align="center">Non abbiamo nessuna struttura da consigliarti al momento!</h5>
+                            </div>
+                        </div>
                         }
                     </div>
                 </div>

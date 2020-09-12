@@ -126,7 +126,7 @@ async function ricercap(req, res, next) {
                 AND (struttura.nome_struttura LIKE ? OR struttura.regione LIKE ? OR struttura.citta LIKE ? OR struttura.stato LIKE ?) AND camera.numero_posti_letto>=?  \
                 AND (struttura.disdetta_gratuita<? AND struttura.disdetta_gratuita>?) AND struttura.modalita_di_pagamento LIKE ? AND camera.costo_camera<=? AND camera.colazione_inclusa LIKE ? AND struttura.servizi LIKE ?)\
                 EXCEPT (SELECT camera.id_struttura FROM camera,prenotazione WHERE prenotazione.id_camera=camera.id_camera \
-                AND (prenotazione.data_fine>? AND prenotazione.data_inizio<?))) GROUP BY struttura.id_struttura, nome_struttura,tipo, indirizzo_struttura, citta, regione, stato, tipo, immagine_1 ORDER BY nome_struttura ASC"
+                AND (prenotazione.data_fine>? AND prenotazione.data_inizio<?) AND prenotazione.stato_prenotazione=('in attesa di conferma' OR 'confermata'))) GROUP BY struttura.id_struttura, nome_struttura,tipo, indirizzo_struttura, citta, regione, stato, tipo, immagine_1 ORDER BY nome_struttura ASC"
                 , [
                     req.body.luogop,
                     req.body.luogop,
@@ -434,16 +434,14 @@ async function prenota(req, res, next) {
         next(createError(500));
     }
 }
- let deletefakepren=setInterval(deleteFakePren,100000);
+ let deletefakepren=setInterval(deleteFakePren,10000);
 
 async function deleteFakePren(){
     const db=await makeDb(config);
-    let now= new Date(Date.now());
-    let conv= new Date(now.getTime()-600000);
     try {
         await withTransaction(db, async () => {
-        await db.query("DELETE FROM prenotazione WHERE  data_prenotazione<=? AND conferma=0 ",[
-            conv
+        await db.query("DELETE FROM prenotazione WHERE conferma=0 ",[
+
         ]).catch(err=>{
             throw err;
         })

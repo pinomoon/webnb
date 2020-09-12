@@ -247,7 +247,7 @@ const Prenotazione =()=>{
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-8">
+                                        <div className="col-6">
                                             <label htmlFor="scadenza">Scadenza</label>
                                             <input name="scadenza" id="scadenza" type="text" className="form-control"
                                                    size="32" maxLength="40" placeholder="MM/AA" pattern="(^[0][1-9]\/[0][1-9]$)|(^[1-2][0-9]\/[0][1-9]$)|(^[0][1-9]\/[1][0-2]$)|(^[1-2][0-9]\/[1][0-2]$)|(^[3][0-1]\/[0][1-9]$)|(^[3][0-1]\/[1][0-2]$)"
@@ -255,7 +255,7 @@ const Prenotazione =()=>{
                                         </div>
 
 
-                                        <div className="col-4">
+                                        <div className="col-6">
                                             <label htmlFor="credit-card">CVC</label>
                                             <input name="cvc" id="cvc" type="text" className="form-control"
                                                    size="32" maxLength="40" placeholder="123" pattern="^[0-9]{3,3}$"
