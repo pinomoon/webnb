@@ -58,11 +58,10 @@ async function ricerca(req, res, next) {
             results=await db.query("SELECT struttura.id_struttura,nome_struttura,tipo,indirizzo_struttura,citta,regione,stato,  tipo,immagine_1\
                 FROM struttura, gallery_struttura,camera\
                 WHERE struttura.id_struttura=gallery_struttura.id_struttura AND struttura.id_struttura=camera.id_struttura \
-                AND struttura.id_struttura IN ((SELECT struttura.id_struttura FROM struttura , camera WHERE camera.id_struttura=struttura.id_struttura\
+                AND struttura.id_struttura IN (SELECT struttura.id_struttura FROM struttura , camera WHERE camera.id_struttura=struttura.id_struttura\
                 AND (struttura.nome_struttura LIKE ? OR struttura.regione LIKE ? OR struttura.citta LIKE ? OR struttura.stato LIKE ?) AND camera.numero_posti_letto>=? AND struttura.tipo LIKE ? \
                 AND (struttura.disdetta_gratuita<? AND struttura.disdetta_gratuita>?) AND struttura.modalita_di_pagamento LIKE ? AND camera.costo_camera<=? AND camera.colazione_inclusa LIKE ? AND struttura.servizi LIKE ?)\
-                EXCEPT (SELECT camera.id_struttura FROM camera,prenotazione WHERE prenotazione.id_camera=camera.id_camera \
-                AND (prenotazione.data_fine>? AND prenotazione.data_inizio<?))) GROUP BY struttura.id_struttura, nome_struttura, tipo, indirizzo_struttura, citta, regione, stato, tipo, immagine_1 ORDER BY nome_struttura ASC"
+                GROUP BY struttura.id_struttura, nome_struttura, tipo, indirizzo_struttura, citta, regione, stato, tipo, immagine_1 ORDER BY nome_struttura ASC"
                 , [
                     req.body.luogo,
                     req.body.luogo,
@@ -76,8 +75,7 @@ async function ricerca(req, res, next) {
                     req.body.costo_camera,
                     req.body.colazione_inclusa,
                     req.body.servizi,
-                    req.body.data_inizio,
-                    req.body.data_fine
+
 
                 ])
                 .catch(err=>{
@@ -122,11 +120,10 @@ async function ricercap(req, res, next) {
             resultsp=await db.query("SELECT struttura.id_struttura,nome_struttura,tipo,indirizzo_struttura,citta,regione,stato,  tipo,immagine_1\
                 FROM struttura, gallery_struttura,camera\
                 WHERE struttura.id_struttura=gallery_struttura.id_struttura AND struttura.id_struttura=camera.id_struttura \
-                AND struttura.id_struttura IN ((SELECT struttura.id_struttura FROM struttura , camera WHERE camera.id_struttura=struttura.id_struttura\
+                AND struttura.id_struttura IN (SELECT struttura.id_struttura FROM struttura , camera WHERE camera.id_struttura=struttura.id_struttura\
                 AND (struttura.nome_struttura LIKE ? OR struttura.regione LIKE ? OR struttura.citta LIKE ? OR struttura.stato LIKE ?) AND camera.numero_posti_letto>=?  \
                 AND (struttura.disdetta_gratuita<? AND struttura.disdetta_gratuita>?) AND struttura.modalita_di_pagamento LIKE ? AND camera.costo_camera<=? AND camera.colazione_inclusa LIKE ? AND struttura.servizi LIKE ?)\
-                EXCEPT (SELECT camera.id_struttura FROM camera,prenotazione WHERE prenotazione.id_camera=camera.id_camera \
-                AND (prenotazione.data_fine>? AND prenotazione.data_inizio<?) AND prenotazione.stato_prenotazione=('in attesa di conferma' OR 'confermata'))) GROUP BY struttura.id_struttura, nome_struttura,tipo, indirizzo_struttura, citta, regione, stato, tipo, immagine_1 ORDER BY nome_struttura ASC"
+                 GROUP BY struttura.id_struttura, nome_struttura,tipo, indirizzo_struttura, citta, regione, stato, tipo, immagine_1 ORDER BY nome_struttura ASC"
                 , [
                     req.body.luogop,
                     req.body.luogop,
@@ -139,8 +136,7 @@ async function ricercap(req, res, next) {
                     req.body.costo_camerap,
                     req.body.colazione_inclusap,
                     req.body.servizip,
-                    req.body.data_iniziop,
-                    req.body.data_finep
+
 
                 ])
                 .catch(err=>{
@@ -180,14 +176,15 @@ async function esplora(req, res, next) {
 
                 results2 = await db.query("SELECT c.id_camera, nome_camera,numero_posti_letto, costo_camera, colazione_inclusa \
                     FROM camera AS c, struttura AS s\
-                    WHERE c.id_struttura=s.id_struttura AND c.id_struttura=? AND c.numero_posti_letto>=? EXCEPT (SELECT camera.id_camera, nome_camera,numero_posti_letto, costo_camera, colazione_inclusa\
+                    WHERE c.id_struttura=s.id_struttura AND c.id_struttura=? AND c.numero_posti_letto>=? AND c.id_camera NOT IN (SELECT camera.id_camera\
                     FROM camera,prenotazione WHERE prenotazione.id_camera=camera.id_camera \
-                    AND (prenotazione.data_fine>? AND prenotazione.data_inizio<?)) \
+                    AND prenotazione.data_fine>? AND prenotazione.data_inizio<? AND (prenotazione.stato_prenotazione='in attesa di conferma' OR  \
+                    prenotazione.stato_prenotazione='confermata')) \
                     ",[
                           req.body.id_struttura,
                           req.body.npl,
-                          req.body.data_fine,
-                          req.body.data_inizio
+                          req.body.data_inizio,
+                          req.body.data_fine
                           
                 ]).catch(err=>{
                     throw  err;

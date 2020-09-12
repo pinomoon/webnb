@@ -368,7 +368,7 @@ const EsploraStruttura=()=>{
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {camere.map((value)=>{
+                                {camere!=[] && (camere.map((value)=>{
                                     let stringa="/prenotazione?id_camera="+value.id_camera+"&?data_inizio="+data_inizio+"&?data_fine="+data_fine+"&?numero_posti_letto="+value.numero_posti_letto;
 
 
@@ -401,13 +401,17 @@ const EsploraStruttura=()=>{
                                         </tr>
                                     );
 
-                                })
+                                }))
 
                                 }
+
                                 </tbody>
                             </table>
-
+                            {camere[0]==null &&
+                            <h6 style={{textAlign:"center",color:"red"}}>Nessuna camera disponibile in queste date!</h6>
+                            }
                         </div>
+
 
 
                     </div>
