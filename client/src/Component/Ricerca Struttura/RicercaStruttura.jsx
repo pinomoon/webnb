@@ -709,8 +709,14 @@ const RicercaStruttura=(props)=> {
 
                     );
                 }))}
+                    {struttureRicerca[0] == null && strutture[0] == null &&
+                    <h5 align="center"> Nessuna struttura trovata che rispetta i criteri di Ricerca!</h5>
+                    }
+
                 </div>
+
             </div>
+
 
 
 

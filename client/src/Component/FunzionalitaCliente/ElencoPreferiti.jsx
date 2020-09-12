@@ -91,9 +91,11 @@ const ElencoPreferiti=()=> {
                         }
 
 
-                        <div className="col-3"></div>
-
                     </div>
+                    {preferiti[0] == null &&
+                    <h5 style={{textAlign:"center"}}> Non hai aggiunto nessuna struttura ai preferiti!</h5>
+                    }
+
 
 
                 </div>

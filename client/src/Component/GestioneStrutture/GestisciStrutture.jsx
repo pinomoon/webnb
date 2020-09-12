@@ -96,6 +96,9 @@ const GestisciStrutture=()=>{
 
                                 </div>
                             ) })}
+                        {strutture[0] == null &&
+                        <div> Non è presente nessuna Struttura!</div>
+                        }
 
                         <div className="col-3"></div>
 

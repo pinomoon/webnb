@@ -153,7 +153,11 @@ const ElencoPrenotazioni=()=>{
                                     </div>
 
                                 )}) }
+
                     </div>
+                    {prenotazioni[0] == null &&
+                    <h5 style={{textAlign:"center"}}> Non è presente nessuna prenotazione!</h5>
+                    }
 
 
                 <div className="col">

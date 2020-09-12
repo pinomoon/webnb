@@ -335,7 +335,12 @@ const Homepage =()=>{
 
                                 );
                             }))}
+
                         </div>
+                        {strutturep[0]==null &&
+                        <h5 align="center">Non abbiamo nessuna struttura da consigliarti al momento!</h5>
+
+                        }
                     </div>
                 </div>
             </section>

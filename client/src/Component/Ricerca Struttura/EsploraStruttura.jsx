@@ -121,7 +121,7 @@ const EsploraStruttura=()=>{
                 <div className="col-sm-12 col-md-7 col-lg-10"
                      style={{backgroundColor: "white", width: "100%", height: "auto", marginTop: "30px"}}>
                     <div className="row">
-                        <div className="col-sm-10 col-lg-10">
+                        <div className="col-sm-10 col-md-10 col-lg-10">
                             {struttura.map(value=>
                                 <h5>{value.nome_struttura}</h5>
                             )}
