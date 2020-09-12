@@ -304,6 +304,8 @@ async function prenota(req, res, next) {
 
     const db = await makeDb(config);
     let results = {};
+    let mail_cliente={};
+    let mail_proprietario={};
     try {
         let date= new Date();
         let year=date.getFullYear();
@@ -349,14 +351,25 @@ async function prenota(req, res, next) {
                 ]).catch(err=>{
                     throw err;
                 });
-            /*
+
+            let mail_cliente=await db.query("SELECT s.nome_struttura, c.nome_camera, s.tipo\
+                FROM struttura AS s,camera AS c WHERE s.id_struttura=c.id_struttura AND s.id_struttura=? AND c.id_camera=?"
+                ,[
+                    req.body.id_struttura,
+                    req.body.id_camera
+                ]).catch(err=>{
+                throw err;
+            });
+
+
             let filename='riepilogoPrenotazione'+req.body.id_utente+'.pdf';
                 let testo="RIEPILOGO PRENOTAZIONE \n\n\n\
                 DATI STRUTTURA:\n\
-                nome struttura:"+req.body.nome_struttura+"\n tipo:"+req.bod.tipo+"\n"+req.body.immagine_1+"\n nome camera:"+req.body.nome_camera+"\
-                \n numero posti letto:"+req.body.npl+"\n\n\n\
+                nome struttura:"+mail_cliente[0].nome_struttura+"\n tipo:"+mail_cliente[0].tipo+"\n"+"\n nome camera:"+mail_cliente[0].nome_camera+"\
+                \n\n\n\
                 DATI PRENOTAZIONE:\n\
-                data richiesta prenotazione:"+now+"\n data inizio soggiorno:"+req.body.data_inizio+"\n data fine soggiorno:"+req.body.data_fine+"\n metodo pagamento:"+req.body.metodo_di_pagamento;                let mydoc=new pdfmaker;
+                data richiesta prenotazione:"+now+"\n data inizio soggiorno:"+req.body.data_inizio+"\n data fine soggiorno:"+req.body.data_fine+"\n metodo pagamento:"+req.body.modalita_pagamento;
+                let mydoc=new pdfmaker;
                 mydoc.pipe(fs.createWriteStream(filename));
                 mydoc.font('Times-Roman');
                 mydoc.fontSize("12");
@@ -399,7 +412,7 @@ async function prenota(req, res, next) {
             });
             mailOptions = {
                 from: 'webnb-service@libero.it',
-                to:    results,
+                to:    results[0].email,
                 subject: 'Prenotazione effettuata nella sua struttura',
                 text: "E' stata effettuata una prenotazione presso una tua struttura.\
                 Puoi in qualsiasi momento, effettuando l'accesso, \
@@ -422,7 +435,7 @@ async function prenota(req, res, next) {
 
                 }
 
-            });*/
+            });
             res.send('1'); //Prenotazione effettuata con successo! Email inviate
     })
     }catch(err){

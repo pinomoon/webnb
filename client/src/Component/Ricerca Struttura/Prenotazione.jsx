@@ -48,7 +48,7 @@ const Prenotazione =()=>{
     const [openConferma, setOpenConferma]=useState(false);
     const [tipoRisposta, setTipoRisposta]=useState("");
 
-    const state={id_utente,id_struttura,data_fine, data_inizio, modalita_pagamento,importi, n18, viaggio_lavoro,  nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,cellulare,email,titolare_carta,numero_carta,scadenza,cvc};
+    const state={id_utente,id_struttura,id_camera,data_fine, data_inizio, modalita_pagamento,importi, n18, viaggio_lavoro,  nome, cognome, data_di_nascita,sesso,indirizzo,citta,cap,cellulare,email,titolare_carta,numero_carta,scadenza,cvc};
     const state2={id_utente, id_camera,data_inizio,data_fine};
     const state3={costo_camera, data_inizio, data_fine, viaggio_lavoro,tassa_soggiorno,n18};
 
@@ -250,7 +250,7 @@ const Prenotazione =()=>{
                                         <div className="col-6">
                                             <label htmlFor="scadenza">Scadenza</label>
                                             <input name="scadenza" id="scadenza" type="text" className="form-control"
-                                                   size="32" maxLength="40" placeholder="MM/AA" pattern="(^[0][1-9]\/[0][1-9]$)|(^[1-2][0-9]\/[0][1-9]$)|(^[0][1-9]\/[1][0-2]$)|(^[1-2][0-9]\/[1][0-2]$)|(^[3][0-1]\/[0][1-9]$)|(^[3][0-1]\/[1][0-2]$)"
+                                                   size="32" maxLength="40" placeholder="AA/MM" pattern="(^[0][1-9]\/[0][1-9]$)|(^[1-2][0-9]\/[0][1-9]$)|(^[0][1-9]\/[1][0-2]$)|(^[1-2][0-9]\/[1][0-2]$)|(^[3][0-1]\/[0][1-9]$)|(^[3][0-1]\/[1][0-2]$)"
                                                    value={state.scadenza} onChange={handleChangeScadenza} required/>
                                         </div>
 
