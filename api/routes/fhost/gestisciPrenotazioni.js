@@ -243,12 +243,13 @@ async function checkinQuestura(req,res,next){
                 .catch(err=>{
                     throw err;
             })
+            let doctext=JSON.stringify(results);
             let filename=results[0].id_utente.toString()+'.pdf'
             let mydoc=new pdfmaker;
             mydoc.pipe(fs.createWriteStream(filename));
             mydoc.font('Times-Roman');
             mydoc.fontSize("12");
-            mydoc.text(results,100,100);
+            mydoc.text(doctext,100,100);
             mydoc.p
             mydoc.end();
 

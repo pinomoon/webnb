@@ -48,7 +48,6 @@ async function resocontoTrimestre(req,res,next){
                 throw err;
             })
             let tax=JSON.stringify(totale_tasse);
-            results.foto_documento=null;
             let doctext=JSON.stringify(results);
             let filename='trimestre'+req.body.data_trimestre+'.pdf'
             let mydoc=new pdfmaker;
