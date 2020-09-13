@@ -307,16 +307,18 @@ async function prenota(req, res, next) {
     let mail_cliente={};
     let mail_proprietario={};
     try {
-        let date= new Date();
+        let date= new Date(req.body.data_inizio);
         let year=date.getFullYear();
-        let data_inizio=""+year+"-"+"01-01";
-        let data_fine=""+year+"-"+"12"+"31";
+        let inizio_anno=""+year+"-"+"01-01";
+        let fine_anno=""+year+"-"+"12-31";
         await withTransaction(db, async() => {
            
             results=await db.query("SELECT data_fine,data_inizio \
             FROM prenotazione,camera \
-            WHERE (data_inizio>='2020-01-01' AND data_fine<='2020-12-12') AND prenotazione.id_camera=camera.id_camera AND prenotazione.id_utente=? AND camera.id_struttura=? ",
+            WHERE (data_inizio>=? AND data_fine<=?) AND prenotazione.conferma=1 AND prenotazione.id_camera=camera.id_camera AND prenotazione.id_utente=? AND camera.id_struttura=? ",
                 [
+                    inizio_anno,
+                    fine_anno,
                     req.body.id_utente,
                     req.body.id_struttura
                 ])
