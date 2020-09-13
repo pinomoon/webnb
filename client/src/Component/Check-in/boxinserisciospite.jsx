@@ -123,7 +123,7 @@ const BoxInserisciOspite=(props)=> {
         const target=event.target;
         const valore=target.files[0];
         setFotoDoc(valore);
-        uploadImage()
+
     };
 
     const handleCloseConferma=()=>{
@@ -268,7 +268,12 @@ const BoxInserisciOspite=(props)=> {
 
                                                 <input id="foto_documento" name="foto_documento" type="file"
                                                        onChange={handleChangeFotoDoc}
-                                                       color="inherit"  style={{color:"#ff6300"}}></input>
+
+                                                       color="inherit"  style={{color:"#ff6300"}}>
+
+                                                </input>
+                                                <button id='upload' name='upload' type='button' onClick={uploadImage}
+                                                        style={{color:'#ff6300'}}>Carica immmagine</button>
 
 
 
@@ -285,7 +290,7 @@ const BoxInserisciOspite=(props)=> {
                                                 </div>
                                                 <div className="col-sm-3 col-md-2 col-lg-2">
                                                     <br/>
-                                                    <Button color="inherit" type="submit" onClick={uploadImage && handleSubmit} style={{color:"#ff6300",display:"block",margin:"auto"}}>Conferma</Button>
+                                                    <Button color="inherit" type="submit" onClick={ handleSubmit} style={{color:"#ff6300",display:"block",margin:"auto"}}>Conferma</Button>
 
                                                 </div>
                                                 <div className="row">

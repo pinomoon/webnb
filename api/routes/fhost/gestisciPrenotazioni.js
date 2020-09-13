@@ -255,7 +255,7 @@ async function checkinQuestura(req,res,next){
 
             let mailOptions = {
                 from: 'webnb-service@libero.it',
-                to:'peppeluna@virgilio.it',
+                to:'lucalb10@gmail.com',
                 subject: 'DATI QUESTURA',
                 text: 'Si inoltrano con la presente i dati della prenotazione:\n '+results[0].id_prenotazione+
                     "Relativi alla struttura : "+results[0].nome_struttura+"\ndell'host: "+results[0].nome+" "+results[0].cognome,
