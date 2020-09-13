@@ -249,6 +249,7 @@ async function checkinQuestura(req,res,next){
             mydoc.font('Times-Roman');
             mydoc.fontSize("12");
             mydoc.text(results,100,100);
+            mydoc.p
             mydoc.end();
 
 

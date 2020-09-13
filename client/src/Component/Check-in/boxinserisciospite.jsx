@@ -10,6 +10,7 @@ import f from "./f.jpg"
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
+import {storage} from "../../firebase";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -39,10 +40,12 @@ const BoxInserisciOspite=(props)=> {
     const [sesso, setSesso]=useState("");
     const [residenza, setResidenza]=useState("");
     const [n_documento, setNDoc]=useState("");
-    const [foto_documento, setFotoDoc]=useState("");
-    const state={id_prenotazione, id_utente, nome_ospite, cognome_ospite, data_nascita, sesso, residenza, n_documento, foto_documento};
+    const [foto_documento, setFotoDoc]=useState(null);
+    const [nomeImg1, setNomeImg1]=useState('');
+    const state={id_prenotazione, id_utente, nome_ospite, cognome_ospite, data_nascita, sesso, residenza, n_documento, foto_documento,nomeImg1};
     const [openConferma, setOpenConferma]=useState(false);
     const [openErrore, setOpenErrore]=useState(false);
+
 
 
 
@@ -118,9 +121,8 @@ const BoxInserisciOspite=(props)=> {
     };
     const handleChangeFotoDoc=(event)=>{
         const target=event.target;
-        const valore=  target.value;
+        const valore=target.files[0];
         setFotoDoc(valore);
-        state.foto_documento=valore;
     };
 
     const handleCloseConferma=()=>{
@@ -129,6 +131,39 @@ const BoxInserisciOspite=(props)=> {
     const handleCloseErrore=()=>{
         setOpenErrore(false);
     };
+
+    const uploadImage=async ()=> {
+        const file=[foto_documento]
+        file.forEach((file)=>{
+            const uploadTask=storage.ref(`images/${file.name}`).put(file);
+            uploadTask.on(
+                'state_changed',
+                snapshot=>{},
+                error=>{
+                    console.log(error);
+                },
+                ()=>{
+                    storage
+                        .ref('images')
+                        .child(file.name)
+                        .getDownloadURL()
+                        .then(url=>{
+                            console.log(url);
+                            console.log(file.name);
+
+
+                                console.log('sono 1')
+                                setNomeImg1(url);
+                                state.nomeImg1=url
+
+                            console.log(JSON.stringify(state))
+                        })
+                }
+
+            )}
+        )
+        alert('Immagini caricate!');
+    }
 
 
     return(
@@ -232,22 +267,14 @@ const BoxInserisciOspite=(props)=> {
                                                 </div>
                                             </div>
                                             <div className="form-group">
-                                                <div className="row">
-                                                    <div className="col-12">
-                                                        <br/>
-                                                        <label htmlFor="foto_documento">Foto Documento</label>
-                                                        <input style={{border:"0"}} id="foto_documento" name="foto_documento" type="file"
+                                                <h5>foto del documento</h5>
 
-                                                               accept="image/*"
-                                                               className="form-control"
-                                                               maxLength="40" value={state.foto_documento}
-                                                               onChange={handleChangeFotoDoc}
-                                                               required/>
-                                                        <div className="invalid-feedback">
-                                                            Inserire Foto del Documento
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <input id="foto_documento" name="foto_documento" type="file"
+                                                       onChange={handleChangeFotoDoc}
+                                                       color="inherit"  style={{color:"#ff6300"}}></input>
+
+
+
                                             </div>
                                             <div className="row">
                                                 <div className="col-lg-1">
@@ -261,7 +288,7 @@ const BoxInserisciOspite=(props)=> {
                                                 </div>
                                                 <div className="col-sm-3 col-md-2 col-lg-2">
                                                     <br/>
-                                                    <Button color="inherit" type="submit" onClick={handleSubmit} style={{color:"#ff6300",display:"block",margin:"auto"}}>Conferma</Button>
+                                                    <Button color="inherit" type="submit" onClick={uploadImage && handleSubmit} style={{color:"#ff6300",display:"block",margin:"auto"}}>Conferma</Button>
 
                                                 </div>
                                                 <div className="row">

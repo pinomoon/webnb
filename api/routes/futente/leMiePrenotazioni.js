@@ -42,7 +42,9 @@ router.post('/annullaPrenotazione', annulla);
 async function annulla(req, res, next) {
 
     const db = await makeDb(config);
-    let results = {};
+    let results ={};
+    let results_c={};
+    let results_h={};
     try {
         await withTransaction(db, async() => {
             results = await db.query("SELECT stato_prenotazione,data_inizio,disdetta_gratuita,metodo_di_pagamento \
@@ -64,35 +66,35 @@ async function annulla(req, res, next) {
                 });
             let datenow=new Date();
             console.log(req.body.id_prenotazione);
-        if(results[0].stato_prenotazione=='confermata'){
-            if((results[0].modalita_di_pagamento=='struttura') && (data_inizio.getTime()-datenow.getTime()<(results[0].disdetta_gratuita*86400000))){
-                
+        if(results[0].stato_prenotazione=='confermata') {
+            if ((results[0].modalita_di_pagamento == 'struttura') && (data_inizio.getTime() - datenow.getTime() < (results[0].disdetta_gratuita * 86400000))) {
+
                 await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione='annullata', prenotazione.stato_pagamento=true \
-                WHERE prenotazione.id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{
+                WHERE prenotazione.id_prenotazione=?", [req.body.id_prenotazione]).catch(err => {
                     throw err;
                 });
                 let mailOptions = {
                     from: 'webnb-service@libero.it',
-                    to:results_h[0].email,
+                    to: results_h[0].email,
                     subject: 'Prenotazione annullata',
-                    text: 'Ciao '+results_h[0].nome+' '+results_h[0].cognome+',\n'+'\nCon la presente email ti comunichiamo che un cliente ha annullato la prenotazione:'
-                    +req.body.id_prenotazione+'\npresso una tua struttura\nVerrà effettuato il pagamento in quanto la disdetta è avvenuta dopo il periodo di disdetta gratuita da te indicato\n Saluti,\n\n Staff WeB&B.'
+                    text: 'Ciao ' + results_h[0].nome + ' ' + results_h[0].cognome + ',\n' + '\nCon la presente email ti comunichiamo che un cliente ha annullato la prenotazione:'
+                        + req.body.id_prenotazione + '\npresso una tua struttura\nVerrà effettuato il pagamento in quanto la disdetta è avvenuta dopo il periodo di disdetta gratuita da te indicato\n Saluti,\n\n Staff WeB&B.'
                 };
-                transport.sendMail(mailOptions, function(error, info){
+                transport.sendMail(mailOptions, function (error, info) {
                     if (error) {
                         console.log(error);
                     } else {
                         console.log('Email sent: ' + info.response);
                     }
                 });
-                mailOptions = {
+                let mailOptions1 = {
                     from: 'webnb-service@libero.it',
-                    to:results_c[0].email,
+                    to: results_c[0].email,
                     subject: 'Prenotazione annullata',
-                    text: 'Ciao '+results_c[0].nome+' '+results_c[0].cognome+',\n'+'\nCon la presente email ti comunichiamo che hai correttamente annullato la prenotazione:'
-                    +req.body.id_prenotazione+'\nVerrà effettuato il pagamento in quanto la disdetta è avvenuta dopo il periodo di disdetta gratuita indicato dall host\n Saluti,\n\n Staff WeB&B.'
+                    text: 'Ciao ' + results_c[0].nome + ' ' + results_c[0].cognome + ',\n' + '\nCon la presente email ti comunichiamo che hai correttamente annullato la prenotazione:'
+                        + req.body.id_prenotazione + '\nVerrà effettuato il pagamento in quanto la disdetta è avvenuta dopo il periodo di disdetta gratuita indicato dall host\n Saluti,\n\n Staff WeB&B.'
                 };
-                transport.sendMail(mailOptions, function(error, info){
+                transport.sendMail(mailOptions1, function (error, info) {
                     if (error) {
                         console.log(error);
                     } else {
@@ -100,35 +102,34 @@ async function annulla(req, res, next) {
                     }
                 });
                 res.send('1'); //Prenotazione annullata e pagamento effettuato
-            }
-            else if((results[0].modalita_di_pagamento=='carta') && (data_inizio.getTime()-datenow.getTime()>=(results[0].disdetta_gratuita*86400000))){
+            } else if ((results[0].modalita_di_pagamento == 'carta') && (data_inizio.getTime() - datenow.getTime() >= (results[0].disdetta_gratuita * 86400000))) {
                 /* effettua rimborso */
-                await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione=annullata, prenotazione.stato_rimborso=true \
-                WHERE prenotazione.id_prenotazione=?",[req.body.id_prenotazione]).catch(err=>{
+                await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione='annullata', prenotazione.stato_rimborso=true \
+                WHERE prenotazione.id_prenotazione=?", [req.body.id_prenotazione]).catch(err => {
                     throw err;
                 });
-                 mailOptions = {
+                let mailOptions2 = {
                     from: 'webnb-service@libero.it',
-                    to:results_h[0].email,
+                    to: results_h[0].email,
                     subject: 'Prenotazione annullata',
-                    text: 'Ciao '+results_h[0].nome+' '+results_h[0].cognome+',\n'+'\nCon la presente email ti comunichiamo che un cliente ha annullato la prenotazione:'
-                    +req.body.id_prenotazione+'\npresso una tua struttura\nVerrà effettuato il rimborso in quanto il cliente ha pagato con carta e la disdetta è avvenuta durante il periodo di disdetta gratuita da te indicato\n Saluti,\n\n Staff WeB&B.'
+                    text: 'Ciao ' + results_h[0].nome + ' ' + results_h[0].cognome + ',\n' + '\nCon la presente email ti comunichiamo che un cliente ha annullato la prenotazione:'
+                        + req.body.id_prenotazione + '\npresso una tua struttura\nVerrà effettuato il rimborso in quanto il cliente ha pagato con carta e la disdetta è avvenuta durante il periodo di disdetta gratuita da te indicato\n Saluti,\n\n Staff WeB&B.'
                 };
-                transport.sendMail(mailOptions, function(error, info){
+                transport.sendMail(mailOptions2, function (error, info) {
                     if (error) {
                         console.log(error);
                     } else {
                         console.log('Email sent: ' + info.response);
                     }
                 });
-                 mailOptions = {
+                let mailOptions3 = {
                     from: 'webnb-service@libero.it',
-                    to:results_c[0].email,
+                    to: results_c[0].email,
                     subject: 'Prenotazione annullata',
-                    text: 'Ciao '+results_c[0].nome+' '+results_c[0].cognome+',\n'+'\nCon la presente email ti comunichiamo che hai correttamente annullato la prenotazione:'
-                    +req.body.id_prenotazione+'\nVerrà effettuato il rimborso in quanto la disdetta è avvenuta durante il periodo di disdetta gratuita indicato dall host\n Saluti,\n\n Staff WeB&B.'
+                    text: 'Ciao ' + results_c[0].nome + ' ' + results_c[0].cognome + ',\n' + '\nCon la presente email ti comunichiamo che hai correttamente annullato la prenotazione:'
+                        + req.body.id_prenotazione + '\nVerrà effettuato il rimborso in quanto la disdetta è avvenuta durante il periodo di disdetta gratuita indicato dall host\n Saluti,\n\n Staff WeB&B.'
                 };
-                transport.sendMail(mailOptions, function(error, info){
+                transport.sendMail(mailOptions3, function (error, info) {
                     if (error) {
                         console.log(error);
                     } else {
@@ -137,25 +138,83 @@ async function annulla(req, res, next) {
                 });
                 res.send('2'); //prenotazione annullata e rimborso effettuato
             }
-            else{
+            else {
+                await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione='annullata' \
+                WHERE prenotazione.id_prenotazione=?"
+                    , [
+                        req.body.id_prenotazione
+                    ]).catch(err => {
+                    throw err;
+                });
+                let mailOptions5 = {
+                    from: 'webnb-service@libero.it',
+                    to: results_c[0].email,
+                    subject: 'Prenotazione annullata',
+                    text: 'Ciao ' + results_c[0].nome + ' ' + results_c[0].cognome + ',\n' + '\nCon la presente email ti comunichiamo che hai correttamente annullato la prenotazione:'
+                        + req.body.id_prenotazione + '\n\n Saluti,\n\n Staff WeB&B.'
+                };
+                transport.sendMail(mailOptions5, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                });
+                let mailOptions6 = {
+                    from: 'webnb-service@libero.it',
+                    to: results_h[0].email,
+                    subject: 'Prenotazione annullata',
+                    text: 'Ciao ' + results_c[0].nome + ' ' + results_c[0].cognome + ',\n' + '\nCon la presente email ti comunichiamo che un cliente ha annullato la prenotazione:'
+                        + req.body.id_prenotazione + '\npresso una tua struttura\n\n Saluti,\n\n Staff WeB&B.'
+                };
+                transport.sendMail(mailOptions6,function (error,info) {
+                    if (error){
+                        console.log(error);
+                    } else {
+                        console.log("Email sent: " + info.response);
+                    }
+
+                });
+                res.send('3'); //prenotazione annullata//
+
+            }
+        }
+        else if(results[0].stato_prenotazione=='in attesa di conferma'){
                 await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione='annullata' \
                 WHERE prenotazione.id_prenotazione=?"
                 ,[
                     req.body.id_prenotazione
                 ]).catch(err=>{
                     throw err;
-                })
-                res.send('3'); //prenotazione annullata//
-            }
-        }
-        else if(results[0].stato_prenotazione=='in attesa di conferma'){
-            result= await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione='annullata' \
-                WHERE prenotazione.id_prenotazione=?"
-                ,[
-                    req.body.id_prenotazione
-                ]).catch(err=>{
-                    throw err;
-                })
+                });
+            let mailOptions2 = {
+                from: 'webnb-service@libero.it',
+                to:results_h[0].email,
+                subject: 'Prenotazione annullata',
+                text: 'Ciao '+results_h[0].nome+' '+results_h[0].cognome+',\n'+'\nCon la presente email ti comunichiamo che un cliente ha annullato la prenotazione:'
+                    +req.body.id_prenotazione+'\npresso una tua struttura\n\n Saluti,\n\n Staff WeB&B.'
+            };
+            transport.sendMail(mailOptions2, function(error, info){
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+            let mailOptions3 = {
+                from: 'webnb-service@libero.it',
+                to:results_c[0].email,
+                subject: 'Prenotazione annullata',
+                text: 'Ciao '+results_c[0].nome+' '+results_c[0].cognome+',\n'+'\nCon la presente email ti comunichiamo che hai correttamente annullato la prenotazione:'
+                    +req.body.id_prenotazione+'\n\n Saluti,\n\n Staff WeB&B.'
+            };
+            transport.sendMail(mailOptions3, function(error, info){
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
                 res.send('3'); //prenotazione annullata
             }
         
