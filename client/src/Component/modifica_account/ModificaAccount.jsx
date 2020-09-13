@@ -33,9 +33,6 @@ const ModificaAccount=()=>{
                     if(response.data[0]=="1"){
                         setNome(response.data[1][0].nome);
                         setCognome(response.data[1][0].cognome);
-                        let data=response.data[1][0].data_di_nascita.substr(0,10);//Ritornava un formato diverso, cosi prendo solo quello che mi serve
-                        setData_di_nascita(data);//C'è un problema di fuso orario
-                        
                         setIndirizzo(response.data[1][0].indirizzo);
                         setSesso(response.data[1][0].sesso)
                         setCitta(response.data[1][0].citta);

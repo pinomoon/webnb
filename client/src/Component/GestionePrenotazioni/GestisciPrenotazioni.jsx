@@ -81,8 +81,8 @@ const GestisciPrenotazioni=()=> {
                                                     <ul className="list-group list-group-flush" style={{height:"10%",width:"100%"}}>
                                                         <li className="list-group-item" > <b>{values.nome_struttura}</b></li>
                                                         <li className="list-group-item"><b>{values.nome_camera}</b></li>
-                                                        <li className="list-group-item">{values.data_inizio.substr(0,10)}</li>
-                                                        <li className="list-group-item">{values.data_fine.substr(0,10)}</li>
+                                                        <li className="list-group-item">{new Date(values.data_inizio).toLocaleDateString()}</li>
+                                                        <li className="list-group-item">{new Date(values.data_fine).toLocaleDateString()}</li>
 
                                                     </ul>
 

@@ -58,7 +58,7 @@ const Prenotazione =()=>{
                 if(response.data[0]=="1"){
                     setNome(response.data[1].nome);
                     setCognome(response.data[1].cognome);
-                    setData_di_nascita(response.data[1].data_di_nascita.substr(0,10));
+                    setData_di_nascita(new Date(response.data[1].data_di_nascita).toLocaleDateString());
                     setSesso(response.data[1].sesso);
                     setIndirizzo(response.data[1].indirizzo);
                     setCitta(response.data[1].citta);
