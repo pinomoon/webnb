@@ -86,7 +86,7 @@ const RicercaStruttura=(props)=> {
             setOpenErroreDate(true);
             return
         }
-        alert(JSON.stringify(state));
+
         axios.post("https://localhost:9000/prenotazione/ricercaStruttura", state)
             .then((response)=>{
                 if(strutture!=[]){

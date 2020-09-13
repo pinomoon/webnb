@@ -116,42 +116,76 @@ const EsploraStruttura=()=>{
 
         <div className="container">
             <div className="row">
-                <div className="col-1">
+                <div className="col-lg-1">
                 </div>
-                <div className="col-sm-12 col-md-7 col-lg-10"
+                <div className="col-sm-12 col-md-12 col-lg-10"
                      style={{backgroundColor: "white", width: "100%", height: "auto", marginTop: "30px"}}>
                     <div className="row">
-                        <div className="col-sm-10 col-md-10 col-lg-10">
+                        <div className="col-sm-12 col-md-12 col-lg-12">
                             {struttura.map(value=>
-                                <h5>{value.nome_struttura}</h5>
-                            )}
+                                <div>
+                                <div className="row">
+                                <h5>&nbsp;&nbsp;{value.nome_struttura}</h5>
+                                </div>
+                                <div className="row">
+                                    <div className="col-sm-6 col-md-6 col-lg-3">
+                                        <div className="row">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<u>{value.indirizzo_struttura}</u>
+                                        </div>
+                                        <div className="row">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<u>{value.citta},{value.regione}</u>
+                                        </div>
+                                        </div>
+                                    <div className="col-sm-2 col-md-4 col-lg-7">
+
+                                    </div>
+                                    <div className="col-sm-4 col-md-2 col-lg-2">
+                                        {getSessionCookie().tipo=="1" &&
+
+                                        <div className="col-sm-12 col-md-12 col-lg-12" class="effetto">
+
+
+                                            {preferiti == false ? (
+
+                                                    <Tooltip title="Aggiungi ai preferiti" placement="top" >
+
+                                                        <Button onClick={handleClickPreferiti} class="button">
+                                                            <FavoriteBorderIcon />
+
+                                                        </Button>
+                                                    </Tooltip>
+                                                )
+                                                : (
+                                                    <Tooltip title="Rimuovi dai preferiti" placement="top">
+
+                                                        <Button onClick={handleClickPreferiti} class="button">
+
+                                                            <FavoriteIcon />
+                                                        </Button>
+
+                                                    </Tooltip>
+
+                                                )
+
+                                            }
+
+                                            <br/>
+                                        </div>
+
+
+                                        }
+
+                                    </div>
+
+
+                                </div>
+
+                                    </div>
+                                )}
                         </div>
-                        {getSessionCookie().tipo=="1" &&
-                        <div className="col-sm-1 col-mg-1 col-lg-1" class="effetto">
 
-                            {preferiti == false ? (
-
-                                    <Tooltip title="Aggiungi ai preferiti" placement="top" >
-
-                                        <Button onClick={handleClickPreferiti} class="button">
-                                            <FavoriteBorderIcon />
-                                        </Button>
-                                    </Tooltip>
-                                )
-                                : (
-                                    <Tooltip title="Rimuovi dai preferiti" placement="top">
-
-                                        <Button onClick={handleClickPreferiti} class="button">
-                                            <FavoriteIcon />
-                                        </Button>
-                                    </Tooltip> )
-
-                            }
-
-                            <br/>
-                        </div>
-                        }
                     </div>
+                    <hr style={{borderBottom:"1px solid #ff6300"}}/>
                     {struttura.map(value=>
                         <div>
                         <div className="row">
@@ -160,44 +194,40 @@ const EsploraStruttura=()=>{
                                 <br/>
                             </div>
                         </div>
-                        <div className="row">
+                            <hr style={{borderBottom:"1px solid #ff6300"}}/>
+
+                            <div className="row">
                         <br/>
                         </div>
                         <div className="row">
-                        <div className="col-6">
+                        <div className="col-6" style={{borderRight: "2px solid #ff6300"}}>
+
                         <img src={value.immagine_2} style={{width: "100%", height: "90%"}}/>
                         </div>
+
                         <div className="col-6">
+
                         <img src={value.immagine_3} style={{width: "100%", height: "90%"}}/>
-                        </div>
+                            </div>
                         </div>
                     </div>
                     )}
+                    <hr style={{borderBottom:"1px solid #ff6300"}}/>
+
                     <div className="row">
-                        <div className="col-6">
-                            <div style={{
-                                backgroundColor: "white",
-                                borderRight: "2px solid #ff6300",
-                                height: "100%"
-                            }}>
+                        <div className="col-6" style={{borderRight: "2px solid #ff6300"}}>
+
                                 <h5>Descrizione struttura</h5>
                                 {struttura.map(value=>
                                     <p>{value.descrizione}</p>
                                 )}
-                            </div>
                         </div>
                         <div className="col-6">
-                            <div style={{
-                                margin: "auto",
-                                border: "3px solid #ff6300",
-                                height: "auto",
-                                width: "70%",
-                                backgroundColor: "white smoke"
-                            }}>
+
                                 <h5 style={{textAlign: "center"}}>Servizi</h5>
-                                <ListGroup variant="flush">
+                                <ListGroup variant="flush" style={{border:"none"}}>
                                     {struttura.map(value=>
-                                        <ListGroup.Item style={{width:"90%",margin:"auto"}}>
+                                        <ListGroup.Item style={{width:"100%",margin:"auto",border:"none"}}>
                                             {value.servizi === "wifi,,," &&
                                             <div>
                                                 <p><WifiRoundedIcon/> Wi-Fi</p>
@@ -323,12 +353,12 @@ const EsploraStruttura=()=>{
                                         </ListGroup.Item>
                                     )}
                                 </ListGroup>
-                            </div>
                             <div className="row">
                                 <br/>
                             </div>
                         </div>
                     </div>
+                    <br/>
                     <div className="row">
                         <div className="col">
                             <div style={{

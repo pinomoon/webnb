@@ -176,7 +176,8 @@ const Homepage =()=>{
                                         height: "auto",
                                         backgroundColor: "white",
                                         margin: "auto",
-                                        border: "2px solid #ff6300"
+                                        border: "2px solid #ff6300",
+                                        borderRadius:25
                                     }}>
                                         <form className="row" name="form" id="form" method="POST" >
                                             <div className="form-group  col-sm-12 col-md-12 col-lg-3">
@@ -235,10 +236,12 @@ const Homepage =()=>{
                                             <div className="col-md-12 col-lg-1">
                                                 <Button type="submit" onClick={handleSubmit}  style={{
                                                     marginTop: "-2px",
-                                                    backgroundColor: "#ff6300",
+                                                    backgroundColor: "trasparent",
                                                     height: "106%",
-                                                    color: "white",
-                                                    borderRadius: 0
+                                                    color: "#ff6300",
+                                                    borderRadius: 25,
+                                                    fontSize:"16px",
+                                                    outline:"none"
                                                 }}>Ricerca</Button>
                                             </div>
                                         </form>

@@ -302,14 +302,14 @@ const Registrazione=()=>{
 
                                 <div className="form-group">
                                     <div className="row">
-                                        <div className="col-12">
+                                        <div className="col-9">
                                             <label htmlFor="credit-card">Titolare</label>
                                             <input name="titolare_carta" id="titolare_carta" type="name" className="form-control"
                                                    size="32" maxLength="40"
                                                    value={state.titolare_carta} onChange={handleChangeTitolareCarta}/>
                                         </div>
-                                        <div class="col-12">
-                                            <label htmlFor="credit-card">Numero</label>
+                                        <div class="col-9">
+                                            <label htmlFor="credit-card">Numero Carta</label>
                                             <input name="numero_carta" id="numero_carta" type="credit-card" className="form-control"
                                                    size="32" maxLength="40" pattern="[0-9]{13,16}"
                                                    value={state.numero_carta} onChange={handleChangeNumeroCarta}/>
