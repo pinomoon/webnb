@@ -310,7 +310,7 @@ async function inserisciOspiti(req,res,next){
                 req.body.sesso,
                 req.body.residenza,
                 req.body.n_documento,
-                req.body.foto_documento
+                req.body.nomeImg1
                     ]
                 ]
         ]).catch(err=>{

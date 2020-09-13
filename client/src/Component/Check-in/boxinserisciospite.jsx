@@ -42,7 +42,7 @@ const BoxInserisciOspite=(props)=> {
     const [n_documento, setNDoc]=useState("");
     const [foto_documento, setFotoDoc]=useState(null);
     const [nomeImg1, setNomeImg1]=useState('');
-    const state={id_prenotazione, id_utente, nome_ospite, cognome_ospite, data_nascita, sesso, residenza, n_documento, foto_documento,nomeImg1};
+    const state={id_prenotazione, id_utente, nome_ospite, cognome_ospite, data_nascita, sesso, residenza, n_documento, nomeImg1};
     const [openConferma, setOpenConferma]=useState(false);
     const [openErrore, setOpenErrore]=useState(false);
 
@@ -123,6 +123,7 @@ const BoxInserisciOspite=(props)=> {
         const target=event.target;
         const valore=target.files[0];
         setFotoDoc(valore);
+        uploadImage()
     };
 
     const handleCloseConferma=()=>{
@@ -150,12 +151,8 @@ const BoxInserisciOspite=(props)=> {
                         .then(url=>{
                             console.log(url);
                             console.log(file.name);
-
-
-                                console.log('sono 1')
-                                setNomeImg1(url);
-                                state.nomeImg1=url
-
+                            setNomeImg1(url);
+                            state.nomeImg1=url
                             console.log(JSON.stringify(state))
                         })
                 }
@@ -267,7 +264,7 @@ const BoxInserisciOspite=(props)=> {
                                                 </div>
                                             </div>
                                             <div className="form-group">
-                                                <h5>foto del documento</h5>
+                                                <h5>Foto del documento</h5>
 
                                                 <input id="foto_documento" name="foto_documento" type="file"
                                                        onChange={handleChangeFotoDoc}
