@@ -309,29 +309,35 @@ async function prenota(req, res, next) {
     try {
         let date= new Date();
         let year=date.getFullYear();
+        let data_inizio=""+year+"-"+"01-01";
+        let data_fine=""+year+"-"+"12"+"31";
         await withTransaction(db, async() => {
            
-            results=await db.query("SELECT SUM(data_fine-data_inizio) AS giorni_soggiorno \
+            results=await db.query("SELECT data_fine,data_inizio \
             FROM prenotazione,camera \
-            WHERE (data_inizio>=?-01-01 AND data_fine<=?-12-31) AND prenotazione.id_camera=camera.id_camera AND prenotazione.id_utente=? AND camera.id_struttura=? ",
+            WHERE (data_inizio>='2020-01-01' AND data_fine<='2020-12-12') AND prenotazione.id_camera=camera.id_camera AND prenotazione.id_utente=? AND camera.id_struttura=? ",
                 [
-                    year,
-                    year,
                     req.body.id_utente,
                     req.body.id_struttura
                 ])
                 .catch(err=>{
                     throw err;
                 });
-                let gsog=results[0].giorni_soggiorno;
-                if(gsog+(req.body.data_fine-req.body.data_inizio)>28){
+                let giorni=0;
+                for(i=0;i<results.length;i++){
+                    giorni=giorni+results[i].data_fine.getTime()-results[i].data_inizio.getTime();
+                }
+                let inizio=new Date(req.body.data_inizio);
+                let fine=new Date(req.body.data_fine);
+
+                let calcolo=giorni+(fine.getTime()-inizio.getTime())
+                if(calcolo>2419200000){
                     console.log('28 giorni superati');
-                    var risultato=['2',gsog];
+                    var risultato=['8'];
                     res.send(risultato);
-                    next(createError(403, '28 giorni superata'));
                 }
 
-                
+
                 
                 let now= new Date();
                 now=Date.now();
@@ -390,6 +396,7 @@ async function prenota(req, res, next) {
                             }
                         ]
                 };
+            if(calcolo<2419200000){
                 transport.sendMail(mailOptions, function(error, info){
                     if (error) {
                         console.log(error);
@@ -400,7 +407,7 @@ async function prenota(req, res, next) {
 
                     }
     
-                });
+                });}
             
             results= await db.query("SELECT email FROM utente,struttura WHERE struttura.id_utente=utente.id_utente\
             AND struttura.id_struttura=?",
@@ -425,6 +432,7 @@ async function prenota(req, res, next) {
                         }
                     ]
             };
+            if(calcolo<2419200000){
             transport.sendMail(mailOptions, function(error, info){
                 if (error) {
                     console.log(error);
@@ -435,7 +443,7 @@ async function prenota(req, res, next) {
 
                 }
 
-            });
+            });}
             res.send('1'); //Prenotazione effettuata con successo! Email inviate
     })
     }catch(err){
@@ -444,6 +452,7 @@ async function prenota(req, res, next) {
         next(createError(500));
     }
 }
+
  let deletefakepren=setInterval(deleteFakePren,10000);
 
 async function deleteFakePren(){

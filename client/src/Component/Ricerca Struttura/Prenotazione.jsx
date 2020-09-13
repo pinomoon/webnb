@@ -150,8 +150,14 @@ const Prenotazione =()=>{
         event.preventDefault();
         axios.post("https://localhost:9000/prenotazione",state)
             .then((response)=>{
-                setTipoRisposta(response.data);
-                handleOpenConferma();
+                if(response.data[0]=="8"){
+                    alert('Impossibile effettuare la prenotazione,28 giorni di soggiorno superati in un anno presso questa struttura');
+
+                }
+                else {
+                    setTipoRisposta(response.data);
+                    handleOpenConferma();
+                }
             })
             .catch((error)=>{
                 alert(error);
