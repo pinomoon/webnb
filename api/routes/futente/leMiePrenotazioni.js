@@ -64,10 +64,12 @@ async function annulla(req, res, next) {
                 ,[req.body.id_prenotazione]).catch(err=>{
                     throw err;
                 });
-            let datenow=new Date();
+            let datenow=new Date(Date.now());
+            let inizio=new Date(results[0].data_inizio)
+
             console.log(req.body.id_prenotazione);
         if(results[0].stato_prenotazione=='confermata') {
-            if ((results[0].modalita_di_pagamento == 'struttura') && (data_inizio.getTime() - datenow.getTime() < (results[0].disdetta_gratuita * 86400000))) {
+            if ((results[0].modalita_di_pagamento == 'struttura') && (inizio.getTime() - datenow.getTime() < (results[0].disdetta_gratuita * 86400000))) {
 
                 await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione='annullata', prenotazione.stato_pagamento=true \
                 WHERE prenotazione.id_prenotazione=?", [req.body.id_prenotazione]).catch(err => {
@@ -102,7 +104,10 @@ async function annulla(req, res, next) {
                     }
                 });
                 res.send('1'); //Prenotazione annullata e pagamento effettuato
-            } else if ((results[0].modalita_di_pagamento == 'carta') && (data_inizio.getTime() - datenow.getTime() >= (results[0].disdetta_gratuita * 86400000))) {
+            }
+
+
+            else if ((results[0].modalita_di_pagamento == 'carta') /*&& (inizio.getTime() - datenow.getTime() >= (results[0].disdetta_gratuita * 86400000))*/) {
                 /* effettua rimborso */
                 await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione='annullata', prenotazione.stato_rimborso=true \
                 WHERE prenotazione.id_prenotazione=?", [req.body.id_prenotazione]).catch(err => {
