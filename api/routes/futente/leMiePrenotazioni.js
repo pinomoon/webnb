@@ -65,11 +65,12 @@ async function annulla(req, res, next) {
                     throw err;
                 });
             let datenow=new Date(Date.now());
-            let inizio=new Date(results[0].data_inizio)
-
+            let inizio=new Date(results[0].data_inizio);
+            console.log(inizio);
+            console.log(inizio.getTime());
             console.log(req.body.id_prenotazione);
         if(results[0].stato_prenotazione=='confermata') {
-            if ((results[0].modalita_di_pagamento == 'struttura') && (inizio.getTime() - datenow.getTime() < (results[0].disdetta_gratuita * 86400000))) {
+            if (((results[0].metodo_di_pagamento == 'struttura')||(results[0].metodo_di_pagamento== 'anticipo_carta')) && (inizio.getTime() - datenow.getTime() < (results[0].disdetta_gratuita * 86400000))) {
 
                 await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione='annullata', prenotazione.stato_pagamento=true \
                 WHERE prenotazione.id_prenotazione=?", [req.body.id_prenotazione]).catch(err => {
@@ -107,7 +108,7 @@ async function annulla(req, res, next) {
             }
 
 
-            else if ((results[0].modalita_di_pagamento == 'carta') /*&& (inizio.getTime() - datenow.getTime() >= (results[0].disdetta_gratuita * 86400000))*/) {
+            else if (((results[0].metodo_di_pagamento== 'carta')||(results[0].metodo_di_pagamento== 'anticipo_carta')) && (inizio.getTime() - datenow.getTime() >= (results[0].disdetta_gratuita * 86400000))) {
                 /* effettua rimborso */
                 await db.query("UPDATE prenotazione SET prenotazione.stato_prenotazione='annullata', prenotazione.stato_rimborso=true \
                 WHERE prenotazione.id_prenotazione=?", [req.body.id_prenotazione]).catch(err => {
@@ -116,7 +117,7 @@ async function annulla(req, res, next) {
                 let mailOptions2 = {
                     from: 'webnb-service@libero.it',
                     to: results_h[0].email,
-                    subject: 'Prenotazione annullata',
+                    subject: 'Prenotazione confermata annullata',
                     text: 'Ciao ' + results_h[0].nome + ' ' + results_h[0].cognome + ',\n' + '\nCon la presente email ti comunichiamo che un cliente ha annullato la prenotazione:'
                         + req.body.id_prenotazione + '\npresso una tua struttura\nVerrà effettuato il rimborso in quanto il cliente ha pagato con carta e la disdetta è avvenuta durante il periodo di disdetta gratuita da te indicato\n Saluti,\n\n Staff WeB&B.'
                 };
@@ -130,7 +131,7 @@ async function annulla(req, res, next) {
                 let mailOptions3 = {
                     from: 'webnb-service@libero.it',
                     to: results_c[0].email,
-                    subject: 'Prenotazione annullata',
+                    subject: 'Prenotazione confermata annullata',
                     text: 'Ciao ' + results_c[0].nome + ' ' + results_c[0].cognome + ',\n' + '\nCon la presente email ti comunichiamo che hai correttamente annullato la prenotazione:'
                         + req.body.id_prenotazione + '\nVerrà effettuato il rimborso in quanto la disdetta è avvenuta durante il periodo di disdetta gratuita indicato dall host\n Saluti,\n\n Staff WeB&B.'
                 };
@@ -154,7 +155,7 @@ async function annulla(req, res, next) {
                 let mailOptions5 = {
                     from: 'webnb-service@libero.it',
                     to: results_c[0].email,
-                    subject: 'Prenotazione annullata',
+                    subject: 'Prenotazione confermata annullata',
                     text: 'Ciao ' + results_c[0].nome + ' ' + results_c[0].cognome + ',\n' + '\nCon la presente email ti comunichiamo che hai correttamente annullato la prenotazione:'
                         + req.body.id_prenotazione + '\n\n Saluti,\n\n Staff WeB&B.'
                 };
@@ -168,7 +169,7 @@ async function annulla(req, res, next) {
                 let mailOptions6 = {
                     from: 'webnb-service@libero.it',
                     to: results_h[0].email,
-                    subject: 'Prenotazione annullata',
+                    subject: 'Prenotazione confermata annullata',
                     text: 'Ciao ' + results_c[0].nome + ' ' + results_c[0].cognome + ',\n' + '\nCon la presente email ti comunichiamo che un cliente ha annullato la prenotazione:'
                         + req.body.id_prenotazione + '\npresso una tua struttura\n\n Saluti,\n\n Staff WeB&B.'
                 };
@@ -195,7 +196,7 @@ async function annulla(req, res, next) {
             let mailOptions2 = {
                 from: 'webnb-service@libero.it',
                 to:results_h[0].email,
-                subject: 'Prenotazione annullata',
+                subject: 'Prenotazione in attesa di conferma annullata',
                 text: 'Ciao '+results_h[0].nome+' '+results_h[0].cognome+',\n'+'\nCon la presente email ti comunichiamo che un cliente ha annullato la prenotazione:'
                     +req.body.id_prenotazione+'\npresso una tua struttura\n\n Saluti,\n\n Staff WeB&B.'
             };
@@ -209,7 +210,7 @@ async function annulla(req, res, next) {
             let mailOptions3 = {
                 from: 'webnb-service@libero.it',
                 to:results_c[0].email,
-                subject: 'Prenotazione annullata',
+                subject: 'Prenotazione in attesa di conferma annullata',
                 text: 'Ciao '+results_c[0].nome+' '+results_c[0].cognome+',\n'+'\nCon la presente email ti comunichiamo che hai correttamente annullato la prenotazione:'
                     +req.body.id_prenotazione+'\n\n Saluti,\n\n Staff WeB&B.'
             };
